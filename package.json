@@ -5,7 +5,7 @@
     "name": "Pablo Alcaraz Martínez",
     "url": "https://github.com/palcarazm/"
   },
-  "description": "Bootstrap 4 Toggle is a bootstrap 5 plugin that converts checkboxes into toggles.",
+  "description": "Bootstrap 5 Toggle is a bootstrap 5 plugin that converts checkboxes into toggles.",
   "homepage": "https://palcarazm.github.io/bootstrap5-toggle/",
   "license": "MIT",
   "main": "js/bootstrap5-toggle.min.js",
