@@ -2,10 +2,12 @@ module.exports = function(grunt){
 	'use strict';
 
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist'],
 		uglify: {
 			options: {
-				preserveComments: 'some',
+				banner: '/*!\n* Bootstrap Toggle: bootstrap5-toggle.css v<%= pkg.version %>\n* https://palcarazm.github.io/bootstrap5-toggle/\n*\n* @author 2011-2014 Min Hur (https://github.com/minhur)\n* @author 2018-2019 Brent Ely (https://github.com/gitbrent)\n* @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)\n* @lisense MIT License\n* @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE\n* @preserve\n*/\n',
+				preserveComments: false,
 				sourceMap: true
 			},
 			build: {
@@ -18,7 +20,8 @@ module.exports = function(grunt){
 		},
 		cssmin: {
 			options: {
-				keepBreaks: true
+				keepBreaks: true,
+				banner: '/*!\n* Bootstrap Toggle: bootstrap5-toggle.css v<%= pkg.version %>\n* https://palcarazm.github.io/bootstrap5-toggle/\n*\n* @author 2011-2014 Min Hur (https://github.com/minhur)\n* @author 2018-2019 Brent Ely (https://github.com/gitbrent)\n* @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)\n* @lisense MIT License\n* @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE\n* @preserve\n*/\n',
 			},
 			build: {
 				expand: true,

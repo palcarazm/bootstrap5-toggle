@@ -1,12 +1,14 @@
-/*\
-|*| ========================================================================
-|*| Bootstrap Toggle: bootstrap4-toggle.js v3.7.0
-|*| https://gitbrent.github.io/bootstrap4-toggle/
-|*| ========================================================================
-|*| Copyright 2018-2019 Brent Ely
-|*| Licensed under MIT
-|*| ========================================================================
-\*/
+/*!
+ * Bootstrap Toggle: bootstrap5-toggle.css v4.0.0
+ * https://palcarazm.github.io/bootstrap5-toggle/
+ *
+ * @author 2011-2014 Min Hur (https://github.com/minhur)
+ * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
+ * @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)
+ * @lisense MIT License
+ * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
+ * @preserve
+ */
 
 +function ($) {
  	'use strict';
