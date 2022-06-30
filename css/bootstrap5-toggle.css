@@ -43,6 +43,7 @@
 	left: 0;
 	transition: left 0.35s;
 	-webkit-transition: left 0.35s;
+	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 }
