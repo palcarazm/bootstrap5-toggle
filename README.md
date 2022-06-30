@@ -22,7 +22,7 @@ Project |Description
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/  
 
-![Demo GIF](doc/bootstrap5-toggle-demo.gif)
+![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
