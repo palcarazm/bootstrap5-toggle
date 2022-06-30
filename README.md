@@ -1,32 +1,39 @@
-[![MIT Licence](https://img.shields.io/github/license/gitbrent/bootstrap4-toggle.svg)](https://opensource.org/licenses/mit-license.php)   [![Bootstrap 4.2.1](https://img.shields.io/badge/bootstrap-4.3.1-green.svg?style=flat-square)](https://getbootstrap.com/docs/4.1)  [![Known Vulnerabilities](https://snyk.io/test/npm/bootstrap4-toggle/badge.svg)](https://snyk.io/test/npm/bootstrap4-toggle)  [![npm downloads](https://img.shields.io/npm/dm/bootstrap4-toggle.svg)](https://www.npmjs.com/package/bootstrap4-toggle)  [![JSDelivr Badge](https://data.jsdelivr.com/v1/package/gh/gitbrent/bootstrap4-toggle/badge)](https://www.jsdelivr.com/package/gh/gitbrent/bootstrap4-toggle)
+[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+[![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
+[![Bootstrap 5.1.3](https://img.shields.io/badge/bootstrap-5.1.3-green.svg?style=flat-square)](https://getbootstrap.com/docs/5.1)
+[![JSDelivr Badge](https://data.jsdelivr.com/v1/package/gh/palcarazm/bootstrap5-toggle/badge)](https://www.jsdelivr.com/package/gh/palcarazm/bootstrap5-toggle)
 
-# Bootstrap 4 Toggle
+# Bootstrap 5 Toggle
 
-**Bootstrap 4 Toggle** is a bootstrap plugin/widget that converts checkboxes into toggles.
+**Bootstrap 5 Toggle** is a bootstrap plugin/widget that converts checkboxes into toggles.
 
-**************************************************************************************************
+***
 
 #### Library Distributions
-Project                                                                                    |Description
--------------------------------------------------------------------------------------------|-------------------------------------------------------
+Project |Description
+---|---
+[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                         | Supports bootstrap5 (requires jQuery)
 [bootstrap4-toggle](https://github.com/gitbrent/bootstrap4-toggle)                         | Supports bootstrap4 (requires jQuery)
 [bootstrap-switch-button](https://github.com/gitbrent/bootstrap-switch-button)             | Supports bootstrap4+ (ES6 class, no dependencies)
 [bootstrap-switch-button-react](https://github.com/gitbrent/bootstrap-switch-button-react) | Supports bootstrap4+ (React component, no dependencies)
 
 # Demos
-**Demos and API Docs:** https://gitbrent.github.io/bootstrap4-toggle/  
+**Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/  
 
-![Demo GIF](https://github.com/gitbrent/bootstrap4-toggle/blob/master/doc/bootstrap4-toggle-demo.gif?raw=true)
+![Demo GIF](doc/bootstrap5-toggle-demo.gif)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
   - [Download](#download)
-  - [NPM](#npm)
-  - [Yarn](#yarn)
 - [Usage](#usage)
   - [Initialize With HTML](#initialize-with-html)
   - [Initialize With Code](#initialize-with-code)
@@ -46,22 +53,12 @@ Project                                                                         
 
 ## CDN
 ```html
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">  
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.0.0/css/bootstrap5-toggle.min.css" rel="stylesheet">  
+<script src="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.0.0/js/bootstrap5-toggle.min.js"></script>
 ```
 
 ## Download
-[Latest GitHub Release](https://github.com/gitbrent/bootstrap4-toggle/releases/latest)
-
-## NPM
-```ksh
-npm install bootstrap4-toggle
-```
-
-## Yarn
-```ksh
-yarn add bootstrap4-toggle
-```
+[Latest GitHub Release](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
 
 # Usage
 
