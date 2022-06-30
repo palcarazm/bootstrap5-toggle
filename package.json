@@ -1,29 +1,29 @@
 {
-  "name": "bootstrap4-toggle",
-  "version": "3.7.0-beta",
+  "name": "bootstrap5-toggle",
+  "version": "4.0.0-snapshoot",
   "author": {
-    "name": "Brent Ely",
-    "url": "https://github.com/gitbrent/"
+    "name": "Pablo Alcaraz Martínez",
+    "url": "https://github.com/palcarazm/"
   },
-  "description": "Bootstrap 4 Toggle is a bootstrap 4 plugin that converts checkboxes into toggles.",
-  "homepage": "https://gitbrent.github.io/bootstrap4-toggle/",
+  "description": "Bootstrap 4 Toggle is a bootstrap 5 plugin that converts checkboxes into toggles.",
+  "homepage": "https://palcarazm.github.io/bootstrap5-toggle/",
   "license": "MIT",
-  "main": "js/bootstrap4-toggle.min.js",
+  "main": "js/bootstrap5-toggle.min.js",
   "files": [
-    "css/bootstrap4-toggle.min.css",
-    "js/bootstrap4-toggle.min.js"
+    "css/bootstrap5-toggle.min.css",
+    "js/bootstrap5-toggle.min.js"
   ],
   "scripts": {
     "build": "grunt"
   },
   "keywords": [
     "bootstrap",
-    "bootstrap4",
-    "bootstrap-4",
-    "bootstrap 4",
-    "bootstrap 4 checkbox",
-    "bootstrap 4 switch",
-    "bootstrap 4 toggle",
+    "bootstrap5",
+    "bootstrap-5",
+    "bootstrap 5",
+    "bootstrap 5 checkbox",
+    "bootstrap 5 switch",
+    "bootstrap 5 toggle",
     "bootstrap-checkbox",
     "bootstrap-switch",
     "bootstrap-switch-button",
@@ -31,16 +31,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gitbrent/bootstrap4-toggle.git"
+    "url": "https://github.com/palcarazm/bootstrap5-toggle.git"
   },
   "bugs": {
-    "url": "https://github.com/gitbrent/bootstrap4-toggle/issues"
+    "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
   "devDependencies": {
-    "doctoc": "^1.4.0",
-    "grunt": "^1.0.4",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-uglify": "^4.0.1"
+    "doctoc": "^2.2.0",
+    "grunt": "^1.5.3",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-uglify": "^5.2.1"
   }
 }
