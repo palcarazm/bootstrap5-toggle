@@ -31,4 +31,4 @@ jobs:
       with:
         project: Issue triage
         column: High priority
-        repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
