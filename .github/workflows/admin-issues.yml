@@ -1,0 +1,27 @@
+name: Issues Workflows
+
+on:
+  issues:
+    types: [opened]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign Issues to One Project
+    steps:
+    - name: Assign NEW issues to project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.action == 'opened'
+      with:
+        project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/1'
+    - name: Comment in NEW issues
+      uses: peter-evans/create-or-update-comment@v2
+      if: github.event.action == 'opened'
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          Hi! :wave:
+          Thanks for your issue. You are helping to improve Bootstrap 5 toggle.
+        reactions: '+1'
