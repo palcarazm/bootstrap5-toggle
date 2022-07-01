@@ -16,6 +16,7 @@ jobs:
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/1'
+        column_name: 'Needs triage'
     - name: Comment in NEW issues
       uses: peter-evans/create-or-update-comment@v2
       if: github.event.action == 'opened'
