@@ -1,6 +1,6 @@
 {
   "name": "bootstrap5-toggle",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "author": {
     "name": "Pablo Alcaraz Martínez",
     "url": "https://github.com/palcarazm/"
@@ -10,8 +10,8 @@
   "license": "MIT",
   "main": "js/bootstrap5-toggle.min.js",
   "files": [
-    "css/bootstrap5-toggle.min.css",
-    "js/bootstrap5-toggle.min.js"
+    "css/*",
+    "js/*"
   ],
   "scripts": {
     "build": "grunt"

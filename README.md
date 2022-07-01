@@ -34,6 +34,8 @@ Project |Description
 - [Installation](#installation)
   - [CDN](#cdn)
   - [Download](#download)
+  - [NPM](#npm)
+  - [Yarn](#yarn)
 - [Usage](#usage)
   - [Initialize With HTML](#initialize-with-html)
   - [Initialize With Code](#initialize-with-code)
@@ -53,17 +55,27 @@ Project |Description
 
 ## CDN
 ```html
-<link href="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.0.0/css/bootstrap5-toggle.min.css" rel="stylesheet">  
-<script src="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.0.0/js/bootstrap5-toggle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.1.0/css/bootstrap5-toggle.min.css" rel="stylesheet">  
+<script src="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle@4.1.0/js/bootstrap5-toggle.min.js"></script>
 ```
 
 ## Download
-[Latest GitHub Release](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+
+## NPM
+```ksh
+npm install bootstrap5-toggle
+```
+
+## Yarn
+```ksh
+yarn add bootstrap5-toggle
+```
 
 # Usage
 
 ## Initialize With HTML
-Simply add `data-toggle="toggle"` to automatically convert a plain checkbox into a bootstrap 4 toggle.
+Simply add `data-toggle="toggle"` to automatically convert a plain checkbox into a bootstrap 5 toggle.
 
 ```html
 <input id="chkToggle" type="checkbox" data-toggle="toggle">

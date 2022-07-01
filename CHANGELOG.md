@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [3.7.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.0.0) 2022-06-30
+## [4.1.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.1.0) 2022-06-30
+### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.0.0...v4.1.0)
+### Added
+- feat: support for npm and yarn
+
+## [4.0.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.0.0) 2022-06-30
 ### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v3.6.0...v4.0.0)
 ### Added
 - feat: support for Boostrap 5
