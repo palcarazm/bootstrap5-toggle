@@ -2,7 +2,7 @@ name: Issues Workflows
 
 on:
   issues:
-    types: [opened]
+    types: [opened, milestoned]
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -25,3 +25,10 @@ jobs:
           Hi! :wave:
           Thanks for your issue. You are helping to improve Bootstrap 5 toggle.
         reactions: '+1'
+    - name: High priority issue
+      uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
+      if: github.event.action == 'milestoned'
+      with:
+        project: Issue triage
+        column: High priority
+        repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
