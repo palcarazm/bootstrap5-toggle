@@ -9,7 +9,7 @@ env:
 jobs:
   assign_one_project:
     runs-on: ubuntu-latest
-    name: Assign Issues to One Project
+    name: Pull Request Workflows
     steps:
     - name: Assign NEW pull request to project
       uses: srggrs/assign-one-project-github-action@1.2.1
