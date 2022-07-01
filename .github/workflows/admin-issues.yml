@@ -9,7 +9,7 @@ env:
 jobs:
   assign_one_project:
     runs-on: ubuntu-latest
-    name: Assign Issues to One Project
+    name: Issues Workflows
     steps:
     - name: Assign NEW issues to project
       uses: srggrs/assign-one-project-github-action@1.2.1
@@ -31,4 +31,4 @@ jobs:
       with:
         project: Issue triage
         column: High priority
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
