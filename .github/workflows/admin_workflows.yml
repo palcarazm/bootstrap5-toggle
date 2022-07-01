@@ -1,0 +1,41 @@
+name: Issues_Opened
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign Issues to One Project
+    steps:
+    - name: Assign NEW issues to project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.type == 'IssuesEvent'
+      with:
+        project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/1'
+    - name: Comment in NEW issues
+      uses: mshick/add-pr-comment@v1
+      if: github.event.type == 'IssuesEvent'
+      with:
+        message: |
+          **Hi! 👋**
+          Thanks for your issue. You are helping to improve Bootstrap 5 Toggle.
+        allow-repeats: true
+    - name: Assign NEW pull request to project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.type == 'PullRequestEvent'
+      with:
+        project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/2'
+    - name: Comment in NEW pull request
+      uses: mshick/add-pr-comment@v1
+      if: github.event.type == 'PullRequestEvent'
+      with:
+        message: |
+          **Hi! 👋**
+          Thanks for your pull request. You are helping to improve Bootstrap 5 Toggle.
+        allow-repeats: true
