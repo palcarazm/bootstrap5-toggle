@@ -1,58 +1,103 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>bootstrap4toggle size check</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet "href="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle/css/bootstrap5-toggle.min.css">
-	<!--
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/bootstrap5-toggle.css">
-	-->
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/gh/palcarazm/bootstrap5-toggle/js/bootstrap5-toggle.min.js"></script>
-	<!--
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
 	<script src="../js/bootstrap5-toggle.js"></script>
-	-->
 
 	<script>
-		// ==================================================================================================================
+		function init() {
+			let main = $('main');
+			const sizes = [
+				{ code: 'lg', name: 'large', tag: true },
+				{ code: 'md', name: 'medium', tag: false },
+				{ code: 'sm', name: 'small', tag: true }
+			];
+			sizes.forEach((size) => {
+				let col = $('<div class="col text-center">');
+				let toggleDiv = (col.clone())
+					.append(
+						$('<input type="checkbox" checked data-toggle="toggle">')
+							.attr('data-size', size.tag ? size.code : '')
+					);
+				let buttonDiv = (col.clone())
+					.append(
+						$('<button class="btn btn-info text-center">')
+							.addClass(size.tag ? 'btn-' + size.code : '')
+							.html('Button')
+					);
+				let selectDiv = (col.clone())
+					.append(
+						$('<select>')
+							.addClass(size.tag ? 'form-control form-control-' + size.code : 'form-control')
+							.html('<option val="Choice 1">select</option>')
+					);
+				let inputDiv = (col.clone())
+					.append(
+						$('<input type="text" placeholder="text">')
+							.addClass(size.tag ? 'form-control form-control-' + size.code : 'form-control')
+					);
+				let testDiv = $('<div class="border p-3 mb-4 test">').attr('id', 'size-' + size.code);
+				testDiv.append(
+					$('<div class="row mb-3">').append(toggleDiv, buttonDiv, selectDiv, inputDiv)
+				);
+				testDiv.append(
+					$('<div class="row align-items-center">').append(
+						$('<div class="col text-center"></div>'),
+						$('<div class="col text-center"></div>'),
+						$('<div class="col text-center"></div>'),
+						$('<div class="col text-center"></div>')
+					));
+				main.append($('<h4 class="fw-light text-capitalize">').html(size.name), testDiv);
+			});
+		}
 
 		function doCompare() {
-			$('[id^="size-"]').each(function(){
+			$('[id^="size-"]').each(function () {
 				var $row = $(this).find('.row:eq(1)');
 				var toogleHeight = parseFloat($(this).find('div.toggle').css('height').match(/(\d+.\d+)/));
 				var isSuccess = true;
-				$(this).find('.row:eq(0) .col').each(function(idx){
-					if(idx == 0) return;
+				$(this).find('.row:eq(0) .col').each(function (idx) {
+					if (idx == 0) return;
 					var itemHeight = parseFloat($(this).find('div.toggle, .btn, [class^="form-control"]').css('height').match(/(\d+.\d+)/));
 					var badge = $('<div></div>').addClass('badge text-monospace');
-					if(Math.abs(toogleHeight - itemHeight) <= 2.0){
+					if (Math.abs(toogleHeight - itemHeight) <= 0.05) {
 						badge.addClass('bg-success');
-					}else{
+					} else {
 						isSuccess = false;
 						badge.addClass('bg-danger');
 					}
 					badge.html('H: ' + itemHeight + 'px');
-					$row.find('.col:eq('+idx+')').append( badge );
+					$row.find('.col:eq(' + idx + ')').append(badge);
 				});
 				var badge = $('<div></div>').addClass('badge text-monospace');
-						badge.addClass(isSuccess ? 'bg-success': 'bg-danger');
-					badge.html('H: ' + toogleHeight + 'px');
-					$row.find('.col:eq(0)').append( badge );
+				badge.addClass(isSuccess ? 'bg-success' : 'bg-danger');
+				badge.html('H: ' + toogleHeight + 'px');
+				$row.find('.col:eq(0)').append(badge);
 			});
 		}
 
 		function appStartup() {
-			setTimeout(doCompare,500);
+			init();
+			$('input[data-toggle="toggle"]').bootstrapToggle();
+			setTimeout(doCompare, 500);
 		}
-
-		// ==================================================================================================================
-		window.onload = function(){ appStartup() };
+		$(document).ready(appStartup)
 	</script>
 </head>
+
 <body class="bg-light p-4">
 	<div id="appHeader" class="container">
 		<div class="row align-items-center">
@@ -71,89 +116,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="container">
-		<h4 class="text-primary font-weight-light">Large</h4>
-	</div>
-	<div id="size-lg" class="container border p-3 mb-4">
-		<div class="row mb-3">
-			<div class="col px-5 py-3">
-				<input type="checkbox" data-style="w-100" data-toggle="toggle" data-size="lg" checked>
-			</div>
-			<div class="col px-5 py-3">
-				<button class="btn btn-lg btn-info w-100">Button</button>
-			</div>
-			<div class="col px-5 py-3">
-				<select class="form-control-lg w-100">
-					<option val="Choice 1">select</option>
-				</select>
-			</div>
-			<div class="col px-5 py-3">
-				<input type="text" class="form-control-lg w-100" placeholder="text">
-			</div>
-		</div>
-		<div class="row align-items-center">
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-		</div>
-	</div>
-
-	<div class="container">
-		<h4 class="text-primary font-weight-light">Default</h4>
-	</div>
-	<div id="size-md" class="container border p-3 mb-4">
-		<div class="row mb-3">
-			<div class="col px-5 py-3">
-				<input type="checkbox" data-style="w-100" data-toggle="toggle" checked>
-			</div>
-			<div class="col px-5 py-3">
-				<button class="btn btn-info w-100">Button</button>
-			</div>
-			<div class="col px-5 py-3">
-				<select class="form-control w-100">
-					<option val="Choice 1">select</option>
-				</select>
-			</div>
-			<div class="col px-5 py-3">
-				<input type="text" class="form-control w-100" placeholder="text">
-			</div>
-		</div>
-		<div class="row align-items-center">
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-		</div>
-	</div>
-
-	<div class="container">
-		<h4 class="text-primary font-weight-light">Small</h4>
-	</div>
-	<div id="size-sm" class="container border p-3 mb-4">
-		<div class="row mb-3">
-			<div class="col px-5 py-3">
-				<input type="checkbox" data-style="w-100" data-toggle="toggle" data-size="sm" checked>
-			</div>
-			<div class="col px-5 py-3">
-				<button class="btn btn-sm btn-info w-100">Button</button>
-			</div>
-			<div class="col px-5 py-3">
-				<select class="form-control-sm w-100">
-					<option val="Choice 1">select</option>
-				</select>
-			</div>
-			<div class="col px-5 py-3">
-				<input type="text" class="form-control-sm w-100" placeholder="text">
-			</div>
-		</div>
-		<div class="row align-items-center">
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-			<div class="col text-center"></div>
-		</div>
-	</div>
+	<main class="container"></main>
 </body>
 </html>
