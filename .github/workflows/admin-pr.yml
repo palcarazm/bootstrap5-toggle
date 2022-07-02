@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Assign NEW pull request to project
       uses: srggrs/assign-one-project-github-action@1.2.1
-      if: github.event.type == 'PullRequestEvent'
+      if: github.event.action == 'opened'
       with:
         project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/2'
         column_name: 'To do'
