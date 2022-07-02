@@ -1,0 +1,118 @@
+<h2>Events</h2>
+<hr>
+
+<h3 class="text-secondary">Event Propagation</h3>
+<p>All events are propagated to and from input element to the toggle.<br>
+Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as the toggle stays synced with the input.</p>
+<div class="example skip">
+    <input id="toggle-event" type="checkbox" data-toggle="toggle">
+    <script>
+        $(function () {
+            $('#toggle-event').change(function () {
+                $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+            })
+        })
+    </script>
+    <pre class="mb-0"><code id="console-event" class="text-info"></code></pre>
+</div>
+<pre><code class="highlight language-html">&lt;input id="toggle-event" type="checkbox" data-toggle="toggle"&gt;
+&lt;script&gt;
+    $(function () {
+        $('#toggle-event').change(function () {
+            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+        })
+    })
+&lt;/script&gt;</code></pre>
+
+<h3 class="text-secondary">Stopping Event Propagation</h3>
+<p>
+    Passing <code>true</code> to the on/off methods will enable the silent option to prevent the control from
+    propagating the change event in
+    cases where you want to update the controls on/off state, but do not want to fire the onChange event.
+</p>
+<div class="example skip">
+    <input id="toggle-silent" type="checkbox" data-toggle="toggle"
+        onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')">
+    <button class="btn btn-success" onclick="toggleApiOnSilent()">On by API (silent)</button>
+    <button class="btn btn-success" onclick="toggleApiOffSilent()">Off by API (silent)</button>
+    <button class="btn btn-warning" onclick="toggleApiOnNotSilent()">On by API (not silent)</button>
+    <button class="btn btn-warning" onclick="toggleApiOffNotSilent()">On by API (not silent)</button>
+    <script>
+        function toggleApiOnSilent() {
+            $('#toggle-silent').bootstrapToggle('on', true);
+        }
+        function toggleApiOffSilent() {
+            $('#toggle-silent').bootstrapToggle('off', true);
+        }
+        function toggleApiOnNotSilent() {
+            $('#toggle-silent').bootstrapToggle('on');
+        }
+        function toggleApiOffNotSilent() {
+            $('#toggle-silent').bootstrapToggle('off');
+        }
+    </script>
+    <pre class="mb-0"><code id="chgConsole" class="text-info"></code></pre>
+</div>
+<pre><code class="highlight language-html">&lt;input id="toggle-silent" type="checkbox" data-toggle="toggle"
+    onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')"&gt;
+&lt;button class="btn btn-success" onclick="toggleApiOnSilent()"&gt;On by API (silent)&lt;/button&gt;
+&lt;button class="btn btn-success" onclick="toggleApiOffSilent()"&gt;Off by API (silent)&lt;/button&gt;
+&lt;button class="btn btn-warning" onclick="toggleApiOnNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
+&lt;button class="btn btn-warning" onclick="toggleApiOffNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
+&lt;script&gt;
+    function toggleApiOnSilent() {
+        $('#toggle-silent').bootstrapToggle('on', true);
+    }
+    function toggleApiOffSilent() {
+        $('#toggle-silent').bootstrapToggle('off', true);
+    }
+    function toggleApiOnNotSilent() {
+        $('#toggle-silent').bootstrapToggle('on');
+    }
+    function toggleApiOffNotSilent() {
+        $('#toggle-silent').bootstrapToggle('off');
+    }
+&lt;/script&gt;</code></pre>
+
+<h3 class="text-secondary">API vs Input</h3>
+<p>This also means that using the API or Input to trigger events will work both ways.</p>
+<div class="example skip">
+    <input id="toggle-trigger" type="checkbox" data-toggle="toggle">
+    <button class="btn btn-success" onclick="toggleApiOn()">On by API</button>
+    <button class="btn btn-danger" onclick="toggleApiOff()">Off by API</button>
+    <button class="btn btn-success" onclick="toggleInpOn()">On by Input</button>
+    <button class="btn btn-danger" onclick="toggleInpOff()">Off by Input</button>
+    <script>
+        function toggleApiOn() {
+            $('#toggle-trigger').bootstrapToggle('on');
+        }
+        function toggleApiOff() {
+            $('#toggle-trigger').bootstrapToggle('off');
+        }
+        function toggleInpOn() {
+            $('#toggle-trigger').prop('checked', true).change();
+        }
+        function toggleInpOff() {
+            $('#toggle-trigger').prop('checked', false).change();
+        }
+    </script>
+</div>
+<pre><code class="highlight language-html">&lt;input id="toggle-trigger" type="checkbox" data-toggle="toggle"&gt;
+&lt;button class="btn btn-success" onclick="toggleApiOn()"&gt;On by API&lt;/button&gt;
+&lt;button class="btn btn-danger" onclick="toggleApiOff()"&gt;Off by API&lt;/button&gt;
+&lt;button class="btn btn-success" onclick="toggleInpOn()"&gt;On by Input&lt;/button&gt;
+&lt;button class="btn btn-danger" onclick="toggleInpOff()"&gt;Off by Input&lt;/button&gt;
+&lt;script&gt;
+    function toggleApiOn() {
+        $('#toggle-trigger').bootstrapToggle('on');
+    }
+    function toggleApiOff() {
+        $('#toggle-trigger').bootstrapToggle('off');
+    }
+    function toggleInpOn() {
+        $('#toggle-trigger').prop('checked', true).change();
+    }
+    function toggleInpOff() {
+        $('#toggle-trigger').prop('checked', false).change();
+    }
+&lt;/script&gt;</code></pre>

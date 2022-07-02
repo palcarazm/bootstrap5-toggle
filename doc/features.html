@@ -1,0 +1,179 @@
+<h2>Features</h2>
+<hr>
+
+<h3 class="text-secondary">Sizes</h3>
+<p>Bootstrap toggle is available in different sizes.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-size="lg">
+    <input type="checkbox" checked data-toggle="toggle">
+    <input type="checkbox" checked data-toggle="toggle" data-size="sm">
+    <input type="checkbox" checked data-toggle="toggle" data-size="xs">
+</div>
+
+<h3 class="text-secondary">Custom Sizes</h3>
+<p>Bootstrap toggle can handle custom sizes by <code>data-width</code> and <code>data-height</code> options.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-width="100" data-height="75">
+    <input type="checkbox" checked data-toggle="toggle" data-height="75">
+    <input type="checkbox" checked data-toggle="toggle" data-width="100">
+</div>
+
+<h3 class="text-secondary">Colors</h3>
+<p>Bootstrap Toggle implements all standard bootstrap 4 button colors.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="secondary">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="success">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="danger">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="warning">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="light">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="dark">
+</div>
+
+<h3 class="text-secondary">Outline Colors</h3>
+<p>Bootstrap Toggle implements all standard bootstrap 4 button outline colors.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-primary"
+        data-offstyle="outline-secondary">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-secondary"
+        data-offstyle="outline-success">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-success" data-offstyle="outline-danger">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-danger" data-offstyle="outline-warning">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-warning" data-offstyle="outline-info">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-info" data-offstyle="outline-light">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-light" data-offstyle="outline-dark">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-dark" data-offstyle="outline-primary">
+</div>
+
+<h3 class="text-secondary">Dark Theme Colors</h3>
+<p>Bootstrap Toggle colors look great on dark backgrounds.</p>
+<div class="example bg-dark" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-offstyle="secondary">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="secondary" data-offstyle="success">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="warning">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="warning" data-offstyle="info">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-offstyle="light">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="light" data-offstyle="dark" data-style="border">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="dark" data-offstyle="light" data-style="border">
+</div>
+
+<h3 class="text-secondary">Dark Theme Outline Colors</h3>
+<p>Bootstrap Toggle outline colors look great on dark backgrounds.</p>
+<div class="example bg-dark" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-primary"
+        data-offstyle="outline-secondary">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-secondary"
+        data-offstyle="outline-success">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-success" data-offstyle="outline-danger">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-danger" data-offstyle="outline-warning">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-warning" data-offstyle="outline-info">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-info" data-offstyle="outline-light">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-light" data-offstyle="outline-dark"
+        data-style="border">
+    <input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-dark" data-offstyle="outline-light"
+        data-style="border">
+</div>
+
+<h3 class="text-secondary">Custom Style</h3>
+<p>Style the buttons to fit an existing UX.</p>
+<div class="example" code-lang="html">
+    <!-- iOS Style: Rounded -->
+    <style>
+        .toggle.ios,
+        .toggle-on.ios,
+        .toggle-off.ios {
+            border-radius: 20rem;
+        }
+
+        .toggle.ios .toggle-handle {
+            border-radius: 20rem;
+        }
+    </style>
+    <input type="checkbox" checked data-toggle="toggle" data-style="ios">
+    <!-- Android Style: No radius -->
+    <style>
+        .toggle.android {
+            border-radius: 0px;
+        }
+
+        .toggle.android .toggle-handle {
+            border-radius: 0px;
+        }
+    </style>
+    <input type="checkbox" checked data-toggle="toggle" data-style="android" data-onstyle="info">
+</div>
+
+<h3 class="text-secondary">Custom Text</h3>
+<p>The text can be changed easily with attributes or options.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-onstyle="success"
+        data-offstyle="danger">
+</div>
+
+<h3 class="text-secondary">HTML, Icons, Images</h3>
+<p>You can easily add icons or images since html is supported for on/off text.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-play'></i> Play"
+        data-off="<i class='fa fa-pause'></i> Pause">
+</div>
+
+<h3 class="text-secondary">Multiple Lines of Text</h3>
+<p>Toggles with multiple lines will adjust its heights.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-on="Hello<br>World" data-off="Goodbye<br>World">
+</div>
+
+<h3 class="text-secondary">Animation Speed</h3>
+<p>Transition speed can be easily controlled with css <code>transition</code> property on <code>.toggle-group</code>.
+    You can also turn animation off completely.</p>
+<div class="example" code-lang="html">
+    <style>
+        .slow .toggle-group {
+            transition: left 0.7s;
+            -webkit-transition: left 0.7s;
+        }
+
+        .fast .toggle-group {
+            transition: left 0.1s;
+            -webkit-transition: left 0.1s;
+        }
+
+        .quick .toggle-group {
+            transition: none;
+            -webkit-transition: none;
+        }
+    </style>
+    <input type="checkbox" checked data-toggle="toggle" data-style="slow">
+    <input type="checkbox" checked data-toggle="toggle" data-style="fast">
+    <input type="checkbox" checked data-toggle="toggle" data-style="quick">
+</div>
+
+<h3 class="text-secondary">Stacked checkboxes</h3>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles.</p>
+<div class="example" code-lang="html">
+    <div class="form-check pl-0">
+        <input id="stackedCheck1" class="form-check-input" type="checkbox" data-toggle="toggle" checked>
+        <label for="stackedCheck1" class="form-check-label">Enabled</label>
+    </div>
+    <div class="form-check pl-0">
+        <input id="stackedCheck2" class="form-check-input" type="checkbox" data-toggle="toggle" disabled>
+        <label for="stackedCheck2" class="form-check-label">Disabled</label>
+    </div>
+</div>
+
+<h3 class="text-secondary">Inline Checkboxes</h3>
+<p>Simply add <code>data-toggle="toggle"</code> to a convert checkboxes into toggles.</p>
+<div class="example" code-lang="html">
+    <div class="form-check form-check-inline">
+        <input id="inlineCheckbox1" class="form-check-input" type="checkbox" data-toggle="toggle" data-style="mr-1"
+            checked>
+        <label for="inlineCheckbox1" class="form-check-label">Enabled</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input id="inlineCheckbox2" class="form-check-input" type="checkbox" data-toggle="toggle" data-style="mr-1"
+            disabled>
+        <label for="inlineCheckbox2" class="form-check-label">Disabled</label>
+    </div>
+</div>
