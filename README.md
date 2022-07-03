@@ -2,8 +2,9 @@
 [![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
-[![Bootstrap 5.1.3](https://img.shields.io/badge/bootstrap-5.1.3-green.svg)](https://getbootstrap.com/docs/5.1)
-[![JSDelivr Badge](https://data.jsdelivr.com/v1/package/gh/palcarazm/bootstrap5-toggle/badge?style=rounded)](https://www.jsdelivr.com/package/gh/palcarazm/bootstrap5-toggle)
+[![Bootstrap 5.1.3](https://img.shields.io/static/v1?label=Bootstrap&message=5.1.3&logo=bootstrap&logoColor=white&color=success)](https://getbootstrap.com/docs/5.1)
+[![JSDelivr Badge](https://img.shields.io/jsdelivr/gh/hm/palcarazm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white&color=success)](https://www.jsdelivr.com/package/gh/palcarazm/bootstrap5-toggle)
+[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 # Bootstrap 5 Toggle
 
