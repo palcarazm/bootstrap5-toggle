@@ -36,18 +36,47 @@ function testSize() {
 
 /**
  * Test outline feature
+ * @param {Object} state : toggle state (activated or disactivated)
  */
- function testOutline() {
-    let isSuccess, $row,
-        toggleOnBgColor, toggleOnBorderColor, toggleOnTextColor, toggleOpacity,
+ function testOutline(state) {
+    testColorsOutline('outline', state);
+}
+
+/**
+ * Test color feature
+ * @param {Object} state : toggle state (activated or disactivated)
+ */
+ function testColor(state) {
+    testColorsOutline('solid', state);
+ }
+
+/**
+ * Test color and outline feature
+ * @param {String} colorMode : toggle style (solid or outline)
+ * @param {Object} state : toggle state (activated or disactivated)
+ */
+ function testColorsOutline(colorMode, state) {
+    let isSuccess, $row, hang_compare,
+        toggleBgColor, toggleBorderColor, toggleTextColor, toggleOpacity,
         toggleHandleBgColor, toggleHandleBorderColor,
         buttonBgColor, buttonBorderColor, buttonTextColor, buttonOpacity;
+
+    switch (colorMode.toLocaleLowerCase()) {
+        case 'solid':
+            hang_compare = 'rgb(255, 255, 255)';
+            break;
+        case 'outline':
+            hang_compare = null;
+            break;
+        default:
+            throw new DOMException('Unkown color mode "'+colorMode+'".',DOMException.NOT_SUPPORTED_ERR);
+    }
     $('.test').each(function () {
         toggleOpacity = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle"), null).getPropertyValue('opacity');
 
-        toggleOnBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-on"), null).getPropertyValue('background-color');
-        toggleOnBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-on"), null).getPropertyValue('border-color');
-        toggleOnTextColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-on"), null).getPropertyValue('color');
+        toggleBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('background-color');
+        toggleBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('border-color');
+        toggleTextColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('color');
         
         toggleHandleBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-handle"), null).getPropertyValue('background-color');
         toggleHandleBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-handle"), null).getPropertyValue('border-color');
@@ -58,14 +87,17 @@ function testSize() {
         buttonOpacity = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " button"), null).getPropertyValue('opacity');
         
         $row = $(this).find('.row:eq(1)');
+
         isSuccess = (
-                toggleOnBgColor == buttonBgColor
+                toggleBgColor == buttonBgColor
             ) && (
-                toggleOnBorderColor == buttonBorderColor && toggleHandleBgColor == buttonBorderColor && toggleHandleBorderColor == buttonBorderColor
+                toggleBorderColor == buttonBorderColor
             ) && (
                 toggleOpacity == buttonOpacity
             ) && (
-                toggleOnTextColor == buttonTextColor
+                toggleTextColor == buttonTextColor
+            ) && (
+                toggleHandleBgColor == (hang_compare || buttonBorderColor) && toggleHandleBorderColor == (hang_compare || buttonBorderColor)
             );
 
         $row.find('.col:eq(1)').append(
@@ -82,12 +114,12 @@ function testSize() {
             (BADGE.clone())
                 .addClass(isSuccess ? 'bg-success' : 'bg-danger')
                 .html(
-                    'On Background: ' + toggleOnBgColor + '<br>'+
-                    'On Border: ' + toggleOnBorderColor + '<br>'+
-                    'On Tex: ' + toggleOnTextColor + '<br>'+
+                    'Toggle Background: ' + toggleBgColor + '<br>'+
+                    'Toggle Border: ' + toggleBorderColor + '<br>'+
+                    'Toggle Tex: ' + toggleTextColor + '<br>'+
+                    'Toggle Opacity: ' + toggleOpacity + '<br>'+
                     'Handle Background: ' + toggleHandleBgColor + '<br>'+
-                    'Handle Border: ' + toggleHandleBorderColor + '<br>'+
-                    'Toggle Opacity: ' + toggleOpacity
+                    'Handle Border: ' + toggleHandleBorderColor 
                 )
         );
     });

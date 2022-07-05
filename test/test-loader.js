@@ -26,6 +26,11 @@ const STATUS = [
     {code: 'disabled', name: 'disabled', tag : true}
 ];
 
+const STATES = {
+    activated : {code: 'checked', name: 'activated', tag : true, property: 'on' , inverse: 'off'},
+    disactivated : {code: 'unchecked', name: 'disactivated', tag : false, property: 'off', inverse: 'on'}
+};
+
 /**
  * Create the layout for testing size feature
  */
@@ -72,28 +77,56 @@ function initTestSize() {
 
 /**
  * Create the layout for testing outline feature
+ * @param {Object} state : toggle state (activated or disactivated)
  */
- function initTestOutline() {
-    let status_tag, toggleDiv, buttonDiv, testDiv;
-    DESCRIPTION.html('Compares outline render color of <code>bootstrap</code> buttons to <code>bootstrap5-toggle</code> buttons')
+ function initTestOutline(state) {
+    initTestColorsOutline('outline', state);
+}
+
+/**
+ * Create the layout for testing color feature
+ * @param {Object} state : toggle state (activated or disactivated)
+ */
+ function initTestColor(state) {
+    initTestColorsOutline('solid', state);
+ }
+
+ /**
+  *  Create the layout dor testing colors or outline feature
+  * @param {String} colorMode : toggle style (solid or outline)
+  * @param {Object} state : toggle state (activated or disactivated)
+  */
+ function initTestColorsOutline(colorMode, state) {
+    let status_tag, toggleDiv, buttonDiv, testDiv, color_tag;
+    switch (colorMode.toLocaleLowerCase()) {
+        case 'solid':
+            color_tag = '';
+            break;
+        case 'outline':
+            color_tag  ='outline-'
+            break;
+        default:
+            throw new DOMException('Unkown color mode "'+colorMode+'".',DOMException.NOT_SUPPORTED_ERR);
+    }
+    DESCRIPTION.html('Compares render color of <code>bootstrap</code> buttons to <code>bootstrap5-toggle</code> buttons')
     STATUS.forEach((toggle_status)=>{
         status_tag = toggle_status.tag ? toggle_status.code : '';
         COLORS.forEach((color) => {
             toggleDiv = (COL.clone())
                 .append(
-                    $('<input type="checkbox" checked data-toggle="toggle" data-offstyle="outline-dark" ' + status_tag + '>')
-                        .attr('data-onstyle', 'outline-' + color)
+                    $('<input type="checkbox" ' + (state.tag ? state.code : '') + ' data-toggle="toggle" data-' + state.inverse + 'style="'+color_tag+'dark" ' + status_tag + '>')
+                        .attr('data-' + state.property + 'style', color_tag + color)
                 );
             buttonDiv = (COL.clone())
                 .append(
                     $('<button class="btn text-center" ' + status_tag + '>')
-                        .addClass('btn-outline-' + color)
+                        .addClass('btn-'+color_tag + color)
                         .html('Button')
                 );
             testDiv = (TEST_CONTAINER.clone()).attr('id', 'color-' + color + '-' + toggle_status.code);
             testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
             testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
-            MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' +toggle_status.name), testDiv);
+            MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' + toggle_status.name + ' ' + state.name), testDiv);
         });
     });
-}
+ }

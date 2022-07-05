@@ -25,8 +25,17 @@
 				case 'size':
 					initTestSize() 
 					break;
-				case 'outline':
-					initTestOutline() 
+				case 'outline-on':
+					initTestOutline(STATES.activated) 
+					break;
+				case 'outline-off':
+					initTestOutline(STATES.disactivated) 
+					break;
+				case 'color-on':
+					initTestColor(STATES.activated) 
+					break;
+				case 'color-off':
+					initTestColor(STATES.disactivated) 
 					break;
 			
 				default:
@@ -38,8 +47,17 @@
 				case 'size':
 					testSize() 
 					break;
-				case 'outline':
-					testOutline() 
+				case 'outline-on':
+					testOutline(STATES.activated) 
+					break;
+				case 'outline-off':
+					testOutline(STATES.disactivated) 
+					break;
+				case 'color-on':
+					testColor(STATES.activated) 
+					break;
+				case 'color-off':
+					testColor(STATES.disactivated) 
 					break;
 			
 				default:
@@ -67,7 +85,10 @@
 		</div>
 		<div class="btn-group" role="group" id="test-selector">
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="size">size</button>
-			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline">outline</button>
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline-on">outline on</button>
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline-off">outline off</button>
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="color-on">color on</button>
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="color-off">color off</button>
 		</div>
 		<div class="px-1 text-muted fw-bolder" id="description"></div>
 		<hr>
