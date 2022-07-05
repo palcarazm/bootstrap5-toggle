@@ -83,6 +83,7 @@
 	width: 0px;
 	border-width: 0 1px;
 	background-color: #fff;
+	border-color: #fff;
 }
 
 .toggle.btn-outline-primary .toggle-handle {
