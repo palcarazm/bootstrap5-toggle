@@ -37,6 +37,9 @@
 				case 'color-off':
 					initTestColor(STATES.disactivated) 
 					break;
+				case 'custom-text':
+					initTestCustomText() 
+					break;
 			
 				default:
 					break;
@@ -58,6 +61,9 @@
 					break;
 				case 'color-off':
 					testColor(STATES.disactivated) 
+					break;
+				case 'custom-text':
+					testCustomText() 
 					break;
 			
 				default:
@@ -89,6 +95,7 @@
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline-off">outline off</button>
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="color-on">color on</button>
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="color-off">color off</button>
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="custom-text">custom text</button>
 		</div>
 		<div class="px-1 text-muted fw-bolder" id="description"></div>
 		<hr>

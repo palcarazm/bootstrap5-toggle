@@ -1,6 +1,33 @@
 const BADGE = $('<div></div>').addClass('badge text-monospace');
 
 /**
+ * Testcustom text feature
+ */
+ function testCustomText() {
+    let toggle_status, toggle_text, text, isSuccess;
+
+    $('.test').each(function () {
+        toggle_status = $(this).find('.toggle input[type="checkbox"]').prop('checked');
+        text = $(this).find('code').html();
+        toggle_text = $(this).find('.toggle ' + (toggle_status ? '.toggle-on' : '.toggle-off')).html();
+
+        isSuccess = (text == toggle_text);
+
+        $(this).find('.row:eq(1) .col:eq(1)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html('Text: ' + text)
+        );
+
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html('Text: ' + toggle_text)
+        );
+    });
+}
+
+/**
  * Test size feature
  */
 function testSize() {
@@ -106,7 +133,7 @@ function testSize() {
                 .html(
                     'Background: ' + buttonBgColor + '<br>'+
                     'Border: ' + buttonBorderColor + '<br>'+
-                    'Tex: ' + buttonTextColor + '<br>'+
+                    'Text: ' + buttonTextColor + '<br>'+
                     'Opacity: ' + buttonOpacity
                 )
         );
@@ -116,7 +143,7 @@ function testSize() {
                 .html(
                     'Toggle Background: ' + toggleBgColor + '<br>'+
                     'Toggle Border: ' + toggleBorderColor + '<br>'+
-                    'Toggle Tex: ' + toggleTextColor + '<br>'+
+                    'Toggle Text: ' + toggleTextColor + '<br>'+
                     'Toggle Opacity: ' + toggleOpacity + '<br>'+
                     'Handle Background: ' + toggleHandleBgColor + '<br>'+
                     'Handle Border: ' + toggleHandleBorderColor 
