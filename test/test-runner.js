@@ -102,7 +102,7 @@ function testSize() {
         toggleOpacity = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle"), null).getPropertyValue('opacity');
 
         toggleBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('background-color');
-        toggleBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('border-color');
+        toggleBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle"), null).getPropertyValue('border-color');
         toggleTextColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('color');
         
         toggleHandleBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-handle"), null).getPropertyValue('background-color');

@@ -30,10 +30,6 @@
 	position: relative;
 	overflow: hidden;
 }
-.toggle.btn.btn-light, .toggle.btn.btn-outline-light {
-	/* bootstrap-4 - add a border so toggle is delineated */
-	border-color: rgba(0, 0, 0, .15);
-}
 .toggle input[type="checkbox"] {
 	display: none;
 }
@@ -83,6 +79,7 @@
 	width: 0px;
 	border-width: 0 1px;
 	background-color: #fff;
+	border-color: #fff;
 }
 
 .toggle.btn-outline-primary .toggle-handle {
