@@ -4,40 +4,58 @@ const COL = $('<div class="col text-center">');
 const TEST_CONTAINER = $('<div class="border p-3 mb-4 test rounded">');
 const TEST_TITLE = $('<h4 class="fw-light text-capitalize">');
 
+const SIZES = [
+    { code: 'lg', name: 'large', tag: true },
+    { code: 'md', name: 'medium', tag: false },
+    { code: 'sm', name: 'small', tag: true }
+];
+
+const COLORS = [
+    "primary",
+    "secondary",
+    "success",
+    "danger",
+    "warning",
+    "info",
+    "dark",
+    "light"
+];
+
+const STATUS = [
+    {code: 'enabled', name: 'enabled', tag : false},
+    {code: 'disabled', name: 'disabled', tag : true}
+];
+
 /**
  * Create the layout for testing size feature
  */
 function initTestSize() {
+    let toggleDiv, buttonDiv, selectDiv, inputDiv, testDiv;
     DESCRIPTION.html('Compares size of <code>bootstrap</code> buttons to <code>bootstrap5-toggle</code> buttons')
-    const sizes = [
-        { code: 'lg', name: 'large', tag: true },
-        { code: 'md', name: 'medium', tag: false },
-        { code: 'sm', name: 'small', tag: true }
-    ];
-    sizes.forEach((size) => {
-        let toggleDiv = (COL.clone())
+    SIZES.forEach((size) => {
+        toggleDiv = (COL.clone())
             .append(
                 $('<input type="checkbox" checked data-toggle="toggle">')
                     .attr('data-size', size.tag ? size.code : '')
             );
-        let buttonDiv = (COL.clone())
+        buttonDiv = (COL.clone())
             .append(
                 $('<button class="btn btn-primary text-center">')
                     .addClass(size.tag ? 'btn-' + size.code : '')
                     .html('Button')
             );
-        let selectDiv = (COL.clone())
+        selectDiv = (COL.clone())
             .append(
                 $('<select>')
                     .addClass(size.tag ? 'form-control form-control-' + size.code : 'form-control')
                     .html('<option val="Choice 1">select</option>')
             );
-        let inputDiv = (COL.clone())
+        inputDiv = (COL.clone())
             .append(
                 $('<input type="text" placeholder="text">')
                     .addClass(size.tag ? 'form-control form-control-' + size.code : 'form-control')
             );
-        let testDiv = (TEST_CONTAINER.clone()).attr('id', 'size-' + size.code);
+        testDiv = (TEST_CONTAINER.clone()).attr('id', 'size-' + size.code);
         testDiv.append(
             $('<div class="row mb-3">').append(toggleDiv, buttonDiv, selectDiv, inputDiv)
         );
@@ -56,32 +74,26 @@ function initTestSize() {
  * Create the layout for testing outline feature
  */
  function initTestOutline() {
+    let status_tag, toggleDiv, buttonDiv, testDiv;
     DESCRIPTION.html('Compares outline render color of <code>bootstrap</code> buttons to <code>bootstrap5-toggle</code> buttons')
-    const colors = [
-        "primary",
-        "secondary",
-        "success",
-        "danger",
-        "warning",
-        "info",
-        "dark",
-        "light"
-    ];
-    colors.forEach((color) => {
-        let toggleDiv = (COL.clone())
-            .append(
-                $('<input type="checkbox" checked data-toggle="toggle" data-offstyle="outline-dark">')
-                    .attr('data-onstyle', 'outline-' + color)
-            );
-        let buttonDiv = (COL.clone())
-            .append(
-                $('<button class="btn text-center">')
-                    .addClass('btn-outline-' + color)
-                    .html('Button')
-            );
-        let testDiv = (TEST_CONTAINER.clone()).attr('id', 'color-' + color);
-        testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
-        testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
-        MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color), testDiv);
+    STATUS.forEach((toggle_status)=>{
+        status_tag = toggle_status.tag ? toggle_status.code : '';
+        COLORS.forEach((color) => {
+            toggleDiv = (COL.clone())
+                .append(
+                    $('<input type="checkbox" checked data-toggle="toggle" data-offstyle="outline-dark" ' + status_tag + '>')
+                        .attr('data-onstyle', 'outline-' + color)
+                );
+            buttonDiv = (COL.clone())
+                .append(
+                    $('<button class="btn text-center" ' + status_tag + '>')
+                        .addClass('btn-outline-' + color)
+                        .html('Button')
+                );
+            testDiv = (TEST_CONTAINER.clone()).attr('id', 'color-' + color + '-' + toggle_status.code);
+            testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
+            testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+            MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' +toggle_status.name), testDiv);
+        });
     });
 }
