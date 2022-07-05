@@ -4,18 +4,16 @@ const BADGE = $('<div></div>').addClass('badge text-monospace');
  * Test size feature
  */
 function testSize() {
-    let isSuccess;
-    let bagdeclass;
-    let toogleHeight;
-    let itemHeight;
-    let $row;
+    let isSuccess, bagdeclass, toggle, toogleHeight, item, itemHeight, $row;
     $('.test').each(function () {
         isSuccess = true;
         $row = $(this).find('.row:eq(1)');
-        toogleHeight = parseFloat($(this).find('div.toggle').css('height').match(/(\d+.\d+)/));
+        toggle = $(this).find('div.toggle').css('height');
+        toogleHeight = parseFloat(toggle.match(/(\d+.\d+)/) || toggle.match(/(\d+)/));
         $(this).find('.row:eq(0) .col').each(function (idx) {
             if (idx == 0) return;
-            itemHeight = parseFloat($(this).find('div.toggle, .btn, [class^="form-control"]').css('height').match(/(\d+.\d+)/));
+            item = $(this).find('div.toggle, .btn, [class^="form-control"]').css('height');
+            itemHeight = parseFloat(item.match(/(\d+.\d+)/) || item.match(/(\d+)/));
             if (Math.abs(toogleHeight - itemHeight) <= 0.05) {
                 bagdeclass='bg-success';
             } else {
