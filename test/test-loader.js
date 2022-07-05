@@ -32,6 +32,28 @@ const STATES = {
 };
 
 /**
+ * Create the layout for testing custom text feature
+ */
+function initTestCustomText() {
+    let toggleDiv, textDiv, testDiv;
+    DESCRIPTION.html('Check custom text in <code>bootstrap5-toggle</code> buttons');
+    (Object.values(STATES)).forEach((state)=>{
+        toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" ' + (state.tag ? state.code : '') + ' data-toggle="toggle" data-' + state.property + '="'+state.name+'">')
+        );
+        textDiv = (COL.clone())
+        .append(
+            $('<code>').html(state.name)
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'text-' + state.name);
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, textDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('Custom text ' + state.name), testDiv);
+    });
+}
+
+/**
  * Create the layout for testing size feature
  */
 function initTestSize() {
