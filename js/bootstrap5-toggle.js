@@ -49,11 +49,24 @@
 	Toggle.prototype.render = function () {
 		this._onstyle = 'btn-' + this.options.onstyle
 		this._offstyle = 'btn-' + this.options.offstyle
-		var size
-			= this.options.size === 'large' || this.options.size === 'lg' ? 'btn-lg'
-			: this.options.size === 'small' || this.options.size === 'sm' ? 'btn-sm'
-			: this.options.size === 'mini'  || this.options.size === 'xs' ? 'btn-xs'
-			: ''
+		var size;
+		switch (this.options.size ) {
+			case 'large':
+			case 'lg':
+				size = 'btn-lg';
+				break;
+			case 'small':
+			case 'sm':
+				size = 'btn-sm';
+				break;
+			case 'mini':
+			case 'xs':
+				size = 'btn-xs';
+				break;
+			default:
+				size = ''
+				break;
+		}
 		var $toggleOn = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.on)
 			.addClass(this._onstyle + ' ' + size)
 		var $toggleOff = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.off)
