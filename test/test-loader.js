@@ -28,7 +28,7 @@ const STATUS = [
 
 const STATES = {
     activated : {code: 'checked', name: 'activated', tag : true, property: 'on' , inverse: 'off'},
-    disactivated : {code: 'unchecked', name: 'disactivated', tag : false, property: 'off', inverse: 'on'}
+    disactivated : {code: 'unchecked', name: 'deactivated', tag : false, property: 'off', inverse: 'on'}
 };
 
 /**
