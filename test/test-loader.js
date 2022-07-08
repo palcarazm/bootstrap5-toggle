@@ -119,7 +119,7 @@ function initTestSize() {
   * @param {Object} state : toggle state (activated or disactivated)
   */
  function initTestColorsOutline(colorMode, state) {
-    let status_tag, toggleDiv, buttonDiv, testDiv, color_tag;
+    let toggleDiv, buttonDiv, testDiv, color_tag;
     switch (colorMode.toLocaleLowerCase()) {
         case 'solid':
             color_tag = '';
@@ -131,24 +131,21 @@ function initTestSize() {
             throw new DOMException('Unkown color mode "'+colorMode+'".',DOMException.NOT_SUPPORTED_ERR);
     }
     DESCRIPTION.html('Compares render color of <code>bootstrap</code> buttons to <code>bootstrap5-toggle</code> buttons')
-    STATUS.forEach((toggle_status)=>{
-        status_tag = toggle_status.tag ? toggle_status.code : '';
-        COLORS.forEach((color) => {
-            toggleDiv = (COL.clone())
-                .append(
-                    $('<input type="checkbox" ' + (state.tag ? state.code : '') + ' data-toggle="toggle" data-' + state.inverse + 'style="'+color_tag+'dark" ' + status_tag + '>')
-                        .attr('data-' + state.property + 'style', color_tag + color)
-                );
-            buttonDiv = (COL.clone())
-                .append(
-                    $('<button class="btn text-center" ' + status_tag + '>')
-                        .addClass('btn-'+color_tag + color)
-                        .html('Button')
-                );
-            testDiv = (TEST_CONTAINER.clone()).attr('id', 'color-' + color + '-' + toggle_status.code);
-            testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
-            testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
-            MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' + toggle_status.name + ' ' + state.name), testDiv);
-        });
+    COLORS.forEach((color) => {
+        toggleDiv = (COL.clone())
+            .append(
+                $('<input type="checkbox" ' + (state.tag ? state.code : '') + ' data-toggle="toggle" data-' + state.inverse + 'style="'+color_tag+'dark">')
+                    .attr('data-' + state.property + 'style', color_tag + color)
+            );
+        buttonDiv = (COL.clone())
+            .append(
+                $('<button class="btn text-center">')
+                    .addClass('btn-'+color_tag + color)
+                    .html('Button')
+            );
+        testDiv = (TEST_CONTAINER.clone()).attr('id', 'color-' + color);
+        testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
+        testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+        MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' + state.name), testDiv);
     });
  }

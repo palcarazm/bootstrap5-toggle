@@ -84,9 +84,9 @@ function testSize() {
  */
  function testColorsOutline(colorMode, state) {
     let isSuccess, $row, hang_compare,
-        toggleBgColor, toggleBorderColor, toggleTextColor, toggleOpacity,
+        toggleBgColor, toggleBorderColor, toggleTextColor,
         toggleHandleBgColor, toggleHandleBorderColor,
-        buttonBgColor, buttonBorderColor, buttonTextColor, buttonOpacity;
+        buttonBgColor, buttonBorderColor, buttonTextColor;
 
     switch (colorMode.toLocaleLowerCase()) {
         case 'solid':
@@ -99,8 +99,6 @@ function testSize() {
             throw new DOMException('Unkown color mode "'+colorMode+'".',DOMException.NOT_SUPPORTED_ERR);
     }
     $('.test').each(function () {
-        toggleOpacity = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle"), null).getPropertyValue('opacity');
-
         toggleBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('background-color');
         toggleBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle"), null).getPropertyValue('border-color');
         toggleTextColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " .toggle-" + state.property), null).getPropertyValue('color');
@@ -111,7 +109,6 @@ function testSize() {
         buttonBgColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " button"), null).getPropertyValue('background-color');
         buttonBorderColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " button"), null).getPropertyValue('border-color');
         buttonTextColor = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " button"), null).getPropertyValue('color');
-        buttonOpacity = window.getComputedStyle(document.querySelector('#' + $(this).attr('id') + " button"), null).getPropertyValue('opacity');
         
         $row = $(this).find('.row:eq(1)');
 
@@ -119,8 +116,6 @@ function testSize() {
                 toggleBgColor == buttonBgColor
             ) && (
                 toggleBorderColor == buttonBorderColor
-            ) && (
-                toggleOpacity == buttonOpacity
             ) && (
                 toggleTextColor == buttonTextColor
             ) && (
@@ -133,8 +128,7 @@ function testSize() {
                 .html(
                     'Background: ' + buttonBgColor + '<br>'+
                     'Border: ' + buttonBorderColor + '<br>'+
-                    'Text: ' + buttonTextColor + '<br>'+
-                    'Opacity: ' + buttonOpacity
+                    'Text: ' + buttonTextColor
                 )
         );
         $row.find('.col:eq(0)').append(
@@ -144,7 +138,6 @@ function testSize() {
                     'Toggle Background: ' + toggleBgColor + '<br>'+
                     'Toggle Border: ' + toggleBorderColor + '<br>'+
                     'Toggle Text: ' + toggleTextColor + '<br>'+
-                    'Toggle Opacity: ' + toggleOpacity + '<br>'+
                     'Handle Background: ' + toggleHandleBgColor + '<br>'+
                     'Handle Border: ' + toggleHandleBorderColor 
                 )
