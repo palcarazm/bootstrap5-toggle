@@ -2,3 +2,5 @@
 node_modules
 *.log
 bootstrap*.tgz
+cypress/videos
+cypress/downloads
