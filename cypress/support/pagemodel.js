@@ -1,4 +1,14 @@
 class PageModel {
+  DEFAULTS = {
+		on: 'On',
+		off: 'Off',
+		onstyle: 'primary',
+		offstyle: 'secondary',
+		size: 'normal',
+		style: '',
+		width: null,
+		height: null
+	}
     /**
      * Load Test App and go to the selected test
      * @param {String} btn_data_test : data-test of the button to click
