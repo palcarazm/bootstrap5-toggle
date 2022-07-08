@@ -37,10 +37,15 @@
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
   "devDependencies": {
+    "cypress": "^10.3.0",
     "doctoc": "^2.2.0",
     "grunt": "^1.5.3",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-cssmin": "^4.0.0",
     "grunt-contrib-uglify": "^5.2.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "jquery": "^3.6.0"
   }
 }
