@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import PageModel from "../support/pagemodel"
 const pageModel = new PageModel();
 
