@@ -3,6 +3,10 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
+
+[![Build](https://badgen.net/github/checks/palcarazm/bootstrap5-toggle/master/build?label=Build&icon=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
+[![Test](https://badgen.net/github/checks/palcarazm/bootstrap5-toggle/master/cypress-run?label=Cypress%20test)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
+
 [![Bootstrap 5.1.3](https://img.shields.io/static/v1?label=Bootstrap&message=5.1.3&logo=bootstrap&logoColor=white&color=success)](https://getbootstrap.com/docs/5.1)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
@@ -56,6 +60,7 @@ Project |Description
 # Installation
 
 ## CDN
+[![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 ```html
 <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.1.0/css/bootstrap5-toggle.min.css" rel="stylesheet">  
 <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.1.0/js/bootstrap5-toggle.min.js"></script>
@@ -65,6 +70,7 @@ Project |Description
 [![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
 
 ## NPM
+[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 ```ksh
 npm install bootstrap5-toggle
 ```
@@ -163,7 +169,7 @@ You should listen to events from the `<input type="checkbox">` directly rather t
 ```
 
 ## Stopping Event Propagation
-Passing `true` to the on/off methods will enable the silent option to prevent the control from propagating the change event in
+Passing `true` to the on, off and toggle methods will enable the silent option to prevent the control from propagating the change event in
 cases where you want to update the controls on/off state, but do not want to fire the onChange event.
 
 ```html
