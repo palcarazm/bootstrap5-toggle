@@ -82,6 +82,15 @@
 	border-color: #fff;
 }
 
+/** Support for input-group
+ * @author (bryan-brancotte)[https://github.com/bryan-brancotte]
+ * @see https://github.com/gitbrent/bootstrap4-toggle/issues/32#issuecomment-616974580
+ */
+.input-group .toggle-on,
+.input-group .toggle-off{
+    position: absolute;
+}
+
 .toggle.btn-outline-primary .toggle-handle {
 	background-color: var(--bs-primary);
 	border-color: var(--bs-primary);
