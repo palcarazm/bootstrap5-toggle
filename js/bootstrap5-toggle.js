@@ -100,19 +100,19 @@
 		this.trigger(true)
 	}
 
-	Toggle.prototype.toggle = function () {
-		if (this.$element.prop('checked')) this.off()
-		else this.on()
+	Toggle.prototype.toggle = function (silent = false) {
+		if (this.$element.prop('checked')) this.off(silent)
+		else this.on(silent)
 	}
 
-	Toggle.prototype.on = function (silent) {
+	Toggle.prototype.on = function (silent = false) {
 		if (this.$element.prop('disabled')) return false
 		this.$toggle.removeClass(this._offstyle + ' off').addClass(this._onstyle)
 		this.$element.prop('checked', true)
 		if (!silent) this.trigger()
 	}
 
-	Toggle.prototype.off = function (silent) {
+	Toggle.prototype.off = function (silent = false) {
 		if (this.$element.prop('disabled')) return false
 		this.$toggle.removeClass(this._onstyle).addClass(this._offstyle + ' off')
 		this.$element.prop('checked', false)
