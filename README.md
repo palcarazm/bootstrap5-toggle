@@ -1,15 +1,12 @@
-[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
 [![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
-[![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
-
-[![Build](https://badgen.net/github/checks/palcarazm/bootstrap5-toggle/master/build?label=Build&icon=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
-[![Test](https://badgen.net/github/checks/palcarazm/bootstrap5-toggle/master/cypress-run?label=Cypress%20test)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
-
-[![Bootstrap 5.1.3](https://img.shields.io/static/v1?label=Bootstrap&message=5.1.3&logo=bootstrap&logoColor=white&color=success)](https://getbootstrap.com/docs/5.1)
+[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
+[![Bootstrap 5.1.3](https://img.shields.io/static/v1?label=bootstrap&message=5.1.3&logo=bootstrap&logoColor=white&color=success)](https://getbootstrap.com/docs/5.1)
+[![Build](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Build%20Check?logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
+[![Test](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Cypress%20Tests?label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
+[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-success.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
+[![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
 
 # Bootstrap 5 Toggle
 
