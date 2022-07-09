@@ -14,7 +14,9 @@
     "js/*"
   ],
   "scripts": {
-    "build": "grunt"
+    "build": "grunt",
+    "postversion": "grunt",
+    "prepublishOnly": "grunt"
   },
   "keywords": [
     "bootstrap",
