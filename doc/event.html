@@ -25,52 +25,62 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
 &lt;/script&gt;</code></pre>
 
 <h3 class="text-secondary">Stopping Event Propagation</h3>
-<p>
-    Passing <code>true</code> to the on/off methods will enable the silent option to prevent the control from
-    propagating the change event in
-    cases where you want to update the controls on/off state, but do not want to fire the onChange event.
-</p>
+<p>Passing <code>true</code> to the on, off and toogle methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.</p>
 <div class="example skip">
     <input id="toggle-silent" type="checkbox" data-toggle="toggle"
-        onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')">
-    <button class="btn btn-success" onclick="toggleApiOnSilent()">On by API (silent)</button>
-    <button class="btn btn-success" onclick="toggleApiOffSilent()">Off by API (silent)</button>
-    <button class="btn btn-warning" onclick="toggleApiOnNotSilent()">On by API (not silent)</button>
-    <button class="btn btn-warning" onclick="toggleApiOffNotSilent()">On by API (not silent)</button>
+        onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')"><br>
+    <button class="btn btn-success" onclick="apiOnSilent()">On by API (silent)</button>
+    <button class="btn btn-success" onclick="apiOffSilent()">Off by API (silent)</button>
+    <button class="btn btn-success" onclick="apiToggleSilent()">Toggle by API (silent)</button><br>
+    <button class="btn btn-warning" onclick="apiOnNotSilent()">On by API (not silent)</button>
+    <button class="btn btn-warning" onclick="apiOffNotSilent()">Off by API (not silent)</button>
+    <button class="btn btn-warning" onclick="apiToggleNotSilent()">Toggle by API (not silent)</button>
     <script>
-        function toggleApiOnSilent() {
+        function apiOnSilent() {
             $('#toggle-silent').bootstrapToggle('on', true);
         }
-        function toggleApiOffSilent() {
+        function apiOffSilent() {
             $('#toggle-silent').bootstrapToggle('off', true);
         }
-        function toggleApiOnNotSilent() {
+        function apiToggleSilent() {
+            $('#toggle-silent').bootstrapToggle('toggle', true);
+        }
+        function apiOnNotSilent() {
             $('#toggle-silent').bootstrapToggle('on');
         }
-        function toggleApiOffNotSilent() {
+        function apiOffNotSilent() {
             $('#toggle-silent').bootstrapToggle('off');
+        }
+        function apiToggleNotSilent() {
+            $('#toggle-silent').bootstrapToggle('toggle');
         }
     </script>
     <pre class="mb-0"><code id="chgConsole" class="text-info"></code></pre>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-silent" type="checkbox" data-toggle="toggle"
     onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')"&gt;
-&lt;button class="btn btn-success" onclick="toggleApiOnSilent()"&gt;On by API (silent)&lt;/button&gt;
-&lt;button class="btn btn-success" onclick="toggleApiOffSilent()"&gt;Off by API (silent)&lt;/button&gt;
-&lt;button class="btn btn-warning" onclick="toggleApiOnNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
-&lt;button class="btn btn-warning" onclick="toggleApiOffNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
+&lt;button class="btn btn-success" onclick="apiOnSilent()"&gt;On by API (silent)&lt;/button&gt;
+&lt;button class="btn btn-success" onclick="apiOffSilent()"&gt;Off by API (silent)&lt;/button&gt;
+&lt;button class="btn btn-warning" onclick="apiOnNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
+&lt;button class="btn btn-warning" onclick="apiOffNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
 &lt;script&gt;
-    function toggleApiOnSilent() {
+    function apiOnSilent() {
         $('#toggle-silent').bootstrapToggle('on', true);
     }
-    function toggleApiOffSilent() {
+    function apiOffSilent() {
         $('#toggle-silent').bootstrapToggle('off', true);
     }
-    function toggleApiOnNotSilent() {
+    function apiToggleSilent() {
+        $('#toggle-silent').bootstrapToggle('toggle', true);
+    }
+    function apiOnNotSilent() {
         $('#toggle-silent').bootstrapToggle('on');
     }
-    function toggleApiOffNotSilent() {
+    function apiOffNotSilent() {
         $('#toggle-silent').bootstrapToggle('off');
+    }
+    function apiToggleNotSilent() {
+        $('#toggle-silent').bootstrapToggle('toggle');
     }
 &lt;/script&gt;</code></pre>
 
