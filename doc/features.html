@@ -150,8 +150,8 @@
     <input type="checkbox" checked data-toggle="toggle" data-style="quick">
 </div>
 
-<h3 class="text-secondary">Stacked checkboxes</h3>
-<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles.</p>
+<h3 class="text-secondary">Stacked Checkboxes</h3>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>form-check</code>.</p>
 <div class="example" code-lang="html">
     <div class="form-check pl-0">
         <input id="stackedCheck1" class="form-check-input" type="checkbox" data-toggle="toggle" checked>
@@ -164,7 +164,7 @@
 </div>
 
 <h3 class="text-secondary">Inline Checkboxes</h3>
-<p>Simply add <code>data-toggle="toggle"</code> to a convert checkboxes into toggles.</p>
+<p>Simply add <code>data-toggle="toggle"</code> to a convert checkboxes into toggles inside a Bootstrap <code>form-check form-check-inline</code>.</p>
 <div class="example" code-lang="html">
     <div class="form-check form-check-inline">
         <input id="inlineCheckbox1" class="form-check-input" type="checkbox" data-toggle="toggle" data-style="mr-1"
@@ -175,5 +175,25 @@
         <input id="inlineCheckbox2" class="form-check-input" type="checkbox" data-toggle="toggle" data-style="mr-1"
             disabled>
         <label for="inlineCheckbox2" class="form-check-label">Disabled</label>
+    </div>
+</div>
+
+<h3 class="text-secondary">Input-Group Checkboxes</h3>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>input-group</code>.</p>
+<div class="example" code-lang="html">
+    <div class="input-group input-group-sm mb-3 w-75">
+        <span class="input-group-text">Small</span>
+        <input type="text" class="form-control">
+        <input type="checkbox" checked data-toggle="toggle" data-size="sm">
+    </div>
+    <div class="input-group mb-3 w-75">
+        <span class="input-group-text">Default</span>
+        <input type="text" class="form-control">
+        <input type="checkbox" checked data-toggle="toggle">
+    </div>
+    <div class="input-group input-group-lg w-75">
+        <span class="input-group-text">Large</span>
+        <input type="text" class="form-control">
+        <input type="checkbox" checked data-toggle="toggle" data-size="lg">
     </div>
 </div>
