@@ -193,3 +193,32 @@ function testSize() {
         );
     });
 }
+
+/**
+ * Test layout feature
+ */
+ function testLayout() {
+    let isSuccess, toggle, toogleHeight, item, itemHeight, badgeHTML;
+    $('.test').each(function () {
+        isSuccess = true;
+        toggle = $(this).find('div.toggle').css('height');
+        toogleHeight = parseFloat(toggle.match(/(\d+.\d+)/) || toggle.match(/(\d+)/));
+        badgeHTML = 'H Toggle: ' + toogleHeight + 'px<br>H Elements:<ul>';
+
+        $(this).find('div.toggle').siblings().each(function () {
+            item = $(this).css('height');
+            itemHeight = parseFloat(item.match(/(\d+.\d+)/) || item.match(/(\d+)/));
+            badgeHTML+='<li>'+ itemHeight +'px</li>';
+            if (Math.abs(toogleHeight - itemHeight) >= 0.05) {
+                isSuccess = false;
+            }
+        });
+
+        badgeHTML+='</ul>'
+        $(this).find('.row:eq(1) .col').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(badgeHTML)
+        );
+    });
+}

@@ -31,12 +31,18 @@ const STATES = {
     disactivated : {code: 'unchecked', name: 'deactivated', tag : false, property: 'off', inverse: 'on'}
 };
 
+const LAYOUTS = {
+    inputGroupLG: {code: 'input-group-lg', name:'Input Group Large', formTag: 'input-group input-group-lg', inputTag:'data-size="lg"'},
+    inputGroupMD: {code: 'input-group-md', name:'Input Group Medium', formTag: 'input-group', inputTag:''},
+    inputGroupSM: {code: 'input-group-sm', name:'Input Group Small', formTag: 'input-group input-group-sm', inputTag:'data-size="sm"'}
+}
+
 /**
  * Create the layout for testing status feature
  */
  function initTestStatus() {
     let toggleDiv, buttonDiv, testDiv;
-    DESCRIPTION.html('Check tootgle enabled/disabled <code>bootstrap5-toggle</code> buttons');
+    DESCRIPTION.html('Check <code>bootstrap5-toggle</code> toogle enabled/disabled');
     (Object.values(STATUS)).forEach((status)=>{
         toggleDiv = (COL.clone())
         .append(
@@ -171,3 +177,25 @@ function initTestSize() {
         MAIN.append((TEST_TITLE.clone()).addClass('text-' + color).html(color + ' ' + state.name), testDiv);
     });
  }
+
+/**
+ * Create the layout for testing layouts feature
+ */
+function initTestLayout() {
+    let formDiv, testDiv;
+    DESCRIPTION.html('Check <code>bootstrap5-toggle</code> support for forms layouts');
+    (Object.values(LAYOUTS)).forEach((layout)=>{
+        formDiv = (COL.clone())
+        .append( $('<div class="'+layout.formTag+'">')
+            .append(
+                $('<span class="input-group-text">Label</span>'),
+                $('<input type="text" class="form-control">'),
+                $('<input type="checkbox" ' + layout.inputTag + ' data-toggle="toggle">')
+            )
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'layout-' + layout.code);
+    testDiv.append($('<div class="row mb-3">').append(formDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('Layout ' + layout.name), testDiv);
+    });
+}
