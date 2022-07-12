@@ -32,6 +32,28 @@ const STATES = {
 };
 
 /**
+ * Create the layout for testing status feature
+ */
+ function initTestStatus() {
+    let toggleDiv, buttonDiv, testDiv;
+    DESCRIPTION.html('Check tootgle enabled/disabled <code>bootstrap5-toggle</code> buttons');
+    (Object.values(STATUS)).forEach((status)=>{
+        toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" ' + (status.tag ? status.code : '') + ' data-toggle="toggle">')
+        );
+        buttonDiv = (COL.clone())
+        .append(
+            $('<button ' + (status.tag ? status.code : '') + '>').html(status.name).addClass('btn btn-info')
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'status-' + status.name);
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('Status ' + status.name), testDiv);
+    });
+}
+
+/**
  * Create the layout for testing custom text feature
  */
 function initTestCustomText() {

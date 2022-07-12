@@ -22,6 +22,9 @@
 			MAIN.html('');
 			DESCRIPTION.html('');
 			switch (test) {
+				case 'status':
+					initTestStatus() 
+					break;
 				case 'size':
 					initTestSize() 
 					break;
@@ -47,6 +50,9 @@
 			$('input[data-toggle="toggle"]').bootstrapToggle();
 			setTimeout(function () {
 				switch (test) {
+				case 'status':
+					testStatus() 
+					break;
 				case 'size':
 					testSize() 
 					break;
@@ -90,6 +96,7 @@
 			</div>
 		</div>
 		<div class="btn-group" role="group" id="test-selector">
+			<button type="button" class="btn btn-secondary text-capitalize" data-test="status">status</button>
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="size">size</button>
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline-on">outline on</button>
 			<button type="button" class="btn btn-secondary text-capitalize" data-test="outline-off">outline off</button>

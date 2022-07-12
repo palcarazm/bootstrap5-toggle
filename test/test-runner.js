@@ -1,7 +1,56 @@
 const BADGE = $('<div></div>').addClass('badge text-monospace');
+/**
+ * Test status feature
+ */
+ function testStatus() {
+    let toggle, button, isSuccess,
+        toggle_opacity,toggle_cursor, toggle_cursorevt, toggle_status,
+        button_opacity,button_cursor, button_cursorevt, button_status;
+
+    $('.test').each(function () {
+        toggle = $(this).find('.toggle');
+        button = $(this).find('button');
+
+        toggle_opacity = window.getComputedStyle(toggle[0], null).getPropertyValue('opacity');
+        button_opacity = window.getComputedStyle(button[0], null).getPropertyValue('opacity');
+
+        toggle_cursor = window.getComputedStyle(toggle[0], null).getPropertyValue('cursor');
+        button_cursor = window.getComputedStyle(button[0], null).getPropertyValue('cursor');
+        
+        toggle_cursorevt = window.getComputedStyle(toggle[0], null).getPropertyValue('pointer-events');
+        button_cursorevt = window.getComputedStyle(button[0], null).getPropertyValue('pointer-events');
+        
+        toggle_status = toggle.is('[disabled]');
+        button_status = button.is('[disabled]');
+
+        isSuccess = (toggle_opacity == button_opacity) && (toggle_cursor == button_cursor) && (toggle_cursorevt == button_cursorevt) && (toggle_status == button_status);
+
+        $(this).find('.row:eq(1) .col:eq(1)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    'Opacity: ' + toggle_opacity + '<br>' +
+                    'Cursor: ' + toggle_cursor + '<br>' +
+                    'Cursor Event: ' + toggle_cursorevt + '<br>' +
+                    'Status: ' + toggle_status
+                )
+        );
+
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    'Opacity: ' + button_opacity + '<br>' +
+                    'Cursor: ' + button_cursor + '<br>' +
+                    'Cursor Event: ' + button_cursorevt + '<br>' +
+                    'Status: ' + button_status
+                )
+        );
+    });
+}
 
 /**
- * Testcustom text feature
+ * Test custom text feature
  */
  function testCustomText() {
     let toggle_status, toggle_text, text, isSuccess;
