@@ -36,7 +36,7 @@ const STATES = {
  */
  function initTestStatus() {
     let toggleDiv, buttonDiv, testDiv;
-    DESCRIPTION.html('Check tootgle enabled/disabled <code>bootstrap5-toggle</code> buttons');
+    DESCRIPTION.html('Check <code>bootstrap5-toggle</code> toogle enabled/disabled');
     (Object.values(STATUS)).forEach((status)=>{
         toggleDiv = (COL.clone())
         .append(
