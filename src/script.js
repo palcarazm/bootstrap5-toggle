@@ -64,6 +64,7 @@ $().ready(function () {
 
     // Init highlightBlock
     hljs.highlightAll();
+    window.highlightJsBadge();
 
     // Init BootstraoToggle
     $('input[data-toggle="toggle"]').bootstrapToggle();

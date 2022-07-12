@@ -9,17 +9,17 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
     <script>
         $(function () {
             $('#toggle-event').change(function () {
-                $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+                $('#console-event').html($('#console-event').html()+'Toggle: ' + $(this).prop('checked')+'<br>> ')
             })
         })
     </script>
-    <pre class="mb-0"><code id="console-event" class="text-info"></code></pre>
+    <div><code id="console-event" class="badge bg-secondary w-100 text-start">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-event" type="checkbox" data-toggle="toggle"&gt;
 &lt;script&gt;
     $(function () {
         $('#toggle-event').change(function () {
-            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+            log('Toggle: ' + $(this).prop('checked'))
         })
     })
 &lt;/script&gt;</code></pre>
@@ -28,7 +28,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
 <p>Passing <code>true</code> to the on, off and toogle methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.</p>
 <div class="example skip">
     <input id="toggle-silent" type="checkbox" data-toggle="toggle"
-        onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')"><br>
+        onchange="$('#chgConsole').html($('#chgConsole').html()+new Date().toISOString()+' ... change event fired!<br>> ')"><br>
     <button class="btn btn-success" onclick="apiOnSilent()">On by API (silent)</button>
     <button class="btn btn-success" onclick="apiOffSilent()">Off by API (silent)</button>
     <button class="btn btn-success" onclick="apiToggleSilent()">Toggle by API (silent)</button><br>
@@ -55,10 +55,10 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
             $('#toggle-silent').bootstrapToggle('toggle');
         }
     </script>
-    <pre class="mb-0"><code id="chgConsole" class="text-info"></code></pre>
+    <div><code id="chgConsole" class="badge bg-secondary w-100 text-start">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-silent" type="checkbox" data-toggle="toggle"
-    onchange="$('#chgConsole').text(new Date().toISOString()+' ... change event fired!')"&gt;
+    onchange="log(new Date().toISOString()+' ... change event fired!')"&gt;
 &lt;button class="btn btn-success" onclick="apiOnSilent()"&gt;On by API (silent)&lt;/button&gt;
 &lt;button class="btn btn-success" onclick="apiOffSilent()"&gt;Off by API (silent)&lt;/button&gt;
 &lt;button class="btn btn-warning" onclick="apiOnNotSilent()"&gt;On by API (not silent)&lt;/button&gt;
