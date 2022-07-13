@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.2.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.2.0) 2022-07-12
+### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.1.0...v4.2.0)
+### Added
+* feat: Support toggle silent method by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/30
+### Changed
+* feat: Remove btn-light from handle  by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/21
+* feat: Change default btn off class to secondary  by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/22
+### Fixed
+* fix: Handle border color and btn-light border color by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/17
+* fix: Render in input-group by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/29
+
 ## [4.1.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.1.0) 2022-06-30
 ### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.0.0...v4.1.0)
 ### Added
