@@ -14,7 +14,7 @@ class PageModel {
    * @param {String} btn_data_test : data-test of the button to click
    */
   load(btn_data_test) {
-    cy.visit("./test/test-app.html");
+    cy.visit("./test/test-app.jquery.html");
     cy.get('button[data-test="' + btn_data_test + '"]').click();
   }
 
