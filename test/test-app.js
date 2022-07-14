@@ -1,4 +1,10 @@
+const ENV = $('#env-data')
 function appStartup(test) {
+    ENV.html('');
+    ENV.append(
+        $("<div>").append($("<code>").html("Bootstrap v"+Bootstrap)),
+        $("<div>").append($("<code>").html("Interface "+INTERFACE))
+        )
     MAIN.html('');
     DESCRIPTION.html('');
     switch (test) {
