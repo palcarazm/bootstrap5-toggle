@@ -11,10 +11,11 @@ class PageModel {
   };
   /**
    * Load Test App and go to the selected test
+   * @param {String} bstInterface : Bootstrap Toggle interface (jquery or ecmas)
    * @param {String} btn_data_test : data-test of the button to click
    */
-  load(btn_data_test) {
-    cy.visit("./test/test-app.jquery.html");
+  load(bstInterface, btn_data_test) {
+    cy.visit("./test/test-app." + bstInterface.toLowerCase() + ".html");
     cy.get('button[data-test="' + btn_data_test + '"]').click();
   }
 
