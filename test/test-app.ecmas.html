@@ -18,78 +18,7 @@
 	<script src="../js/bootstrap5-toggle.ecmas.js"></script>
 
 	<script>
-		function appStartup(test) {
-			MAIN.html('');
-			DESCRIPTION.html('');
-			switch (test) {
-				case 'status':
-					initTestStatus() 
-					break;
-				case 'size':
-					initTestSize() 
-					break;
-				case 'outline-on':
-					initTestOutline(STATES.activated) 
-					break;
-				case 'outline-off':
-					initTestOutline(STATES.disactivated) 
-					break;
-				case 'color-on':
-					initTestColor(STATES.activated) 
-					break;
-				case 'color-off':
-					initTestColor(STATES.disactivated) 
-					break;
-				case 'custom-text':
-					initTestCustomText() 
-					break;
-				case 'layout':
-					initTestLayout() 
-					break;
-			
-				default:
-					break;
-			}
-			document.querySelectorAll('input[type=checkbox][data-toggle="toggle"]').forEach(function(ele) {
-				ele.bootstrapToggle();
-			});
-			setTimeout(function () {
-				switch (test) {
-				case 'status':
-					testStatus() 
-					break;
-				case 'size':
-					testSize() 
-					break;
-				case 'outline-on':
-					testOutline(STATES.activated) 
-					break;
-				case 'outline-off':
-					testOutline(STATES.disactivated) 
-					break;
-				case 'color-on':
-					testColor(STATES.activated) 
-					break;
-				case 'color-off':
-					testColor(STATES.disactivated) 
-					break;
-				case 'custom-text':
-					testCustomText() 
-					break;
-				case 'layout':
-					testLayout() 
-					break;
-			
-				default:
-					break;
-			}
-			}, 500);
-		}
-		$(document).ready( function () {
-			$('#test-selector button[data-test]').click(function() {
-				appStartup($(this).attr('data-test'))
-			});
-		});
+		const INTERFACE = 'ECMAS';
 	</script>
 </head>
 
@@ -119,6 +48,7 @@
 	<main class="container bg-white px-3 py-3 rounded"></main>
 </body>
 
+<script src="test-app.js"></script>
 <script src="test-loader.js"></script>
 <script src="test-runner.js"></script>
 </html>
