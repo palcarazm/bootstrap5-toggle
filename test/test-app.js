@@ -14,6 +14,9 @@ function appStartup(test) {
         case 'size':
             initTestSize() 
             break;
+        case 'custom-size':
+            initTestCustomSize() 
+            break;
         case 'outline-on':
             initTestOutline(STATES.activated) 
             break;
@@ -57,6 +60,9 @@ function appStartup(test) {
             break;
         case 'size':
             testSize() 
+            break;
+        case 'custom-size':
+            testCustomSize() 
             break;
         case 'outline-on':
             testOutline(STATES.activated) 

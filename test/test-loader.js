@@ -126,6 +126,39 @@ function initTestSize() {
 }
 
 /**
+ * Create the layout for testing custom size feature
+ */
+ function initTestCustomSize() {
+    let toggleDiv, textDiv, testDiv;
+    DESCRIPTION.html('Check custom size in <code>bootstrap5-toggle</code> buttons');
+        toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" data-toggle="toggle" data-width="100">')
+        );
+        textDiv = (COL.clone())
+        .append(
+            $('<code>').html("width:100")
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'size-width');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, textDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('Custom size width'), testDiv);
+
+    toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" data-toggle="toggle" data-height="75">')
+        );
+        textDiv = (COL.clone())
+        .append(
+            $('<code>').html("height:75")
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'size-height');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, textDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('Custom size height'), testDiv);
+}
+
+/**
  * Create the layout for testing outline feature
  * @param {Object} state : toggle state (activated or disactivated)
  */

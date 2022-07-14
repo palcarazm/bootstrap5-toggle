@@ -111,6 +111,32 @@ function testSize() {
 }
 
 /**
+ * Test custom size feature
+ */
+ function testCustomSize() {
+    let isSuccess, property, toggle, toggleSize, item, itemSize;
+    $('.test').each(function () {
+        item = $(this).find('code').html();
+        property = item.split(":")[0];
+        itemSize = item.split(":")[1];
+
+        toggle = $(this).find('div.toggle').css(property);
+        toggleSize = parseFloat(toggle.match(/(\d+.\d+)/) || toggle.match(/(\d+)/));
+        
+        isSuccess = Math.abs(toggleSize - itemSize) <= 0.05;
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    property + '<br>'+
+                    'current: ' + toggleSize + 'px' + '<br>'+
+                    'expected: ' + itemSize + 'px'
+                    )
+        );
+    });
+}
+
+/**
  * Test outline feature
  * @param {Object} state : toggle state (activated or disactivated)
  */
