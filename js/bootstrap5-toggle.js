@@ -89,6 +89,10 @@
 		let $toggle = $('<div class="toggle btn" data-toggle="toggle" role="button">')
 			.addClass( this.$element.prop('checked') ? 'btn-' +this.options.onstyle : 'btn-' +this.options.offstyle+' off' )
 			.addClass(size).addClass(this.options.style)
+		if (this.$element.prop('disabled')){
+			$toggle.addClass('disabled')
+			$toggle.attr('disabled', 'disabled')
+		}
 
 		// 6: Replace HTML checkbox with Toggle-Button
 		this.$element.wrap($toggle)
@@ -121,9 +125,6 @@
 		// 8: Add listeners (NOT NEEDED)
 		// 9: Set toggle to bootstrap object (NOT NEEDED)
 		// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
-		// 11: Fire events
-		this.update(true)
-		this.trigger(true)
 	}
 
 	Toggle.prototype.toggle = function (silent = false) {
@@ -223,7 +224,7 @@
 	 * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
 	 * Executes once page elements have rendered enabling script to be placed in `<head>`
 	 */
-	$(document).ready(function() {
+	$(function() {
 		$('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle()
 	})
 

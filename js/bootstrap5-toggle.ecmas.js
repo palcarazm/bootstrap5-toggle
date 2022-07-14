@@ -105,8 +105,13 @@
 			let ecmasToggle = document.createElement('div');
 			ecmasToggle.setAttribute('class', 'toggle btn');
 			ecmasToggle.classList.add(this.element.checked ? 'btn-' + this.options.onstyle : 'btn-' + this.options.offstyle);
+			if (!this.element.checked) ecmasToggle.classList.add('off');
 			if (this.options.size) ecmasToggle.classList.add(size);
 			if (this.options.style) ecmasToggle.classList.add(this.options.style);
+			if (this.element.disabled){
+				ecmasToggle.classList.add('disabled');
+				ecmasToggle.setAttribute('disabled', 'disabled');
+			}
 
 			// 6: Replace HTML checkbox with Toggle-Button
 			this.element.parentElement.insertBefore(ecmasToggle, this.element);
@@ -148,10 +153,6 @@
 
 			// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
 			this.element.bsToggle = this;
-
-			// 11: Fire events
-			this.update(true);
-			this.trigger(true);
 		}
 
 		toggle(silent = false) {
