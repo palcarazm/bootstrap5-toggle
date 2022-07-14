@@ -46,21 +46,21 @@ function testCase(bstInterface) {
   
   context("When toggle is disabled", () => {
     const test_id = "#status-disabled";
-    it("Then toggle opacity is equal to bootstrap enabled button opacity", () => {
+    it("Then toggle opacity is equal to bootstrap disabled button opacity", () => {
       pageModel.load(bstInterface, data_test);
       cy.get(test_id).each(($test) => {
         pageModel.assertComputedStyleProperty($test,'button','.toggle','opacity');
       });
     });
 
-    it("Then toggle cursor is equal to bootstrap enabled button cursor", () => {
+    it("Then toggle cursor is equal to bootstrap disabled button cursor", () => {
       pageModel.load(bstInterface, data_test);
       cy.get(test_id).each(($test) => {
         pageModel.assertComputedStyleProperty($test,'button','.toggle','cursor');
       });
     });
 
-    it("Then toggle pointer events are equal to bootstrap enabled button pointer events", () => {
+    it("Then toggle pointer events are equal to bootstrap disabled button pointer events", () => {
       pageModel.load(bstInterface, data_test);
       cy.get(test_id).each(($test) => {
         pageModel.assertComputedStyleProperty($test,'button','.toggle','pointer-events');
