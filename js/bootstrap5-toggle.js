@@ -122,7 +122,15 @@
 			}
 		}
 
-		// 8: Add listeners (NOT NEEDED)
+		// 8: Add listeners
+		this.$toggle.on('touchstart', (e)=>{
+			this.toggle()
+			e.preventDefault()
+		});
+		this.$toggle.on('click', (e)=>{
+			this.toggle()
+			e.preventDefault()
+		});
 		// 9: Set toggle to bootstrap object (NOT NEEDED)
 		// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
 	}
@@ -217,20 +225,11 @@
 		return this
 	}
 
-	// TOGGLE DATA-API
-	// ===============
-
 	/**
 	 * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
 	 * Executes once page elements have rendered enabling script to be placed in `<head>`
 	 */
 	$(function() {
 		$('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle()
-	})
-
-	$(document).on('click.bs.toggle', 'div[data-toggle^=toggle]', function(e) {
-		let $checkbox = $(this).find('input[type=checkbox]')
-		$checkbox.bootstrapToggle('toggle')
-		e.preventDefault()
 	})
 }(jQuery);
