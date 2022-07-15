@@ -107,7 +107,11 @@
 			ecmasToggle.classList.add(this.element.checked ? 'btn-' + this.options.onstyle : 'btn-' + this.options.offstyle);
 			if (!this.element.checked) ecmasToggle.classList.add('off');
 			if (this.options.size) ecmasToggle.classList.add(size);
-			if (this.options.style) ecmasToggle.classList.add(this.options.style);
+			if (this.options.style) {
+				(this.options.style).split(' ').forEach((style)=>{
+					ecmasToggle.classList.add(style);
+				});
+			}
 			if (this.element.disabled){
 				ecmasToggle.classList.add('disabled');
 				ecmasToggle.setAttribute('disabled', 'disabled');
