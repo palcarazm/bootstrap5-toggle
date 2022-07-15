@@ -5,28 +5,52 @@
 <p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to
     <code>data-</code>, as in <code>data-on="Enabled"</code>.
 </p>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="api-options-jquery-tab" data-bs-toggle="tab" data-bs-target="#api-options-jquery" type="button" role="tab" aria-controls="api-options-jquery" aria-selected="true">jQuery</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link position-relative" id="api-options-ecmas-tab" data-bs-toggle="tab" data-bs-target="#api-options-ecmas" type="button" role="tab" aria-controls="api-options-ecmas" aria-selected="false">
+            ECMAS
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                NEW
+                <span class="visually-hidden">v4.3.0</span>
+            </span>
+        </button>
+    </li>
+</ul>
 <div class="example skip" code-lang="html">
     <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
     <input type="checkbox" id="toggle-two">
     <script>
-        $(function () {
-            $('#toggle-two').bootstrapToggle({
-                on: 'Enabled',
-                off: 'Disabled'
-            });
-        })
-    </script>
-</div>
-<pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled"&gt;
-&lt;input type="checkbox" id="toggle-two"&gt;
-&lt;script&gt;
-    $(function () {
         $('#toggle-two').bootstrapToggle({
             on: 'Enabled',
             off: 'Disabled'
         });
-    })
+    </script>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="api-options-jquery" role="tabpanel" aria-labelledby="api-options-jquery-tab" tabindex="0">
+<pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled"&gt;
+&lt;input type="checkbox" id="toggle-two"&gt;
+&lt;script&gt;
+    $('#toggle-two').bootstrapToggle({
+        on: 'Enabled',
+        off: 'Disabled'
+    });
 &lt;/script&gt;</code></pre>
+    </div>
+    <div class="tab-pane fade" id="api-options-ecmas" role="tabpanel" aria-labelledby="api-options-ecmas-tab" tabindex="0">
+<pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled"&gt;
+&lt;input type="checkbox" id="toggle-two"&gt;
+&lt;script&gt;
+    doctument.querySelector('#toggle-two').bootstrapToggle({
+        on: 'Enabled',
+        off: 'Disabled'
+    });
+&lt;/script&gt;</code></pre>
+    </div>
+</div>
 <div class="table-responsive">
     <table class="table table-striped table-condensed">
         <thead>
@@ -186,6 +210,13 @@
             </tr>
         </tbody>
     </table>
+</div>
+<div class="alert alert-info position-relative" role="alert">
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        NEW
+        <span class="visually-hidden">v4.3.0</span>
+    </span>
+    <i class="fas fa-info-circle"></i> For ECMAS JavaScript replace <code>$('#toggle-demo')...</code> with <code>document.querySelector('#toggle-demo')...</code>
 </div>
 
 <h3 class="text-secondary">Checked State</h3>

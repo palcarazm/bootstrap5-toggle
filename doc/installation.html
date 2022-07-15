@@ -7,12 +7,30 @@
         <img src="https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white" alt="jsDelivr">
     </a>
 </div>
-<pre><code class="highlight language-html">&lt;link
-    href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.2.0/css/bootstrap5-toggle.min.css"
-    rel="stylesheet"&gt;
-&lt;script
-    src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.2.0/js/bootstrap5-toggle.min.js"&gt;
-&lt;/script&gt;</code></pre>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="installation-jquery-tab" data-bs-toggle="tab" data-bs-target="#installation-jquery" type="button" role="tab" aria-controls="installation-jquery" aria-selected="true">jQuery</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link position-relative" id="installation-ecmas-tab" data-bs-toggle="tab" data-bs-target="#installation-ecmas" type="button" role="tab" aria-controls="installation-ecmas" aria-selected="false">
+            ECMAS
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                NEW
+                <span class="visually-hidden">v4.3.0</span>
+            </span>
+        </button>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="installation-jquery" role="tabpanel" aria-labelledby="installation-jquery-tab" tabindex="0">
+<pre><code class="highlight language-html">&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/css/bootstrap5-toggle.min.css" rel="stylesheet"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/js/bootstrap5-toggle.min.js"&gt;&lt;/script&gt;</code></pre>
+    </div>
+    <div class="tab-pane fade" id="installation-ecmas" role="tabpanel" aria-labelledby="installation-ecmas-tab" tabindex="0">
+<pre><code class="highlight language-html">&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/css/bootstrap5-toggle.min.css" rel="stylesheet"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/js/bootstrap5-toggle.ecmas.min.js"&gt;&lt;/script&gt;</code></pre>
+    </div>
+</div>
 
 <h3 class="text-secondary">Download from GitHub</h3>
 <div class="mb-2">
