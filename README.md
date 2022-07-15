@@ -27,13 +27,11 @@ Project |Description
 
 ![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
+<!-- To update TOC run .\node_modules\.bin\doctoc README.md --github -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
-- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
   - [Download](#download)
@@ -49,6 +47,7 @@ Project |Description
   - [Event Propagation](#event-propagation)
   - [Stopping Event Propagation](#stopping-event-propagation)
   - [API vs Input](#api-vs-input)
+- [Collaborators welcom!](#collaborators-welcom)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -118,13 +117,13 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 </script>
 ```
 
-Name      |Type       |Default    |Description                 |
-----------|-----------|----------|----------------------------|
-`on`      |string/html|"On"      |Text of the on toggle
-`off`     |string/html|"Off"     |Text of the off toggle
-`size`    |string     |"normal"  |Size of the toggle. Possible values are: `large`, `normal`, `small`, `mini`.
-`onstyle` |string     |"primary" |Style of the on toggle. Possible values are: `primary`,`secondary`,`success`,`danger`,`warning`,`info`,`light`,`dark`
-`offstyle`|string     |"light"   |Style of the off toggle. Possible values are: `primary`,`secondary`,`success`,`danger`,`warning`,`info`,`light`,`dark`
+Name      |Type       |Default     |Description                 |
+----------|-----------|-----------|----------------------------|
+`on`      |string/html|"On"       |Text of the on toggle
+`off`     |string/html|"Off"      |Text of the off toggle
+`size`    |string     |"normal"   |Size of the toggle. Possible values are: `large`, `normal`, `small`, `mini`.
+`onstyle` |string     |"primary"  |Style of the on toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix
+`offstyle`|string     |"secondary"|Style of the off toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix
 `style`   |string     |           |Appends the value to the class attribute of the toggle. This can be used to apply custom styles. Refer to Custom Styles for reference.
 `width`   |integer    |*null*     |Sets the width of the toggle. if set to *null*, width will be auto-calculated.
 `height`  |integer    |*null*     |Sets the height of the toggle. if set to *null*, height will be auto-calculated.
@@ -215,3 +214,12 @@ This also means that using the API or Input to trigger events will work both way
   }
 </script>
 ```
+# Collaborators welcom!
+- :sos: ¿Do you need some help? Open a issue in [GitHub help wanted](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=help+wanted&template=help-wanted.md&title=%5BHELP%5D)
+ - :bug: ¿Do you find a bug? Open a issue in [GitHub bug report](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D)
+ - :bulb: ¿Do you have a great idea? Open a issue in [GitHub feature request](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D)
+ - :computer: ¿Do you know how to fix a bug? Open a pull request in [GitHub pull repuest](https://github.com/palcarazm/bootstrap5-toggle/compare).
+
+[![GitHub Contributors](https://contrib.rocks/image?repo=palcarazm/bootstrap5-toggle)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
+
+¿Do you like the project? Give us a :star: in [GitHub](https://github.com/palcarazm/bootstrap5-toggle).
