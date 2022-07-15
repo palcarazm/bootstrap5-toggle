@@ -20,11 +20,22 @@ module.exports = function (grunt) {
         sourceMap: true,
       },
       build: {
-        expand: true,
-        cwd: "js",
-        src: ["**/*.js", ["!**/*.min.js"]],
-        dest: "js",
-        ext: ".min.js",
+        files:[
+          {
+            expand: true,
+            cwd: "js",
+            src: "bootstrap5-toggle.js",
+            dest: "js",
+            ext: ".min.js",
+          },
+          {
+            expand: true,
+            cwd: "js",
+            src: "bootstrap5-toggle.ecmas.js",
+            dest: "js",
+            ext: ".ecmas.min.js",
+          }
+      ]
       },
     },
     cssmin: {

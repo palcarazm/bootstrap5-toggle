@@ -77,6 +77,28 @@ const BADGE = $('<div></div>').addClass('badge text-monospace');
 }
 
 /**
+ * Test custom style feature
+ */
+ function testCustomStyle() {
+    let toggle, style, isSuccess;
+
+    $('.test').each(function () {
+        style = $(this).find('code').html();
+        toggle = $(this).find('.toggle');
+        isSuccess =  toggle.hasClass(style);
+
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    'Toggle classes: ' + toggle.attr('class') + '<br>' +
+                    'Custom class: ' + style
+                )
+        );
+    });
+}
+
+/**
  * Test size feature
  */
 function testSize() {
@@ -106,6 +128,32 @@ function testSize() {
             (BADGE.clone())
                 .addClass(isSuccess ? 'bg-success' : 'bg-danger')
                 .html('H: ' + toogleHeight + 'px')
+        );
+    });
+}
+
+/**
+ * Test custom size feature
+ */
+ function testCustomSize() {
+    let isSuccess, property, toggle, toggleSize, item, itemSize;
+    $('.test').each(function () {
+        item = $(this).find('code').html();
+        property = item.split(":")[0];
+        itemSize = item.split(":")[1];
+
+        toggle = $(this).find('div.toggle').css(property);
+        toggleSize = parseFloat(toggle.match(/(\d+.\d+)/) || toggle.match(/(\d+)/));
+        
+        isSuccess = Math.abs(toggleSize - itemSize) <= 0.05;
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    property + '<br>'+
+                    'current: ' + toggleSize + 'px' + '<br>'+
+                    'expected: ' + itemSize + 'px'
+                    )
         );
     });
 }

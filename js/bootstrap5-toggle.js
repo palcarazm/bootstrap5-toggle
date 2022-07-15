@@ -15,9 +15,12 @@
 	// TOGGLE PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Toggle = function (element, options) {
+	let Toggle = function (element, options) {
+		// A: Capture ref to HMTL element
 		this.$element  = $(element)
+		// B: Set options
 		this.options   = $.extend({}, this.defaults(), options)
+		// LAST: Render Toggle
 		this.render()
 	}
 
@@ -46,9 +49,8 @@
 	}
 
 	Toggle.prototype.render = function () {
-		this._onstyle = 'btn-' + this.options.onstyle
-		this._offstyle = 'btn-' + this.options.offstyle
-		var size;
+		// 0: Parse size
+		let size;
 		switch (this.options.size ) {
 			case 'large':
 			case 'lg':
@@ -66,18 +68,33 @@
 				size = ''
 				break;
 		}
-		var $toggleOn = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.on)
-			.addClass(this._onstyle + ' ' + size)
-		var $toggleOff = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.off)
-			.addClass(this._offstyle + ' ' + size)
-		var $toggleHandle = $('<span class="toggle-handle btn">')
+		
+		// 1: On
+		let $toggleOn = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.on)
+			.addClass('btn-' +this.options.onstyle + ' ' + size)
+		
+		// 2: Off
+		let $toggleOff = $('<label for="'+ this.$element.prop('id') +'" class="btn">').html(this.options.off)
+			.addClass('btn-' +this.options.offstyle + ' ' + size)
+		
+		// 3: Handle
+		let $toggleHandle = $('<span class="toggle-handle btn">')
 			.addClass(size)
-		var $toggleGroup = $('<div class="toggle-group">')
-			.append($toggleOn, $toggleOff, $toggleHandle)
-		var $toggle = $('<div class="toggle btn" data-toggle="toggle" role="button">')
-			.addClass( this.$element.prop('checked') ? this._onstyle : this._offstyle+' off' )
-			.addClass(size).addClass(this.options.style)
 
+		// 4: Toggle Group
+		let $toggleGroup = $('<div class="toggle-group">')
+			.append($toggleOn, $toggleOff, $toggleHandle)
+			
+		// 5: Toggle
+		let $toggle = $('<div class="toggle btn" data-toggle="toggle" role="button">')
+			.addClass( this.$element.prop('checked') ? 'btn-' +this.options.onstyle : 'btn-' +this.options.offstyle+' off' )
+			.addClass(size).addClass(this.options.style)
+		if (this.$element.prop('disabled')){
+			$toggle.addClass('disabled')
+			$toggle.attr('disabled', 'disabled')
+		}
+
+		// 6: Replace HTML checkbox with Toggle-Button
 		this.$element.wrap($toggle)
 		$.extend(this, {
 			$toggle: this.$element.parent(),
@@ -87,17 +104,35 @@
 		})
 		this.$toggle.append($toggleGroup)
 
-		var width = this.options.width || Math.max($toggleOn.outerWidth(), $toggleOff.outerWidth())+($toggleHandle.outerWidth()/2)
-		var height = this.options.height || Math.max($toggleOn.outerHeight(), $toggleOff.outerHeight())
-		$toggleOn.addClass('toggle-on')
-		$toggleOff.addClass('toggle-off')
-		this.$toggle.css({ width: width, height: height })
-		if (this.options.height) {
-			$toggleOn.css('line-height', $toggleOn.height() + 'px')
-			$toggleOff.css('line-height', $toggleOff.height() + 'px')
+		// 7: Set button W/H, lineHeight
+		{
+			// A: Set style W/H
+			let width = this.options.width || Math.max($toggleOn.outerWidth(), $toggleOff.outerWidth())+($toggleHandle.outerWidth()/2)
+			let height = this.options.height || Math.max($toggleOn.outerHeight(), $toggleOff.outerHeight())
+			this.$toggle.css({ width: width, height: height })
+
+			// B: Apply on/off class
+			$toggleOn.addClass('toggle-on')
+			$toggleOff.addClass('toggle-off')
+
+			// C: Finally, set lineHeight if needed
+			if (this.options.height) {
+				$toggleOn.css('line-height', $toggleOn.height() + 'px')
+				$toggleOff.css('line-height', $toggleOff.height() + 'px')
+			}
 		}
-		this.update(true)
-		this.trigger(true)
+
+		// 8: Add listeners
+		this.$toggle.on('touchstart', (e)=>{
+			this.toggle()
+			e.preventDefault()
+		});
+		this.$toggle.on('click', (e)=>{
+			this.toggle()
+			e.preventDefault()
+		});
+		// 9: Set toggle to bootstrap object (NOT NEEDED)
+		// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
 	}
 
 	Toggle.prototype.toggle = function (silent = false) {
@@ -107,14 +142,14 @@
 
 	Toggle.prototype.on = function (silent = false) {
 		if (this.$element.prop('disabled')) return false
-		this.$toggle.removeClass(this._offstyle + ' off').addClass(this._onstyle)
+		this.$toggle.removeClass('btn-' +this.options.offstyle + ' off').addClass('btn-' +this.options.onstyle)
 		this.$element.prop('checked', true)
 		if (!silent) this.trigger()
 	}
 
 	Toggle.prototype.off = function (silent = false) {
 		if (this.$element.prop('disabled')) return false
-		this.$toggle.removeClass(this._onstyle).addClass(this._offstyle + ' off')
+		this.$toggle.removeClass('btn-' +this.options.onstyle).addClass('btn-' +this.options.offstyle + ' off')
 		this.$element.prop('checked', false)
 		if (!silent) this.trigger()
 	}
@@ -147,8 +182,11 @@
 	}
 
 	Toggle.prototype.destroy = function() {
+		// A: Remove button-group from UI, replace checkbox element
 		this.$element.off('change.bs.toggle')
 		this.$toggleGroup.remove()
+
+		// B: Delete internal refs
 		this.$element.removeData('bs.toggle')
 		this.$element.unwrap()
 	}
@@ -157,21 +195,24 @@
 	// ========================
 
 	function Plugin(option) {
-		var optArg = Array.prototype.slice.call( arguments, 1 )[0]
+		let optArg = Array.prototype.slice.call( arguments, 1 )[0]
 
 		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('bs.toggle')
-			var options = typeof option == 'object' && option
+			let $this   = $(this)
+			let data    = $this.data('bs.toggle')
+			let options = typeof option == 'object' && option
 
-			if (!data) $this.data('bs.toggle', (data = new Toggle(this, options)))
+			if (!data) {
+				data = new Toggle(this, options)
+				$this.data('bs.toggle', data)
+			}
 			if (typeof option === 'string' && data[option] && typeof optArg === 'boolean') data[option](optArg)
 			else if (typeof option === 'string' && data[option]) data[option]()
 			//else if (option && !data[option]) console.log('bootstrap-toggle: error: method `'+ option +'` does not exist!');
 		})
 	}
 
-	var old = $.fn.bootstrapToggle
+	let old = $.fn.bootstrapToggle
 
 	$.fn.bootstrapToggle             = Plugin
 	$.fn.bootstrapToggle.Constructor = Toggle
@@ -184,16 +225,11 @@
 		return this
 	}
 
-	// TOGGLE DATA-API
-	// ===============
-
+	/**
+	 * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
+	 * Executes once page elements have rendered enabling script to be placed in `<head>`
+	 */
 	$(function() {
 		$('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle()
-	})
-
-	$(document).on('click.bs.toggle', 'div[data-toggle^=toggle]', function(e) {
-		var $checkbox = $(this).find('input[type=checkbox]')
-		$checkbox.bootstrapToggle('toggle')
-		e.preventDefault()
 	})
 }(jQuery);

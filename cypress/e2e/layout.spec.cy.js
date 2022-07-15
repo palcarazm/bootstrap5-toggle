@@ -1,20 +1,29 @@
 /// <reference types="cypress" />
+import ToggleModel from "../support/togglemodel";
 import PageModel from "../support/pagemodel";
-const pageModel = new PageModel();
 
 describe("Layout feature", () => {
+  context("Given ECMAS bootstrap toggle interface",()=>{
+    testCase("ecmas");
+  });
+  context("Given jQuery bootstrap toggle interface",()=>{
+    testCase("jquery");
+  });
+});
+
+function testCase(bstInterface) {
   context("When a toggle is in Input Group", () => {
     const data_test = 'layout';
     it("Then toggle height must be equal to elements height with this size", () => {
-      pageModel.load(data_test);
-      pageModel.getTests().each(($test) => {
-        pageModel.assertComputedStyleProperty(
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        PageModel.assertComputedStyleProperty(
           $test,
           "input",
           ".toggle",
           "height"
         );
-        pageModel.assertComputedStyleProperty(
+        PageModel.assertComputedStyleProperty(
           $test,
           "input",
           ".toggle",
@@ -22,13 +31,11 @@ describe("Layout feature", () => {
         );
       });
     });
-
     it("Then toggle change on click", () => {
-      pageModel.load(data_test);
-      pageModel.getTests().each(($test) => {
-        pageModel.checkToggleClick($test, true);
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        ToggleModel.checkToggleClick($test, true);
       });
     });
-    
   });
-});
+}
