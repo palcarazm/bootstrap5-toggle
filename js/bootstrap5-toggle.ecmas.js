@@ -18,9 +18,9 @@
 	class Toggle {
 		constructor(element, options) {
 			const DEFAULTS = {
-				onlabel: 'On',
+				on: 'On',
 				onstyle: 'primary',
-				offlabel: 'Off',
+				off: 'Off',
 				offstyle: 'secondary',
 				size: '',
 				style: '',
@@ -34,9 +34,9 @@
 
 			// B: Set options
 			this.options = {
-				onlabel: this.element.getAttribute('data-on') || options.onlabel || DEFAULTS.onlabel,
+				on: this.element.getAttribute('data-on') || options.on || DEFAULTS.on,
 				onstyle: this.element.getAttribute('data-onstyle') || options.onstyle || DEFAULTS.onstyle,
-				offlabel: this.element.getAttribute('data-off') || options.offlabel || DEFAULTS.offlabel,
+				off: this.element.getAttribute('data-off') || options.off || DEFAULTS.off,
 				offstyle: this.element.getAttribute('data-offstyle') || options.offstyle || DEFAULTS.offstyle,
 				size: this.element.getAttribute('data-size') || options.size || DEFAULTS.size,
 				style: this.element.getAttribute('data-style') || options.style || DEFAULTS.style,
@@ -82,13 +82,13 @@
 			let ecmasToggleOn = document.createElement('label');
 			ecmasToggleOn.setAttribute('class', 'btn btn-' + this.options.onstyle + ' ' + size);
 			ecmasToggleOn.setAttribute('for', this.element.id);
-			ecmasToggleOn.innerHTML = this.options.onlabel;
+			ecmasToggleOn.innerHTML = this.options.on;
 
 			// 2: Off
 			let ecmasToggleOff = document.createElement('label');
 			ecmasToggleOff.setAttribute('class', 'btn btn-' + this.options.offstyle + ' ' + size);
 			ecmasToggleOff.setAttribute('for', this.element.id);
-			ecmasToggleOff.innerHTML = this.options.offlabel;
+			ecmasToggleOff.innerHTML = this.options.off;
 
 			// 3: Handle
 			let ecmasToggleHandle = document.createElement('span');
