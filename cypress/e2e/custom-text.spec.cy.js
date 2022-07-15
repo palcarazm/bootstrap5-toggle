@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
-import PageModel from "../support/pagemodel";
-const pageModel = new PageModel();
+import ToggleModel from "../support/togglemodel";
+import PageModel from "../support/PageModel";
 
 describe("Custom Text feature", () => {
   context("Given ECMAS bootstrap toggle interface",()=>{
@@ -15,8 +15,8 @@ function testCase(bstInterface) {
   context("When data-on attribute is set", () => {
     const data_test = "custom-text";
     it("Then toggle-on text is equal to a custom text", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if ($test.find('input[data-toggle="toggle"][data-on]').length > 0) {
           cy.wrap($test)
             .find("code")
@@ -33,8 +33,8 @@ function testCase(bstInterface) {
   context("When data-off attribute is set", () => {
     const data_test = "custom-text";
     it("Then toggle-off text is equal to a custom text", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if ($test.find('input[data-toggle="toggle"][data-off]').length > 0) {
           cy.wrap($test)
             .find("code")
@@ -51,14 +51,14 @@ function testCase(bstInterface) {
   context("When data-on attribute isn't set", () => {
     const data_test = "custom-text";
     it("Then toggle-on text is equal to the default text", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if (
           $test.find('input[data-toggle="toggle"]:not([data-on])').length > 0
         ) {
           cy.wrap($test)
             .find(".toggle-on")
-            .should("have.text", pageModel.DEFAULTS.on);
+            .should("have.text", ToggleModel.DEFAULTS.on);
         }
       });
     });
@@ -67,14 +67,14 @@ function testCase(bstInterface) {
   context("When data-off attribute isn't set", () => {
     const data_test = "custom-text";
     it("Then toggle-off text is equal to the default text", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if (
           $test.find('input[data-toggle="toggle"]:not([data-off])').length > 0
         ) {
           cy.wrap($test)
             .find(".toggle-off")
-            .should("have.text", pageModel.DEFAULTS.off);
+            .should("have.text", ToggleModel.DEFAULTS.off);
         }
       });
     });

@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
-import PageModel from "../support/pagemodel";
-const pageModel = new PageModel();
+import PageModel from "../support/PageModel";
 
 describe("Custom Size feature", () => {
   context("Given ECMAS bootstrap toggle interface",()=>{
@@ -15,8 +14,8 @@ function testCase(bstInterface) {
   context("When data-width attribute is set", () => {
     const data_test = "custom-size";
     it("Then toggle width is equal to data-width value", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if ($test.find('input[data-toggle="toggle"][data-width]').length > 0) {
           cy.wrap($test)
             .find('input[data-toggle="toggle"]')
@@ -37,8 +36,8 @@ function testCase(bstInterface) {
   context("When data-height attribute is set", () => {
     const data_test = "custom-size";
     it("Then toggle height is equal to data-height value", () => {
-      pageModel.load(bstInterface, data_test);
-      pageModel.getTests().each(($test) => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
         if ($test.find('input[data-toggle="toggle"][data-height]').length > 0) {
           cy.wrap($test)
             .find('input[data-toggle="toggle"]')
