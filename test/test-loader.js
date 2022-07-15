@@ -255,3 +255,68 @@ function initTestLayout() {
     MAIN.append((TEST_TITLE.clone()).html('Layout ' + layout.name), testDiv);
     });
 }
+
+/**
+ * Create the layout for testing API contructor feature
+ */
+function initTestApiContructor() {
+    let toggleDiv, testDiv, buttonDiv, configDiv;
+    DESCRIPTION.html('Check <code>bootstrap5-toggle</code> API constructor');
+    toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" id="toggle1">')
+        );
+    buttonDiv = (COL.clone())
+        .append(
+            $('<button type="button" class="btn btn-secondary">').html('Create').on('click',()=>{
+                let options = {
+                    on: 'Enabled',
+                    off: 'Disabled',
+                    onstyle: 'success',
+                    offstyle: 'danger',
+                    size: 'lg'
+                };
+                if(INTERFACE == 'JQUERY') $('#toggle1').bootstrapToggle(options);
+                if(INTERFACE == 'ECMAS') document.querySelector('#toggle1').bootstrapToggle(options);
+                $('#config1').html(JSON.stringify(options, null, 2));
+            })
+        );
+    configDiv = (COL.clone())
+        .append(
+            $('<code id="config1">')
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-all');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('API all options'), testDiv);
+
+    toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" id="toggle2">')
+        );
+    buttonDiv = (COL.clone())
+        .append(
+            $('<button type="button" class="btn btn-secondary">').html('Create').on('click',()=>{
+                let options = {
+                    on: 'Enabled',
+                    off: 'Disabled',
+                    onstyle: 'outline-success',
+                    offstyle: 'outline-danger',
+                    style: 'mystyle',
+                    width: 100,
+                    height: 75
+                };
+                if(INTERFACE == 'JQUERY') $('#toggle2').bootstrapToggle(options);
+                if(INTERFACE == 'ECMAS') document.querySelector('#toggle2').bootstrapToggle(options);
+                $('#config2').html(JSON.stringify(options, null, 2));
+            })
+        );
+    configDiv = (COL.clone())
+        .append(
+            $('<code id="config2">')
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-custom');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('API custom options'), testDiv);
+}

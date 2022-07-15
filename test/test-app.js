@@ -1,15 +1,16 @@
 const ENV = $('#env-data')
 const TESTCASES =[
-    {name: 'status'     , code:'status'},
-    {name: 'size'       , code:'size'},
-    {name: 'custom size', code:'custom-size'},
-    {name: 'outline on' , code:'outline-on'},
-    {name: 'outline off', code:'outline-off'},
-    {name: 'color on'   , code:'color-on'},
-    {name: 'color off'  , code:'color-off'},
-    {name: 'custom text', code:'custom-text'},
-    {name: 'custom style', code:'custom-style'},
-    {name: 'layout'     , code:'layout'}
+    {name: 'status'         , code:'status'},
+    {name: 'size'           , code:'size'},
+    {name: 'custom size'    , code:'custom-size'},
+    {name: 'outline on'     , code:'outline-on'},
+    {name: 'outline off'    , code:'outline-off'},
+    {name: 'color on'       , code:'color-on'},
+    {name: 'color off'      , code:'color-off'},
+    {name: 'custom text'    , code:'custom-text'},
+    {name: 'custom style'   , code:'custom-style'},
+    {name: 'layout'         , code:'layout'},
+    {name: 'API contructor' , code:'api-constructor'}
 ];
 function appStartup(test) {
     ENV.html('');
@@ -49,6 +50,9 @@ function appStartup(test) {
             break;
         case 'layout':
             initTestLayout() 
+            break;
+        case 'api-constructor':
+            initTestApiContructor() 
             break;
     
         default:
@@ -99,6 +103,8 @@ function appStartup(test) {
             break;
         case 'layout':
             testLayout() 
+            break;
+        case 'api-constructor':
             break;
     
         default:
