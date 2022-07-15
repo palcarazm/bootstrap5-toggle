@@ -10,7 +10,8 @@ const TESTCASES =[
     {name: 'custom text'    , code:'custom-text'},
     {name: 'custom style'   , code:'custom-style'},
     {name: 'layout'         , code:'layout'},
-    {name: 'API contructor' , code:'api-constructor'}
+    {name: 'API contructor' , code:'api-constructor'},
+    {name: 'API methods' , code:'api-methods'}
 ];
 function appStartup(test) {
     ENV.html('');
@@ -53,6 +54,9 @@ function appStartup(test) {
             break;
         case 'api-constructor':
             initTestApiContructor() 
+            break;
+        case 'api-methods':
+            initTestApiMethods() 
             break;
     
         default:
@@ -105,6 +109,7 @@ function appStartup(test) {
             testLayout() 
             break;
         case 'api-constructor':
+        case 'api-methods':
             break;
     
         default:

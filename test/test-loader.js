@@ -268,7 +268,7 @@ function initTestApiContructor() {
         );
     buttonDiv = (COL.clone())
         .append(
-            $('<button type="button" class="btn btn-secondary">').html('Create').on('click',()=>{
+            $('<button type="button" class="btn btn-outline-secondary">').html('Create').on('click',()=>{
                 let options = {
                     on: 'Enabled',
                     off: 'Disabled',
@@ -296,7 +296,7 @@ function initTestApiContructor() {
         );
     buttonDiv = (COL.clone())
         .append(
-            $('<button type="button" class="btn btn-secondary">').html('Create').on('click',()=>{
+            $('<button type="button" class="btn btn-outline-secondary">').html('Create').on('click',()=>{
                 let options = {
                     on: 'Enabled',
                     off: 'Disabled',
@@ -317,6 +317,78 @@ function initTestApiContructor() {
         );
     testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-custom');
     testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv));
-    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone(), COL.clone()));
     MAIN.append((TEST_TITLE.clone()).html('API custom options'), testDiv);
+}
+
+/**
+ * Create the layout for testing API methods feature
+ */
+function initTestApiMethods() {
+    let toggleDiv, testDiv, buttonDiv, buttonGroup;
+    DESCRIPTION.html('Check <code>bootstrap5-toggle</code> API methods');
+    toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" id="toggle">').on('change',()=>{
+                $('.test').append($('<div class="badge bg-secondary" id="changeNotif">').html('Change event fired!'))
+            })
+        );
+    buttonGroup = $('<div>').addClass('btn-group').attr('role','group').append(
+        $('<button type="button" class="btn btn-outline-secondary" data-method="initialize">').html('initialize').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle();
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle();
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="destroy">').html('destroy').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('destroy');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('destroy');
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="on">').html('on').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('on');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('on');
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="off">').html('off').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('off');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('off');
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="toggle">').html('toggle').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('toggle');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('toggle');
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="on-silent">').html('on silent').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('on', true);
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('on', true);
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="off-silent">').html('off silent').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('off', true);
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('off', true);
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="toggle-silent">').html('toggle silent').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('toggle', true);
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('toggle', true);
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="enable">').html('enable').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('enable');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('enable');
+        }),
+        $('<button type="button" class="btn btn-outline-secondary" data-method="disable">').html('disable').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('disable');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('disable');
+        }),
+    
+
+    );
+    buttonDiv = (COL.clone()).append(buttonGroup);
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-all');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
+    MAIN.append((TEST_TITLE.clone()).html('API all options'), testDiv);
 }
