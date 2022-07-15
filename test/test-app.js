@@ -8,6 +8,7 @@ const TESTCASES =[
     {name: 'color on'   , code:'color-on'},
     {name: 'color off'  , code:'color-off'},
     {name: 'custom text', code:'custom-text'},
+    {name: 'custom style', code:'custom-style'},
     {name: 'layout'     , code:'layout'}
 ];
 function appStartup(test) {
@@ -42,6 +43,9 @@ function appStartup(test) {
             break;
         case 'custom-text':
             initTestCustomText() 
+            break;
+        case 'custom-style':
+            initTestCustomStyle() 
             break;
         case 'layout':
             initTestLayout() 
@@ -89,6 +93,9 @@ function appStartup(test) {
             break;
         case 'custom-text':
             testCustomText() 
+            break;
+        case 'custom-style':
+            testCustomStyle() 
             break;
         case 'layout':
             testLayout() 

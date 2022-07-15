@@ -77,6 +77,28 @@ const BADGE = $('<div></div>').addClass('badge text-monospace');
 }
 
 /**
+ * Test custom style feature
+ */
+ function testCustomStyle() {
+    let toggle, style, isSuccess;
+
+    $('.test').each(function () {
+        style = $(this).find('code').html();
+        toggle = $(this).find('.toggle');
+        isSuccess =  toggle.hasClass(style);
+
+        $(this).find('.row:eq(1) .col:eq(0)').append(
+            (BADGE.clone())
+                .addClass(isSuccess ? 'bg-success' : 'bg-danger')
+                .html(
+                    'Toggle classes: ' + toggle.attr('class') + '<br>' +
+                    'Custom class: ' + style
+                )
+        );
+    });
+}
+
+/**
  * Test size feature
  */
 function testSize() {

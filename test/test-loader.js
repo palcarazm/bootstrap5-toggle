@@ -82,6 +82,29 @@ function initTestCustomText() {
 }
 
 /**
+ * Create the layout for testing custom style feature
+ */
+function initTestCustomStyle() {
+    let toggleDiv, textDiv, testDiv, styles;
+    DESCRIPTION.html('Check custom style in <code>bootstrap5-toggle</code> buttons');
+    styles = ['mystyle', 'MYSTYLE', 'mystyle1 mystyle2'];
+    styles.forEach((style)=>{
+        toggleDiv = (COL.clone())
+            .append(
+                $('<input type="checkbox" data-toggle="toggle" data-style="' + style + '">')
+            );
+        textDiv = (COL.clone())
+            .append(
+                $('<code>').html(style)
+            );
+        testDiv = (TEST_CONTAINER.clone()).attr('id', 'style-'+style);
+        testDiv.append($('<div class="row mb-3">').append(toggleDiv, textDiv));
+        testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+        MAIN.append((TEST_TITLE.clone()).html('Custom style '+style), testDiv);
+    });
+}
+
+/**
  * Create the layout for testing size feature
  */
 function initTestSize() {
