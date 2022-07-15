@@ -1,4 +1,15 @@
 const ENV = $('#env-data')
+const TESTCASES =[
+    {name: 'status'     , code:'status'},
+    {name: 'size'       , code:'size'},
+    {name: 'custom size', code:'custom-size'},
+    {name: 'outline on' , code:'outline-on'},
+    {name: 'outline off', code:'outline-off'},
+    {name: 'color on'   , code:'color-on'},
+    {name: 'color off'  , code:'color-off'},
+    {name: 'custom text', code:'custom-text'},
+    {name: 'layout'     , code:'layout'}
+];
 function appStartup(test) {
     ENV.html('');
     ENV.append(
@@ -88,7 +99,16 @@ function appStartup(test) {
     }
     }, 500);
 }
-$(document).ready( function () {
+$( function () {
+    TESTCASES.forEach((testCase)=>{
+        $('#test-selector').append(
+            $('<button type="button">')
+                .addClass("btn btn-secondary text-capitalize")
+                .attr('data-test',testCase.code)
+                .html(testCase.name)
+        )
+    });
+    
     $('#test-selector button[data-test]').click(function() {
         appStartup($(this).attr('data-test'))
     });
