@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import ToggleModel from "../support/togglemodel";
-import PageModel from "../support/PageModel";
+import PageModel from "../support/pagemodel";
 
 describe("Custom Text feature", () => {
   context("Given ECMAS bootstrap toggle interface",()=>{

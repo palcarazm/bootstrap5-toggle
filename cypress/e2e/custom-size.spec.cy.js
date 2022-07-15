@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import PageModel from "../support/PageModel";
+import PageModel from "../support/pagemodel";
 
 describe("Custom Size feature", () => {
   context("Given ECMAS bootstrap toggle interface",()=>{
