@@ -22,8 +22,9 @@ const COLORS = [
 ];
 
 const STATUS = [
-    {code: 'enabled', name: 'enabled', tag : false},
-    {code: 'disabled', name: 'disabled', tag : true}
+    {buttonCode: 'enabled', inputCode: 'enabled', name: 'enabled', tag : false},
+    {buttonCode: 'disabled', inputCode: 'disabled', name: 'disabled', tag : true},
+    {buttonCode: 'disabled', inputCode: 'readonly', name: 'readonly', tag : true}
 ];
 
 const STATES = {
@@ -46,11 +47,11 @@ const LAYOUTS = {
     (Object.values(STATUS)).forEach((status)=>{
         toggleDiv = (COL.clone())
         .append(
-            $('<input type="checkbox" ' + (status.tag ? status.code : '') + ' data-toggle="toggle">')
+            $('<input type="checkbox" ' + (status.tag ? status.inputCode : '') + ' data-toggle="toggle">')
         );
         buttonDiv = (COL.clone())
         .append(
-            $('<button ' + (status.tag ? status.code : '') + '>').html(status.name).addClass('btn btn-info')
+            $('<button ' + (status.tag ? status.buttonCode : '') + '>').html(status.name).addClass('btn btn-info')
         );
     testDiv = (TEST_CONTAINER.clone()).attr('id', 'status-' + status.name);
     testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
@@ -384,8 +385,11 @@ function initTestApiMethods() {
             if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('disable');
             if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('disable');
         }),
-    
-
+        $('<button type="button" class="btn btn-outline-secondary" data-method="readonly">').html('readonly').on('click',()=>{
+            $('#changeNotif').remove();
+            if(INTERFACE == 'JQUERY') $('#toggle').bootstrapToggle('readonly');
+            if(INTERFACE == 'ECMAS') document.querySelector('#toggle').bootstrapToggle('readonly');
+        }),
     );
     buttonDiv = (COL.clone()).append(buttonGroup);
     testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-all');

@@ -74,4 +74,35 @@ function testCase(bstInterface) {
       });
     });
   });
+  
+  context("When toggle is readonly", () => {
+    const test_id = "#status-readonly";
+    it("Then toggle opacity is equal to bootstrap disabled button opacity", () => {
+      PageModel.load(bstInterface, data_test);
+      cy.get(test_id).each(($test) => {
+        PageModel.assertComputedStyleProperty($test,'button','.toggle','opacity');
+      });
+    });
+
+    it("Then toggle cursor is equal to bootstrap disabled button cursor", () => {
+      PageModel.load(bstInterface, data_test);
+      cy.get(test_id).each(($test) => {
+        PageModel.assertComputedStyleProperty($test,'button','.toggle','cursor');
+      });
+    });
+
+    it("Then toggle pointer events are equal to bootstrap disabled button pointer events", () => {
+      PageModel.load(bstInterface, data_test);
+      cy.get(test_id).each(($test) => {
+        PageModel.assertComputedStyleProperty($test,'button','.toggle','pointer-events');
+      });
+    });
+
+    it.only("Then toggle do not change on click", () => {
+      PageModel.load(bstInterface, data_test);
+      cy.get(test_id).each(($test) => {
+        ToggleModel.checkToggleClick($test, false, 'readonly');
+      });
+    });
+  });
 }

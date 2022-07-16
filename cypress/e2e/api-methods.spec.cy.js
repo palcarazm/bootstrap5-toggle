@@ -40,8 +40,19 @@ function testCase(bstInterface) {
       PageModel.getTests().each(($test) => {
         cy.wrap($test).find('button[data-method="initialize"]').click()
         cy.wrap($test).find('button[data-method="disable"]').click()
-        cy.wrap($test).find('.toggle').should('have.class', 'disabled').and('have.attr', 'disabled', 'disabled');
+        cy.wrap($test).find('.toggle').should('have.class', 'disabled').and('have.attr', 'disabled');
         cy.wrap($test).find('input').should('be.disabled');
+      });
+    });
+  });
+  context("When the API readonly method is call", () => {
+    it("Then toggle is disabled and the checkbox is set as readonly", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        cy.wrap($test).find('button[data-method="initialize"]').click()
+        cy.wrap($test).find('button[data-method="readonly"]').click()
+        cy.wrap($test).find('.toggle').should('have.class', 'disabled').and('have.attr', 'disabled');
+        cy.wrap($test).find('input').should('not.be.disabled').and('have.attr','readonly');
       });
     });
   });
