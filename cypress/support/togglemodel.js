@@ -14,12 +14,21 @@ class ToggleModel {
    * Check a click in a toggle element
    * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
    * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
    * @static
    */
-  static checkToggleClick(test, isEnabled) {
+  static checkToggleClick(test, isEnabled, inputAttr = 'disabled') {
     let prevState = test.find(".toggle input").is("[checked]");
 
-    cy.wrap(test).find(".toggle input").should(isEnabled ? "be.enabled" : "not.be.enabled");
+    if(isEnabled){
+      cy.wrap(test).find(".toggle input").should("be.enabled");
+    }else if(inputAttr == 'disabled'){
+      cy.wrap(test).find('input').should('be.disabled').and('not.have.attr','readonly');
+    }else if(inputAttr == 'readonly'){
+      cy.wrap(test).find('input').should('be.enabled').and('have.attr','readonly');
+    }else{
+      throw new Error("Test fail. Argument not supported for inputAttr " + inputAttr);
+    }
 
     cy.wrap(test).find(".toggle").click({force: true}).then(() => {
       let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState)  ;

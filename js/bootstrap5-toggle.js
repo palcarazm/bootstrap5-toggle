@@ -89,7 +89,7 @@
 		let $toggle = $('<div class="toggle btn" data-toggle="toggle" role="button">')
 			.addClass( this.$element.prop('checked') ? 'btn-' +this.options.onstyle : 'btn-' +this.options.offstyle+' off' )
 			.addClass(size).addClass(this.options.style)
-		if (this.$element.prop('disabled')){
+		if (this.$element.prop('disabled') || this.$element.prop('readonly')){
 			$toggle.addClass('disabled')
 			$toggle.attr('disabled', 'disabled')
 		}
@@ -141,14 +141,14 @@
 	}
 
 	Toggle.prototype.on = function (silent = false) {
-		if (this.$element.prop('disabled')) return false
+		if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
 		this.$toggle.removeClass('btn-' +this.options.offstyle + ' off').addClass('btn-' +this.options.onstyle)
 		this.$element.prop('checked', true)
 		if (!silent) this.trigger()
 	}
 
 	Toggle.prototype.off = function (silent = false) {
-		if (this.$element.prop('disabled')) return false
+		if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
 		this.$toggle.removeClass('btn-' +this.options.onstyle).addClass('btn-' +this.options.offstyle + ' off')
 		this.$element.prop('checked', false)
 		if (!silent) this.trigger()
@@ -158,16 +158,26 @@
 		this.$toggle.removeClass('disabled')
 		this.$toggle.removeAttr('disabled')
 		this.$element.prop('disabled', false)
+		this.$element.prop('readonly',false)
 	}
 
 	Toggle.prototype.disable = function () {
 		this.$toggle.addClass('disabled')
 		this.$toggle.attr('disabled', 'disabled')
 		this.$element.prop('disabled', true)
+		this.$element.prop('readonly', false)
+	}
+
+	Toggle.prototype.readonly = function () {
+		this.$toggle.addClass('disabled')
+		this.$toggle.attr('disabled', 'disabled')
+		this.$element.prop('disabled', false)
+		this.$element.prop('readonly', true)
 	}
 
 	Toggle.prototype.update = function (silent) {
 		if (this.$element.prop('disabled')) this.disable()
+		else if (this.$element.prop('readonly')) this.readonly()
 		else this.enable()
 		if (this.$element.prop('checked')) this.on(silent)
 		else this.off(silent)

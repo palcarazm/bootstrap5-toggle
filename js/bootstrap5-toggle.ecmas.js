@@ -112,7 +112,7 @@
 					ecmasToggle.classList.add(style);
 				});
 			}
-			if (this.element.disabled){
+			if (this.element.disabled || this.element.readOnly){
 				ecmasToggle.classList.add('disabled');
 				ecmasToggle.setAttribute('disabled', 'disabled');
 			}
@@ -165,7 +165,7 @@
 		}
 
 		on(silent = false) {
-			if (this.element.disabled) return false;
+			if (this.element.disabled || this.element.readOnly) return false;
 			this.ecmasToggle.classList.remove('btn-' + this.options.offstyle);
 			this.ecmasToggle.classList.add('btn-' + this.options.onstyle);
 			this.ecmasToggle.classList.remove('off');
@@ -174,7 +174,7 @@
 		}
 
 		off(silent = false) {
-			if (this.element.disabled) return false;
+			if (this.element.disabled || this.element.readOnly) return false;
 			this.ecmasToggle.classList.remove('btn-' + this.options.onstyle);
 			this.ecmasToggle.classList.add('btn-' + this.options.offstyle);
 			this.ecmasToggle.classList.add('off');
@@ -186,16 +186,26 @@
 			this.ecmasToggle.classList.remove('disabled');
 			this.ecmasToggle.removeAttribute('disabled');
 			this.element.removeAttribute('disabled');
+			this.element.removeAttribute('readonly');
 		}
 
 		disable() {
 			this.ecmasToggle.classList.add('disabled');
-			this.ecmasToggle.setAttribute('disabled', 'disabled');
-			this.element.setAttribute('disabled', 'disabled');
+			this.ecmasToggle.setAttribute('disabled', '');
+			this.element.setAttribute('disabled', '');
+			this.element.removeAttribute('readonly');
+		}
+
+		readonly() {
+			this.ecmasToggle.classList.add('disabled');
+			this.ecmasToggle.setAttribute('disabled', '');
+			this.element.removeAttribute('disabled');
+			this.element.setAttribute('readonly', '');
 		}
 
 		update(silent) {
 			if (this.element.disabled) this.disable();
+			else if (this.element.readOnly) this.readonly();
 			else this.enable();
 			if (this.element.checked) this.on(silent);
 			else this.off(silent);
@@ -230,6 +240,7 @@
 			else if (options.toLowerCase() == 'off') _bsToggle.off(silent);
 			else if (options.toLowerCase() == 'enable') _bsToggle.enable();
 			else if (options.toLowerCase() == 'disable') _bsToggle.disable();
+			else if (options.toLowerCase() == 'readonly') _bsToggle.readonly();
 			else if (options.toLowerCase() == 'destroy') _bsToggle.destroy();
 		}
 	};
