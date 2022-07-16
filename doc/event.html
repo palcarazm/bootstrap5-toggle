@@ -13,7 +13,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
             })
         })
     </script>
-    <div><code id="console-event" class="badge bg-secondary w-100 text-start">> </code></div>
+    <div><code id="console-event" class="badge bg-secondary w-100 text-start font-monospace">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-event" type="checkbox" data-toggle="toggle"&gt;
 &lt;script&gt;
@@ -55,7 +55,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
             $('#toggle-silent').bootstrapToggle('toggle');
         }
     </script>
-    <div><code id="chgConsole" class="badge bg-secondary w-100 text-start">> </code></div>
+    <div><code id="chgConsole" class="badge bg-secondary w-100 text-start font-monospace">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-silent" type="checkbox" data-toggle="toggle"
     onchange="log(new Date().toISOString()+' ... change event fired!')"&gt;

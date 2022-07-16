@@ -150,6 +150,44 @@
     <input type="checkbox" checked data-toggle="toggle" data-style="quick">
 </div>
 
+<h3 class="text-secondary">State and Status</h3>
+<p>Toggle atate and status is simply set adding vanilla html attributes to the checkbox:</p>
+<ul>
+    <li>Simply add <code>checked</code> to convert checkboxes into on toggles.</li>
+    <li>Simply add <code>disabled</code> to convert checkboxes into disabled toggles. Checkboxes will not be presents in the payload of a submited form.</li>
+    <li>
+        Simply add <code>readonly</code> to convert checkboxes into disabled toggles but presents in the payload of a submited form.
+        <span class="badge rounded-pill bg-danger">
+            NEW
+            <span class="visually-hidden">v4.3.0</span>
+        </span>
+    </li>
+</ul>
+<div class="example skip" code-lang="html">
+    <form id="form-state-status">
+        <div>
+            <input name="enabled" type="checkbox" data-toggle="toggle" checked>
+            <input name="disabled" type="checkbox" data-toggle="toggle" checked disabled>
+            <input name="readonly" type="checkbox" data-toggle="toggle" checked readonly>
+        </div>
+        <div class="d-flex mt-2 align-items-start">
+            <div class="me-2 font-monospace text-muted">Payload:</div>
+            <div class="flex-grow-1 me-2"><pre><code class="highlight language-json"></code></pre></div>
+            <div><button type="submit" class="btn btn-outline-secondary">Submit</button></div>
+        </div>
+    </form>
+    <script>
+        let form = $("#form-state-status");
+        form.submit((e) => {
+        e.preventDefault();
+        form.find('code').html(JSON.stringify(form.serializeArray(), null, 2))
+        });
+    </script>
+</div>
+<pre><code class="highlight language-html">&lt;input name="enabled" type="checkbox" data-toggle="toggle" checked&gt;
+&lt;input name="disabled" type="checkbox" data-toggle="toggle" checked disabled&gt;
+&lt;input name="readonly" type="checkbox" data-toggle="toggle" checked readonly&gt;</code></pre>
+
 <h3 class="text-secondary">Stacked Checkboxes</h3>
 <p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>form-check</code>.</p>
 <div class="example" code-lang="html">
