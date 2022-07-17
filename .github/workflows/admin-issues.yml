@@ -40,6 +40,17 @@ jobs:
         project: Issue triage
         column: Low priority
         repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    - name: Comment in TO DO issues
+      uses: peter-evans/create-or-update-comment@v2
+      if: github.event.action == 'milestoned'
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          :ballot_box_with_check: **Task list**
+          - [ ] Develop feature/fix jQuery
+          - [ ] Develop feature/fix ECMAS 
+          - [ ] Add cypress test coverage
+          - [ ] Update docs (is needed)
     - name: In progress Issue
       uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
       if: github.event.action == 'assigned'
