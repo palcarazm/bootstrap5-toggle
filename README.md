@@ -17,7 +17,7 @@
 #### Library Distributions
 Project |Description
 ---|---
-[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports bootstrap5 (requires jQuery)
+[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports bootstrap5 (jQuery and ECMAS distributions)
 [bootstrap4-toggle](https://github.com/gitbrent/bootstrap4-toggle)                         | Supports bootstrap4 (requires jQuery)
 [bootstrap-switch-button](https://github.com/gitbrent/bootstrap-switch-button)             | Supports bootstrap4+ (ES6 class, no dependencies)
 [bootstrap-switch-button-react](https://github.com/gitbrent/bootstrap-switch-button-react) | Supports bootstrap4+ (React component, no dependencies)
