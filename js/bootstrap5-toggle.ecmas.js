@@ -26,6 +26,7 @@
 				style: '',
 				width: null,
 				height: null,
+				tabindex: 0
 			};
 			options = options || {};
 
@@ -42,6 +43,7 @@
 				style: this.element.getAttribute('data-style') || options.style || DEFAULTS.style,
 				width: this.element.getAttribute('data-width') || options.width || DEFAULTS.width,
 				height: this.element.getAttribute('data-height') || options.height || DEFAULTS.height,
+				tabindex: this.element.getAttribute('tabindex') || options.tabindex || DEFAULTS.tabindex,
 			};
 
 			// LAST: Render Toggle
@@ -105,6 +107,7 @@
 			let ecmasToggle = document.createElement('div');
 			ecmasToggle.setAttribute('class', 'toggle btn');
 			ecmasToggle.classList.add(this.element.checked ? 'btn-' + this.options.onstyle : 'btn-' + this.options.offstyle);
+			ecmasToggle.setAttribute('tabindex',this.options.tabindex);
 			if (!this.element.checked) ecmasToggle.classList.add('off');
 			if (this.options.size) ecmasToggle.classList.add(size);
 			if (this.options.style) {

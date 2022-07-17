@@ -32,6 +32,9 @@ Project |Description
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
   - [Download](#download)
@@ -127,6 +130,7 @@ Name      |Type       |Default     |Description                 |
 `style`   |string     |           |Appends the value to the class attribute of the toggle. This can be used to apply custom styles. Refer to Custom Styles for reference.
 `width`   |integer    |*null*     |Sets the width of the toggle. if set to *null*, width will be auto-calculated.
 `height`  |integer    |*null*     |Sets the height of the toggle. if set to *null*, height will be auto-calculated.
+`tabindex`|integer    |0          |Sets the tabindex of the toggle.
 
 ## Methods
 Methods can be used to control toggles directly.
