@@ -140,6 +140,17 @@
                     If set to <em>null</em>, height will be calculated.
                 </td>
             </tr>
+            <tr>
+                <td><code>tabindex</code></td>
+                <td>integer</td>
+                <td><code>0</code></td>
+                <td class="position-relative">Sets the tabindex.
+                    <span class="position-absolute top-50 end-0 translate-middle-y badge rounded-pill bg-danger">
+                        NEW
+                        <span class="visually-hidden">v4.3.0</span>
+                    </span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -209,16 +220,16 @@
                         onclick="demo.disable('#toggle-demo')">Disable</button></td>
             </tr>
             <tr>
-                <td>readonly
-                    <span class="badge rounded-pill bg-danger">
+                <td>readonly</td>
+                <td><code>$('#toggle-demo').bootstrapToggle('readonly')</code></td>
+                <td class="position-relative">
+                    Disables the toggle but the checkbox stay enabled
+                    <span class="position-absolute top-50 end-0 translate-middle-y badge rounded-pill bg-danger">
                         NEW
                         <span class="visually-hidden">v4.3.0</span>
                     </span>
                 </td>
-                <td><code>$('#toggle-demo').bootstrapToggle('readonly')</code></td>
-                <td>Disables the toggle but the checkbox stay enabled</td>
-                <td><button class="btn btn-outline-dark btn-sm w-100"
-                        onclick="demo.disable('#toggle-demo')">Readonly</button></td>
+                <td><button class="btn btn-outline-dark btn-sm w-100" onclick="demo.disable('#toggle-demo')">Readonly</button></td>
             </tr>
         </tbody>
     </table>
