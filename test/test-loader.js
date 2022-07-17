@@ -305,7 +305,8 @@ function initTestApiContructor() {
                     offstyle: 'outline-danger',
                     style: 'mystyle',
                     width: 100,
-                    height: 75
+                    height: 75,
+                    tabindex:-1
                 };
                 if(INTERFACE == 'JQUERY') $('#toggle2').bootstrapToggle(options);
                 if(INTERFACE == 'ECMAS') document.querySelector('#toggle2').bootstrapToggle(options);

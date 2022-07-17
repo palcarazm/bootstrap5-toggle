@@ -8,6 +8,7 @@ class ToggleModel {
     style: "",
     width: null,
     height: null,
+    tabindex: 0,
   };
 
   /**
@@ -77,6 +78,7 @@ class ToggleModel {
         .should("have.class", "off")
         .and("have.class",'btn-'+(options.offstyle || this.DEFAULTS.offstyle))
     }
+    cy.wrap($toggle).should('have.attr','tabindex',(options.tabindex || this.DEFAULTS.tabindex))
     if(options.width || this.DEFAULTS.width) cy.wrap($toggle).should('have.css', 'width', (options.width || this.DEFAULTS.width)+'px')
     if(options.height || this.DEFAULTS.height) cy.wrap($toggle).should('have.css', 'height', (options.height || this.DEFAULTS.height)+'px')
     if((options.style || this.DEFAULTS.style) != '') cy.wrap($toggle).should('have.class', options.style || this.DEFAULTS.style)
