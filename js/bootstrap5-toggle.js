@@ -32,7 +32,8 @@
 		size: 'normal',
 		style: '',
 		width: null,
-		height: null
+		height: null,
+		tabindex: 0,
 	}
 
 	Toggle.prototype.defaults = function() {
@@ -44,7 +45,8 @@
 			size: this.$element.attr('data-size') || Toggle.DEFAULTS.size,
 			style: this.$element.attr('data-style') || Toggle.DEFAULTS.style,
 			width: this.$element.attr('data-width') || Toggle.DEFAULTS.width,
-			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height
+			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height,
+			tabindex: this.$element.attr('tabindex') || Toggle.DEFAULTS.tabindex,
 		}
 	}
 
@@ -89,6 +91,7 @@
 		let $toggle = $('<div class="toggle btn" data-toggle="toggle" role="button">')
 			.addClass( this.$element.prop('checked') ? 'btn-' +this.options.onstyle : 'btn-' +this.options.offstyle+' off' )
 			.addClass(size).addClass(this.options.style)
+			.attr('tabindex', this.options.tabindex)
 		if (this.$element.prop('disabled') || this.$element.prop('readonly')){
 			$toggle.addClass('disabled')
 			$toggle.attr('disabled', 'disabled')
