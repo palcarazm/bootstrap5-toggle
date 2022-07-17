@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 require('cypress-plugin-tab');
 import PageModel from "../support/pagemodel";
+import ToggleModel from "../support/togglemodel";
 
-describe("Layout feature", () => {
+describe("Keyboard use feature", () => {
   context("Given ECMAS bootstrap toggle interface",()=>{
     testCase("ecmas");
   });
@@ -20,6 +21,15 @@ function testCase(bstInterface) {
         cy.wrap($test)
           .find("input.form-control")
           .tab().should('have.class','toggle');
+      });
+    });
+  });
+  context("When toggle element is selected and spacebar is pressed", () => {
+    const data_test = 'layout';
+    it.only("Then toggle is toggle", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        ToggleModel.checkToggleKeypress($test,true);
       });
     });
   });

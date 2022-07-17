@@ -24,14 +24,43 @@ class ToggleModel {
     if(isEnabled){
       cy.wrap(test).find(".toggle input").should("be.enabled");
     }else if(inputAttr == 'disabled'){
-      cy.wrap(test).find('input').should('be.disabled').and('not.have.attr','readonly');
+      cy.wrap(test).find('.toggle input').should('be.disabled').and('not.have.attr','readonly');
     }else if(inputAttr == 'readonly'){
-      cy.wrap(test).find('input').should('be.enabled').and('have.attr','readonly');
+      cy.wrap(test).find('.toggle input').should('be.enabled').and('have.attr','readonly');
     }else{
       throw new Error("Test fail. Argument not supported for inputAttr " + inputAttr);
     }
 
     cy.wrap(test).find(".toggle").click({force: true}).then(() => {
+      let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState)  ;
+      cy.wrap(test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
+      cy.wrap(test).find(".toggle").should(isChecked ? "not.have.class" : "have.class", "off");
+      /*cy.wrap(test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
+      cy.wrap(test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
+      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+    });
+  }
+  /**
+   * Check a Keypress with focused toggle
+   * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
+   * @static
+   */
+  static checkToggleKeypress(test, isEnabled, inputAttr = 'disabled') {
+    let prevState = test.find(".toggle input").is("[checked]");
+
+    if(isEnabled){
+      cy.wrap(test).find(".toggle input").should("be.enabled");
+    }else if(inputAttr == 'disabled'){
+      cy.wrap(test).find('.toggle input').should('be.disabled').and('not.have.attr','readonly');
+    }else if(inputAttr == 'readonly'){
+      cy.wrap(test).find('.toggle input').should('be.enabled').and('have.attr','readonly');
+    }else{
+      throw new Error("Test fail. Argument not supported for inputAttr " + inputAttr);
+    }
+
+    cy.wrap(test).find(".toggle").focus().type(' ').then(() => {
       let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState)  ;
       cy.wrap(test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
       cy.wrap(test).find(".toggle").should(isChecked ? "not.have.class" : "have.class", "off");
