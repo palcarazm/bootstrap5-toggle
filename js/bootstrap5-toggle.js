@@ -134,6 +134,12 @@
 			this.toggle()
 			e.preventDefault()
 		});
+		this.$toggle.on('keypress', (e)=>{
+			if(e.key == " "){
+				this.toggle()
+				e.preventDefault()
+			}
+		});
 		// 9: Set toggle to bootstrap object (NOT NEEDED)
 		// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
 	}

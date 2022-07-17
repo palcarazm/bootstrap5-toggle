@@ -154,6 +154,12 @@
 				this.toggle()
 				e.preventDefault()
 			});
+			ecmasToggle.addEventListener('keypress', (e)=>{
+				if(e.key == " "){
+					this.toggle()
+					e.preventDefault()
+				}
+			});
 
 			// 9: Set toggle to bootstrap object
 			this.ecmasToggle = ecmasToggle;
