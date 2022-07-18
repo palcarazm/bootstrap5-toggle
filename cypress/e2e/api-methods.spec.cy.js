@@ -75,7 +75,8 @@ function testCase(bstInterface) {
         cy.wrap($test).find('button[data-method="initialize"]').click()
         cy.wrap($test).find('button[data-method="on"]').click()
         cy.wrap($test).find('.toggle').should('not.have.class', 'off');
-        cy.wrap($test).find('input').should('be.checked');
+        cy.wrap($test).find('input:eq(0)').should('be.checked');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked');
         cy.wrap($test).find('.badge').should('exist');
       });
     });
@@ -88,7 +89,8 @@ function testCase(bstInterface) {
         cy.wrap($test).find('button[data-method="on"]').click()
         cy.wrap($test).find('button[data-method="off"]').click()
         cy.wrap($test).find('.toggle').should('have.class', 'off');
-        cy.wrap($test).find('input').should('not.be.checked');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked');
+        cy.wrap($test).find('input:eq(1)').should('be.checked');
         cy.wrap($test).find('.badge').should('exist');
       });
     });
@@ -101,12 +103,14 @@ function testCase(bstInterface) {
         //ON
         cy.wrap($test).find('button[data-method="toggle"]').click()
         cy.wrap($test).find('.toggle').should('not.have.class', 'off');
-        cy.wrap($test).find('input').should('be.checked');
+        cy.wrap($test).find('input:eq(0)').should('be.checked');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked');
         cy.wrap($test).find('.badge').should('exist');
         //OFF
         cy.wrap($test).find('button[data-method="toggle"]').click()
         cy.wrap($test).find('.toggle').should('have.class', 'off');
-        cy.wrap($test).find('input').should('not.be.checked');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked');
+        cy.wrap($test).find('input:eq(1)').should('be.checked');
         cy.wrap($test).find('.badge').should('exist');
       });
     });
@@ -118,7 +122,8 @@ function testCase(bstInterface) {
         cy.wrap($test).find('button[data-method="initialize"]').click()
         cy.wrap($test).find('button[data-method="on-silent"]').click()
         cy.wrap($test).find('.toggle').should('not.have.class', 'off');
-        cy.wrap($test).find('input').should('be.checked');
+        cy.wrap($test).find('input:eq(0)').should('be.checked');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked');
         cy.wrap($test).find('.badge').should('not.exist');
       });
     });
@@ -131,7 +136,8 @@ function testCase(bstInterface) {
         cy.wrap($test).find('button[data-method="on-silent"]').click()
         cy.wrap($test).find('button[data-method="off-silent"]').click()
         cy.wrap($test).find('.toggle').should('have.class', 'off');
-        cy.wrap($test).find('input').should('not.be.checked');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked');
+        cy.wrap($test).find('input:eq(1)').should('be.checked');
         cy.wrap($test).find('.badge').should('not.exist');
       });
     });
@@ -144,12 +150,14 @@ function testCase(bstInterface) {
         //ON
         cy.wrap($test).find('button[data-method="toggle-silent"]').click()
         cy.wrap($test).find('.toggle').should('not.have.class', 'off');
-        cy.wrap($test).find('input').should('be.checked');
+        cy.wrap($test).find('input:eq(0)').should('be.checked');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked');
         cy.wrap($test).find('.badge').should('not.exist');
         //OFF
         cy.wrap($test).find('button[data-method="toggle-silent"]').click()
         cy.wrap($test).find('.toggle').should('have.class', 'off');
-        cy.wrap($test).find('input').should('not.be.checked');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked');
+        cy.wrap($test).find('input:eq(1)').should('be.checked');
         cy.wrap($test).find('.badge').should('not.exist');
       });
     });

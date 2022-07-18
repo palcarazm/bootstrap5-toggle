@@ -275,6 +275,8 @@ function initTestApiContructor() {
                     off: 'Disabled',
                     onstyle: 'success',
                     offstyle: 'danger',
+                    onvalue: 'ON',
+                    offvalue: 'OFF',
                     size: 'lg'
                 };
                 if(INTERFACE == 'JQUERY') $('#toggle1').bootstrapToggle(options);
@@ -321,6 +323,33 @@ function initTestApiContructor() {
     testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv));
     testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone(), COL.clone()));
     MAIN.append((TEST_TITLE.clone()).html('API custom options'), testDiv);
+
+    toggleDiv = (COL.clone())
+        .append(
+            $('<input type="checkbox" id="toggle3" value="Enabled">')
+        );
+    buttonDiv = (COL.clone())
+        .append(
+            $('<button type="button" class="btn btn-outline-secondary">').html('Create').on('click',()=>{
+                let options = {
+                    on: 'Enabled',
+                    off: 'Disabled',
+                    onstyle: 'success',
+                    offstyle: 'danger',
+                };
+                if(INTERFACE == 'JQUERY') $('#toggle3').bootstrapToggle(options);
+                if(INTERFACE == 'ECMAS') document.querySelector('#toggle3').bootstrapToggle(options);
+                $('#config3').html(JSON.stringify(options, null, 2));
+            })
+        );
+    configDiv = (COL.clone())
+        .append(
+            $('<code id="config3">')
+        );
+    testDiv = (TEST_CONTAINER.clone()).attr('id', 'api-all');
+    testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv));
+    testDiv.append($('<div class="row align-items-center">').append(COL.clone(), COL.clone()));
+    MAIN.append((TEST_TITLE.clone()).html('API input with value'), testDiv);
 }
 
 /**
@@ -331,7 +360,7 @@ function initTestApiMethods() {
     DESCRIPTION.html('Check <code>bootstrap5-toggle</code> API methods');
     toggleDiv = (COL.clone())
         .append(
-            $('<input type="checkbox" id="toggle">').on('change',()=>{
+            $('<input type="checkbox" id="toggle" data-offvalue="OFF">').on('change',()=>{
                 $('.test').append($('<div class="badge bg-secondary" id="changeNotif">').html('Change event fired!'))
             })
         );
