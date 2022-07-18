@@ -20,8 +20,10 @@
 			const DEFAULTS = {
 				on: 'On',
 				onstyle: 'primary',
+				onvalue: null,
 				off: 'Off',
 				offstyle: 'secondary',
+				offvalue: null,
 				size: '',
 				style: '',
 				width: null,
@@ -37,8 +39,10 @@
 			this.options = {
 				on: this.element.getAttribute('data-on') || options.on || DEFAULTS.on,
 				onstyle: this.element.getAttribute('data-onstyle') || options.onstyle || DEFAULTS.onstyle,
+				onvalue: this.element.getAttribute('value') || this.element.getAttribute('data-onvalue') || options.onvalue || DEFAULTS.onvalue,
 				off: this.element.getAttribute('data-off') || options.off || DEFAULTS.off,
 				offstyle: this.element.getAttribute('data-offstyle') || options.offstyle || DEFAULTS.offstyle,
+				offvalue: this.element.getAttribute('data-offvalue') || options.offvalue || DEFAULTS.offvalue,
 				size: this.element.getAttribute('data-size') || options.size || DEFAULTS.size,
 				style: this.element.getAttribute('data-style') || options.style || DEFAULTS.style,
 				width: this.element.getAttribute('data-width') || options.width || DEFAULTS.width,
@@ -120,12 +124,24 @@
 				ecmasToggle.setAttribute('disabled', 'disabled');
 			}
 
-			// 6: Replace HTML checkbox with Toggle-Button
+			// 6: Set form values
+		if(this.options.onvalue) this.element.setAttribute('value', this.options.onvalue);
+		let invElement = null;
+		if(this.options.offvalue){
+			invElement = this.element.cloneNode();
+			invElement.setAttribute('value',this.options.offvalue);
+			invElement.setAttribute('data-toggle', 'invert-toggle');
+			invElement.removeAttribute('id');
+			invElement.checked = !this.element.checked;
+		}
+
+			// 7: Replace HTML checkbox with Toggle-Button
 			this.element.parentElement.insertBefore(ecmasToggle, this.element);
 			ecmasToggle.appendChild(this.element);
+			if(invElement) ecmasToggle.appendChild(invElement);
 			ecmasToggle.appendChild(ecmasToggleGroup);
 
-			// 7: Set button W/H, lineHeight
+			// 8: Set button W/H, lineHeight
 			{
 				// A: Set style W/H
 				// NOTE: `offsetWidth` returns *rounded* integer values, so use `getBoundingClientRect` instead.
@@ -145,7 +161,7 @@
 				}
 			}
 
-			// 8: Add listeners
+			// 9: Add listeners
 			ecmasToggle.addEventListener('touchstart', (e)=>{
 				this.toggle()
 				e.preventDefault()
@@ -161,10 +177,11 @@
 				}
 			});
 
-			// 9: Set toggle to bootstrap object
+			// 10: Set elements to bootstrap object
 			this.ecmasToggle = ecmasToggle;
+			this.invElement = invElement;
 
-			// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
+			// 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
 			this.element.bsToggle = this;
 		}
 
@@ -179,6 +196,7 @@
 			this.ecmasToggle.classList.add('btn-' + this.options.onstyle);
 			this.ecmasToggle.classList.remove('off');
 			this.element.checked = true;
+			if(this.invElement) this.invElement.checked = false;
 			if (!silent) this.trigger();
 		}
 
@@ -188,6 +206,7 @@
 			this.ecmasToggle.classList.add('btn-' + this.options.offstyle);
 			this.ecmasToggle.classList.add('off');
 			this.element.checked = false;
+			if(this.invElement) this.invElement.checked = true;
 			if (!silent) this.trigger();
 		}
 
@@ -196,6 +215,10 @@
 			this.ecmasToggle.removeAttribute('disabled');
 			this.element.removeAttribute('disabled');
 			this.element.removeAttribute('readonly');
+			if(this.invElement) {
+				this.invElement.removeAttribute('disabled');
+				this.invElement.removeAttribute('readonly');
+			}
 		}
 
 		disable() {
@@ -203,6 +226,10 @@
 			this.ecmasToggle.setAttribute('disabled', '');
 			this.element.setAttribute('disabled', '');
 			this.element.removeAttribute('readonly');
+			if(this.invElement) {
+				this.invElement.setAttribute('disabled', '');
+				this.invElement.removeAttribute('readonly');
+			}
 		}
 
 		readonly() {
@@ -210,6 +237,10 @@
 			this.ecmasToggle.setAttribute('disabled', '');
 			this.element.removeAttribute('disabled');
 			this.element.setAttribute('readonly', '');
+			if(this.invElement) {
+				this.invElement.removeAttribute('disabled');
+				this.invElement.setAttribute('readonly', '');
+			}
 		}
 
 		update(silent) {

@@ -4,6 +4,8 @@ class ToggleModel {
     off: "Off",
     onstyle: "primary",
     offstyle: "secondary",
+    onvalue: null,
+		offvalue: null,
     size: "normal",
     style: "",
     width: null,
@@ -80,6 +82,7 @@ class ToggleModel {
     this.#checkToggleWithOptions($toggle, options);
     this.#checkToggleOnWithOptions($toggle, options);
     this.#checkToggleOffWithOptions($toggle, options);
+    this.#checkElementwhitOptions($toggle, options);
 
     // Size Check
     let sizeClass = this.#getSizeClass(options.size || this.DEFAULTS.size);
@@ -135,6 +138,21 @@ class ToggleModel {
   static #checkToggleOffWithOptions($toggle, options){
     cy.wrap($toggle).find('.toggle-off').should("have.html", options.off || this.DEFAULTS.off)
     cy.wrap($toggle).find('.toggle-off').should("have.class", 'btn-'+(options.offstyle || this.DEFAULTS.offstyle))
+  }
+
+  static #checkElementwhitOptions($toggle, options){
+    cy.wrap($toggle).find('input:eq(0)').should('not.visible')
+    if(options.onvalue){
+      cy.wrap($toggle).find('input:eq(0)').should('have.attr','value', $toggle.find('input:eq(0)').val() || options.onvalue)
+    }
+    if(options.offvalue){
+      cy.wrap($toggle).find('input:eq(1)')
+        .should('have.attr','value', options.offvalue)
+        .and('have.attr','data-toggle', 'invert-toggle')
+        .and('not.visible')
+    }else{
+      cy.wrap($toggle).find('input:eq(1)').should('not.exist')
+    }
   }
 
   /**
