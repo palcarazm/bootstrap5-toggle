@@ -29,6 +29,8 @@
 		off: 'Off',
 		onstyle: 'primary',
 		offstyle: 'secondary',
+		onvalue: null,
+		offvalue: null,
 		size: 'normal',
 		style: '',
 		width: null,
@@ -42,6 +44,8 @@
 			off: this.$element.attr('data-off') || Toggle.DEFAULTS.off,
 			onstyle: this.$element.attr('data-onstyle') || Toggle.DEFAULTS.onstyle,
 			offstyle: this.$element.attr('data-offstyle') || Toggle.DEFAULTS.offstyle,
+			onvalue: this.$element.attr('value') || this.$element.attr('data-onvalue') || Toggle.DEFAULTS.onvalue,
+			offvalue: this.$element.attr('data-offvalue') || Toggle.DEFAULTS.offvalue,
 			size: this.$element.attr('data-size') || Toggle.DEFAULTS.size,
 			style: this.$element.attr('data-style') || Toggle.DEFAULTS.style,
 			width: this.$element.attr('data-width') || Toggle.DEFAULTS.width,
@@ -97,17 +101,29 @@
 			$toggle.attr('disabled', 'disabled')
 		}
 
-		// 6: Replace HTML checkbox with Toggle-Button
+		// 6: Set form values
+		if(this.options.onvalue) this.$element.val(this.options.onvalue)
+		let $invElement = null;
+		if(this.options.offvalue){
+			$invElement = this.$element.clone();
+			$invElement.val(this.options.offvalue);
+			$invElement.attr('data-toggle', 'invert-toggle');
+			$invElement.removeAttr('id');
+			$invElement.prop('checked', !this.$element.prop('checked'));
+		}
+
+		// 7: Replace HTML checkbox with Toggle-Button
 		this.$element.wrap($toggle)
 		$.extend(this, {
 			$toggle: this.$element.parent(),
 			$toggleOn: $toggleOn,
 			$toggleOff: $toggleOff,
-			$toggleGroup: $toggleGroup
+			$toggleGroup: $toggleGroup,
+			$invElement: $invElement
 		})
-		this.$toggle.append($toggleGroup)
+		this.$toggle.append($invElement, $toggleGroup)
 
-		// 7: Set button W/H, lineHeight
+		// 8: Set button W/H, lineHeight
 		{
 			// A: Set style W/H
 			let width = this.options.width || Math.max($toggleOn.outerWidth(), $toggleOff.outerWidth())+($toggleHandle.outerWidth()/2)
@@ -125,7 +141,7 @@
 			}
 		}
 
-		// 8: Add listeners
+		// 9: Add listeners
 		this.$toggle.on('touchstart', (e)=>{
 			this.toggle()
 			e.preventDefault()
@@ -140,8 +156,8 @@
 				e.preventDefault()
 			}
 		});
-		// 9: Set toggle to bootstrap object (NOT NEEDED)
-		// 10: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
+		// 10: Set elements to bootstrap object (NOT NEEDED)
+		// 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
 	}
 
 	Toggle.prototype.toggle = function (silent = false) {
@@ -153,6 +169,7 @@
 		if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
 		this.$toggle.removeClass('btn-' +this.options.offstyle + ' off').addClass('btn-' +this.options.onstyle)
 		this.$element.prop('checked', true)
+		if(this.$invElement) this.$invElement.prop('checked', false);
 		if (!silent) this.trigger()
 	}
 
@@ -160,6 +177,7 @@
 		if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
 		this.$toggle.removeClass('btn-' +this.options.onstyle).addClass('btn-' +this.options.offstyle + ' off')
 		this.$element.prop('checked', false)
+		if(this.$invElement) this.$invElement.prop('checked', true);
 		if (!silent) this.trigger()
 	}
 
@@ -168,6 +186,10 @@
 		this.$toggle.removeAttr('disabled')
 		this.$element.prop('disabled', false)
 		this.$element.prop('readonly',false)
+		if(this.$invElement){
+			this.$invElement.prop('disabled', false)
+			this.$invElement.prop('readonly',false)
+		} 
 	}
 
 	Toggle.prototype.disable = function () {
@@ -175,6 +197,10 @@
 		this.$toggle.attr('disabled', 'disabled')
 		this.$element.prop('disabled', true)
 		this.$element.prop('readonly', false)
+		if(this.$invElement){
+			this.$invElement.prop('disabled', true)
+			this.$invElement.prop('readonly', false)
+		} 
 	}
 
 	Toggle.prototype.readonly = function () {
@@ -182,6 +208,10 @@
 		this.$toggle.attr('disabled', 'disabled')
 		this.$element.prop('disabled', false)
 		this.$element.prop('readonly', true)
+		if(this.$invElement){
+			this.$invElement.prop('disabled', false)
+			this.$invElement.prop('readonly', true)
+		} 
 	}
 
 	Toggle.prototype.update = function (silent) {
