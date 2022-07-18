@@ -179,7 +179,7 @@
     </li>
 </ul>
 <div class="example skip" code-lang="html">
-    <form id="form-state-status">
+    <form id="form_state_status">
         <div>
             <input name="enabled" type="checkbox" data-toggle="toggle" checked>
             <input name="disabled" type="checkbox" data-toggle="toggle" checked disabled>
@@ -192,16 +192,49 @@
         </div>
     </form>
     <script>
-        let form = $("#form-state-status");
-        form.submit((e) => {
+        let form_state_status = $("#form_state_status");
+        form_state_status.submit((e) => {
         e.preventDefault();
-        form.find('code').html(JSON.stringify(form.serializeArray(), null, 2))
+        form_state_status.find('code').html(JSON.stringify(form_state_status.serializeArray(), null, 2))
         });
     </script>
 </div>
 <pre><code class="highlight language-html">&lt;input name="enabled" type="checkbox" data-toggle="toggle" checked&gt;
 &lt;input name="disabled" type="checkbox" data-toggle="toggle" checked disabled&gt;
 &lt;input name="readonly" type="checkbox" data-toggle="toggle" checked readonly&gt;</code></pre>
+
+<h3 class="text-secondary">Form submit values</h3>
+<p>
+    Simply add <code>data-onvalue="x" data-offvalue="y"</code> to set on state <code>value</code> to <code>x</code> and off state <code>value</code> to <code>y</code>. If original checkbox have a <code>value</code> settes, <code>data-onvalue</code> will be ignored preserving the original <code>value</code>. 
+    <span class="badge rounded-pill bg-danger">
+        NEW
+        <span class="visually-hidden">v4.3.0</span>
+    </span>
+</p>
+<div class="example skip" code-lang="html">
+    <form id="form_submit_demo">
+        <div>
+            <input type="checkbox" data-toggle="toggle" checked value="VALUE" data-onvalue="ON" data-offvalue="OFF" name="valueToggle">
+            <input type="checkbox" data-toggle="toggle" checked data-onvalue="ON" data-offvalue="OFF" name="dataONToggle">
+            <input type="checkbox" data-toggle="toggle" checked name="simplyToggle">
+        </div>
+        <div class="d-flex mt-2 align-items-start">
+            <div class="me-2 font-monospace text-muted">Payload:</div>
+            <div class="flex-grow-1 me-2"><pre><code class="highlight language-json"></code></pre></div>
+            <div><button type="submit" class="btn btn-outline-secondary">Submit</button></div>
+        </div>
+    </form>
+    <script>
+        let form_submit_demo = $("#form_submit_demo");
+        form_submit_demo.submit((e) => {
+        e.preventDefault();
+        form_submit_demo.find('code').html(JSON.stringify(form_submit_demo.serializeArray(), null, 2))
+        });
+    </script>
+</div>
+<pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" checked value="VALUE" data-onvalue="ON" data-offvalue="OFF" name="valueToggle"&gt;
+&lt;input type="checkbox" data-toggle="toggle" checked data-onvalue="ON" data-offvalue="OFF" name="dataONToggle"&gt;
+&lt;input type="checkbox" data-toggle="toggle" checked name="simplyToggle"&gt;</code></pre>
 
 <h3 class="text-secondary">Stacked Checkboxes</h3>
 <p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>form-check</code>.</p>
