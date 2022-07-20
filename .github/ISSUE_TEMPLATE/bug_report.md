@@ -22,7 +22,7 @@ Steps to reproduce the behavior and minimal code:
 ```
 
 ```javascript
-<!-- javascript code-->
+/*javascript code*/
 ```
 
 **Expected behavior**
