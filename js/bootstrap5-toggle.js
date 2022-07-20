@@ -36,6 +36,8 @@
 		width: null,
 		height: null,
 		tabindex: 0,
+		tristate: false,
+		name: null,
 	}
 
 	Toggle.prototype.defaults = function() {
@@ -51,6 +53,8 @@
 			width: this.$element.attr('data-width') || Toggle.DEFAULTS.width,
 			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height,
 			tabindex: this.$element.attr('tabindex') || Toggle.DEFAULTS.tabindex,
+			tristate: this.$element.is('[tristate]') || Toggle.DEFAULTS.tristate,
+			name: this.$element.attr('name') || Toggle.DEFAULTS.name,
 		}
 	}
 
@@ -143,21 +147,37 @@
 
 		// 9: Add listeners
 		this.$toggle.on('touchstart', (e)=>{
-			this.toggle()
-			e.preventDefault()
+			toggleActionPerformed(e, this)
 		});
 		this.$toggle.on('click', (e)=>{
-			this.toggle()
-			e.preventDefault()
+			toggleActionPerformed(e, this)
 		});
 		this.$toggle.on('keypress', (e)=>{
 			if(e.key == " "){
-				this.toggle()
-				e.preventDefault()
+				toggleActionPerformed(e, this)
 			}
 		});
 		// 10: Set elements to bootstrap object (NOT NEEDED)
 		// 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
+	}
+
+	/**
+	 * Trigger actions
+	 * @param {Event} e event
+	 * @param {Toggle} target Toggle
+	 */
+	function toggleActionPerformed(e , target){
+		if(target.options.tristate){
+			if(target.$toggle.hasClass('indeterminate')){
+				target.determinate();
+				target.toggle();
+			}else{
+				target.indeterminate();
+			}
+		}else{
+			target.toggle()
+		}
+		e.preventDefault()
 	}
 
 	Toggle.prototype.toggle = function (silent = false) {
@@ -178,6 +198,26 @@
 		this.$toggle.removeClass('btn-' +this.options.onstyle).addClass('btn-' +this.options.offstyle + ' off')
 		this.$element.prop('checked', false)
 		if(this.$invElement) this.$invElement.prop('checked', true);
+		if (!silent) this.trigger()
+	}
+
+	Toggle.prototype.indeterminate = function (silent = false) {
+		if(!this.options.tristate) return false;
+		this.$toggle.addClass('indeterminate');
+		this.$element.prop('indeterminate', true);
+		this.$element.removeAttr('name');
+		if(this.$invElement) this.$invElement.prop('indeterminate', true);
+		if(this.$invElement) this.$invElement.removeAttr('name');
+		if (!silent) this.trigger()
+	}
+	
+	Toggle.prototype.determinate = function (silent = false) {
+		if(!this.options.tristate) return false;
+		this.$toggle.removeClass('indeterminate');
+		this.$element.prop('indeterminate', false);
+		if(this.options.name) this.$element.attr('name', this.options.name);
+		if(this.$invElement) this.$invElement.prop('indeterminate', false);
+		if(this.$invElement && this.options.name) this.$invElement.attr('name', this.options.name);
 		if (!silent) this.trigger()
 	}
 
