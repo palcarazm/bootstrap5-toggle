@@ -94,5 +94,14 @@ Demo.prototype.enable = function (selector) {
 Demo.prototype.disable = function (selector) {
   $(selector).bootstrapToggle("disable");
 };
+Demo.prototype.readonly = function (selector) {
+  $(selector).bootstrapToggle("readonly");
+};
+Demo.prototype.indeterminate = function (selector) {
+  $(selector).bootstrapToggle("indeterminate");
+};
+Demo.prototype.determinate = function (selector) {
+  $(selector).bootstrapToggle("determinate");
+};
 
 demo = new Demo();
