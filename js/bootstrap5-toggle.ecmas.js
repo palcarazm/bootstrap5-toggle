@@ -230,7 +230,7 @@
 		}
 
 		indeterminate(silent = false) {
-			if(!this.options.tristate) return false;
+			if (!this.options.tristate || this.element.disabled || this.element.readOnly) return false;
 			this.ecmasToggle.classList.add('indeterminate');
 			this.element.indeterminate = true;
 			this.element.removeAttribute('name');
@@ -240,12 +240,12 @@
 		}
 
 		determinate(silent = false) {
-			if(!this.options.tristate) return false;
+			if (!this.options.tristate || this.element.disabled || this.element.readOnly) return false;
 			this.ecmasToggle.classList.remove('indeterminate');
 			this.element.indeterminate = false;
 			if(this.options.name) this.element.setAttribute('name', this.options.name);
-			if(this.invElement) target.invElement.indeterminate = false;
-			if(this.invElement && target.options.name) this.invElement.setAttribute('name', this.options.name);
+			if(this.invElement) this.invElement.indeterminate = false;
+			if(this.invElement && this.options.name) this.invElement.setAttribute('name', this.options.name);
 			if (!silent) this.trigger()
 		}
 

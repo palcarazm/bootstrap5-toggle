@@ -169,7 +169,7 @@
 	function toggleActionPerformed(e , target){
 		if(target.options.tristate){
 			if(target.$toggle.hasClass('indeterminate')){
-				target.determinate();
+				target.determinate(true);
 				target.toggle();
 			}else{
 				target.indeterminate();
@@ -202,7 +202,7 @@
 	}
 
 	Toggle.prototype.indeterminate = function (silent = false) {
-		if(!this.options.tristate) return false;
+		if (!this.options.tristate || this.$element.prop('disabled') || this.$element.prop('readonly')) return false;
 		this.$toggle.addClass('indeterminate');
 		this.$element.prop('indeterminate', true);
 		this.$element.removeAttr('name');
@@ -212,7 +212,7 @@
 	}
 	
 	Toggle.prototype.determinate = function (silent = false) {
-		if(!this.options.tristate) return false;
+		if (!this.options.tristate || this.$element.prop('disabled') || this.$element.prop('readonly')) return false;
 		this.$toggle.removeClass('indeterminate');
 		this.$element.prop('indeterminate', false);
 		if(this.options.name) this.$element.attr('name', this.options.name);
@@ -274,6 +274,7 @@
 		// A: Remove button-group from UI, replace checkbox element
 		this.$element.off('change.bs.toggle')
 		this.$toggleGroup.remove()
+		if(this.$invElement) this.$invElement.remove()
 
 		// B: Delete internal refs
 		this.$element.removeData('bs.toggle')
