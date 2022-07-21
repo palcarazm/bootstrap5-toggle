@@ -30,7 +30,7 @@ function testCase(bstInterface) {
         cy.wrap($test).find('button[data-method="initialize"]').click()
         cy.wrap($test).find('button[data-method="destroy"]').click()
         cy.wrap($test).find('.toggle').should('not.exist');
-        cy.wrap($test).find('input').should('exist').and('be.visible');
+        cy.wrap($test).find('input').should('exist').and('be.visible').and('have.length',1);
       });
     });
   });
@@ -158,6 +158,64 @@ function testCase(bstInterface) {
         cy.wrap($test).find('.toggle').should('have.class', 'off');
         cy.wrap($test).find('input:eq(0)').should('not.be.checked');
         cy.wrap($test).find('input:eq(1)').should('be.checked');
+        cy.wrap($test).find('.badge').should('not.exist');
+      });
+    });
+  });
+  context("When the API indeterminate method is call", () => {
+    it("Then toggle and the checkbox are not checked and have not name, and a change event is fired", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        cy.wrap($test).find('button[data-method="initialize"]').click()
+        cy.wrap($test).find('button[data-method="indeterminate"]').click()
+        cy.wrap($test).find('.toggle').should('have.class', 'indeterminate');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked').and('not.have.attr', 'name');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked').and('not.have.attr', 'name');
+        cy.wrap($test).find('input:indeterminate').should('exist').and('have.length',2);
+        cy.wrap($test).find('.badge').should('exist');
+      });
+    });
+  });
+  context("When the API determinate method is call in a off chackbox", () => {
+    it("Then toggle and the checkbox are not checked and have name, and a change event is fired", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        cy.wrap($test).find('button[data-method="initialize"]').click()
+        cy.wrap($test).find('button[data-method="off"]').click()
+        cy.wrap($test).find('button[data-method="indeterminate"]').click()
+        cy.wrap($test).find('button[data-method="determinate"]').click()
+        cy.wrap($test).find('.toggle').should('not.have.class', 'indeterminate');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked').and('have.attr', 'name');
+        cy.wrap($test).find('input:eq(1)').should('be.checked').and('have.attr', 'name');
+        cy.wrap($test).find('input:indeterminate').should('not.exist');
+        cy.wrap($test).find('.badge').should('exist');
+      });
+    });
+  });
+  context("When the API indeterminate silent method is call", () => {
+    it("Then toggle and the checkbox are not checked and have not name, and a change event is not fired", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        cy.wrap($test).find('button[data-method="initialize"]').click()
+        cy.wrap($test).find('button[data-method="indeterminate-silent"]').click()
+        cy.wrap($test).find('.toggle').should('have.class', 'indeterminate');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked').and('not.have.attr', 'name');
+        cy.wrap($test).find('input:eq(1)').should('not.be.checked').and('not.have.attr', 'name');
+        cy.wrap($test).find('.badge').should('not.exist');
+      });
+    });
+  });
+  context("When the API determinate silent method is call in a off chackbox", () => {
+    it("Then toggle and the checkbox are not checked and have name, and a change event is not fired", () => {
+      PageModel.load(bstInterface, data_test);
+      PageModel.getTests().each(($test) => {
+        cy.wrap($test).find('button[data-method="initialize"]').click()
+        cy.wrap($test).find('button[data-method="off"]').click()
+        cy.wrap($test).find('button[data-method="indeterminate"]').click()
+        cy.wrap($test).find('button[data-method="determinate-silent"]').click()
+        cy.wrap($test).find('.toggle').should('not.have.class', 'indeterminate');
+        cy.wrap($test).find('input:eq(0)').should('not.be.checked').and('have.attr', 'name');
+        cy.wrap($test).find('input:eq(1)').should('be.checked').and('have.attr', 'name');
         cy.wrap($test).find('.badge').should('not.exist');
       });
     });

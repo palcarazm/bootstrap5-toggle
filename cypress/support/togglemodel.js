@@ -11,6 +11,7 @@ class ToggleModel {
     width: null,
     height: null,
     tabindex: 0,
+    tristate: false,
   };
 
   /**
@@ -18,9 +19,10 @@ class ToggleModel {
    * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
    * @param {Boolean} isEnabled: Toggle enabled (Y/N)
    * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
+   * @param {Boolean} tristate: Tristate toggle (Y/N)
    * @static
    */
-  static checkToggleClick(test, isEnabled, inputAttr = 'disabled') {
+  static checkToggleClick(test, isEnabled, inputAttr = 'disabled', tristate = false) {
     let prevState = test.find(".toggle input").is("[checked]");
 
     if(isEnabled){
@@ -33,13 +35,16 @@ class ToggleModel {
       throw new Error("Test fail. Argument not supported for inputAttr " + inputAttr);
     }
 
+    let prevDeterminated = null;
+    if(tristate){
+     prevDeterminated = !test.find('.toggle').hasClass('indeterminate');
+    }
     cy.wrap(test).find(".toggle").click({force: true}).then(() => {
-      let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState)  ;
-      cy.wrap(test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
-      cy.wrap(test).find(".toggle").should(isChecked ? "not.have.class" : "have.class", "off");
-      /*cy.wrap(test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
-      cy.wrap(test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
-      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+      if(tristate){
+        this.#checkActionPerformedTristate(test,isEnabled,prevState, prevDeterminated)
+      }else{
+        this.#checkActionPerformedBistate(test,isEnabled,prevState, prevDeterminated)
+      }
     });
   }
   /**
@@ -47,9 +52,10 @@ class ToggleModel {
    * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
    * @param {Boolean} isEnabled: Toggle enabled (Y/N)
    * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
+   * @param {Boolean} tristate: Tristate toggle (Y/N)
    * @static
    */
-  static checkToggleKeypress(test, isEnabled, inputAttr = 'disabled') {
+  static checkToggleKeypress(test, isEnabled, inputAttr = 'disabled', tristate = false) {
     let prevState = test.find(".toggle input").is("[checked]");
 
     if(isEnabled){
@@ -62,14 +68,60 @@ class ToggleModel {
       throw new Error("Test fail. Argument not supported for inputAttr " + inputAttr);
     }
 
+    let prevDeterminated = null;
+    if(tristate){
+     prevDeterminated = !test.find('.toggle').hasClass('indeterminate');
+    }
+
     cy.wrap(test).find(".toggle").focus().type(' ').then(() => {
-      let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState)  ;
-      cy.wrap(test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
-      cy.wrap(test).find(".toggle").should(isChecked ? "not.have.class" : "have.class", "off");
-      /*cy.wrap(test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
-      cy.wrap(test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
-      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+      if(tristate){
+        this.#checkActionPerformedTristate(test,isEnabled,prevState, prevDeterminated)
+      }else{
+        this.#checkActionPerformedBistate(test,isEnabled,prevState, prevDeterminated)
+      }
     });
+  }
+
+  /**
+   * Check bistate toggle before doing an action
+   * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {Boolean} prevState: Toggle where ON (Y/N)
+   * @static
+   */
+  static #checkActionPerformedBistate($test,isEnabled,prevState){
+    let isChecked = (isEnabled && !prevState) || (!isEnabled && prevState);
+    cy.wrap($test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
+    cy.wrap($test).find(".toggle").should(isChecked ? "not.have.class" : "have.class", "off");
+    /*cy.wrap($test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
+    cy.wrap($test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
+    CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+  }
+
+  /**
+   * Check tristate toggle before doing an action
+   * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {Boolean} prevState: Toggle where ON (Y/N) 
+   * @param {Boolean} prevDeterminated: Toggle where determinate (Y/N) 
+   * @static
+   */
+  static #checkActionPerformedTristate($test,isEnabled,prevState, prevDeterminated){
+    let isChecked = (isEnabled && !prevState && !prevDeterminated) || (!isEnabled && prevState);
+    let isDeterminated  = (isEnabled && !prevDeterminated) || (!isEnabled && prevDeterminated);
+
+    cy.wrap($test).find(".toggle input").should(isChecked ? "be.checked" : "not.be.checked");
+    cy.wrap($test).find(".toggle").should(isChecked || (!isDeterminated && prevState) ? "not.have.class" : "have.class", "off");
+    cy.wrap($test).find(".toggle").should(isDeterminated ? "not.have.class" : "have.class", "indeterminate");
+    if(isDeterminated){
+      /*cy.wrap($test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
+      cy.wrap($test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
+      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+    }else{
+      /*cy.wrap($test).find('.toggle-on').should('be.visible');
+      cy.wrap($test).find('.toggle-off').should('be.visible');
+      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+    }
   }
 
   /**
