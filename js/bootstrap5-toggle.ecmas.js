@@ -28,7 +28,9 @@
 				style: '',
 				width: null,
 				height: null,
-				tabindex: 0
+				tabindex: 0,
+				tristate: false,
+				name: null
 			};
 			options = options || {};
 
@@ -48,6 +50,8 @@
 				width: this.element.getAttribute('data-width') || options.width || DEFAULTS.width,
 				height: this.element.getAttribute('data-height') || options.height || DEFAULTS.height,
 				tabindex: this.element.getAttribute('tabindex') || options.tabindex || DEFAULTS.tabindex,
+				tristate: this.element.hasAttribute('tristate') || options.tristate || DEFAULTS.tristate,
+				name: this.element.getAttribute('name') || options.name || DEFAULTS.name,
 			};
 
 			// LAST: Render Toggle
@@ -163,17 +167,14 @@
 
 			// 9: Add listeners
 			ecmasToggle.addEventListener('touchstart', (e)=>{
-				this.toggle()
-				e.preventDefault()
+				this.#toggleActionPerformed(e)
 			});
 			ecmasToggle.addEventListener('click', (e)=>{
-				this.toggle()
-				e.preventDefault()
+				this.#toggleActionPerformed(e)
 			});
 			ecmasToggle.addEventListener('keypress', (e)=>{
 				if(e.key == " "){
-					this.toggle()
-					e.preventDefault()
+					this.#toggleActionPerformed(e)
 				}
 			});
 
@@ -184,6 +185,24 @@
 			// 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
 			this.element.bsToggle = this;
 		}
+
+		/**
+	 * Trigger actions
+	 * @param {Event} e event
+	 */
+	#toggleActionPerformed(e){
+		if(this.options.tristate){
+			if(this.ecmasToggle.classList.contains('indeterminate')){
+				this.determinate(true);
+				this.toggle();
+			}else{
+				this.indeterminate();
+			}
+		}else{
+			this.toggle()
+		}
+		e.preventDefault()
+	}
 
 		toggle(silent = false) {
 			if (this.element.checked) this.off(silent);
@@ -208,6 +227,26 @@
 			this.element.checked = false;
 			if(this.invElement) this.invElement.checked = true;
 			if (!silent) this.trigger();
+		}
+
+		indeterminate(silent = false) {
+			if (!this.options.tristate || this.element.disabled || this.element.readOnly) return false;
+			this.ecmasToggle.classList.add('indeterminate');
+			this.element.indeterminate = true;
+			this.element.removeAttribute('name');
+			if(this.invElement) this.invElement.indeterminate = true;
+			if(this.invElement) this.invElement.removeAttribute('name');
+			if (!silent) this.trigger()
+		}
+
+		determinate(silent = false) {
+			if (!this.options.tristate || this.element.disabled || this.element.readOnly) return false;
+			this.ecmasToggle.classList.remove('indeterminate');
+			this.element.indeterminate = false;
+			if(this.options.name) this.element.setAttribute('name', this.options.name);
+			if(this.invElement) this.invElement.indeterminate = false;
+			if(this.invElement && this.options.name) this.invElement.setAttribute('name', this.options.name);
+			if (!silent) this.trigger()
 		}
 
 		enable() {
@@ -278,6 +317,8 @@
 			if (options.toLowerCase() == 'toggle') _bsToggle.toggle(silent);
 			else if (options.toLowerCase() == 'on') _bsToggle.on(silent);
 			else if (options.toLowerCase() == 'off') _bsToggle.off(silent);
+			else if (options.toLowerCase() == 'indeterminate') _bsToggle.indeterminate(silent);
+			else if (options.toLowerCase() == 'determinate') _bsToggle.determinate(silent);
 			else if (options.toLowerCase() == 'enable') _bsToggle.enable();
 			else if (options.toLowerCase() == 'disable') _bsToggle.disable();
 			else if (options.toLowerCase() == 'readonly') _bsToggle.readonly();

@@ -133,6 +133,7 @@ Name      |Type       |Default     |Description                 |
 `width`   |integer    |*null*     |Sets the width of the toggle. if set to *null*, width will be auto-calculated.
 `height`  |integer    |*null*     |Sets the height of the toggle. if set to *null*, height will be auto-calculated.
 `tabindex`|integer    |0          |Sets the tabindex of the toggle.
+`tristate`|boolean    |false      |Sets tristate support
 
 ## Methods
 Methods can be used to control toggles directly.
@@ -141,16 +142,18 @@ Methods can be used to control toggles directly.
 <input id="toggle-demo" type="checkbox" data-toggle="toggle">
 ```
 
-Method     |Example                                          |Description
------------|-------------------------------------------------|------------------------------------------
-initialize | `$('#toggle-demo').bootstrapToggle()`           |Initializes the toggle plugin with options
-destroy    | `$('#toggle-demo').bootstrapToggle('destroy')`  |Destroys the toggle
-on         | `$('#toggle-demo').bootstrapToggle('on')`       |Sets the toggle to 'On' state
-off        | `$('#toggle-demo').bootstrapToggle('off')`      |Sets the toggle to 'Off' state
-toggle     | `$('#toggle-demo').bootstrapToggle('toggle')`   |Toggles the state of the toggle on/off
-enable     | `$('#toggle-demo').bootstrapToggle('enable')`   |Enables the toggle
-disable    | `$('#toggle-demo').bootstrapToggle('disable')`  |Disables the toggle
-readonly   | `$('#toggle-demo').bootstrapToggle('readonly')` |Disables the toggle but preserve checkbox enabled
+Method       |Example                                              |Description
+-------------|-----------------------------------------------------|------------------------------------------
+initialize   | `$('#toggle-demo').bootstrapToggle()`               |Initializes the toggle plugin with options
+destroy      | `$('#toggle-demo').bootstrapToggle('destroy')`      |Destroys the toggle
+on           | `$('#toggle-demo').bootstrapToggle('on')`           |Sets the toggle to 'On' state
+off          | `$('#toggle-demo').bootstrapToggle('off')`          |Sets the toggle to 'Off' state
+toggle       | `$('#toggle-demo').bootstrapToggle('toggle')`       |Toggles the state of the toggle on/off
+enable       | `$('#toggle-demo').bootstrapToggle('enable')`       |Enables the toggle
+disable      | `$('#toggle-demo').bootstrapToggle('disable')`      |Disables the toggle
+readonly     | `$('#toggle-demo').bootstrapToggle('readonly')`     |Disables the toggle but preserve checkbox enabled
+indeterminate| `$('#toggle-demo').bootstrapToggle('indeterminate')`|Sets the toggle to 'indeterminate' state
+determinate  | `$('#toggle-demo').bootstrapToggle('determinate')`  |Sets the toggle to 'determinate' state
 
 # Events
 
@@ -172,8 +175,7 @@ You should listen to events from the `<input type="checkbox">` directly rather t
 ```
 
 ## Stopping Event Propagation
-Passing `true` to the on, off and toggle methods will enable the silent option to prevent the control from propagating the change event in
-cases where you want to update the controls on/off state, but do not want to fire the onChange event.
+Passing `true` to the on, off, toggle, determinate and indeterminate methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.
 
 ```html
 <input id="toggle-silent" type="checkbox" data-toggle="toggle">

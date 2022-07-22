@@ -1,6 +1,7 @@
 const ENV = $('#env-data')
 const TESTCASES =[
     {name: 'status'         , code:'status'},
+    {name: 'tristate'       , code:'tristate'},
     {name: 'size'           , code:'size'},
     {name: 'custom size'    , code:'custom-size'},
     {name: 'outline on'     , code:'outline-on'},
@@ -24,6 +25,9 @@ function appStartup(test) {
     switch (test) {
         case 'status':
             initTestStatus() 
+            break;
+        case 'tristate':
+            initTestTristate() 
             break;
         case 'size':
             initTestSize() 
@@ -110,6 +114,7 @@ function appStartup(test) {
             break;
         case 'api-constructor':
         case 'api-methods':
+        case 'tristate':
             break;
     
         default:
