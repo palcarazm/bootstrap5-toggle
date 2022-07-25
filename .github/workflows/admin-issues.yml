@@ -28,14 +28,14 @@ jobs:
         reactions: '+1'
     - name: High priority issue
       uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
-      if: github.event.action == 'milestoned' && github.event.milestone.title == 'v4.4.0'
+      if: github.event.action == 'milestoned' && github.event.milestone.title == 'v4.3.1'
       with:
         project: Issue triage
         column: High priority
         repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     - name: Low priority issue
       uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
-      if: github.event.action == 'milestoned' && github.event.milestone.title != 'v4.4.0'
+      if: github.event.action == 'milestoned' && github.event.milestone.title != 'v4.3.1'
       with:
         project: Issue triage
         column: Low priority
