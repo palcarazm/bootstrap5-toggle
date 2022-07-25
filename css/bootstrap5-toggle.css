@@ -29,6 +29,11 @@
 	position: relative;
 	overflow: hidden;
 }
+.toggle,
+.toggle:focus,
+.toggle:hover{
+background-color: transparent;
+}
 .toggle input[type="checkbox"] {
 	display: none;
 }
