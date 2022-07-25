@@ -13,7 +13,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
             })
         })
     </script>
-    <div><code id="console-event" class="badge bg-secondary w-100 text-start">> </code></div>
+    <div><code id="console-event" class="badge bg-secondary w-100 text-start font-monospace">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-event" type="checkbox" data-toggle="toggle"&gt;
 &lt;script&gt;
@@ -25,7 +25,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
 &lt;/script&gt;</code></pre>
 
 <h3 class="text-secondary">Stopping Event Propagation</h3>
-<p>Passing <code>true</code> to the on, off and toogle methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.</p>
+<p>Passing <code>true</code> to the on, off, toggle, determinate and indeterminate methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.</p>
 <div class="example skip">
     <input id="toggle-silent" type="checkbox" data-toggle="toggle"
         onchange="$('#chgConsole').html($('#chgConsole').html()+new Date().toISOString()+' ... change event fired!<br>> ')"><br>
@@ -55,7 +55,7 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
             $('#toggle-silent').bootstrapToggle('toggle');
         }
     </script>
-    <div><code id="chgConsole" class="badge bg-secondary w-100 text-start">> </code></div>
+    <div><code id="chgConsole" class="badge bg-secondary w-100 text-start font-monospace">> </code></div>
 </div>
 <pre><code class="highlight language-html">&lt;input id="toggle-silent" type="checkbox" data-toggle="toggle"
     onchange="log(new Date().toISOString()+' ... change event fired!')"&gt;
@@ -83,6 +83,13 @@ Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as 
         $('#toggle-silent').bootstrapToggle('toggle');
     }
 &lt;/script&gt;</code></pre>
+<div class="alert alert-info position-relative" role="alert">
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        NEW
+        <span class="visually-hidden">v4.3.0</span>
+    </span>
+    <i class="fas fa-info-circle"></i> For ECMAS JavaScript replace <code>$('#toggle-silent')...</code> with <code>document.querySelector('#toggle-silent')...</code>
+</div>
 
 <h3 class="text-secondary">API vs Input</h3>
 <p>This also means that using the API or Input to trigger events will work both ways.</p>
