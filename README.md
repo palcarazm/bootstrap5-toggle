@@ -32,11 +32,10 @@ Project |Description
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
-- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
+    - [jQuery Interface](#jquery-interface)
+    - [ECMAS Interface](#ecmas-interface)
   - [Download](#download)
   - [NPM](#npm)
   - [Yarn](#yarn)
@@ -60,9 +59,16 @@ Project |Description
 
 ## CDN
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
+### jQuery Interface
 ```html
-<link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/css/bootstrap5-toggle.min.css" rel="stylesheet">  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.0/js/bootstrap5-toggle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.1/css/bootstrap5-toggle.min.css" rel="stylesheet">  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.1/js/bootstrap5-toggle.min.js"></script>
+```
+
+### ECMAS Interface
+```html
+<link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.1/css/bootstrap5-toggle.min.css" rel="stylesheet">  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.1/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ## Download

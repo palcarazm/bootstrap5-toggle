@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.3.1](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.1) 2022-07-28
+### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.3.0...v4.3.1)
+### Fixed
+* fix: Toggle stay hover on Bootstrap 5.2.0 (#51) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/52
+
 ## [4.3.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.0) 2022-07-25
 ### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.2.0...v4.3.0)
 ### Added
