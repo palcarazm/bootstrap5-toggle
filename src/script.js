@@ -37,8 +37,8 @@ $().ready(function () {
     Toc.init({
       $nav: $("#toc"),
     });
-    $("body").scrollspy({
-      target: "#toc",
+    const _scrollSpy = new bootstrap.ScrollSpy(document.body, {
+      target: '#toc'
     });
 
     // format examples
