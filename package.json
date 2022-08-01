@@ -8,6 +8,10 @@
   "description": "Bootstrap 5 Toggle is a bootstrap 5 plugin that converts checkboxes into toggles.",
   "homepage": "https://palcarazm.github.io/bootstrap5-toggle/",
   "license": "MIT",
+  "funding":{
+    "type": "GitHub Sponsors",
+    "url": "https://github.com/sponsors/palcarazm"
+  },
   "main": "js/bootstrap5-toggle.min.js",
   "files": [
     "css/*",
