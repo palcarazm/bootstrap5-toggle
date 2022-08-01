@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [3.7.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v3.7.00) 2022-08-01
+## [3.7.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v3.7.0) 2022-08-01
 ### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v3.6.0...v3.7.0)
 ### Added
 * feat: Distribution of ECMAS lib (#2) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/36
