@@ -17,8 +17,8 @@
 #### Library Distributions
 Project |Description
 ---|---
-[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports bootstrap5 (jQuery and ECMAS distributions)
-[bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports bootstrap4 (jQuery and ECMAS distributions)
+[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=v5.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) (jQuery and ECMAS distributions)
+[bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=v4.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) (jQuery and ECMAS distributions)
 
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/v3.X.X  
