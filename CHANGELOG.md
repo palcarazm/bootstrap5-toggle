@@ -6,13 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [4.3.1](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.1) 2022-07-28
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.3.0...v4.3.1)
-### Fixed
-* fix: Toggle stay hover on Bootstrap 5.2.0 (#51) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/52
-
-## [4.3.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.0) 2022-07-25
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.2.0...v4.3.0)
+## [3.7.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v3.7.00) 2022-08-01
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v3.6.0...v3.7.0)
 ### Added
 * feat: Distribution of ECMAS lib (#2) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/36
 * feat: Support readonly attribute (#35) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/37
@@ -20,10 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * feat: Switch toggle from keyboard (#39) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/42
 * feat: Custom value for on and off state on form submit (#34) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/43
 * feat: Tristate toggle (#40) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/47
-
-## [4.2.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.2.0) 2022-07-12
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.1.0...v4.2.0)
-### Added
 * feat: Support toggle silent method by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/30
 ### Changed
 * feat: Remove btn-light from handle  by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/21
@@ -31,16 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 * fix: Handle border color and btn-light border color by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/17
 * fix: Render in input-group by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/29
-
-## [4.1.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.1.0) 2022-06-30
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.0.0...v4.1.0)
-### Added
-- feat: support for npm and yarn
-
-## [4.0.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.0.0) 2022-06-30
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v3.6.0...v4.0.0)
-### Added
-- feat: support for Boostrap 5
 
 ## [3.6.0](https://github.com/gitbrent/bootstrap4-toggle/tree/v3.6.0) 2019-10-17
 ### [Full Changelog](https://github.com/gitbrent/bootstrap4-toggle/compare/v3.5.0...v3.6.0)

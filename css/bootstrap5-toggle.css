@@ -49,7 +49,9 @@ background-color: transparent;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 }
-.toggle-group label, .toggle-group span { cursor: pointer; }
+.toggle.btn:not(.disabled) { cursor: pointer; }
+.toggle.btn.disabled{ cursor:auto; }
+.toggle>.toggle-group>.btn { cursor: inherit; }
 .toggle.off .toggle-group {
 	left: -100%;
 }
@@ -99,39 +101,39 @@ background-color: transparent;
 }
 
 .toggle.btn-outline-primary .toggle-handle {
-	background-color: var(--bs-primary);
-	border-color: var(--bs-primary);
+	background-color: var(--primary);
+	border-color: var(--primary);
 }
 .toggle.btn-outline-secondary .toggle-handle {
-	background-color: var(--bs-secondary);
-	border-color: var(--bs-secondary);
+	background-color: var(--secondary);
+	border-color: var(--secondary);
 }
 .toggle.btn-outline-success .toggle-handle {
-	background-color: var(--bs-success);
-	border-color: var(--bs-success);
+	background-color: var(--success);
+	border-color: var(--success);
 }
 .toggle.btn-outline-danger .toggle-handle {
-	background-color: var(--bs-danger);
-	border-color: var(--bs-danger);
+	background-color: var(--danger);
+	border-color: var(--danger);
 }
 .toggle.btn-outline-warning .toggle-handle {
-	background-color: var(--bs-warning);
-	border-color: var(--bs-warning);
+	background-color: var(--warning);
+	border-color: var(--warning);
 }
 .toggle.btn-outline-info .toggle-handle {
-	background-color: var(--bs-info);
-	border-color: var(--bs-info);
+	background-color: var(--info);
+	border-color: var(--info);
 }
 .toggle.btn-outline-light .toggle-handle {
-	background-color: var(--bs-light);
-	border-color: var(--bs-light);
+	background-color: var(--light);
+	border-color: var(--light);
 }
 .toggle.btn-outline-dark .toggle-handle {
-	background-color: var(--bs-dark);
-	border-color: var(--bs-dark);
+	background-color: var(--dark);
+	border-color: var(--dark);
 }
 .toggle[class*="btn-outline"]:hover .toggle-handle {
-	background-color: var(--bs-light);
+	background-color: var(--light);
 	opacity: 0.5;
 }
 

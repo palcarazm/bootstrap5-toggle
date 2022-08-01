@@ -18,6 +18,7 @@ function appStartup(test) {
     ENV.html('');
     ENV.append(
         $("<div>").append($("<code>").html("Bootstrap v"+Bootstrap)),
+        $("<div>").append($("<code>").html("bs-toggle v"+plugin)),
         $("<div>").append($("<code>").html("Interface "+INTERFACE))
         )
     MAIN.html('');
@@ -123,6 +124,10 @@ function appStartup(test) {
     }, 500);
 }
 $( function () {
+    $.getJSON('../package-lock.json', function(data) {
+        Bootstrap = data.packages["node_modules/bootstrap"].version;
+        plugin = data.version;
+    });
     TESTCASES.forEach((testCase)=>{
         $('#test-selector').append(
             $('<button type="button">')

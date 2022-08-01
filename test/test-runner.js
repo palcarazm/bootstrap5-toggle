@@ -15,7 +15,9 @@ const BADGE = $('<div></div>').addClass('badge text-monospace');
         button_opacity = window.getComputedStyle(button[0], null).getPropertyValue('opacity');
 
         toggle_cursor = window.getComputedStyle(toggle[0], null).getPropertyValue('cursor');
+        toggle_cursor = toggle_cursor == 'default' ? 'auto' : toggle_cursor;
         button_cursor = window.getComputedStyle(button[0], null).getPropertyValue('cursor');
+        button_cursor = button_cursor == 'default' ? 'auto' : button_cursor;
         
         toggle_cursorevt = window.getComputedStyle(toggle[0], null).getPropertyValue('pointer-events');
         button_cursorevt = window.getComputedStyle(button[0], null).getPropertyValue('pointer-events');
