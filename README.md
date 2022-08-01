@@ -1,5 +1,5 @@
 [![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
-[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3.X.X)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3.X.X)](https://github.com/palcarazm/bootstrap5-toggle/releases)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Bootstrap 5](https://img.shields.io/npm/dependency-version/bootstrap5-toggle/bootstrap?logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.2)
