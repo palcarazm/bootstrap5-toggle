@@ -1,0 +1,34 @@
+<h2>Usage</h2>
+<hr>
+
+<h3 class="text-secondary">Initialize with HTML</h3>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles.</p>
+<pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" checked&gt;</code></pre>
+
+<h3 class="text-secondary">Initialize with JavaScript</h3>
+<p>Simply call the <code>bootstrapToggle</code> method to convert checkboxes into toggles. See <a
+        href="#api">Options</a> for additional colors, etc.</p>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="usage-jquery-tab" data-bs-toggle="tab" data-bs-target="#usage-jquery" type="button" role="tab" aria-controls="usage-jquery" aria-selected="true">jQuery</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link position-relative" id="usage-ecmas-tab" data-bs-toggle="tab" data-bs-target="#usage-ecmas" type="button" role="tab" aria-controls="usage-ecmas" aria-selected="false">
+            ECMAS
+            <span class="position-absolute top-0 start-100 translate-middle badge badge-pill badge-danger">
+                NEW
+                <span class="visually-hidden">v3.7.0</span>
+            </span>
+        </button>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="usage-jquery" role="tabpanel" aria-labelledby="usage-jquery-tab" tabindex="0">
+<pre><code class="highlight language-javascript">$('input[data-toggle="toggle"]').bootstrapToggle();</code></pre>
+    </div>
+    <div class="tab-pane fade" id="usage-ecmas" role="tabpanel" aria-labelledby="usage-ecmas-tab" tabindex="0">
+<pre ><code class="highlight language-javascript">document.querySelectorAll('input[type=checkbox][data-toggle="toggle"]').forEach(function(ele) {
+    ele.bootstrapToggle();
+});</code></pre>
+    </div>
+</div>
