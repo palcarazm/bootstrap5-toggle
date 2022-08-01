@@ -10,6 +10,8 @@ module.exports = function (grunt) {
       " * @author 2011-2014 Min Hur (https://github.com/minhur)\n" +
       " * @author 2018-2019 Brent Ely (https://github.com/gitbrent)\n" +
       " * @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)\n" +
+      " * @funding <%= pkg.funding.type %>\n" +
+      " * @see <%= pkg.funding.url %>\n" +
       " * @license <%= pkg.license %>\n" +
       " * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE\n" +
       " */\n",

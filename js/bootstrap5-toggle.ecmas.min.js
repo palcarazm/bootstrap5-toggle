@@ -4,6 +4,8 @@
  * @author 2011-2014 Min Hur (https://github.com/minhur)
  * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
  * @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)
+ * @funding GitHub Sponsors
+ * @see https://github.com/sponsors/palcarazm
  * @license MIT
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
