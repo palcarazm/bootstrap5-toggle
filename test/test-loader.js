@@ -267,7 +267,9 @@ function initTestLayout() {
         formDiv = (COL.clone())
         .append( $('<div class="'+layout.formTag+'">')
             .append(
-                $('<span class="input-group-text">Label</span>'),
+                $('<div class="input-group-prepend"></div').append(
+                    $('<span class="input-group-text">Label</span>')
+                ),
                 $('<input type="text" class="form-control">'),
                 $('<input type="checkbox" ' + layout.inputTag + ' data-toggle="toggle">')
             )
