@@ -1,5 +1,5 @@
 [![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/master)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Bootstrap 5](https://img.shields.io/npm/dependency-version/bootstrap5-toggle/bootstrap?logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.2)
@@ -18,9 +18,7 @@
 Project |Description
 ---|---
 [bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports bootstrap5 (jQuery and ECMAS distributions)
-[bootstrap4-toggle](https://github.com/gitbrent/bootstrap4-toggle)                         | Supports bootstrap4 (requires jQuery)
-[bootstrap-switch-button](https://github.com/gitbrent/bootstrap-switch-button)             | Supports bootstrap4+ (ES6 class, no dependencies)
-[bootstrap-switch-button-react](https://github.com/gitbrent/bootstrap-switch-button-react) | Supports bootstrap4+ (React component, no dependencies)
+[bootstrap4-toggle](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports bootstrap4 (jQuery and ECMAS distributions)
 
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/  
