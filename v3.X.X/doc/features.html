@@ -280,18 +280,24 @@
 <p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>input-group</code>.</p>
 <div class="example" code-lang="html">
     <div class="input-group input-group-sm mb-3 w-75">
-        <span class="input-group-text">Small</span>
+        <div class="input-group-prepend">
+            <span class="input-group-text">Small</span>
+        </div>
         <input type="text" class="form-control">
         <input type="checkbox" checked data-toggle="toggle" data-size="sm">
     </div>
     <div class="input-group mb-3 w-75">
-        <span class="input-group-text">Default</span>
+        <div class="input-group-prepend">
+            <span class="input-group-text">Default</span>
+        </div>
         <input type="text" class="form-control">
         <input type="checkbox" checked data-toggle="toggle">
     </div>
     <div class="input-group input-group-lg w-75">
-        <span class="input-group-text">Large</span>
-        <input type="text" class="form-control">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Large</span>
+        </div>
+        <input type="text" class="form-control">       
         <input type="checkbox" checked data-toggle="toggle" data-size="lg">
     </div>
 </div>
