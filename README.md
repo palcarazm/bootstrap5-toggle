@@ -18,7 +18,7 @@
 Project |Description
 ---|---
 [bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports bootstrap5 (jQuery and ECMAS distributions)
-[bootstrap4-toggle](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports bootstrap4 (jQuery and ECMAS distributions)
+[bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports bootstrap4 (jQuery and ECMAS distributions)
 
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/v3.X.X  
