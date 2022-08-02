@@ -5,6 +5,7 @@
 [![Build](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Build%20Check?logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
 [![Test](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Cypress%20Tests?label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-success.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
+[![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
 
 # Bootstrap 5 Toggle
@@ -14,10 +15,10 @@
 ***
 
 #### Library Distributions
-Project |Description
----|---
-[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | Supports [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=v5.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) (jQuery and ECMAS distributions)
-[bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)            | Supports [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=v4.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) (jQuery and ECMAS distributions)
+Branch | Bootstrap Support | Last Release
+---|---|---
+[bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=v5.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/master)](https://github.com/palcarazm/bootstrap5-toggle/releases)
+[bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)     | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=v4.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3.X.X)](https://github.com/palcarazm/bootstrap5-toggle/releases)
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/  
 
@@ -68,7 +69,7 @@ Project |Description
 ```
 
 ## Download
-[![Latest release](https://img.shields.io/github/v/release/palcarazm/bootstrap5-toggle.svg?display_name=tag&include_prereleases&sort=semver)](https://github.com/palcarazm/bootstrap5-toggle/releases/latest)
+[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/master)](https://github.com/palcarazm/bootstrap5-toggle/releases)
 
 ## NPM
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
