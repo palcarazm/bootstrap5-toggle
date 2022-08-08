@@ -4,3 +4,4 @@ node_modules
 bootstrap*.tgz
 cypress/videos
 cypress/downloads
+.vscode
