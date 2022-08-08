@@ -3,6 +3,7 @@ node_modules
 *.log
 debug
 .github
+.vscode
 test
 bootstrap*.tgz
 cypress
