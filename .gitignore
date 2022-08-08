@@ -3,5 +3,6 @@ node_modules
 *.log
 bootstrap*.tgz
 cypress/videos
+cypress/screenshots
 cypress/downloads
 .vscode

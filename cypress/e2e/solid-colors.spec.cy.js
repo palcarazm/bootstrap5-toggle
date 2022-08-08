@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import PageModel from "../support/pagemodel"
 
-const rgbWhite = 'rgb(255, 255, 255)';
+const rgbWhite = 'rgb(248, 249, 250)';
 
 describe('Solid colors feature', () => {
   context("Given ECMAS bootstrap toggle interface",()=>{
