@@ -1,8 +1,9 @@
 .DS_Store
 node_modules
 *.log
-debug/*
+debug
 .github
+.vscode
 test
 bootstrap*.tgz
 cypress
