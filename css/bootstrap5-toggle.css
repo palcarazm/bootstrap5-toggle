@@ -101,6 +101,16 @@
 .input-group .toggle-off{
     position: absolute;
 }
+.input-group:not(.has-validation)>:not(:last-child).toggle,
+.input-group.has-validation>:nth-last-child(n+3).toggle{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-group>:not(:first-child).toggle{
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 
 .toggle.btn-outline-primary .toggle-handle {
 	background-color: var(--primary);
