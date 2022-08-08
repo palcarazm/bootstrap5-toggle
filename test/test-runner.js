@@ -189,7 +189,7 @@ function testSize() {
 
     switch (colorMode.toLocaleLowerCase()) {
         case 'solid':
-            hang_compare = 'rgb(255, 255, 255)';
+            hang_compare = 'rgb(248, 249, 250)';
             break;
         case 'outline':
             hang_compare = null;

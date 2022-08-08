@@ -31,10 +31,10 @@
 	position: relative;
 	overflow: hidden;
 }
-.toggle,
-.toggle:focus,
-.toggle:hover{
-background-color: transparent;
+.toggle:hover > .toggle-group > .toggle-handle,
+.toggle:focus > .toggle-group > .toggle-handle {
+	background-color: var(--light);
+	opacity: 0.5;
 }
 .toggle input[type="checkbox"] {
 	display: none;
@@ -89,8 +89,8 @@ background-color: transparent;
 	height: 100%;
 	width: 0px;
 	border-width: 0 1px;
-	background-color: #fff;
-	border-color: #fff;
+	background-color: var(--light);
+	border-color: var(--light);
 }
 
 /** Support for input-group
@@ -133,10 +133,6 @@ background-color: transparent;
 .toggle.btn-outline-dark .toggle-handle {
 	background-color: var(--dark);
 	border-color: var(--dark);
-}
-.toggle[class*="btn-outline"]:hover .toggle-handle {
-	background-color: var(--light);
-	opacity: 0.5;
 }
 
 /* NOTE: Must come first, so classes below override as needed */
