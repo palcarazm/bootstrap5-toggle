@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 *.log
-debug/*
+debug
+img
 .github
 test
 bootstrap*.tgz
