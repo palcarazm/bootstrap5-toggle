@@ -6,13 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.3.2](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.2) 2022-08-08
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.1...v4.3.2)
+### Fixed
+* fix: Transparent inner border (#55) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/58
+
 ## [4.3.1](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.1) 2022-07-28
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.3.0...v4.3.1)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.0...v4.3.1)
 ### Fixed
 * fix: Toggle stay hover on Bootstrap 5.2.0 (#51) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/52
 
 ## [4.3.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.0) 2022-07-25
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.2.0...v4.3.0)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.2.0...v4.3.0)
 ### Added
 * feat: Distribution of ECMAS lib (#2) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/36
 * feat: Support readonly attribute (#35) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/37
@@ -22,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * feat: Tristate toggle (#40) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/47
 
 ## [4.2.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.2.0) 2022-07-12
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.1.0...v4.2.0)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.1.0...v4.2.0)
 ### Added
 * feat: Support toggle silent method by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/30
 ### Changed
@@ -33,12 +38,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * fix: Render in input-group by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/29
 
 ## [4.1.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.1.0) 2022-06-30
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v4.0.0...v4.1.0)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.0.0...v4.1.0)
 ### Added
 - feat: support for npm and yarn
 
 ## [4.0.0](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.0.0) 2022-06-30
-### [Full Changelog](https://github.com/palcaraz/bootstrap4-toggle/compare/v3.6.0...v4.0.0)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v3.6.0...v4.0.0)
 ### Added
 - feat: support for Boostrap 5
 

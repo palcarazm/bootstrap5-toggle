@@ -2,6 +2,7 @@
 node_modules
 *.log
 debug
+img
 .github
 .vscode
 test
