@@ -1,6 +1,6 @@
 {
   "name": "bootstrap5-toggle",
-  "version": "4.3.1",
+  "version": "4.3.2",
   "author": {
     "name": "Pablo Alcaraz Martínez",
     "url": "https://github.com/palcarazm/"
@@ -8,7 +8,7 @@
   "description": "Bootstrap 5 Toggle is a bootstrap 5 plugin that converts checkboxes into toggles.",
   "homepage": "https://palcarazm.github.io/bootstrap5-toggle/",
   "license": "MIT",
-  "funding":{
+  "funding": {
     "type": "GitHub Sponsors",
     "url": "https://github.com/sponsors/palcarazm"
   },
