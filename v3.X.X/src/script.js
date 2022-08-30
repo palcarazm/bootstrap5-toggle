@@ -37,6 +37,11 @@ $().ready(function () {
 
   // Wait for load
   setTimeout(function () {
+    // Anchor root mapping
+    $('a[root]').each(function(_index, anchor){
+      $(anchor).attr('href',ROOT + $(anchor).attr('root'));
+    });
+    
     // Add table of contents
     $("#toc").html("");
     Toc.init({
