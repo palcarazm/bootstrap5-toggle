@@ -19,10 +19,21 @@ Branch | Bootstrap Support | Last Release
 ---|---|---
 [bootstrap5-toggle](https://github.com/palcarazm/bootstrap5-toggle)                        | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=v5.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/master?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
 [bootstrap5-toggle v3.X.X](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.X.X)     | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=v4.X.X&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3.X.X?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
+
 # Demos
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/  
 
 ![Demo GIF](img/bootstrap5-toggle-demo.gif)
+
+# Related Bootstrap Puglins
+<div align="center">
+  <a href="https://github.com/palcarazm/bs-darkmode" title="Boostrap Darkmode"
+    ><img
+      src="https://github-readme-stats.vercel.app/api/pin/?username=palcarazm&repo=bs-darkmode&border_radius=10&show_owner=true"
+  /></a>
+</div>
+
+***
 
 <!-- To update TOC run .\node_modules\.bin\doctoc README.md --github -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
