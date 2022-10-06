@@ -26,6 +26,16 @@ Branch | Bootstrap Support | Last Release
 
 ![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
+# Related Bootstrap Puglins
+<div align="center">
+  <a href="https://github.com/palcarazm/bs-darkmode" title="Boostrap Darkmode"
+    ><img
+      src="https://github-readme-stats.vercel.app/api/pin/?username=palcarazm&repo=bs-darkmode&border_radius=10&show_owner=true"
+  /></a>
+</div>
+
+***
+
 <!-- To update TOC run .\node_modules\.bin\doctoc README.md --github -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
