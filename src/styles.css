@@ -52,3 +52,15 @@ code.hljs .hljs-tag .hljs-attr{
 .example > div.toggle {
 	margin-right: 10px;
 }
+nav#toc .navbar-nav{flex-direction: column;}
+
+nav[data-toggle=toc] .nav>li>a{color:var(--gray);}
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover{
+	color: var(--purple);
+	border-color: var(--purple);
+}
+.bs-darkmode-dark nav[data-toggle=toc] .nav-link.active, .bs-darkmode-dark nav[data-toggle=toc] .nav-link.active:focus, .bs-darkmode-dark nav[data-toggle=toc] .nav-link.active:hover{
+	filter: brightness(1.4);
+}
+
+.bs-darkmode-dark .img-toggle img{filter: brightness(1.7);}
