@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.3...v4.3.3)
 ### Changed
 * refactor: More specific CSS selectors
-* Update dependencies. Support for Bootstarap v5.2.2
+* Update dependencies. Support for Bootstrap v5.2.2
 
 ## [4.3.2](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.2) 2022-08-08
 ### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.1...v4.3.2)
