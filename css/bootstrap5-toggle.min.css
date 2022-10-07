@@ -1,5 +1,5 @@
 /* Copyright Notice
- * bootstrap5-toggle v4.3.2
+ * bootstrap5-toggle v4.3.3
  * https://palcarazm.github.io/bootstrap5-toggle/
  * @author 2011-2014 Min Hur (https://github.com/minhur)
  * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
