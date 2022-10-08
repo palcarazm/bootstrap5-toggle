@@ -112,35 +112,35 @@
     border-bottom-left-radius: 0;
 }
 
-.toggle.btn-outline-primary > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-primary > .toggle-group > .toggle-handle {
 	background-color: var(--primary);
 	border-color: var(--primary);
 }
-.toggle.btn-outline-secondary > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-secondary > .toggle-group > .toggle-handle {
 	background-color: var(--secondary);
 	border-color: var(--secondary);
 }
-.toggle.btn-outline-success > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-success > .toggle-group > .toggle-handle {
 	background-color: var(--success);
 	border-color: var(--success);
 }
-.toggle.btn-outline-danger > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-danger > .toggle-group > .toggle-handle {
 	background-color: var(--danger);
 	border-color: var(--danger);
 }
-.toggle.btn-outline-warning > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-warning > .toggle-group > .toggle-handle {
 	background-color: var(--warning);
 	border-color: var(--warning);
 }
-.toggle.btn-outline-info > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-info > .toggle-group > .toggle-handle {
 	background-color: var(--info);
 	border-color: var(--info);
 }
-.toggle.btn-outline-light > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-light > .toggle-group > .toggle-handle {
 	background-color: var(--light);
 	border-color: var(--light);
 }
-.toggle.btn-outline-dark > .toggle-group > .toggle-handle {
+.toggle:not(:hover):not(:focus).btn-outline-dark > .toggle-group > .toggle-handle {
 	background-color: var(--dark);
 	border-color: var(--dark);
 }
