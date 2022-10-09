@@ -5,11 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [4.3.4](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.4) 2022-10-09
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.3...v4.3.4)
 ### Fixed
-* fix: handle of outline buttons: on hover or focus (#71)
+* fix: Handle's background color of outline toggles on hover or focus (#71)
 
 ## [4.3.3](https://github.com/palcaraz/bootstrap5-toggle/tree/v4.3.3) 2022-10-07
-### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.3...v4.3.3)
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v4.3.2...v4.3.3)
 ### Changed
 * refactor: More specific CSS selectors
 * Update dependencies. Support for Bootstrap v5.2.2
