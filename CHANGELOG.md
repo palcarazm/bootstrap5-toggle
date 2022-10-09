@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.7.3](https://github.com/palcaraz/bootstrap5-toggle/tree/v3.7.3) 2022-10-09
+### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v3.7.2...v3.7.3)
+### Fixed
+fix: Handle's background color of outline toggles on hover or focus (#71)
+
 ## [3.7.2](https://github.com/palcaraz/bootstrap5-toggle/tree/v3.7.2) 2022-10-07
 ### [Full Changelog](https://github.com/palcaraz/bootstrap5-toggle/compare/v3.7.1...v3.7.2)
 ### Changed
