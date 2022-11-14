@@ -43,7 +43,7 @@
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
   "devDependencies": {
-    "cypress": "^10.3.0",
+    "cypress": "^11.0.1",
     "cypress-plugin-tab": "^1.0.5",
     "doctoc": "^2.2.0",
     "grunt": "^1.5.3",
