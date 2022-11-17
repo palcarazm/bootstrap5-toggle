@@ -5,6 +5,7 @@ debug
 img
 .github
 .vscode
+.prettierrc
 test
 bootstrap*.tgz
 cypress
