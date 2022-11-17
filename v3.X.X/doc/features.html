@@ -96,8 +96,9 @@
 
 <h3 class="text-secondary">Custom tabindex</h3>
 <p>
-    Simply add <code>tabindex="x"</code> to set <code>tabindex</code> to <code>x</code>. If not <code>tabindex</code> is provided it will be set to <code>0</code>. 
-    Toggle can be switched pressing <code>ENTER</code> while it's focused.
+    Simply add <code>tabindex="x"</code> to set <code>tabindex</code> to <code>x</code>. If not <code>tabindex</code> is
+    provided it will be set to <code>0</code>.
+    Toggle can be switched pressing <code>SPACEBAR</code> while it's focused.
     <span class="badge badge-pill badge-danger">
         NEW
         <span class="visually-hidden">v3.7.0</span>
@@ -151,9 +152,11 @@
 <p>Toggle atate and status is simply set adding vanilla html attributes to the checkbox:</p>
 <ul>
     <li>Simply add <code>checked</code> to convert checkboxes into on toggles.</li>
-    <li>Simply add <code>disabled</code> to convert checkboxes into disabled toggles. Checkboxes will not be presents in the payload of a submited form.</li>
+    <li>Simply add <code>disabled</code> to convert checkboxes into disabled toggles. Checkboxes will not be presents in
+        the payload of a submited form.</li>
     <li>
-        Simply add <code>readonly</code> to convert checkboxes into disabled toggles but presents in the payload of a submited form.
+        Simply add <code>readonly</code> to convert checkboxes into disabled toggles but presents in the payload of a
+        submited form.
         <span class="badge badge-pill badge-danger">
             NEW
             <span class="visually-hidden">v3.7.0</span>
@@ -169,15 +172,17 @@
         </div>
         <div class="d-flex mt-2 align-items-start">
             <div class="me-2 font-monospace text-muted">Payload:</div>
-            <div class="flex-grow-1 me-2"><pre><code class="highlight language-json"></code></pre></div>
+            <div class="flex-grow-1 me-2">
+                <pre><code class="highlight language-json"></code></pre>
+            </div>
             <div><button type="submit" class="btn btn-outline-secondary">Submit</button></div>
         </div>
     </form>
     <script>
         let form_state_status = $("#form_state_status");
         form_state_status.submit((e) => {
-        e.preventDefault();
-        form_state_status.find('code').html(JSON.stringify(form_state_status.serializeArray(), null, 2))
+            e.preventDefault();
+            form_state_status.find('code').html(JSON.stringify(form_state_status.serializeArray(), null, 2))
         });
     </script>
 </div>
@@ -187,7 +192,9 @@
 
 <h3 class="text-secondary">Form submit values</h3>
 <p>
-    Simply add <code>data-onvalue="x" data-offvalue="y"</code> to set on state <code>value</code> to <code>x</code> and off state <code>value</code> to <code>y</code>. If original checkbox have a <code>value</code> settes, <code>data-onvalue</code> will be ignored preserving the original <code>value</code>. 
+    Simply add <code>data-onvalue="x" data-offvalue="y"</code> to set on state <code>value</code> to <code>x</code> and
+    off state <code>value</code> to <code>y</code>. If original checkbox have a <code>value</code> settes,
+    <code>data-onvalue</code> will be ignored preserving the original <code>value</code>.
     <span class="badge badge-pill badge-danger">
         NEW
         <span class="visually-hidden">v3.7.0</span>
@@ -196,21 +203,25 @@
 <div class="example skip" code-lang="html">
     <form id="form_submit_demo">
         <div>
-            <input type="checkbox" data-toggle="toggle" checked value="VALUE" data-onvalue="ON" data-offvalue="OFF" name="valueToggle">
-            <input type="checkbox" data-toggle="toggle" checked data-onvalue="ON" data-offvalue="OFF" name="dataONToggle">
+            <input type="checkbox" data-toggle="toggle" checked value="VALUE" data-onvalue="ON" data-offvalue="OFF"
+                name="valueToggle">
+            <input type="checkbox" data-toggle="toggle" checked data-onvalue="ON" data-offvalue="OFF"
+                name="dataONToggle">
             <input type="checkbox" data-toggle="toggle" checked name="simplyToggle">
         </div>
         <div class="d-flex mt-2 align-items-start">
             <div class="me-2 font-monospace text-muted">Payload:</div>
-            <div class="flex-grow-1 me-2"><pre><code class="highlight language-json"></code></pre></div>
+            <div class="flex-grow-1 me-2">
+                <pre><code class="highlight language-json"></code></pre>
+            </div>
             <div><button type="submit" class="btn btn-outline-secondary">Submit</button></div>
         </div>
     </form>
     <script>
         let form_submit_demo = $("#form_submit_demo");
         form_submit_demo.submit((e) => {
-        e.preventDefault();
-        form_submit_demo.find('code').html(JSON.stringify(form_submit_demo.serializeArray(), null, 2))
+            e.preventDefault();
+            form_submit_demo.find('code').html(JSON.stringify(form_submit_demo.serializeArray(), null, 2))
         });
     </script>
 </div>
@@ -219,7 +230,9 @@
 &lt;input type="checkbox" data-toggle="toggle" checked name="simplyToggle"&gt;</code></pre>
 
 <h3 class="text-secondary">Stacked Checkboxes</h3>
-<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>form-check</code>.</p>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap
+    <code>form-check</code>.
+</p>
 <div class="example" code-lang="html">
     <div class="form-check pl-0">
         <input id="stackedCheck1" class="form-check-input" type="checkbox" data-toggle="toggle" checked>
@@ -232,7 +245,9 @@
 </div>
 
 <h3 class="text-secondary">Inline Checkboxes</h3>
-<p>Simply add <code>data-toggle="toggle"</code> to a convert checkboxes into toggles inside a Bootstrap <code>form-check form-check-inline</code>.</p>
+<p>Simply add <code>data-toggle="toggle"</code> to a convert checkboxes into toggles inside a Bootstrap
+    <code>form-check form-check-inline</code>.
+</p>
 <div class="example" code-lang="html">
     <div class="form-check form-check-inline">
         <input id="inlineCheckbox1" class="form-check-input" type="checkbox" data-toggle="toggle" data-style="mr-1"
@@ -247,7 +262,9 @@
 </div>
 
 <h3 class="text-secondary">Input-Group Checkboxes</h3>
-<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap <code>input-group</code>.</p>
+<p>Simply add <code>data-toggle="toggle"</code> to convert checkboxes into toggles inside a Bootstrap
+    <code>input-group</code>.
+</p>
 <div class="example" code-lang="html">
     <div class="input-group input-group-sm mb-3 w-75">
         <div class="input-group-prepend">
@@ -267,7 +284,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">Large</span>
         </div>
-        <input type="text" class="form-control">       
+        <input type="text" class="form-control">
         <input type="checkbox" checked data-toggle="toggle" data-size="lg">
     </div>
 </div>
