@@ -9,7 +9,7 @@
         content="Bootstrap 5 Toggle is a bootstrap plugin that converts checkboxes into responsive toggles.">
     <meta name="keywords" content="bootstrap, toggle, switch, bootstrap-toggle, bootstrap-switch, bootstrap-checkbox">
     <meta name="author" content="https://github.com/palcarazm">
-    <meta name="version" content="v4.3.4">
+    <meta name="version" content="v4.3.5">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="1 month">
     <title>Bootstrap 5 Toggle</title>
@@ -19,20 +19,22 @@
     <meta property="og:description"
         content="Bootstrap 5 Toggle is a bootstrap plugin that converts checkboxes into responsive toggles." />
     <meta property="og:url" content="https://palcarazm.github.io/bootstrap5-toggle/" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/palcarazm/bootstrap5-toggle/gh-pages/img/card.png" />
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/palcarazm/bootstrap5-toggle/gh-pages/img/card.png" />
     <meta property="og:image:width" content="728" />
     <meta property="og:image:height" content="364" />
-    
+
     <meta name="twitter:title" content="Bootstrap 5 Toggle">
     <meta name="twitter:description"
         content="Bootstrap 5 Toggle is a bootstrap plugin that converts checkboxes into responsive toggles.">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/palcarazm/bootstrap5-toggle/gh-pages/img/card.png">
+    <meta name="twitter:image"
+        content="https://raw.githubusercontent.com/palcarazm/bootstrap5-toggle/gh-pages/img/card.png">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-        integrity="sha256-IUOUHAPazai08QFs7W4MbzTlwEWFo7z/4zw8YmxEiko=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bs-darkmode@2.0.0/css/bs-darkmode.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"
         integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
@@ -42,8 +44,8 @@
         crossorigin="anonymous"></script>
     <!--<script src="js/bootstrap5-toggle.js"></script>
 	<link rel="stylesheet" href="css/bootstrap5-toggle.css">-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.4/js/bootstrap5-toggle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/js/bootstrap5-toggle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/css/bootstrap5-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/styles.css">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHEWVTJSJW"></script>
@@ -56,8 +58,8 @@
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#toc">
-    <a href="https://github.com/palcarazm/bootstrap5-toggle"
-        class="position-absolute top-0 end-0 d-none d-md-inline" target="_blank"><img loading="lazy" width="149" height="149"
+    <a href="https://github.com/palcarazm/bootstrap5-toggle" class="position-absolute top-0 end-0 d-none d-md-inline"
+        target="_blank"><img loading="lazy" width="149" height="149"
             src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149"
             class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
     <div class="px-4 py-5 my-5 text-center">
@@ -78,14 +80,15 @@
             <div class="col-md-3 col-lg-2">
                 <div class="position-sticky" style="top: 0rem;">
                     <div class="d-none d-md-block position-relative mx-auto py-5 img-toggle">
-                        <img class="d-block mx-auto position-absolute top-50 start-50 translate-middle" src="img/logo_on.png"
-                            alt="Bootstrap 5 Toggle">
+                        <img class="d-block mx-auto position-absolute top-50 start-50 translate-middle"
+                            src="img/logo_on.png" alt="Bootstrap 5 Toggle">
                         <img class="d-block mx-auto position-absolute top-50 start-50 translate-middle invisible"
                             src="img/logo_off.png" alt="Bootstrap 5 Toggle">
                     </div>
-                    <nav class="navbar navbar-expand-md navbar-light flex-md-column p-0"  aria-label="Site menu">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <nav class="navbar navbar-expand-md navbar-light flex-md-column p-0" aria-label="Site menu">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <button class="btn border mb-md-2" data-plugin="bsdarkmode" allowsCookie></button>
@@ -94,7 +97,7 @@
                                 <span class="input-group-text" id="basic-addon1">Version</span>
                                 <select class="form-select form-control" id="version">
                                     <option selected value="#">v4.X.X</option>
-                            <option value="v3.X.X">v3.X.X</option>
+                                    <option value="v3.X.X">v3.X.X</option>
                                 </select>
                             </div>
                         </form>
@@ -104,23 +107,30 @@
                     </nav>
                     <div class="d-none d-md-flex flex-column align-items-center">
                         <div class="mt-3">
-                            <a href="https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle" target="_blank" rel="noopener noreferrer" title="Rate in Open Base">
-                                <img src="https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?style=openbase&token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=" alt="Open Base">
+                            <a href="https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle"
+                                target="_blank" rel="noopener noreferrer" title="Rate in Open Base">
+                                <img src="https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?style=openbase&token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o="
+                                    alt="Open Base">
                             </a>
                         </div>
                         <div class="mt-1">
                             <a href="https://github.com/sponsors/palcarazm" title="Sponsors">
-                                <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white"/>
+                                <img
+                                    src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white" />
                             </a>
                         </div>
                         <div class="mt-1">
-                            <a href="http://github.com/palcarazm/bootstrap5-toggle" target="_blank" rel="noopener noreferrer" title="GitHub repository">
-                                <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+                            <a href="http://github.com/palcarazm/bootstrap5-toggle" target="_blank"
+                                rel="noopener noreferrer" title="GitHub repository">
+                                <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
+                                    alt="GitHub">
                             </a>
                         </div>
                         <div class="mt-1">
-                            <a href="https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE" target="_blank" rel="noopener noreferrer" title="License">
-                                <img src="https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?style=for-the-badge" alt="License">
+                            <a href="https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE" target="_blank"
+                                rel="noopener noreferrer" title="License">
+                                <img src="https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?style=for-the-badge"
+                                    alt="License">
                             </a>
                         </div>
                     </div>
@@ -138,7 +148,8 @@
     </main>
     <footer class="bg-light border-top p-4">
         <div class="container">
-            <div class="d-flex font-weight-light flex-column flex-md-row justify-content-around align-items-center mb-4">
+            <div
+                class="d-flex font-weight-light flex-column flex-md-row justify-content-around align-items-center mb-4">
                 <span>Original by <a href="https://github.com/minhur" target="_blank">Min Hur</a></span>
                 <span>Bootstrap 4 by <a href="https://github.com/gitbrent" target="_blank">Brent Ely</a></span>
                 <span>Bootstrap 5 by <a href="https://github.com/palcarazm" target="_blank">Pablo Alcaraz
@@ -146,23 +157,30 @@
             </div>
             <div class="d-flex font-weight-light flex-column flex-md-row justify-content-center align-items-center">
                 <div class="d-md-none d-block mb-2 mb-md-0">
-                    <a href="https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle" target="_blank" rel="noopener noreferrer" title="Rate in Open Base">
-                        <img src="https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?style=openbase&token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=" alt="Open Base">
+                    <a href="https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle"
+                        target="_blank" rel="noopener noreferrer" title="Rate in Open Base">
+                        <img src="https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?style=openbase&token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o="
+                            alt="Open Base">
                     </a>
                 </div>
                 <div class="d-md-none d-block mb-2 mb-md-0">
                     <a href="https://github.com/sponsors/palcarazm" title="Sponsors">
-                        <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white"/>
+                        <img
+                            src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white" />
                     </a>
                 </div>
                 <div class="d-md-none d-block mb-2 mb-md-0">
-                    <a href="http://github.com/palcarazm/bootstrap5-toggle" target="_blank" rel="noopener noreferrer" title="GitHub repository">
-                        <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+                    <a href="http://github.com/palcarazm/bootstrap5-toggle" target="_blank" rel="noopener noreferrer"
+                        title="GitHub repository">
+                        <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
+                            alt="GitHub">
                     </a>
                 </div>
                 <div class="d-md-none d-block mb-2 mb-md-0">
-                    <a href="https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE" target="_blank" rel="noopener noreferrer" title="License">
-                        <img src="https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?style=for-the-badge" alt="License">
+                    <a href="https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE" target="_blank"
+                        rel="noopener noreferrer" title="License">
+                        <img src="https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?style=for-the-badge"
+                            alt="License">
                     </a>
                 </div>
                 <iframe
@@ -174,13 +192,14 @@
             </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha256-xLI5SjD6DkojxrMIVBNT4ghypv12Xtj7cOa0AgKd6wA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha256-lSABj6XYH05NydBq+1dvkMu6uiCc/MbLYOFGRkf3iQs=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-darkmode@2.0.0/js/bs-darkmode.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
-    <script>const ROOT=""</script>
+    <script>const ROOT = ""</script>
     <script src="src/script.js"></script>
 </body>
+
 </html>
