@@ -4,6 +4,7 @@
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Build](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Build%20Check?logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
 [![Test](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Cypress%20Tests?label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
+[![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@4.3.5?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-success.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
