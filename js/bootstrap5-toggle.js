@@ -10,6 +10,7 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
+
 +(function ($) {
   "use strict";
 
@@ -84,18 +85,20 @@
     }
 
     // 1: On
-    let $toggleOn = $(
-      '<label for="' + this.$element.prop("id") + '" class="btn">'
-    )
+    let $toggleOn = $('<label class="btn">')
       .html(this.options.on)
       .addClass("btn-" + this.options.onstyle + " " + size);
+    if (this.$element.prop("id")) {
+      $toggleOn.prop("for", this.$element.prop("id"));
+    }
 
     // 2: Off
-    let $toggleOff = $(
-      '<label for="' + this.$element.prop("id") + '" class="btn">'
-    )
+    let $toggleOff = $('<label class="btn">')
       .html(this.options.off)
       .addClass("btn-" + this.options.offstyle + " " + size);
+    if (this.$element.prop("id")) {
+      $toggleOff.prop("for", this.$element.prop("id"));
+    }
 
     // 3: Handle
     let $toggleHandle = $('<span class="toggle-handle btn">').addClass(size);
