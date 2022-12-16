@@ -4,10 +4,11 @@
 
 Versions currently being supported with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| > 4.0   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Active Support              | Critical Support            |
+| ------- | --------------------------- | --------------------------- |
+| > v4    | :white_check_mark:          | :white_check_mark:          |
+| v3      | :warning: Since 01 Jan 2023 | :warning: Since 01 Jun 2023 |
+| < v3    | :x:                         | :x:                         |
 
 ## Reporting a Vulnerability
 
