@@ -3,10 +3,8 @@
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.6)
-[![Build](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Build%20Check?logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
-[![Test](https://img.shields.io/github/workflow/status/palcarazm/bootstrap5-toggle/Cypress%20Tests?label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
 [![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@3.7.3?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
-[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-success.svg)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
+[![EOL](https://img.shields.io/static/v1?label=EOL&message=active%20support%20since%2001%20Jan%202023&color=important)](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
 
@@ -27,7 +25,7 @@ Branch | Bootstrap Support | Last Release
 
 ![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
-# Related Bootstrap Puglins
+# Related Bootstrap Plugins
 <div align="center">
   <a href="https://github.com/palcarazm/bs-darkmode" title="Boostrap Darkmode"
     ><img
@@ -42,6 +40,10 @@ Branch | Bootstrap Support | Last Release
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
+- [Related Bootstrap Puglins](#related-bootstrap-puglins)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [jQuery Interface](#jquery-interface)
