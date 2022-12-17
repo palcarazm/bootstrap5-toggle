@@ -2,9 +2,9 @@ name: Build Check
 
 on:
   push:
-    branches: [ "master", "v3.X.X"  ]
+    branches: [ "v4", "v3"  ]
   pull_request:
-    branches: [ "master", "v3.X.X"  ]
+    branches: [ "v4", "v3"  ]
 
 jobs:
   build:
