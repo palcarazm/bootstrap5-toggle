@@ -1,7 +1,7 @@
-[![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?color=informational)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
 [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/master?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
-[![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
-[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
+[![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
+[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Build](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/build.yml?branch=v4&logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
 [![Test](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/cypress.yml?branch=v4&label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
 [![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@4.3.5?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
@@ -76,7 +76,7 @@
 
 ## CDN
 
-[![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?color=success&label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
+[![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 
 ### jQuery Interface
 
@@ -102,7 +102,7 @@
 
 ## NPM
 
-[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm&color=success)](https://www.npmjs.com/package/bootstrap5-toggle)
+[![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
 npm install bootstrap5-toggle@4.3.5
