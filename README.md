@@ -28,7 +28,7 @@
 
 ![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
-# Related Bootstrap Puglins
+# Related Bootstrap Plugins
 
 <div align="center">
   <a href="https://github.com/palcarazm/bs-darkmode" title="Boostrap Darkmode"
@@ -45,6 +45,10 @@
 
 **Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
+- [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [jQuery Interface](#jquery-interface)
