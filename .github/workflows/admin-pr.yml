@@ -17,12 +17,3 @@ jobs:
       with:
         project: 'https://github.com/palcarazm/bootstrap5-toggle/projects/2'
         column_name: 'To do'
-    - name: Comment in NEW pull request
-      uses: peter-evans/create-or-update-comment@v2
-      if: github.event.action == 'opened'
-      with:
-        issue-number: ${{ github.event.pull_request.number }}
-        body: |
-          Hi! :wave:
-          Thanks for your pull request. You are helping to improve Bootstrap 5 toggle.
-        reactions: '+1'
