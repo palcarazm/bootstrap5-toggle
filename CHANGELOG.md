@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v3.7.3...v3)
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v3.7.4...v3)
+
+## [3.7.4](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.7.4) 2022-12-19
+
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v3.7.3....v3.7.4)
 
 ### Fixed
 
