@@ -6,6 +6,7 @@ img
 .github
 .vscode
 .prettierrc
+.dccache
 test
 bootstrap*.tgz
 cypress
