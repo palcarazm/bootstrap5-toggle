@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v3.7.3...v3)
 
+### Fixed
+
+- fix: Remove attribute for if there is no ID Fixes (#80)
+
+### Bump
+
+- bump: Bump cypress from v10.3.0 to v12.1.0
+- bump: Bump Jquery from v3.6.0 to v3.6.2
+
 ## [3.7.3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3.7.3) 2022-10-09
 
 ### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v3.7.2...v3.7.3)
