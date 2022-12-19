@@ -10,6 +10,7 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
+
 "use strict";
 
 (function () {
@@ -134,7 +135,7 @@
         "class",
         "btn btn-" + this.options.onstyle + " " + size
       );
-      ecmasToggleOn.setAttribute("for", this.element.id);
+      if (this.element.id) ecmasToggleOn.setAttribute("for", this.element.id);
       ecmasToggleOn.innerHTML = this.options.on;
 
       // 2: Off
@@ -143,7 +144,7 @@
         "class",
         "btn btn-" + this.options.offstyle + " " + size
       );
-      ecmasToggleOff.setAttribute("for", this.element.id);
+      if (this.element.id) ecmasToggleOff.setAttribute("for", this.element.id);
       ecmasToggleOff.innerHTML = this.options.off;
 
       // 3: Handle
