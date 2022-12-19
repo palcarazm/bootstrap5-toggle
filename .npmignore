@@ -10,3 +10,4 @@ cypress
 cypress.config.js
 .vscode
 .prettierrc
+.dccache
