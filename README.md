@@ -5,7 +5,7 @@
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Build](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/build.yml?branch=v4&logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
 [![Test](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/cypress.yml?branch=v4&label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
-[![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@4.3.5?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
+[![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@4.3.6?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 [![EOL](https://img.shields.io/static/v1?label=EOL&message=active%20support&color=success)](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
@@ -18,9 +18,9 @@
 
 #### Library Distributions
 
-| Branch                                                                                 | Bootstrap Support                                                                                                                                                       | Last Release                                                                                                                                                              |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [bootstrap5-toggle v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4)                    | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
+| Branch                                                                         | Bootstrap Support                                                                                                                                                         | Last Release                                                                                                                                                          |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [bootstrap5-toggle v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 | [bootstrap5-toggle v3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3) | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 
 # Demos
@@ -46,8 +46,7 @@
 
 **Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle) - [Library Distributions](#library-distributions)
 - [Demos](#demos)
 - [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
@@ -83,18 +82,18 @@
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/js/bootstrap5-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.min.js"></script>
 ```
 
 ### ECMAS Interface
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.5/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ## Download
@@ -106,13 +105,13 @@
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
-npm install bootstrap5-toggle@4.3.5
+npm install bootstrap5-toggle@4.3.6
 ```
 
 ## Yarn
 
 ```ksh
-yarn add bootstrap5-toggle@4.3.5
+yarn add bootstrap5-toggle@4.3.6
 ```
 
 # Usage

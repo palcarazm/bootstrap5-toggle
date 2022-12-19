@@ -6,13 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v4)
+
+## [4.3.6](https://github.com/palcarazm/bootstrap5-toggle/tree/v4.3.6) 2022-12-19
+
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.5...v4.3.6)
+
 ### Fixed
+
 - fix: Remove attribute for if there is no ID Fixes #80 (co-authored-by [@DarkNami](https://github.com/DarkNami))
 
 ### Bump
-- bump: Bump cypress from 11.2.0 to 12.0.2 
 
-### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.5...master)
+- bump: Bump cypress from 11.2.0 to 12.1.0
+- bump: Bump jquery from 3.6.1 to 3.6.2
 
 ## [4.3.5](https://github.com/palcarazm/bootstrap5-toggle/tree/v4.3.5) 2022-11-23
 
@@ -204,8 +212,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Old Bootstrap 2 files
-
-[unreleased]: https://github.com/gitbrent/bootstrap4-toggle/compare/v1.9.0...HEAD
-[3.2.0]: https://github.com/gitbrent/bootstrap4-toggle/compare/v3.1.0...v3.2.0
-[3.1.0]: https://github.com/gitbrent/bootstrap4-toggle/compare/v3.0.0...v3.1.0
-[3.0.0]: https://github.com/gitbrent/bootstrap4-toggle/compare/v2.2.2...v3.0.0
