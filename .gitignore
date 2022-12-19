@@ -1,4 +1,5 @@
 .DS_Store
+.dccache
 node_modules
 *.log
 css/*
