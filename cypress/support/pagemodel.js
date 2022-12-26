@@ -6,7 +6,13 @@ class PageModel {
    * @static
    */
   static load(bstInterface, btn_data_test) {
-    cy.visit("./test/test-app." + bstInterface.toLowerCase() + ".html");
+    cy.visit("./test/test-app." + bstInterface.toLowerCase() + ".html", {
+      onBeforeLoad(win) {
+        cy.stub(win.console, "log").as("consoleLog");
+        cy.stub(win.console, "warn").as("consoleWarn");
+        cy.stub(win.console, "error").as("consoleError");
+      },
+    });
     cy.get('button[data-test="' + btn_data_test + '"]').click();
   }
 

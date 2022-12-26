@@ -42,10 +42,24 @@ const STATES = {
     code: "checked",
     name: "activated",
     tag: true,
+    property: "onlabel",
+    inverse: "off",
+  },
+  deprecatedActivated: {
+    code: "checked",
+    name: "activated",
+    tag: true,
     property: "on",
     inverse: "off",
   },
   disactivated: {
+    code: "unchecked",
+    name: "deactivated",
+    tag: false,
+    property: "offlabel",
+    inverse: "on",
+  },
+  deprecatedDisactivated: {
     code: "unchecked",
     name: "deactivated",
     tag: false,
@@ -383,8 +397,8 @@ function initTestApiContructor() {
       .html("Create")
       .on("click", () => {
         let options = {
-          on: "Enabled",
-          off: "Disabled",
+          onlabel: "Enabled",
+          offlabel: "Disabled",
           onstyle: "success",
           offstyle: "danger",
           onvalue: "ON",
@@ -414,8 +428,8 @@ function initTestApiContructor() {
       .html("Create")
       .on("click", () => {
         let options = {
-          on: "Enabled",
-          off: "Disabled",
+          onlabel: "Enabled",
+          offlabel: "Disabled",
           onstyle: "outline-success",
           offstyle: "outline-danger",
           style: "mystyle",
@@ -451,8 +465,8 @@ function initTestApiContructor() {
       .html("Create")
       .on("click", () => {
         let options = {
-          on: "Enabled",
-          off: "Disabled",
+          onlabel: "Enabled",
+          offlabel: "Disabled",
           onstyle: "success",
           offstyle: "danger",
         };
@@ -471,6 +485,34 @@ function initTestApiContructor() {
     $('<div class="row align-items-center">').append(COL.clone(), COL.clone())
   );
   MAIN.append(TEST_TITLE.clone().html("API input with value"), testDiv);
+
+  toggleDiv = COL.clone().append($('<input type="checkbox" id="toggle4">'));
+  buttonDiv = COL.clone().append(
+    $('<button type="button" class="btn btn-outline-secondary">')
+      .html("Create")
+      .on("click", () => {
+        let options = {
+          on: "Enabled",
+          off: "Disabled",
+        };
+        if (INTERFACE == "JQUERY") $("#toggle4").bootstrapToggle(options);
+        if (INTERFACE == "ECMAS")
+          document.querySelector("#toggle4").bootstrapToggle(options);
+        $("#config4").html(JSON.stringify(options, null, 2));
+      })
+  );
+  configDiv = COL.clone().append($('<code id="config4">'));
+  testDiv = TEST_CONTAINER.clone().attr("id", "api-all");
+  testDiv.append(
+    $('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv)
+  );
+  testDiv.append(
+    $('<div class="row align-items-center">').append(COL.clone(), COL.clone())
+  );
+  MAIN.append(
+    TEST_TITLE.clone().html("API input with deprecated options"),
+    testDiv
+  );
 }
 
 /**

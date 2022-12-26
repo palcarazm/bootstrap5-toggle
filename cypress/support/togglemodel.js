@@ -1,7 +1,7 @@
 class ToggleModel {
   static DEFAULTS = {
-    on: "On",
-    off: "Off",
+    onlabel: "On",
+    offlabel: "Off",
     onstyle: "primary",
     offstyle: "secondary",
     onvalue: null,
@@ -12,6 +12,20 @@ class ToggleModel {
     height: null,
     tabindex: 0,
     tristate: false,
+  };
+
+  static DEPRECATION = {
+    ATTRIBUTE: "attribute",
+    OPTION: "option",
+    log: function (type, oldlabel, newlabel) {
+      return `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprected. Use ${newlabel} instead.`;
+    },
+    warnCheck: function (type, oldlabel, newlabel) {
+      cy.get("@consoleWarn").should(
+        "be.calledWith",
+        ToggleModel.DEPRECATION.log(type, oldlabel, newlabel)
+      );
+    },
   };
 
   /**
@@ -276,9 +290,14 @@ class ToggleModel {
    * @private
    */
   static #checkToggleOnWithOptions($toggle, options) {
-    cy.wrap($toggle)
-      .find(".toggle-on")
-      .should("have.html", options.on || this.DEFAULTS.on);
+    let onlabel = this.DEFAULTS.onlabel;
+    if (options.onlabel) {
+      onlabel = options.onlabel;
+    } else if (options.on) {
+      this.DEPRECATION.warnCheck(this.DEPRECATION.OPTION, "on", "onlabel");
+      onlabel = options.on;
+    }
+    cy.wrap($toggle).find(".toggle-on").should("have.html", onlabel);
     cy.wrap($toggle)
       .find(".toggle-on")
       .should(
@@ -295,9 +314,14 @@ class ToggleModel {
    * @private
    */
   static #checkToggleOffWithOptions($toggle, options) {
-    cy.wrap($toggle)
-      .find(".toggle-off")
-      .should("have.html", options.off || this.DEFAULTS.off);
+    let offlabel = this.DEFAULTS.offlabel;
+    if (options.offlabel) {
+      offlabel = options.offlabel;
+    } else if (options.off) {
+      this.DEPRECATION.warnCheck(this.DEPRECATION.OPTION, "off", "offlabel");
+      offlabel = options.off;
+    }
+    cy.wrap($toggle).find(".toggle-off").should("have.html", offlabel);
     cy.wrap($toggle)
       .find(".toggle-off")
       .should(
