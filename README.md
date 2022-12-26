@@ -45,15 +45,11 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle) - [Library Distributions](#library-distributions)
-- [Demos](#demos)
-- [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
   - [CDN](#cdn)
-    - [jQuery Interface](#jquery-interface)
     - [ECMAS Interface](#ecmas-interface)
+    - [jQuery Interface](#jquery-interface)
   - [Download](#download)
   - [NPM](#npm)
   - [Yarn](#yarn)
@@ -79,15 +75,6 @@
 
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 
-### jQuery Interface
-
-```html
-<link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/css/bootstrap5-toggle.min.css"
-  rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.min.js"></script>
-```
-
 ### ECMAS Interface
 
 ```html
@@ -95,6 +82,15 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.ecmas.min.js"></script>
+```
+
+### jQuery Interface
+
+```html
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/css/bootstrap5-toggle.min.css"
+  rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.jquery.min.js"></script>
 ```
 
 ## Download
@@ -134,9 +130,7 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 ```html
 <input id="chkToggle" type="checkbox" checked />
 <script>
-  $(function () {
-    $("#chkToggle").bootstrapToggle();
-  });
+  document.querySelector("#chkToggle").bootstrapToggle();
 </script>
 ```
 
@@ -155,11 +149,9 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
   data-off="Disabled" />
 <input type="checkbox" id="toggle-two" />
 <script>
-  $(function () {
-    $("#toggle-two").bootstrapToggle({
-      on: "Enabled",
-      off: "Disabled",
-    });
+  document.querySelector("#toggle-two").bootstrapToggle({
+    on: "Enabled",
+    off: "Disabled",
   });
 </script>
 ```
@@ -185,20 +177,23 @@ Methods can be used to control toggles directly.
 
 ```html
 <input id="toggle-demo" type="checkbox" data-toggle="toggle" />
+<script>
+  const toggleDemo = document.querySelector("#toggle-demo");
+</script>
 ```
 
-| Method        | Example                                              | Description                                       |
-| ------------- | ---------------------------------------------------- | ------------------------------------------------- |
-| initialize    | `$('#toggle-demo').bootstrapToggle()`                | Initializes the toggle plugin with options        |
-| destroy       | `$('#toggle-demo').bootstrapToggle('destroy')`       | Destroys the toggle                               |
-| on            | `$('#toggle-demo').bootstrapToggle('on')`            | Sets the toggle to 'On' state                     |
-| off           | `$('#toggle-demo').bootstrapToggle('off')`           | Sets the toggle to 'Off' state                    |
-| toggle        | `$('#toggle-demo').bootstrapToggle('toggle')`        | Toggles the state of the toggle on/off            |
-| enable        | `$('#toggle-demo').bootstrapToggle('enable')`        | Enables the toggle                                |
-| disable       | `$('#toggle-demo').bootstrapToggle('disable')`       | Disables the toggle                               |
-| readonly      | `$('#toggle-demo').bootstrapToggle('readonly')`      | Disables the toggle but preserve checkbox enabled |
-| indeterminate | `$('#toggle-demo').bootstrapToggle('indeterminate')` | Sets the toggle to 'indeterminate' state          |
-| determinate   | `$('#toggle-demo').bootstrapToggle('determinate')`   | Sets the toggle to 'determinate' state            |
+| Method        | Example                                       | Description                                       |
+| ------------- | --------------------------------------------- | ------------------------------------------------- |
+| initialize    | `toggleDemo.bootstrapToggle()`                | Initializes the toggle plugin with options        |
+| destroy       | `toggleDemo.bootstrapToggle('destroy')`       | Destroys the toggle                               |
+| on            | `toggleDemo.bootstrapToggle('on')`            | Sets the toggle to 'On' state                     |
+| off           | `toggleDemo.bootstrapToggle('off')`           | Sets the toggle to 'Off' state                    |
+| toggle        | `toggleDemo.bootstrapToggle('toggle')`        | Toggles the state of the toggle on/off            |
+| enable        | `toggleDemo.bootstrapToggle('enable')`        | Enables the toggle                                |
+| disable       | `toggleDemo.bootstrapToggle('disable')`       | Disables the toggle                               |
+| readonly      | `toggleDemo.bootstrapToggle('readonly')`      | Disables the toggle but preserve checkbox enabled |
+| indeterminate | `toggleDemo.bootstrapToggle('indeterminate')` | Sets the toggle to 'indeterminate' state          |
+| determinate   | `toggleDemo.bootstrapToggle('determinate')`   | Sets the toggle to 'determinate' state            |
 
 # Events
 
@@ -212,10 +207,10 @@ You should listen to events from the `<input type="checkbox">` directly rather t
 <input id="toggle-event" type="checkbox" data-toggle="toggle" />
 <div id="console-event"></div>
 <script>
-  $(function () {
-    $("#toggle-event").change(function () {
-      $("#console-event").html("Toggle: " + $(this).prop("checked"));
-    });
+  document.querySelector("#toggle-event").change(function (e) {
+    document
+      .querySelector("#console-event")
+      .html("Toggle: " + e.target.prop("checked"));
   });
 </script>
 ```
@@ -240,16 +235,16 @@ Passing `true` to the on, off, toggle, determinate and indeterminate methods wil
 </button>
 <script>
   function toggleApiOnSilent() {
-    $("#toggle-silent").bootstrapToggle("on", true);
+    document.querySelector("#toggle-silent").bootstrapToggle("on", true);
   }
   function toggleApiOffSilent() {
-    $("#toggle-silent").bootstrapToggle("off", true);
+    document.querySelector("#toggle-silent").bootstrapToggle("off", true);
   }
   function toggleApiOnNotSilent() {
-    $("#toggle-silent").bootstrapToggle("on");
+    document.querySelector("#toggle-silent").bootstrapToggle("on");
   }
   function toggleApiOffNotSilent() {
-    $("#toggle-silent").bootstrapToggle("off");
+    document.querySelector("#toggle-silent").bootstrapToggle("off");
   }
 </script>
 ```
@@ -266,16 +261,16 @@ This also means that using the API or Input to trigger events will work both way
 <button class="btn btn-danger" onclick="toggleInpOff()">Off by Input</button>
 <script>
   function toggleApiOn() {
-    $("#toggle-trigger").bootstrapToggle("on");
+    document.querySelector("#toggle-trigger").bootstrapToggle("on");
   }
   function toggleApiOff() {
-    $("#toggle-trigger").bootstrapToggle("off");
+    document.querySelector("#toggle-trigger").bootstrapToggle("off");
   }
   function toggleInpOn() {
-    $("#toggle-trigger").prop("checked", true).change();
+    document.querySelector("#toggle-trigger").prop("checked", true).change();
   }
   function toggleInpOff() {
-    $("#toggle-trigger").prop("checked", false).change();
+    document.querySelector("#toggle-trigger").prop("checked", false).change();
   }
 </script>
 ```
