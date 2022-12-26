@@ -1,10 +1,10 @@
 [![GitHub license](https://img.shields.io/github/license/palcarazm/bootstrap5-toggle.svg?color=informational)](https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE)
-[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
-[![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0)
+[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v5?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
+[![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
-[![Build](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/build.yml?branch=v4&logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
-[![Test](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/cypress.yml?branch=v4&label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
+[![Build](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/build.yml?branch=v5&logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
+[![Test](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/cypress.yml?branch=v5&label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
 [![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@4.3.6?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 [![EOL](https://img.shields.io/static/v1?label=EOL&message=active%20support&color=success)](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
@@ -20,6 +20,7 @@
 
 | Branch                                                                         | Bootstrap Support                                                                                                                                                         | Last Release                                                                                                                                                          |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [bootstrap5-toggle v5](https://github.com/palcarazm/bootstrap5-toggle/tree/v5) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v5?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 | [bootstrap5-toggle v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 | [bootstrap5-toggle v3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3) | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 
@@ -98,7 +99,7 @@
 
 ## Download
 
-[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
+[![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v5?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases)
 
 ## NPM
 
