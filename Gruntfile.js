@@ -22,13 +22,13 @@ module.exports = function (grunt) {
         sourceMap: true,
       },
       build: {
-        files:[
+        files: [
           {
             expand: true,
             cwd: "js",
-            src: "bootstrap5-toggle.js",
+            src: "bootstrap5-toggle.jquery.js",
             dest: "js",
-            ext: ".min.js",
+            ext: ".jquery.min.js",
           },
           {
             expand: true,
@@ -36,8 +36,8 @@ module.exports = function (grunt) {
             src: "bootstrap5-toggle.ecmas.js",
             dest: "js",
             ext: ".ecmas.min.js",
-          }
-      ]
+          },
+        ],
       },
     },
     cssmin: {
