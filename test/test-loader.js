@@ -42,28 +42,32 @@ const STATES = {
     code: "checked",
     name: "activated",
     tag: true,
-    property: "onlabel",
+    value: "on",
+    label: "onlabel",
     inverse: "off",
   },
   deprecatedActivated: {
     code: "checked",
     name: "activated",
     tag: true,
-    property: "on",
+    value: "on",
+    label: "on",
     inverse: "off",
   },
   disactivated: {
     code: "unchecked",
     name: "deactivated",
     tag: false,
-    property: "offlabel",
+    value: "off",
+    label: "offlabel",
     inverse: "on",
   },
   deprecatedDisactivated: {
     code: "unchecked",
     name: "deactivated",
     tag: false,
-    property: "off",
+    value: "off",
+    label: "off",
     inverse: "on",
   },
 };
@@ -161,7 +165,7 @@ function initTestCustomText() {
         '<input type="checkbox" ' +
           (state.tag ? state.code : "") +
           ' data-toggle="toggle" data-' +
-          state.property +
+          state.label +
           '="' +
           state.name +
           '">'
@@ -337,7 +341,7 @@ function initTestColorsOutline(colorMode, state) {
           'style="' +
           color_tag +
           'dark">'
-      ).attr("data-" + state.property + "style", color_tag + color)
+      ).attr("data-" + state.value + "style", color_tag + color)
     );
     buttonDiv = COL.clone().append(
       $('<button class="btn text-center">')
