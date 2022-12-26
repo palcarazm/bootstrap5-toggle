@@ -19,11 +19,22 @@
    */
   class Toggle {
     constructor(element, options) {
+      const DEPRECATION = {
+        value:
+          "BOOTSTRAP TOGGLE DEPRECATION CHECK -- a0Jhux0QySypjjs4tLtEo8xT2kx0AbYaq9K6mgNjWSs0HF0L8T8J0M0o3Kr7zkm7 --",
+        ATTRIBUTE: "attribute",
+        OPTION: "option",
+        log: function (type, oldlabel, newlabel) {
+          console.warn(
+            `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprected. Use ${newlabel} instead.`
+          );
+        },
+      };
       const DEFAULTS = {
-        on: "On",
+        onlabel: "On",
         onstyle: "primary",
         onvalue: null,
-        off: "Off",
+        offlabel: "Off",
         offstyle: "secondary",
         offvalue: null,
         size: "",
@@ -41,7 +52,11 @@
 
       // B: Set options
       this.options = {
-        on: this.element.getAttribute("data-on") || options.on || DEFAULTS.on,
+        onlabel:
+          this.element.getAttribute("data-onlabel") ||
+          options.onlabel ||
+          DEPRECATION.value ||
+          DEFAULTS.onlabel,
         onstyle:
           this.element.getAttribute("data-onstyle") ||
           options.onstyle ||
@@ -51,8 +66,11 @@
           this.element.getAttribute("data-onvalue") ||
           options.onvalue ||
           DEFAULTS.onvalue,
-        off:
-          this.element.getAttribute("data-off") || options.off || DEFAULTS.off,
+        offlabel:
+          this.element.getAttribute("data-offlabel") ||
+          options.offlabel ||
+          DEPRECATION.value ||
+          DEFAULTS.offlabel,
         offstyle:
           this.element.getAttribute("data-offstyle") ||
           options.offstyle ||
@@ -88,6 +106,30 @@
         name:
           this.element.getAttribute("name") || options.name || DEFAULTS.name,
       };
+
+      // C: Check deprecations
+      if (this.options.onlabel === DEPRECATION.value) {
+        if (this.element.getAttribute("data-on")) {
+          DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-on", "data-onlabel");
+          this.options.onlabel = this.element.getAttribute("data-on");
+        } else if (options.on) {
+          DEPRECATION.log(DEPRECATION.OPTION, "on", "onlabel");
+          this.options.onlabel = options.on;
+        } else {
+          this.options.onlabel = DEFAULTS.onlabel;
+        }
+      }
+      if (this.options.offlabel === DEPRECATION.value) {
+        if (this.element.getAttribute("data-off")) {
+          DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-off", "data-offlabel");
+          this.options.offlabel = this.element.getAttribute("data-off");
+        } else if (options.off) {
+          DEPRECATION.log(DEPRECATION.OPTION, "off", "offlabel");
+          this.options.offlabel = options.off;
+        } else {
+          this.options.offlabel = DEFAULTS.offlabel;
+        }
+      }
 
       // LAST: Render Toggle
       this.render();
@@ -136,7 +178,7 @@
         "btn btn-" + this.options.onstyle + " " + size
       );
       if (this.element.id) ecmasToggleOn.setAttribute("for", this.element.id);
-      ecmasToggleOn.innerHTML = this.options.on;
+      ecmasToggleOn.innerHTML = this.options.onlabel;
 
       // 2: Off
       let ecmasToggleOff = document.createElement("label");
@@ -145,7 +187,7 @@
         "btn btn-" + this.options.offstyle + " " + size
       );
       if (this.element.id) ecmasToggleOff.setAttribute("for", this.element.id);
-      ecmasToggleOff.innerHTML = this.options.off;
+      ecmasToggleOff.innerHTML = this.options.offlabel;
 
       // 3: Handle
       let ecmasToggleHandle = document.createElement("span");
