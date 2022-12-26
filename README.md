@@ -45,7 +45,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Installation](#installation)
   - [CDN](#cdn)
     - [ECMAS Interface](#ecmas-interface)
@@ -145,8 +144,8 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 <input
   type="checkbox"
   data-toggle="toggle"
-  data-on="Enabled"
-  data-off="Disabled" />
+  data-onlabel="Enabled"
+  data-offlabel="Disabled" />
 <input type="checkbox" id="toggle-two" />
 <script>
   document.querySelector("#toggle-two").bootstrapToggle({
@@ -158,8 +157,8 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 
 | Name       | Type        | Default     | Description                                                                                                                                              |
 | ---------- | ----------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `on`       | string/html | "On"        | Text of the on toggle                                                                                                                                    |
-| `off`      | string/html | "Off"       | Text of the off toggle                                                                                                                                   |
+| `onlabel`  | string/html | "On"        | Text of the on toggle                                                                                                                                    |
+| `offlabel` | string/html | "Off"       | Text of the off toggle                                                                                                                                   |
 | `size`     | string      | "normal"    | Size of the toggle. Possible values are: `large`, `normal`, `small`, `mini`.                                                                             |
 | `onstyle`  | string      | "primary"   | Style of the on toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix  |
 | `offstyle` | string      | "secondary" | Style of the off toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix |

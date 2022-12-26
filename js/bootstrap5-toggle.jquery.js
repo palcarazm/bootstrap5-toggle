@@ -20,15 +20,61 @@
   let Toggle = function (element, options) {
     // A: Capture ref to HMTL element
     this.$element = $(element);
+
     // B: Set options
     this.options = $.extend({}, this.defaults(), options);
+
+    // C: Check deprecations
+    if (this.options.onlabel === Toggle.DEPRECATION.value) {
+      if (this.$element.attr("data-on")) {
+        Toggle.DEPRECATION.log(
+          Toggle.DEPRECATION.ATTRIBUTE,
+          "data-on",
+          "data-onlabel"
+        );
+        this.options.onlabel = this.$element.attr("data-on");
+      } else if (options.on) {
+        Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "on", "onlabel");
+        this.options.onlabel = options.on;
+      } else {
+        this.options.onlabel = Toggle.DEFAULTS.onlabel;
+      }
+    }
+    if (this.options.offlabel === Toggle.DEPRECATION.value) {
+      if (this.$element.attr("data-off")) {
+        Toggle.DEPRECATION.log(
+          Toggle.DEPRECATION.ATTRIBUTE,
+          "data-off",
+          "data-offlabel"
+        );
+        this.options.offlabel = this.$element.attr("data-off");
+      } else if (options.off) {
+        Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "off", "offlabel");
+        this.options.offlabel = options.off;
+      } else {
+        this.options.offlabel = Toggle.DEFAULTS.offlabel;
+      }
+    }
+
     // LAST: Render Toggle
     this.render();
   };
 
+  Toggle.DEPRECATION = {
+    value:
+      "BOOTSTRAP TOGGLE DEPRECATION CHECK -- a0Jhux0QySypjjs4tLtEo8xT2kx0AbYaq9K6mgNjWSs0HF0L8T8J0M0o3Kr7zkm7 --",
+    ATTRIBUTE: "attribute",
+    OPTION: "option",
+    log: function (type, oldlabel, newlabel) {
+      console.warn(
+        `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprected. Use ${newlabel} instead.`
+      );
+    },
+  };
+
   Toggle.DEFAULTS = {
-    on: "On",
-    off: "Off",
+    onlabel: "On",
+    offlabel: "Off",
     onstyle: "primary",
     offstyle: "secondary",
     onvalue: null,
@@ -44,8 +90,14 @@
 
   Toggle.prototype.defaults = function () {
     return {
-      on: this.$element.attr("data-on") || Toggle.DEFAULTS.on,
-      off: this.$element.attr("data-off") || Toggle.DEFAULTS.off,
+      onlabel:
+        this.$element.attr("data-onlabel") ||
+        Toggle.DEPRECATION.value ||
+        Toggle.DEFAULTS.onlabel,
+      offlabel:
+        this.$element.attr("data-offlabel") ||
+        Toggle.DEPRECATION.value ||
+        Toggle.DEFAULTS.offlabel,
       onstyle: this.$element.attr("data-onstyle") || Toggle.DEFAULTS.onstyle,
       offstyle: this.$element.attr("data-offstyle") || Toggle.DEFAULTS.offstyle,
       onvalue:
@@ -86,7 +138,7 @@
 
     // 1: On
     let $toggleOn = $('<label class="btn">')
-      .html(this.options.on)
+      .html(this.options.onlabel)
       .addClass("btn-" + this.options.onstyle + " " + size);
     if (this.$element.prop("id")) {
       $toggleOn.prop("for", this.$element.prop("id"));
@@ -94,7 +146,7 @@
 
     // 2: Off
     let $toggleOff = $('<label class="btn">')
-      .html(this.options.off)
+      .html(this.options.offlabel)
       .addClass("btn-" + this.options.offstyle + " " + size);
     if (this.$element.prop("id")) {
       $toggleOff.prop("for", this.$element.prop("id"));
