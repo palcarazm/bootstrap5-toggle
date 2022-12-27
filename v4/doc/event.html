@@ -3,14 +3,13 @@
 
 <h3 class="text-secondary">Event Propagation</h3>
 <p>All events are propagated to and from input element to the toggle.<br>
-    Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as the toggle stays synced with the
-    input.</p>
+Listen for events on the <code>&lt;input type="checkbox"&gt;</code> directly as the toggle stays synced with the input.</p>
 <div class="example skip">
     <input id="toggle-event" type="checkbox" data-toggle="toggle">
     <script>
         $(function () {
             $('#toggle-event').change(function () {
-                $('#console-event').html($('#console-event').html() + 'Toggle: ' + $(this).prop('checked') + '<br>> ')
+                $('#console-event').html($('#console-event').html()+'Toggle: ' + $(this).prop('checked')+'<br>> ')
             })
         })
     </script>
@@ -26,9 +25,7 @@
 &lt;/script&gt;</code></pre>
 
 <h3 class="text-secondary">Stopping Event Propagation</h3>
-<p>Passing <code>true</code> to the on, off, toggle, determinate and indeterminate methods will enable the silent option
-    to prevent the control from propagating the change event in cases where you want to update the controls on/off
-    state, but do not want to fire the onChange event.</p>
+<p>Passing <code>true</code> to the on, off, toggle, determinate and indeterminate methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.</p>
 <div class="example skip">
     <input id="toggle-silent" type="checkbox" data-toggle="toggle"
         onchange="$('#chgConsole').html($('#chgConsole').html()+new Date().toISOString()+' ... change event fired!<br>> ')"><br>
@@ -87,8 +84,11 @@
     }
 &lt;/script&gt;</code></pre>
 <div class="alert alert-info position-relative" role="alert">
-    <i class="fas fa-info-circle"></i> For ECMAS JavaScript replace <code>$('#toggle-silent')...</code> with
-    <code>document.querySelector('#toggle-silent')...</code>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        NEW
+        <span class="visually-hidden">v4.3.0</span>
+    </span>
+    <i class="fas fa-info-circle"></i> For ECMAS JavaScript replace <code>$('#toggle-silent')...</code> with <code>document.querySelector('#toggle-silent')...</code>
 </div>
 
 <h3 class="text-secondary">API vs Input</h3>
