@@ -82,10 +82,32 @@
 </div>
 
 <h3 class="text-secondary">Custom Text</h3>
-<p>The text can be changed easily with attributes or options.</p>
+<p>The text can be changed easily with data attributes <code>data-onlabel</code> and <code>data-offlabel</code>.</p>
 <div class="example" code-lang="html">
-    <input type="checkbox" checked data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-onstyle="success"
-        data-offstyle="danger">
+    <input type="checkbox" checked data-toggle="toggle" data-onlabel="Ready" data-offlabel="Not Ready"
+        data-onstyle="success" data-offstyle="danger">
+</div>
+<div class="alert alert-warning" role="alert">
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        CHANGE
+        <span class="visually-hidden">v5.0.0</span>
+    </span>
+    <i class="fas fa-exclamation-circle"></i> Using <code>data-on</code> and <code>data-off</code> data attributes is
+    deprecated and will throw a console warning. Use <code>data-onlabel</code> and <code>data-offlabel</code> data
+    attributes instead.
+</div>
+
+<h3 class="text-secondary">HTML, Icons, Images</h3>
+<p>You can easily add icons or images since html is supported for on/off text.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onlabel="<i class='fa fa-play'></i> Play"
+        data-offlabel="<i class='fa fa-pause'></i> Pause">
+</div>
+
+<h3 class="text-secondary">Multiple Lines of Text</h3>
+<p>Toggles with multiple lines will adjust its heights.</p>
+<div class="example" code-lang="html">
+    <input type="checkbox" checked data-toggle="toggle" data-onlabel="Hello<br>World" data-offlabel="Goodbye<br>World">
 </div>
 
 <h3 class="text-secondary">Custom tabindex</h3>
@@ -98,19 +120,6 @@
     <input type="checkbox" data-toggle="toggle" checked tabindex="-1">
     <input type="checkbox" data-toggle="toggle" checked>
     <input type="checkbox" data-toggle="toggle" checked tabindex="1">
-</div>
-
-<h3 class="text-secondary">HTML, Icons, Images</h3>
-<p>You can easily add icons or images since html is supported for on/off text.</p>
-<div class="example" code-lang="html">
-    <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-play'></i> Play"
-        data-off="<i class='fa fa-pause'></i> Pause">
-</div>
-
-<h3 class="text-secondary">Multiple Lines of Text</h3>
-<p>Toggles with multiple lines will adjust its heights.</p>
-<div class="example" code-lang="html">
-    <input type="checkbox" checked data-toggle="toggle" data-on="Hello<br>World" data-off="Goodbye<br>World">
 </div>
 
 <h3 class="text-secondary">Animation Speed</h3>

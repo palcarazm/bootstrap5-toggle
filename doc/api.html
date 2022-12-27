@@ -18,35 +18,35 @@
     </li>
 </ul>
 <div class="example skip" code-lang="html">
-    <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
+    <input type="checkbox" data-toggle="toggle" data-onlabel="Enabled" data-offlabel="Disabled">
     <input type="checkbox" id="toggle-two">
     <script>
         $('#toggle-two').bootstrapToggle({
-            on: 'Enabled',
-            off: 'Disabled'
+            onlabel: 'Enabled',
+            offlabel: 'Disabled'
         });
     </script>
 </div>
 <div class="tab-content">
     <div class="tab-pane fade show active" id="api-options-jquery" role="tabpanel"
         aria-labelledby="api-options-jquery-tab" tabindex="0">
-        <pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled"&gt;
+        <pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-onlabel="Enabled" data-offlabel="Disabled"&gt;
 &lt;input type="checkbox" id="toggle-two"&gt;
 &lt;script&gt;
     $('#toggle-two').bootstrapToggle({
-        on: 'Enabled',
-        off: 'Disabled'
+        onlabel: 'Enabled',
+        offlabel: 'Disabled'
     });
 &lt;/script&gt;</code></pre>
     </div>
     <div class="tab-pane fade" id="api-options-ecmas" role="tabpanel" aria-labelledby="api-options-ecmas-tab"
         tabindex="0">
-        <pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled"&gt;
+        <pre><code class="highlight language-html">&lt;input type="checkbox" data-toggle="toggle" data-onlabel="Enabled" data-offlabel="Disabled"&gt;
 &lt;input type="checkbox" id="toggle-two"&gt;
 &lt;script&gt;
     document.querySelector('#toggle-two').bootstrapToggle({
-        on: 'Enabled',
-        off: 'Disabled'
+        onlabel: 'Enabled',
+        offlabel: 'Disabled'
     });
 &lt;/script&gt;</code></pre>
     </div>
@@ -64,13 +64,13 @@
         </thead>
         <tbody>
             <tr>
-                <td><code>on</code></td>
+                <td><code>onlabel</code></td>
                 <td class="text-nowrap">string | html</td>
                 <td><code>"On"</code></td>
                 <td>Text of the <em>on</em> toggle label.</td>
             </tr>
             <tr>
-                <td><code>off</code></td>
+                <td><code>offlabel</code></td>
                 <td>string | html</td>
                 <td><code>"Off"</code></td>
                 <td>Text of the <em>off</em> toggle label.</td>
@@ -167,6 +167,14 @@
             </tr>
         </tbody>
     </table>
+</div>
+<div class="alert alert-warning" role="alert">
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        CHANGE
+        <span class="visually-hidden">v5.0.0</span>
+    </span>
+    <i class="fas fa-exclamation-circle"></i> Using <code>on</code> and <code>off</code> options is
+    deprecated and will throw a console warning. Use <code>onlabel</code> and <code>offlabel</code> options instead.
 </div>
 
 <h3 class="text-secondary">Methods</h3>
