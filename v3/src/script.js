@@ -9,6 +9,33 @@ $("section[data]").each(function (_index, section) {
     if (request.readyState === 4 && request.status === 200) {
       // file deepcode ignore DOMXSS: is desired to load the html and the js from the source file.
       $(section).html(request.responseText);
+
+      // format examples
+      $(section)
+        .find(".example:not(.skip)")
+        .each(function () {
+          // fetch & encode html
+          let html = $("<div>").text($(this).html()).html();
+          // find number of space/tabs on first line (minus line break)
+          let count = html.match(/^(\s+)/)[0].length - 1;
+          // replace tabs/spaces on each lines with
+          let regex = new RegExp("\\n\\s{" + count + "}", "g");
+          let code = html.replace(regex, "\n").replace(/\t/g, "  ").trim();
+          // other cleanup
+          code = code.replace(/=""/g, "");
+          // add code block to dom
+          $(this).after(
+            $("<pre>").append(
+              $('<code class="highlight">')
+                .addClass(
+                  $(this).attr("code-lang")
+                    ? "language-" + $(this).attr("code-lang")
+                    : "language-html"
+                )
+                .html(code)
+            )
+          );
+        });
     }
     if (request.readyState === 4 && request.status != 200) {
       $(section).html(
@@ -49,31 +76,6 @@ $().ready(function () {
       $nav: $("#toc"),
     });
     $("body").scrollspy({ target: "#toc" });
-
-    // format examples
-    $(".example:not(.skip)").each(function () {
-      // fetch & encode html
-      let html = $("<div>").text($(this).html()).html();
-      // find number of space/tabs on first line (minus line break)
-      let count = html.match(/^(\s+)/)[0].length - 1;
-      // replace tabs/spaces on each lines with
-      let regex = new RegExp("\\n\\s{" + count + "}", "g");
-      let code = html.replace(regex, "\n").replace(/\t/g, "  ").trim();
-      // other cleanup
-      code = code.replace(/=""/g, "");
-      // add code block to dom
-      $(this).after(
-        $("<pre>").append(
-          $('<code class="highlight">')
-            .addClass(
-              $(this).attr("code-lang")
-                ? "language-" + $(this).attr("code-lang")
-                : "language-html"
-            )
-            .html(code)
-        )
-      );
-    });
 
     // Init highlightBlock
     hljs.highlightAll();
