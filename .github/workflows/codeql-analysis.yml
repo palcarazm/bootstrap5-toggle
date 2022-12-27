@@ -18,6 +18,7 @@ on:
   pull_request:
     types:
       - opened
+      - synchronize
     branches:
       - 'v*'
   schedule:
