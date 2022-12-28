@@ -137,20 +137,14 @@
     }
 
     // 1: On
-    let $toggleOn = $('<label class="btn">')
+    let $toggleOn = $('<span class="btn">')
       .html(this.options.onlabel)
       .addClass("btn-" + this.options.onstyle + " " + size);
-    if (this.$element.prop("id")) {
-      $toggleOn.prop("for", this.$element.prop("id"));
-    }
 
     // 2: Off
-    let $toggleOff = $('<label class="btn">')
+    let $toggleOff = $('<span class="btn">')
       .html(this.options.offlabel)
       .addClass("btn-" + this.options.offstyle + " " + size);
-    if (this.$element.prop("id")) {
-      $toggleOff.prop("for", this.$element.prop("id"));
-    }
 
     // 3: Handle
     let $toggleHandle = $('<span class="toggle-handle btn">').addClass(size);

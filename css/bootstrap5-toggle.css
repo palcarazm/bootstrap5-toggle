@@ -10,6 +10,7 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
+
 /*
 * @added 3.0.0: Return support for "*-xs" removed in Bootstrap-4
 * @see: [Comment](https://github.com/twbs/bootstrap/issues/21881#issuecomment-341972830)
@@ -58,7 +59,6 @@
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-.toggle > .toggle-group > label,
 .toggle > .toggle-group > span {
   cursor: pointer;
 }
