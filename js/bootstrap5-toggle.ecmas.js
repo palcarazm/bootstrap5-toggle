@@ -172,21 +172,19 @@
       }
 
       // 1: On
-      let ecmasToggleOn = document.createElement("label");
+      let ecmasToggleOn = document.createElement("span");
       ecmasToggleOn.setAttribute(
         "class",
         "btn btn-" + this.options.onstyle + " " + size
       );
-      if (this.element.id) ecmasToggleOn.setAttribute("for", this.element.id);
       ecmasToggleOn.innerHTML = this.options.onlabel;
 
       // 2: Off
-      let ecmasToggleOff = document.createElement("label");
+      let ecmasToggleOff = document.createElement("span");
       ecmasToggleOff.setAttribute(
         "class",
         "btn btn-" + this.options.offstyle + " " + size
       );
-      if (this.element.id) ecmasToggleOff.setAttribute("for", this.element.id);
       ecmasToggleOff.innerHTML = this.options.offlabel;
 
       // 3: Handle
