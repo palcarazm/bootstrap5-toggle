@@ -5,9 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased](https://github.com/palcarazm/bootstrap5-toggle/tree/v5)
 
-### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v4)
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5)
+
+### Added
+
+### Changed
+
+- feat!: Set ecmas interface as main interface by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/95
+- feat!: Change on and off option to onlabel and offlabel (#99) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/100
+- feat!: Change toggleOn and toggleOff elements from label to span (#96) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/101
+
+### Fixed
+
+### Bump
+
+- bump: bump jquery from 3.6.2 to 3.6.3
+- bump: bump cypress from 12.1.0 to 12.2.0
 
 ## [4.3.6](https://github.com/palcarazm/bootstrap5-toggle/tree/v4.3.6) 2022-12-19
 
