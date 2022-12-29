@@ -230,6 +230,17 @@
         toggleActionPerformed(e, this);
       }
     });
+
+    if (this.$element.prop("id")) {
+      $('label[for="' + this.$element.prop("id") + '"]').on(
+        "touchstart click",
+        (_e) => {
+          this.toggle();
+          this.$toggle.focus();
+        }
+      );
+    }
+
     // 10: Set elements to bootstrap object (NOT NEEDED)
     // 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
   };
