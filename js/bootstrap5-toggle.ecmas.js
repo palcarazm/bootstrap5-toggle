@@ -279,6 +279,21 @@
         }
       });
 
+      if (this.element.id) {
+        document
+          .querySelectorAll('label[for="' + this.element.id + '"]')
+          .forEach((label) => {
+            label.addEventListener("touchstart", (_e) => {
+              this.toggle();
+              ecmasToggle.focus();
+            });
+            label.addEventListener("click", (_e) => {
+              this.toggle();
+              ecmasToggle.focus();
+            });
+          });
+      }
+
       // 10: Set elements to bootstrap object
       this.ecmasToggle = ecmasToggle;
       this.invElement = invElement;

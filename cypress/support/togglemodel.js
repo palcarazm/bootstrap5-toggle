@@ -29,15 +29,18 @@ class ToggleModel {
   };
 
   /**
-   * Check a click in a toggle element
+   * Check a click in an element
    * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {String} elementSelector:  Selector for the element to click
    * @param {Boolean} isEnabled: Toggle enabled (Y/N)
    * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
    * @param {Boolean} tristate: Tristate toggle (Y/N)
    * @static
+   * @private
    */
-  static checkToggleClick(
+  static #checkElementClick(
     test,
+    elementSelector,
     isEnabled,
     inputAttr = "disabled",
     tristate = false
@@ -67,7 +70,7 @@ class ToggleModel {
       prevDeterminated = !test.find(".toggle").hasClass("indeterminate");
     }
     cy.wrap(test)
-      .find(".toggle")
+      .find(elementSelector)
       .click({ force: true })
       .then(() => {
         if (tristate) {
@@ -87,6 +90,53 @@ class ToggleModel {
         }
       });
   }
+
+  /**
+   * Check a click in an toggle
+   * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
+   * @param {Boolean} tristate: Tristate toggle (Y/N)
+   * @static
+   */
+  static checkToggleClick(
+    test,
+    isEnabled,
+    inputAttr = "disabled",
+    tristate = false
+  ) {
+    ToggleModel.#checkElementClick(
+      test,
+      ".toggle",
+      isEnabled,
+      inputAttr,
+      tristate
+    );
+  }
+
+  /**
+   * Check a click in an label
+   * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
+   * @param {Boolean} isEnabled: Toggle enabled (Y/N)
+   * @param {String} inputAttr: input attribute for disabled toggle [disabled (default) or readonly]
+   * @param {Boolean} tristate: Tristate toggle (Y/N)
+   * @static
+   */
+  static checkLabelClick(
+    test,
+    isEnabled,
+    inputAttr = "disabled",
+    tristate = false
+  ) {
+    ToggleModel.#checkElementClick(
+      test,
+      "label",
+      isEnabled,
+      inputAttr,
+      tristate
+    );
+  }
+
   /**
    * Check a Keypress with focused toggle
    * @param {Chainable<JQuery<HTMLElementTagNameMap[K]>>} test : test element
