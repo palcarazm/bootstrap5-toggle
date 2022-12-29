@@ -373,10 +373,18 @@ function initTestLayout() {
   Object.values(LAYOUTS).forEach((layout) => {
     formDiv = COL.clone().append(
       $('<div class="' + layout.formTag + '">').append(
-        $('<span class="input-group-text">Label</span>'),
+        $(
+          '<label class="input-group-text" for="' +
+            layout.code +
+            '">Label</label>'
+        ),
         $('<input type="text" class="form-control">'),
         $(
-          '<input type="checkbox" ' + layout.inputTag + ' data-toggle="toggle">'
+          '<input type="checkbox" ' +
+            layout.inputTag +
+            ' data-toggle="toggle" id="' +
+            layout.code +
+            '">'
         )
       )
     );
