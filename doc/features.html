@@ -189,6 +189,21 @@
     data-offlabel="Goodbye<br>World" />
 </div>
 
+<h3 class="text-secondary">Custom title</h3>
+<p>
+  Simply add <code>data-ontitle</code> and <code>data-offtitle</code> attributes
+  to set a customs titles to each par od the toggle. To set the same title in
+  both parts just use HTML standard <code>title</code> attribute.
+</p>
+<div class="example" code-lang="html">
+  <input
+    type="checkbox"
+    data-toggle="toggle"
+    data-ontitle="On"
+    data-offtitle="Off" />
+  <input type="checkbox" data-toggle="toggle" title="Toggle" />
+</div>
+
 <h3 class="text-secondary">Custom tabindex</h3>
 <p>
   Simply add <code>tabindex="x"</code> to set <code>tabindex</code> to
