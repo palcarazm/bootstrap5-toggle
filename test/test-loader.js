@@ -415,6 +415,8 @@ function initTestApiContructor() {
           offstyle: "danger",
           onvalue: "ON",
           offvalue: "OFF",
+          ontitle: "Title ON",
+          offtitle: "Title OFF",
           size: "lg",
           tristate: true,
         };

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - feat: Click on label switch and focus the toggle element (#97) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/102
+- feat: Add title definition support (#98) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/103
 
 ### Changed
 

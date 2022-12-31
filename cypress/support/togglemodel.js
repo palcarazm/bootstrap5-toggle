@@ -6,6 +6,8 @@ class ToggleModel {
     offstyle: "secondary",
     onvalue: null,
     offvalue: null,
+    ontitle: null,
+    offtitle: null,
     size: "normal",
     style: "",
     width: null,
@@ -348,6 +350,13 @@ class ToggleModel {
       onlabel = options.on;
     }
     cy.wrap($toggle).find(".toggle-on").should("have.html", onlabel);
+
+    if (options.ontitle) {
+      cy.wrap($toggle)
+        .find(".toggle-on")
+        .should("have.attr", "title", options.ontitle);
+    }
+
     cy.wrap($toggle)
       .find(".toggle-on")
       .should(
@@ -372,6 +381,13 @@ class ToggleModel {
       offlabel = options.off;
     }
     cy.wrap($toggle).find(".toggle-off").should("have.html", offlabel);
+
+    if (options.offtitle) {
+      cy.wrap($toggle)
+        .find(".toggle-off")
+        .should("have.attr", "title", options.offtitle);
+    }
+
     cy.wrap($toggle)
       .find(".toggle-off")
       .should(
