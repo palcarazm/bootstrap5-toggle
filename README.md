@@ -45,6 +45,10 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
+- [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [ECMAS Interface](#ecmas-interface)
@@ -164,6 +168,8 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 | `offstyle` | string      | "secondary" | Style of the off toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix |
 | `onvalue`  | string      | _null_      | Sets on state value                                                                                                                                      |
 | `offvalue` | string      | _null_      | Sets off state value                                                                                                                                     |
+| `ontitle`  | string      | _null_      | Title of the on toggle                                                                                                                                    |
+| `offtitle` | string      | _null_      | Title of the off toggle                                                                                                                                    |
 | `style`    | string      |             | Appends the value to the class attribute of the toggle. This can be used to apply custom styles. Refer to Custom Styles for reference.                   |
 | `width`    | integer     | _null_      | Sets the width of the toggle. if set to _null_, width will be auto-calculated.                                                                           |
 | `height`   | integer     | _null_      | Sets the height of the toggle. if set to _null_, height will be auto-calculated.                                                                         |
