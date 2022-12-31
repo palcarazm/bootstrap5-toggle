@@ -34,9 +34,11 @@
         onlabel: "On",
         onstyle: "primary",
         onvalue: null,
+        ontitle: null,
         offlabel: "Off",
         offstyle: "secondary",
         offvalue: null,
+        offtitle: null,
         size: "",
         style: "",
         width: null,
@@ -66,6 +68,11 @@
           this.element.getAttribute("data-onvalue") ||
           options.onvalue ||
           DEFAULTS.onvalue,
+        ontitle:
+          this.element.getAttribute("data-ontitle") ||
+          options.ontitle ||
+          this.element.getAttribute("title") ||
+          DEFAULTS.ontitle,
         offlabel:
           this.element.getAttribute("data-offlabel") ||
           options.offlabel ||
@@ -79,6 +86,11 @@
           this.element.getAttribute("data-offvalue") ||
           options.offvalue ||
           DEFAULTS.offvalue,
+        offtitle:
+          this.element.getAttribute("data-offtitle") ||
+          options.offtitle ||
+          this.element.getAttribute("title") ||
+          DEFAULTS.offtitle,
         size:
           this.element.getAttribute("data-size") ||
           options.size ||
@@ -178,6 +190,9 @@
         "btn btn-" + this.options.onstyle + " " + size
       );
       ecmasToggleOn.innerHTML = this.options.onlabel;
+      if (this.options.ontitle) {
+        ecmasToggleOn.setAttribute("title", this.options.ontitle);
+      }
 
       // 2: Off
       let ecmasToggleOff = document.createElement("span");
@@ -186,6 +201,9 @@
         "btn btn-" + this.options.offstyle + " " + size
       );
       ecmasToggleOff.innerHTML = this.options.offlabel;
+      if (this.options.offtitle) {
+        ecmasToggleOff.setAttribute("title", this.options.offtitle);
+      }
 
       // 3: Handle
       let ecmasToggleHandle = document.createElement("span");

@@ -79,6 +79,8 @@
     offstyle: "secondary",
     onvalue: null,
     offvalue: null,
+    ontitle: null,
+    offtitle: null,
     size: "normal",
     style: "",
     width: null,
@@ -105,6 +107,14 @@
         this.$element.attr("data-onvalue") ||
         Toggle.DEFAULTS.onvalue,
       offvalue: this.$element.attr("data-offvalue") || Toggle.DEFAULTS.offvalue,
+      ontitle:
+        this.$element.attr("data-ontitle") ||
+        this.$element.attr("title") ||
+        Toggle.DEFAULTS.ontitle,
+      offtitle:
+        this.$element.attr("data-offtitle") ||
+        this.$element.attr("title") ||
+        Toggle.DEFAULTS.offtitle,
       size: this.$element.attr("data-size") || Toggle.DEFAULTS.size,
       style: this.$element.attr("data-style") || Toggle.DEFAULTS.style,
       width: this.$element.attr("data-width") || Toggle.DEFAULTS.width,
@@ -140,11 +150,17 @@
     let $toggleOn = $('<span class="btn">')
       .html(this.options.onlabel)
       .addClass("btn-" + this.options.onstyle + " " + size);
+    if (this.options.ontitle) {
+      $toggleOn.attr("title", this.options.ontitle);
+    }
 
     // 2: Off
     let $toggleOff = $('<span class="btn">')
       .html(this.options.offlabel)
       .addClass("btn-" + this.options.offstyle + " " + size);
+    if (this.options.offtitle) {
+      $toggleOff.attr("title", this.options.offtitle);
+    }
 
     // 3: Handle
     let $toggleHandle = $('<span class="toggle-handle btn">').addClass(size);
