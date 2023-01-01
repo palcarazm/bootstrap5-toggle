@@ -10,7 +10,7 @@ code.hljs {
 }
 
 code.hljs .hljs-tag {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
 }
 
