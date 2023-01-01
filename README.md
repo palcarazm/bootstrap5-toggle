@@ -24,7 +24,7 @@
 | [bootstrap5-toggle v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 | [bootstrap5-toggle v3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3) | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
 
-See EOL in [Security Policy](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
+See EOL for each version in [Security Policy Page](https://github.com/palcarazm/bootstrap5-toggle/security/policy).
 # Demos
 
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/
