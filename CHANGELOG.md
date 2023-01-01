@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/palcarazm/bootstrap5-toggle/tree/v5)
 
 ### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5)
+### Added
+
+### Changed
+
+### Fixed
+
+### Bump
+## [5.0.0-alpha](https://github.com/palcarazm/bootstrap5-toggle/tree/v5.0.0-alpha) 2023-01-01
+
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5.0.0-alpha)
 
 ### Added
 
@@ -19,8 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat!: Set ecmas interface as main interface by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/95
 - feat!: Change on and off option to onlabel and offlabel (#99) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/100
 - feat!: Change toggleOn and toggleOff elements from label to span (#96) by @palcarazm in https://github.com/palcarazm/bootstrap5-toggle/pull/101
-
-### Fixed
 
 ### Bump
 
