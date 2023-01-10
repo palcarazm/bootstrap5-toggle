@@ -66,10 +66,25 @@ module.exports = function (grunt) {
         },
       },
     },
+    copy: {
+      main: {
+        src: "README.template.md",
+        dest: "README.md",
+        options: {
+          process: function (content, _srcpath) {
+            let pkg = grunt.file.readJSON("package.json");
+            return content.replace(/#version#/g, pkg.version);
+          },
+        },
+      },
+    },
   });
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
+  grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-banner");
   grunt.registerTask("default", ["clean", "uglify", "cssmin", "usebanner"]);
+  grunt.registerTask("build", ["clean", "uglify", "cssmin", "usebanner"]);
+  grunt.registerTask("readme", ["copy"]);
 };
