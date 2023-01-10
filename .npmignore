@@ -11,3 +11,4 @@ test
 bootstrap*.tgz
 cypress
 cypress.config.js
+README.template.md
