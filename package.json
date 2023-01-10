@@ -20,7 +20,7 @@
   "scripts": {
     "build": "grunt build",
     "postversion": "grunt build && grunt readme && doctoc README.md --github",
-    "prepare": "grunt build && grunt readme && doctoc README.md --github",
+    "prepack": "grunt build && grunt readme && doctoc README.md --github",
     "test": "cypress run --browser=chrome"
   },
   "keywords": [
