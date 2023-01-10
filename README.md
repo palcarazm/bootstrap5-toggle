@@ -46,10 +46,6 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
-- [Demos](#demos)
-- [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [ECMAS Interface](#ecmas-interface)
