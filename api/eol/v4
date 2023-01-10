@@ -2,5 +2,5 @@
   "schemaVersion": 1,
   "label": "EOL",
   "message": "critical support",
-  "color": "warning"
+  "color": "important"
 }
