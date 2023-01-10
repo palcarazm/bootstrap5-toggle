@@ -16,9 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Bump
 
-## [5.0.0](https://github.com/palcarazm/bootstrap5-toggle/tree/v5.0.0) 2023-01-10
+## [5.0.4](https://github.com/palcarazm/bootstrap5-toggle/tree/v5.0.4) 2023-01-10
 
-### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5.0.0)
+### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5.0.4)
 ## [5.0.0-alpha](https://github.com/palcarazm/bootstrap5-toggle/tree/v5.0.0-alpha) 2023-01-01
 
 ### [Full Changelog](https://github.com/palcarazm/bootstrap5-toggle/compare/v4.3.6...v5.0.0-alpha)
