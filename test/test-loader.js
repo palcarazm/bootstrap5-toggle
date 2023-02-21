@@ -447,7 +447,7 @@ function initTestApiContructor() {
           onstyle: "outline-success",
           offstyle: "outline-danger",
           style: "mystyle",
-          width: 100,
+          width: 150,
           height: 75,
           tabindex: -1,
         };
