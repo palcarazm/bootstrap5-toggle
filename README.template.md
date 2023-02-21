@@ -18,18 +18,17 @@
 
 #### Library Distributions
 
-| Branch                                                                         | Bootstrap Support                                                                                                                                                         | Last Release                                                                                                                                                          |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [bootstrap5-toggle v5](https://github.com/palcarazm/bootstrap5-toggle/tree/v5) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v5?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
-| [bootstrap5-toggle v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
-| [bootstrap5-toggle v3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3) | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) |
+|                           Version                            |                                                                             Bootstrap Support                                                                             |                                                                             Last Release                                                                              |                                                                                     End of Life                                                                                      |
+| :----------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [v5](https://github.com/palcarazm/bootstrap5-toggle/tree/v5) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v5?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) | [![EOL](https://img.shields.io/endpoint?url=https%3A%2F%2Fpalcarazm.github.io%2Fbootstrap5-toggle%2Fapi%2Feol%2Fv5)](https://github.com/palcarazm/bootstrap5-toggle/security/policy) |
+| [v4](https://github.com/palcarazm/bootstrap5-toggle/tree/v4) | [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v4?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) | [![EOL](https://img.shields.io/endpoint?url=https%3A%2F%2Fpalcarazm.github.io%2Fbootstrap5-toggle%2Fapi%2Feol%2Fv4)](https://github.com/palcarazm/bootstrap5-toggle/security/policy) |
+| [v3](https://github.com/palcarazm/bootstrap5-toggle/tree/v3) | [![Bootstrap 4](https://img.shields.io/static/v1?label=bootstrap&message=%5E4.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.0) | [![Latest release](https://img.shields.io/github/package-json/v/palcarazm/bootstrap5-toggle/v3?logo=github)](https://github.com/palcarazm/bootstrap5-toggle/releases) | [![EOL](https://img.shields.io/endpoint?url=https%3A%2F%2Fpalcarazm.github.io%2Fbootstrap5-toggle%2Fapi%2Feol%2Fv3)](https://github.com/palcarazm/bootstrap5-toggle/security/policy) |
 
 See EOL for each version in [Security Policy Page](https://github.com/palcarazm/bootstrap5-toggle/security/policy).
+
 # Demos
 
 **Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/
-
-![Demo GIF](img/bootstrap5-toggle-demo.gif)
 
 # Related Bootstrap Plugins
 
@@ -46,8 +45,7 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle) - [Library Distributions](#library-distributions)
 - [Demos](#demos)
 - [Related Bootstrap Plugins](#related-bootstrap-plugins)
 - [Installation](#installation)
@@ -169,8 +167,8 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 | `offstyle` | string      | "secondary" | Style of the off toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix |
 | `onvalue`  | string      | _null_      | Sets on state value                                                                                                                                      |
 | `offvalue` | string      | _null_      | Sets off state value                                                                                                                                     |
-| `ontitle`  | string      | _null_      | Title of the on toggle                                                                                                                                    |
-| `offtitle` | string      | _null_      | Title of the off toggle                                                                                                                                    |
+| `ontitle`  | string      | _null_      | Title of the on toggle                                                                                                                                   |
+| `offtitle` | string      | _null_      | Title of the off toggle                                                                                                                                  |
 | `style`    | string      |             | Appends the value to the class attribute of the toggle. This can be used to apply custom styles. Refer to Custom Styles for reference.                   |
 | `width`    | integer     | _null_      | Sets the width of the toggle. if set to _null_, width will be auto-calculated.                                                                           |
 | `height`   | integer     | _null_      | Sets the height of the toggle. if set to _null_, height will be auto-calculated.                                                                         |
