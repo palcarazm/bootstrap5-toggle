@@ -259,22 +259,27 @@
       {
         // A: Set style W/H
         // NOTE: `offsetWidth` returns *rounded* integer values, so use `getBoundingClientRect` instead.
-        ecmasToggle.style["min-width"] = `${
-          Math.max(
-            ecmasToggleOn.getBoundingClientRect().width,
-            ecmasToggleOff.getBoundingClientRect().width
-          ) +
-          ecmasToggleHandle.getBoundingClientRect().width / 2
-        }px`;
         if (this.options.width) {
           ecmasToggle.style.width = `${this.options.width}px`;
+        } else {
+          ecmasToggle.style["min-width"] = "100px"; // First approach for better calculation
+          ecmasToggle.style["min-width"] = `${
+            Math.max(
+              ecmasToggleOn.getBoundingClientRect().width,
+              ecmasToggleOff.getBoundingClientRect().width
+            ) +
+            ecmasToggleHandle.getBoundingClientRect().width / 2
+          }px`;
         }
-        ecmasToggle.style["min-height"] = `${Math.max(
-          ecmasToggleOn.getBoundingClientRect().height,
-          ecmasToggleOff.getBoundingClientRect().height
-        )}px`;
+
         if (this.options.height) {
           ecmasToggle.style.height = `${this.options.height}px`;
+        } else {
+          ecmasToggle.style["min-height"] = "36px"; // First approach for better calculation
+          ecmasToggle.style["min-height"] = `${Math.max(
+            ecmasToggleOn.getBoundingClientRect().height,
+            ecmasToggleOff.getBoundingClientRect().height
+          )}px`;
         }
 
         // B: Apply on/off class

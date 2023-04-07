@@ -214,22 +214,27 @@
     // 8: Set button W/H, lineHeight
     {
       // A: Set style W/H
-      this.$toggle.css(
-        "min-width",
-        `${
-          Math.max($toggleOn.outerWidth(), $toggleOff.outerWidth()) +
-          $toggleHandle.outerWidth() / 2
-        }px`
-      );
-      this.$toggle.css(
-        "min-height",
-        `${Math.max($toggleOn.outerHeight(), $toggleOff.outerHeight())}px`
-      );
       if (this.options.width) {
         this.$toggle.css("width", this.options.width);
+      } else {
+        this.$toggle.css("min-width", "100px"); // First approach for better calculation
+        this.$toggle.css(
+          "min-width",
+          `${
+            Math.max($toggleOn.outerWidth(), $toggleOff.outerWidth()) +
+            $toggleHandle.outerWidth() / 2
+          }px`
+        );
       }
+
       if (this.options.height) {
         this.$toggle.css("height", this.options.height);
+      } else {
+        this.$toggle.css("min-height", "36px"); // First approach for better calculation
+        this.$toggle.css(
+          "min-height",
+          `${Math.max($toggleOn.outerHeight(), $toggleOff.outerHeight())}px`
+        );
       }
 
       // B: Apply on/off class
