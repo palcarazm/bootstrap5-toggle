@@ -1,6 +1,6 @@
 {
   "name": "bootstrap5-toggle",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "author": {
     "name": "Pablo Alcaraz Martínez",
     "url": "https://github.com/palcarazm/"
@@ -21,7 +21,7 @@
   "scripts": {
     "build": "grunt build",
     "postversion": "grunt build && grunt readme && doctoc README.md --github",
-    "prepack": "grunt build && grunt readme && doctoc README.md --github && git add -A",
+    "prepack": "grunt build && grunt readme && doctoc README.md --github && git add -A && git commit",
     "test": "cypress run --browser=chrome"
   },
   "keywords": [
