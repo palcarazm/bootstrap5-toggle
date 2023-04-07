@@ -13,6 +13,7 @@
     "url": "https://github.com/sponsors/palcarazm"
   },
   "main": "js/bootstrap5-toggle.ecmas.min.js",
+  "style": "css/bootstrap5-toggle.min.css",
   "files": [
     "css/*",
     "js/*"
