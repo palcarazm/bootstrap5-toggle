@@ -437,6 +437,11 @@ function sanitize(text) {
     this.$element.unwrap();
   };
 
+  Toggle.prototype.rerender = function () {
+    this.destroy();
+    this.$element.bootstrapToggle();
+  };
+
   // TOGGLE PLUGIN DEFINITION
   // ========================
 
