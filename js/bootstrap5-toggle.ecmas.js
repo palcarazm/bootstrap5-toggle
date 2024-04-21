@@ -10,8 +10,21 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
+function sanitize(text) {
+  if (!text) return text; // handle null or undefined
+  var map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+    "/": "&#x2F;",
+  };
+  return text.replace(/[&<>"'/]/g, function (m) {
+    return map[m];
+  });
+}
 
 (function () {
   /**
@@ -55,60 +68,60 @@
       // B: Set options
       this.options = {
         onlabel:
-          this.element.getAttribute("data-onlabel") ||
+          sanitize(this.element.getAttribute("data-onlabel")) ||
           options.onlabel ||
           DEPRECATION.value ||
           DEFAULTS.onlabel,
         onstyle:
-          this.element.getAttribute("data-onstyle") ||
+          sanitize(this.element.getAttribute("data-onstyle")) ||
           options.onstyle ||
           DEFAULTS.onstyle,
         onvalue:
-          this.element.getAttribute("value") ||
-          this.element.getAttribute("data-onvalue") ||
+          sanitize(this.element.getAttribute("value")) ||
+          sanitize(this.element.getAttribute("data-onvalue")) ||
           options.onvalue ||
           DEFAULTS.onvalue,
         ontitle:
-          this.element.getAttribute("data-ontitle") ||
+          sanitize(this.element.getAttribute("data-ontitle")) ||
           options.ontitle ||
-          this.element.getAttribute("title") ||
+          sanitize(this.element.getAttribute("title")) ||
           DEFAULTS.ontitle,
         offlabel:
-          this.element.getAttribute("data-offlabel") ||
+          sanitize(this.element.getAttribute("data-offlabel")) ||
           options.offlabel ||
           DEPRECATION.value ||
           DEFAULTS.offlabel,
         offstyle:
-          this.element.getAttribute("data-offstyle") ||
+          sanitize(this.element.getAttribute("data-offstyle")) ||
           options.offstyle ||
           DEFAULTS.offstyle,
         offvalue:
-          this.element.getAttribute("data-offvalue") ||
+          sanitize(this.element.getAttribute("data-offvalue")) ||
           options.offvalue ||
           DEFAULTS.offvalue,
         offtitle:
-          this.element.getAttribute("data-offtitle") ||
+          sanitize(this.element.getAttribute("data-offtitle")) ||
           options.offtitle ||
-          this.element.getAttribute("title") ||
+          sanitize(this.element.getAttribute("title")) ||
           DEFAULTS.offtitle,
         size:
-          this.element.getAttribute("data-size") ||
+          sanitize(this.element.getAttribute("data-size")) ||
           options.size ||
           DEFAULTS.size,
         style:
-          this.element.getAttribute("data-style") ||
+          sanitize(this.element.getAttribute("data-style")) ||
           options.style ||
           DEFAULTS.style,
         width:
-          this.element.getAttribute("data-width") ||
+          sanitize(this.element.getAttribute("data-width")) ||
           options.width ||
           DEFAULTS.width,
         height:
-          this.element.getAttribute("data-height") ||
+          sanitize(this.element.getAttribute("data-height")) ||
           options.height ||
           DEFAULTS.height,
         tabindex:
-          this.element.getAttribute("tabindex") ||
+          sanitize(this.element.getAttribute("tabindex")) ||
           options.tabindex ||
           DEFAULTS.tabindex,
         tristate:
@@ -116,14 +129,16 @@
           options.tristate ||
           DEFAULTS.tristate,
         name:
-          this.element.getAttribute("name") || options.name || DEFAULTS.name,
+          sanitize(this.element.getAttribute("name")) ||
+          options.name ||
+          DEFAULTS.name,
       };
 
       // C: Check deprecations
       if (this.options.onlabel === DEPRECATION.value) {
-        if (this.element.getAttribute("data-on")) {
+        if (sanitize(this.element.getAttribute("data-on"))) {
           DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-on", "data-onlabel");
-          this.options.onlabel = this.element.getAttribute("data-on");
+          this.options.onlabel = sanitize(this.element.getAttribute("data-on"));
         } else if (options.on) {
           DEPRECATION.log(DEPRECATION.OPTION, "on", "onlabel");
           this.options.onlabel = options.on;
@@ -132,9 +147,11 @@
         }
       }
       if (this.options.offlabel === DEPRECATION.value) {
-        if (this.element.getAttribute("data-off")) {
+        if (sanitize(this.element.getAttribute("data-off"))) {
           DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-off", "data-offlabel");
-          this.options.offlabel = this.element.getAttribute("data-off");
+          this.options.offlabel = sanitize(
+            this.element.getAttribute("data-off")
+          );
         } else if (options.off) {
           DEPRECATION.log(DEPRECATION.OPTION, "off", "offlabel");
           this.options.offlabel = options.off;
