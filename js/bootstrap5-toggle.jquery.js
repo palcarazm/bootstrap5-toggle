@@ -313,7 +313,6 @@ function sanitize(text) {
     } else {
       target.toggle();
     }
-    e.preventDefault();
   }
 
   Toggle.prototype.toggle = function (silent = false) {
