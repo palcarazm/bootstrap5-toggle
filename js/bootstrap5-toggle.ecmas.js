@@ -476,6 +476,11 @@ function sanitize(text) {
       delete this.element.bsToggle;
       delete this.ecmasToggle;
     }
+
+    rerender() {
+      this.destroy();
+      this.element.bootstrapToggle();
+    }
   }
 
   /**
@@ -498,6 +503,7 @@ function sanitize(text) {
       else if (options.toLowerCase() == "disable") _bsToggle.disable();
       else if (options.toLowerCase() == "readonly") _bsToggle.readonly();
       else if (options.toLowerCase() == "destroy") _bsToggle.destroy();
+      else if (options.toLowerCase() == "rerender") _bsToggle.rerender();
     }
   };
 

@@ -734,3 +734,45 @@ function initTestApiMethods() {
   testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
   MAIN.append(TEST_TITLE.clone().html("API all options"), testDiv);
 }
+
+/**
+ * Create the layout for testing render feature
+ */
+function initTestApiRerender() {
+  let toggleDiv, buttonDiv, testDiv;
+  DESCRIPTION.html("Check <code>bootstrap5-toggle</code> render");
+  toggleDiv = COL.clone().append(
+    $(
+      '<div id="fold" class="d-none"><input id="toggle" type="checkbox" data-toggle="toggle"></div>'
+    )
+  );
+  buttonDiv = COL.clone().append(
+    $("<div>")
+      .addClass("btn-group mb-2")
+      .attr("role", "group")
+      .append(
+        $(
+          '<button type="button" class="btn btn-outline-secondary" data-method="unfold">'
+        )
+          .html("unfold")
+          .on("click", () => {
+            $("#fold").removeClass("d-none");
+          }),
+        $(
+          '<button type="button" class="btn btn-outline-secondary" data-method="rerender">'
+        )
+          .html("rerender")
+          .on("click", () => {
+            if (INTERFACE == "JQUERY") $("#toggle").bootstrapToggle("rerender");
+            if (INTERFACE == "ECMAS")
+              document.querySelector("#toggle").bootstrapToggle("rerender");
+          })
+      )
+  );
+  testDiv = TEST_CONTAINER.clone().attr("id", "status-" + status.name);
+  testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
+  testDiv.append(
+    $('<div class="row align-items-center">').append(COL.clone(), COL.clone())
+  );
+  MAIN.append(TEST_TITLE.clone().html("Rerender"), testDiv);
+}
