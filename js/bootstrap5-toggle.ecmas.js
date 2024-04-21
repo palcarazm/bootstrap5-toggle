@@ -311,9 +311,13 @@ function sanitize(text) {
       }
 
       // 9: Add listeners
-      ecmasToggle.addEventListener("touchstart", (e) => {
-        this.#toggleActionPerformed(e);
-      });
+      ecmasToggle.addEventListener(
+        "touchstart",
+        (e) => {
+          this.#toggleActionPerformed(e);
+        },
+        { passive: true }
+      );
       ecmasToggle.addEventListener("click", (e) => {
         this.#toggleActionPerformed(e);
       });
@@ -361,7 +365,6 @@ function sanitize(text) {
       } else {
         this.toggle();
       }
-      e.preventDefault();
     }
 
     toggle(silent = false) {
