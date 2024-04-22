@@ -186,18 +186,19 @@ Methods can be used to control toggles directly.
 </script>
 ```
 
-| Method        | Example                                       | Description                                       |
-| ------------- | --------------------------------------------- | ------------------------------------------------- |
-| initialize    | `toggleDemo.bootstrapToggle()`                | Initializes the toggle plugin with options        |
-| destroy       | `toggleDemo.bootstrapToggle('destroy')`       | Destroys the toggle                               |
-| on            | `toggleDemo.bootstrapToggle('on')`            | Sets the toggle to 'On' state                     |
-| off           | `toggleDemo.bootstrapToggle('off')`           | Sets the toggle to 'Off' state                    |
-| toggle        | `toggleDemo.bootstrapToggle('toggle')`        | Toggles the state of the toggle on/off            |
-| enable        | `toggleDemo.bootstrapToggle('enable')`        | Enables the toggle                                |
-| disable       | `toggleDemo.bootstrapToggle('disable')`       | Disables the toggle                               |
-| readonly      | `toggleDemo.bootstrapToggle('readonly')`      | Disables the toggle but preserve checkbox enabled |
-| indeterminate | `toggleDemo.bootstrapToggle('indeterminate')` | Sets the toggle to 'indeterminate' state          |
-| determinate   | `toggleDemo.bootstrapToggle('determinate')`   | Sets the toggle to 'determinate' state            |
+| Method        | Example                                       | Description                                                                           |
+| ------------- | --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| initialize    | `toggleDemo.bootstrapToggle()`                | Initializes the toggle plugin with options                                            |
+| destroy       | `toggleDemo.bootstrapToggle('destroy')`       | Destroys the toggle                                                                   |
+| rerender      | `toggleDemo.bootstrapToggle('rerender')`      | Rerender toggle with the appropriated size. Useful when parent is collapsed at first. |
+| on            | `toggleDemo.bootstrapToggle('on')`            | Sets the toggle to 'On' state                                                         |
+| off           | `toggleDemo.bootstrapToggle('off')`           | Sets the toggle to 'Off' state                                                        |
+| toggle        | `toggleDemo.bootstrapToggle('toggle')`        | Toggles the state of the toggle on/off                                                |
+| enable        | `toggleDemo.bootstrapToggle('enable')`        | Enables the toggle                                                                    |
+| disable       | `toggleDemo.bootstrapToggle('disable')`       | Disables the toggle                                                                   |
+| readonly      | `toggleDemo.bootstrapToggle('readonly')`      | Disables the toggle but preserve checkbox enabled                                     |
+| indeterminate | `toggleDemo.bootstrapToggle('indeterminate')` | Sets the toggle to 'indeterminate' state                                              |
+| determinate   | `toggleDemo.bootstrapToggle('determinate')`   | Sets the toggle to 'determinate' state                                                |
 
 # Events
 
