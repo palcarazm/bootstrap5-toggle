@@ -5,7 +5,7 @@
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 [![Build](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/build.yml?branch=v5&logo=npm)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Build+Check%22)
 [![Test](https://img.shields.io/github/actions/workflow/status/palcarazm/bootstrap5-toggle/cypress.yml?branch=v5&label=tests&logo=cypress)](https://github.com/palcarazm/bootstrap5-toggle/actions?query=workflow%3A%22Cypress+Tests%22)
-[![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@5.1.0?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
+[![Security](https://img.shields.io/snyk/vulnerabilities/npm/bootstrap5-toggle@5.1.1?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 [![EOL](https://img.shields.io/endpoint?url=https%3A%2F%2Fpalcarazm.github.io%2Fbootstrap5-toggle%2Fapi%2Feol%2Fv5)](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
 [![Rate this package](https://badges.openbase.com/js/rating/bootstrap5-toggle.svg?token=rNvznTVToo+EmX5g+KTvfYqI9+YTWJeUWTxPj7tLA6o=)](https://openbase.com/js/bootstrap5-toggle?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/bootstrap5-toggle)
@@ -79,18 +79,18 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.0/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.0/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ### jQuery Interface
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.0/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.0/js/bootstrap5-toggle.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/js/bootstrap5-toggle.jquery.min.js"></script>
 ```
 
 ## Download
@@ -102,13 +102,13 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
-npm install bootstrap5-toggle@5.1.0
+npm install bootstrap5-toggle@5.1.1
 ```
 
 ## Yarn
 
 ```ksh
-yarn add bootstrap5-toggle@5.1.0
+yarn add bootstrap5-toggle@5.1.1
 ```
 
 # Usage
