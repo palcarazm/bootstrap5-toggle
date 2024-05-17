@@ -213,6 +213,12 @@
                 </td>
             </tr>
             <tr>
+                <td>rerender</td>
+                <td><code>$('#toggle-demo').bootstrapToggle('rerender')</code></td>
+                <td>Rerender toggle with the appropriated size. Useful when parent is collapsed at first.</td>
+                <td></td>
+            </tr>
+            <tr>
                 <td>on</td>
                 <td><code>$('#toggle-demo').bootstrapToggle('on')</code></td>
                 <td>Sets the toggle to 'On' state</td>
@@ -297,4 +303,34 @@
 <div class="example" code-lang="html">
     <input id="toggle-state" type="checkbox" data-toggle="toggle" checked>
     <input id="toggle-state" type="checkbox" data-toggle="toggle">
+</div>
+
+<div class="row">
+    <h3 class="text-secondary col-auto">Re-render toggles</h3>
+    <div class="col">
+      <span class="badge rounded-pill bg-danger">
+        NEW
+        <span class="visually-hidden">v5.1.0</span>
+      </span>
+    </div>
+</div>
+<p>You can rerender a toggle if parent size o visibility change for a better user experience.</p>
+<div class="example" code-lang="html">
+    <button class="btn btn-outline-dark btn-sm w-100" id="collapse-button"
+    data-bs-target="#collapse">Toggle Collapse</button>
+    <div id="collapse" class="collapse" data-bs-parent="#collapse-button">
+        <input id="toggle-render" type="checkbox" data-toggle="toggle" checked>
+    </div>
+    <script>
+        const myCollapsible = document.getElementById('collapse');
+        // create collapse
+        const collapse = new bootstrap.Collapse(myCollapsible, {toggle:false});
+        // Add listener to re-render toggle
+        myCollapsible.addEventListener('shown.bs.collapse', ()=>{
+            $('#toggle-render').bootstrapToggle('rerender');
+        })
+        // Add button functionality
+        const myCollapeButton = document.getElementById('collapse-button');
+        myCollapeButton.addEventListener('click',()=>{collapse.toggle()});
+    </script>
 </div>
