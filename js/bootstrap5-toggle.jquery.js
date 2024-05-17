@@ -10,7 +10,6 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
 function sanitize(text) {
   if (!text) return text; // handle null or undefined
@@ -46,7 +45,7 @@ function sanitize(text) {
           "data-on",
           "data-onlabel"
         );
-        this.options.onlabel = sanitize(this.$element.attr("data-on"));
+        this.options.onlabel = this.$element.attr("data-on");
       } else if (options.on) {
         Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "on", "onlabel");
         this.options.onlabel = options.on;
@@ -61,7 +60,7 @@ function sanitize(text) {
           "data-off",
           "data-offlabel"
         );
-        this.options.offlabel = sanitize(this.$element.attr("data-off"));
+        this.options.offlabel = this.$element.attr("data-off");
       } else if (options.off) {
         Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "off", "offlabel");
         this.options.offlabel = options.off;
@@ -107,11 +106,11 @@ function sanitize(text) {
   Toggle.prototype.defaults = function () {
     return {
       onlabel:
-        sanitize(this.$element.attr("data-onlabel")) ||
+        this.$element.attr("data-onlabel") ||
         Toggle.DEPRECATION.value ||
         Toggle.DEFAULTS.onlabel,
       offlabel:
-        sanitize(this.$element.attr("data-offlabel")) ||
+        this.$element.attr("data-offlabel") ||
         Toggle.DEPRECATION.value ||
         Toggle.DEFAULTS.offlabel,
       onstyle:
