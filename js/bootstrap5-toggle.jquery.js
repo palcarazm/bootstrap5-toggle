@@ -1,5 +1,5 @@
 /* Copyright Notice
- * bootstrap5-toggle v5.1.0
+ * bootstrap5-toggle v5.1.1
  * https://palcarazm.github.io/bootstrap5-toggle/
  * @author 2011-2014 Min Hur (https://github.com/minhur)
  * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
@@ -9,6 +9,7 @@
  * @license MIT
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
+
 
 "use strict";
 function sanitize(text) {
