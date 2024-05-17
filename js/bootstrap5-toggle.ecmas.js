@@ -10,7 +10,6 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
 function sanitize(text) {
   if (!text) return text; // handle null or undefined
@@ -69,7 +68,7 @@ function sanitize(text) {
       // B: Set options
       this.options = {
         onlabel:
-          sanitize(this.element.getAttribute("data-onlabel")) ||
+          this.element.getAttribute("data-onlabel") ||
           options.onlabel ||
           DEPRECATION.value ||
           DEFAULTS.onlabel,
@@ -88,7 +87,7 @@ function sanitize(text) {
           sanitize(this.element.getAttribute("title")) ||
           DEFAULTS.ontitle,
         offlabel:
-          sanitize(this.element.getAttribute("data-offlabel")) ||
+          this.element.getAttribute("data-offlabel") ||
           options.offlabel ||
           DEPRECATION.value ||
           DEFAULTS.offlabel,
@@ -139,7 +138,7 @@ function sanitize(text) {
       if (this.options.onlabel === DEPRECATION.value) {
         if (sanitize(this.element.getAttribute("data-on"))) {
           DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-on", "data-onlabel");
-          this.options.onlabel = sanitize(this.element.getAttribute("data-on"));
+          this.options.onlabel = this.element.getAttribute("data-on");
         } else if (options.on) {
           DEPRECATION.log(DEPRECATION.OPTION, "on", "onlabel");
           this.options.onlabel = options.on;
@@ -150,9 +149,7 @@ function sanitize(text) {
       if (this.options.offlabel === DEPRECATION.value) {
         if (sanitize(this.element.getAttribute("data-off"))) {
           DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-off", "data-offlabel");
-          this.options.offlabel = sanitize(
-            this.element.getAttribute("data-off")
-          );
+          this.options.offlabel = this.element.getAttribute("data-off");
         } else if (options.off) {
           DEPRECATION.log(DEPRECATION.OPTION, "off", "offlabel");
           this.options.offlabel = options.off;
