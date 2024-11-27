@@ -272,10 +272,7 @@ function sanitize(text) {
     }
 
     // 9: Add listeners
-    this.$toggle.on("touchstart", (e) => {
-      toggleActionPerformed(e, this);
-    });
-    this.$toggle.on("click", (e) => {
+    this.$toggle.on("pointerdown", (e) => {
       toggleActionPerformed(e, this);
     });
     this.$toggle.on("keypress", (e) => {
