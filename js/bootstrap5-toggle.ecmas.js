@@ -10,7 +10,6 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
 function sanitize(text) {
   if (!text) return text; // handle null or undefined
@@ -311,33 +310,34 @@ function sanitize(text) {
 
       // 9: Add listeners
       ecmasToggle.addEventListener(
-        "touchstart",
+        "pointerdown",
         (e) => {
           this.#toggleActionPerformed(e);
         },
         { passive: true }
       );
-      ecmasToggle.addEventListener("click", (e) => {
-        this.#toggleActionPerformed(e);
-      });
-      ecmasToggle.addEventListener("keypress", (e) => {
-        if (e.key == " ") {
-          this.#toggleActionPerformed(e);
-        }
-      });
+      ecmasToggle.addEventListener(
+        "keypress",
+        (e) => {
+          if (e.key == " ") {
+            this.#toggleActionPerformed(e);
+          }
+        },
+        { passive: true }
+      );
 
       if (this.element.id) {
         document
           .querySelectorAll('label[for="' + this.element.id + '"]')
           .forEach((label) => {
-            label.addEventListener("touchstart", (_e) => {
-              this.toggle();
-              ecmasToggle.focus();
-            });
-            label.addEventListener("click", (_e) => {
-              this.toggle();
-              ecmasToggle.focus();
-            });
+            label.addEventListener(
+              "pointerdown",
+              (_e) => {
+                this.toggle();
+                ecmasToggle.focus();
+              },
+              { passive: true }
+            );
           });
       }
 

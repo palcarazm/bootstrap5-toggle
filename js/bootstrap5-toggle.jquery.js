@@ -10,7 +10,6 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
 function sanitize(text) {
   if (!text) return text; // handle null or undefined
@@ -283,7 +282,7 @@ function sanitize(text) {
 
     if (this.$element.prop("id")) {
       $('label[for="' + this.$element.prop("id") + '"]').on(
-        "touchstart click",
+        "pointerdown",
         (_e) => {
           this.toggle();
           this.$toggle.focus();
