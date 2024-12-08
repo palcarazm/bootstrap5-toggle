@@ -332,7 +332,8 @@ function sanitize(text) {
           .forEach((label) => {
             label.addEventListener(
               "pointerdown",
-              (_e) => {
+              (e) => {
+                e.preventDefault();
                 this.toggle();
                 ecmasToggle.focus();
               },

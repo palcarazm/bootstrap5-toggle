@@ -282,8 +282,9 @@ function sanitize(text) {
 
     if (this.$element.prop("id")) {
       $('label[for="' + this.$element.prop("id") + '"]').on(
-        "pointerdown",
-        (_e) => {
+        "click touchstart",
+        (e) => {
+          e.preventDefault();
           this.toggle();
           this.$toggle.focus();
         }
