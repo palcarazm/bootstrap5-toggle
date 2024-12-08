@@ -10,7 +10,6 @@
  * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
  */
 
-
 "use strict";
 function sanitize(text) {
   if (!text) return text; // handle null or undefined
@@ -272,10 +271,7 @@ function sanitize(text) {
     }
 
     // 9: Add listeners
-    this.$toggle.on("touchstart", (e) => {
-      toggleActionPerformed(e, this);
-    });
-    this.$toggle.on("click", (e) => {
+    this.$toggle.on("pointerdown", (e) => {
       toggleActionPerformed(e, this);
     });
     this.$toggle.on("keypress", (e) => {
@@ -286,8 +282,9 @@ function sanitize(text) {
 
     if (this.$element.prop("id")) {
       $('label[for="' + this.$element.prop("id") + '"]').on(
-        "touchstart click",
-        (_e) => {
+        "click touchstart",
+        (e) => {
+          e.preventDefault();
           this.toggle();
           this.$toggle.focus();
         }
