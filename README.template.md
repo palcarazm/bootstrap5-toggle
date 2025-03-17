@@ -117,7 +117,7 @@ yarn add bootstrap5-toggle@#version#
 
 ## Initialize With HTML
 
-Simply add `data-toggle="toggle"` to automatically convert a plain checkbox into a bootstrap 5 toggle.
+Add `data-toggle="toggle"` to automatically convert a plain checkbox into a bootstrap 5 toggle.
 
 ```html
 <input id="chkToggle" type="checkbox" data-toggle="toggle" />
