@@ -232,7 +232,7 @@ function sanitize(text) {
       ecmasToggleGroup.appendChild(ecmasToggleOff);
       ecmasToggleGroup.appendChild(ecmasToggleHandle);
 
-      // 5: Toggle
+      // 5: Render Toggle
       let ecmasToggle = document.createElement("div");
       ecmasToggle.setAttribute("class", "toggle btn");
       ecmasToggle.classList.add(
@@ -347,7 +347,12 @@ function sanitize(text) {
       this.ecmasToggle = ecmasToggle;
       this.invElement = invElement;
 
-      // 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
+      // 11: Handle indeterminate state
+      if(this.options.tristate && this.element.indeterminate) {
+        this.indeterminate(true);
+      }
+
+      // 12: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
       this.element.bsToggle = this;
     }
 
