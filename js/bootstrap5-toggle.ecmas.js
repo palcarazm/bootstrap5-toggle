@@ -40,7 +40,7 @@ function sanitize(text) {
         OPTION: "option",
         log: function (type, oldlabel, newlabel) {
           console.warn(
-            `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprected. Use ${newlabel} instead.`
+            `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprecated. Use ${newlabel} instead.`
           );
         },
       };
