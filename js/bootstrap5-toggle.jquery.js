@@ -293,7 +293,11 @@ function sanitize(text) {
     }
 
     // 10: Set elements to bootstrap object (NOT NEEDED)
-    // 11: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
+    // 11: Handle indeterminate state
+      if(this.options.tristate && this.$element.prop("indeterminate")) {
+        this.indeterminate(true);
+      }
+    // 12: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()` (NOT NEEDED)
   };
 
   /**

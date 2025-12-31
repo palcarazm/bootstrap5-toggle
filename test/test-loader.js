@@ -527,6 +527,38 @@ function initTestApiContructor() {
     TEST_TITLE.clone().html("API input with deprecated options"),
     testDiv
   );
+  
+  toggleDiv = COL.clone().append($('<input type="checkbox" id="toggle5" tristate>'));
+  buttonDiv = COL.clone().append(
+    $('<button type="button" class="btn btn-outline-secondary">')
+      .html("Create")
+      .on("click", () => {
+        let options = {
+          onlabel: "Enabled",
+          offlabel: "Disabled",
+          onstyle: "outline-success",
+          offstyle: "outline-danger",
+        };
+        $("#toggle5").prop("indeterminate", true);
+        if (INTERFACE == "JQUERY") $("#toggle5").bootstrapToggle(options);
+        if (INTERFACE == "ECMAS")
+          document.querySelector("#toggle5").bootstrapToggle(options);
+        $("#config5").html(JSON.stringify(options, null, 2));
+      })
+  );
+  configDiv = COL.clone().append($('<code id="config5">'));
+  testDiv = TEST_CONTAINER.clone().attr("id", "api-custom");
+  testDiv.append(
+    $('<div class="row mb-3">').append(toggleDiv, buttonDiv, configDiv)
+  );
+  testDiv.append(
+    $('<div class="row align-items-center">').append(
+      COL.clone(),
+      COL.clone(),
+      COL.clone()
+    )
+  );
+  MAIN.append(TEST_TITLE.clone().html("API tristate indeterminate"), testDiv);
 }
 
 /**
