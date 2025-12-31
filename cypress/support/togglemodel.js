@@ -20,7 +20,7 @@ class ToggleModel {
     ATTRIBUTE: "attribute",
     OPTION: "option",
     log: function (type, oldlabel, newlabel) {
-      return `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprected. Use ${newlabel} instead.`;
+      return `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprecated. Use ${newlabel} instead.`;
     },
     warnCheck: function (type, oldlabel, newlabel) {
       cy.get("@consoleWarn").should(
