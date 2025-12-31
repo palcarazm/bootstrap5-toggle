@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
+    "@types/jest": "^30.0.0",
     "cypress": "^15.8.1",
     "cypress-plugin-tab": "^1.0.5",
     "doctoc": "^2.2.0",
@@ -58,7 +59,9 @@
     "grunt-exec": "^3.0.0",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
-    "rollup": "^4.54.0"
+    "rollup": "^4.54.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "bootstrap": "^5.0.0"

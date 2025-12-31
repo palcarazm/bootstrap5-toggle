@@ -1,15 +1,4 @@
-/* Copyright Notice
- * bootstrap5-toggle v5.1.3
- * https://palcarazm.github.io/bootstrap5-toggle/
- * @author 2011-2014 Min Hur (https://github.com/minhur)
- * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
- * @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)
- * @funding GitHub Sponsors
- * @see https://github.com/sponsors/palcarazm
- * @license MIT
- * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
- */
-
+import { resolveOptions } from "./core/options";
 
 "use strict";
 function sanitize(text) {
@@ -36,116 +25,10 @@ function sanitize(text) {
     this.$element = $(element);
 
     // B: Set options
-    this.options = $.extend({}, this.defaults(), options);
-
-    // C: Check deprecations
-    if (this.options.onlabel === Toggle.DEPRECATION.value) {
-      if (sanitize(this.$element.attr("data-on"))) {
-        Toggle.DEPRECATION.log(
-          Toggle.DEPRECATION.ATTRIBUTE,
-          "data-on",
-          "data-onlabel"
-        );
-        this.options.onlabel = this.$element.attr("data-on");
-      } else if (options.on) {
-        Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "on", "onlabel");
-        this.options.onlabel = options.on;
-      } else {
-        this.options.onlabel = Toggle.DEFAULTS.onlabel;
-      }
-    }
-    if (this.options.offlabel === Toggle.DEPRECATION.value) {
-      if (sanitize(this.$element.attr("data-off"))) {
-        Toggle.DEPRECATION.log(
-          Toggle.DEPRECATION.ATTRIBUTE,
-          "data-off",
-          "data-offlabel"
-        );
-        this.options.offlabel = this.$element.attr("data-off");
-      } else if (options.off) {
-        Toggle.DEPRECATION.log(Toggle.DEPRECATION.OPTION, "off", "offlabel");
-        this.options.offlabel = options.off;
-      } else {
-        this.options.offlabel = Toggle.DEFAULTS.offlabel;
-      }
-    }
+    this.options = resolveOptions(element, options);
 
     // LAST: Render Toggle
     this.render();
-  };
-
-  Toggle.DEPRECATION = {
-    value:
-      "BOOTSTRAP TOGGLE DEPRECATION CHECK -- a0Jhux0QySypjjs4tLtEo8xT2kx0AbYaq9K6mgNjWSs0HF0L8T8J0M0o3Kr7zkm7 --",
-    ATTRIBUTE: "attribute",
-    OPTION: "option",
-    log: function (type, oldlabel, newlabel) {
-      console.warn(
-        `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprecated. Use ${newlabel} instead.`
-      );
-    },
-  };
-
-  Toggle.DEFAULTS = {
-    onlabel: "On",
-    offlabel: "Off",
-    onstyle: "primary",
-    offstyle: "secondary",
-    onvalue: null,
-    offvalue: null,
-    ontitle: null,
-    offtitle: null,
-    size: "normal",
-    style: "",
-    width: null,
-    height: null,
-    tabindex: 0,
-    tristate: false,
-    name: null,
-  };
-
-  Toggle.prototype.defaults = function () {
-    return {
-      onlabel:
-        this.$element.attr("data-onlabel") ||
-        Toggle.DEPRECATION.value ||
-        Toggle.DEFAULTS.onlabel,
-      offlabel:
-        this.$element.attr("data-offlabel") ||
-        Toggle.DEPRECATION.value ||
-        Toggle.DEFAULTS.offlabel,
-      onstyle:
-        sanitize(this.$element.attr("data-onstyle")) || Toggle.DEFAULTS.onstyle,
-      offstyle:
-        sanitize(this.$element.attr("data-offstyle")) ||
-        Toggle.DEFAULTS.offstyle,
-      onvalue:
-        sanitize(this.$element.attr("value")) ||
-        sanitize(this.$element.attr("data-onvalue")) ||
-        Toggle.DEFAULTS.onvalue,
-      offvalue:
-        sanitize(this.$element.attr("data-offvalue")) ||
-        Toggle.DEFAULTS.offvalue,
-      ontitle:
-        sanitize(this.$element.attr("data-ontitle")) ||
-        sanitize(this.$element.attr("title")) ||
-        Toggle.DEFAULTS.ontitle,
-      offtitle:
-        sanitize(this.$element.attr("data-offtitle")) ||
-        sanitize(this.$element.attr("title")) ||
-        Toggle.DEFAULTS.offtitle,
-      size: sanitize(this.$element.attr("data-size")) || Toggle.DEFAULTS.size,
-      style:
-        sanitize(this.$element.attr("data-style")) || Toggle.DEFAULTS.style,
-      width:
-        sanitize(this.$element.attr("data-width")) || Toggle.DEFAULTS.width,
-      height:
-        sanitize(this.$element.attr("data-height")) || Toggle.DEFAULTS.height,
-      tabindex:
-        sanitize(this.$element.attr("tabindex")) || Toggle.DEFAULTS.tabindex,
-      tristate: this.$element.is("[tristate]") || Toggle.DEFAULTS.tristate,
-      name: sanitize(this.$element.attr("name")) || Toggle.DEFAULTS.name,
-    };
   };
 
   Toggle.prototype.render = function () {

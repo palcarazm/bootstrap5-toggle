@@ -1,15 +1,4 @@
-/* Copyright Notice
- * bootstrap5-toggle v5.1.3
- * https://palcarazm.github.io/bootstrap5-toggle/
- * @author 2011-2014 Min Hur (https://github.com/minhur)
- * @author 2018-2019 Brent Ely (https://github.com/gitbrent)
- * @author 2022 Pablo Alcaraz Martínez (https://github.com/palcarazm)
- * @funding GitHub Sponsors
- * @see https://github.com/sponsors/palcarazm
- * @license MIT
- * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE
- */
-
+import{resolveOptions}from"./core/options";
 
 "use strict";
 function sanitize(text) {
@@ -33,132 +22,12 @@ function sanitize(text) {
    */
   class Toggle {
     constructor(element, options) {
-      const DEPRECATION = {
-        value:
-          "BOOTSTRAP TOGGLE DEPRECATION CHECK -- a0Jhux0QySypjjs4tLtEo8xT2kx0AbYaq9K6mgNjWSs0HF0L8T8J0M0o3Kr7zkm7 --",
-        ATTRIBUTE: "attribute",
-        OPTION: "option",
-        log: function (type, oldlabel, newlabel) {
-          console.warn(
-            `Bootstrap Toggle deprecation warning: Using ${oldlabel} ${type} is deprecated. Use ${newlabel} instead.`
-          );
-        },
-      };
-      const DEFAULTS = {
-        onlabel: "On",
-        onstyle: "primary",
-        onvalue: null,
-        ontitle: null,
-        offlabel: "Off",
-        offstyle: "secondary",
-        offvalue: null,
-        offtitle: null,
-        size: "",
-        style: "",
-        width: null,
-        height: null,
-        tabindex: 0,
-        tristate: false,
-        name: null,
-      };
-      options = options || {};
-
       // A: Capture ref to HMTL element
       this.element = element;
 
       // B: Set options
-      this.options = {
-        onlabel:
-          this.element.getAttribute("data-onlabel") ||
-          options.onlabel ||
-          DEPRECATION.value ||
-          DEFAULTS.onlabel,
-        onstyle:
-          sanitize(this.element.getAttribute("data-onstyle")) ||
-          options.onstyle ||
-          DEFAULTS.onstyle,
-        onvalue:
-          sanitize(this.element.getAttribute("value")) ||
-          sanitize(this.element.getAttribute("data-onvalue")) ||
-          options.onvalue ||
-          DEFAULTS.onvalue,
-        ontitle:
-          sanitize(this.element.getAttribute("data-ontitle")) ||
-          options.ontitle ||
-          sanitize(this.element.getAttribute("title")) ||
-          DEFAULTS.ontitle,
-        offlabel:
-          this.element.getAttribute("data-offlabel") ||
-          options.offlabel ||
-          DEPRECATION.value ||
-          DEFAULTS.offlabel,
-        offstyle:
-          sanitize(this.element.getAttribute("data-offstyle")) ||
-          options.offstyle ||
-          DEFAULTS.offstyle,
-        offvalue:
-          sanitize(this.element.getAttribute("data-offvalue")) ||
-          options.offvalue ||
-          DEFAULTS.offvalue,
-        offtitle:
-          sanitize(this.element.getAttribute("data-offtitle")) ||
-          options.offtitle ||
-          sanitize(this.element.getAttribute("title")) ||
-          DEFAULTS.offtitle,
-        size:
-          sanitize(this.element.getAttribute("data-size")) ||
-          options.size ||
-          DEFAULTS.size,
-        style:
-          sanitize(this.element.getAttribute("data-style")) ||
-          options.style ||
-          DEFAULTS.style,
-        width:
-          sanitize(this.element.getAttribute("data-width")) ||
-          options.width ||
-          DEFAULTS.width,
-        height:
-          sanitize(this.element.getAttribute("data-height")) ||
-          options.height ||
-          DEFAULTS.height,
-        tabindex:
-          sanitize(this.element.getAttribute("tabindex")) ||
-          options.tabindex ||
-          DEFAULTS.tabindex,
-        tristate:
-          this.element.hasAttribute("tristate") ||
-          options.tristate ||
-          DEFAULTS.tristate,
-        name:
-          sanitize(this.element.getAttribute("name")) ||
-          options.name ||
-          DEFAULTS.name,
-      };
-
-      // C: Check deprecations
-      if (this.options.onlabel === DEPRECATION.value) {
-        if (sanitize(this.element.getAttribute("data-on"))) {
-          DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-on", "data-onlabel");
-          this.options.onlabel = this.element.getAttribute("data-on");
-        } else if (options.on) {
-          DEPRECATION.log(DEPRECATION.OPTION, "on", "onlabel");
-          this.options.onlabel = options.on;
-        } else {
-          this.options.onlabel = DEFAULTS.onlabel;
-        }
-      }
-      if (this.options.offlabel === DEPRECATION.value) {
-        if (sanitize(this.element.getAttribute("data-off"))) {
-          DEPRECATION.log(DEPRECATION.ATTRIBUTE, "data-off", "data-offlabel");
-          this.options.offlabel = this.element.getAttribute("data-off");
-        } else if (options.off) {
-          DEPRECATION.log(DEPRECATION.OPTION, "off", "offlabel");
-          this.options.offlabel = options.off;
-        } else {
-          this.options.offlabel = DEFAULTS.offlabel;
-        }
-      }
-
+      this.options = resolveOptions(element, options);
+     
       // LAST: Render Toggle
       this.render();
     }

@@ -17,9 +17,10 @@ module.exports = function (grunt) {
       " */\n",
     clean: ["js","css"],
     exec: {
+      ts: "npx tsc",
       rollup: "npx rollup -c",
-      postcss: "npx postcss src/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.css --map",
-      postcssMin: "npx postcss src/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.min.css --map --env production"
+      postcss: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.css --map",
+      postcssMin: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.min.css --map --env production"
     },
     usebanner: {
       taskName: {
@@ -53,7 +54,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-exec");
   
-  grunt.registerTask("default", ["clean","exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
-  grunt.registerTask("build", ["clean","exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
+  grunt.registerTask("default", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
+  grunt.registerTask("build", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
   grunt.registerTask("readme", ["copy"]);
 };

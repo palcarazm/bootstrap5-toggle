@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "strict": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "rootDir": "src/main/ts",
+    "outDir": "src/main/js"
+  },
+  "include": ["src/main/ts/**/*.ts"]
+}
