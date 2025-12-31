@@ -22,7 +22,8 @@
   "scripts": {
     "build": "grunt build",
     "postversion": "grunt build && grunt readme && doctoc README.md --github",
-    "prepack": "grunt build && grunt readme && doctoc README.md --github && git add -A && git commit",
+    "prepack": "grunt build && grunt readme && doctoc README.md --github",
+    "prepublishOnly": "git add -A && git commit",
     "test": "cypress run --browser=chrome"
   },
   "keywords": [
