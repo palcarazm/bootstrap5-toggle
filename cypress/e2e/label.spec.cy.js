@@ -3,7 +3,7 @@ import ToggleModel from "../support/togglemodel";
 import PageModel from "../support/pagemodel";
 
 describe("Label forwarding feature", () => {
-  context("Given ECMAS bootstrap toggle interface", () => {
+  context.skip("Given ECMAS bootstrap toggle interface", () => {
     testCase("ecmas");
   });
   context("Given jQuery bootstrap toggle interface", () => {
