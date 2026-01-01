@@ -78,7 +78,7 @@ describe("DOMBuilder", () => {
     );
 
     const toggle = document.querySelector(".toggle")!;
-    expect(toggle.classList.contains("primary")).toBe(true);
+    expect(toggle.classList.contains("btn-primary")).toBe(true);
     expect(toggle.classList.contains("off")).toBe(false);
     expect(checkbox.checked).toBe(true);
     expect(checkbox.value).toBe("1");
@@ -94,7 +94,7 @@ describe("DOMBuilder", () => {
     );
 
     const toggle = document.querySelector(".toggle")!;
-    expect(toggle.classList.contains("secondary")).toBe(true);
+    expect(toggle.classList.contains("btn-secondary")).toBe(true);
     expect(toggle.classList.contains("off")).toBe(true);
     expect(checkbox.checked).toBe(false);
   });
@@ -181,7 +181,7 @@ describe("DOMBuilder", () => {
       checkbox,
       {
         ...BASE_OPTIONS,
-        width: 120,
+        width: "120px",
         height: "40px"
       },
       state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)

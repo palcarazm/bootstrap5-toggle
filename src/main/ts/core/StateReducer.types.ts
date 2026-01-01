@@ -18,6 +18,7 @@ export enum ToggleStateStatus {
 }
 
 export enum ToggleActionType {
+    NEXT = "next",
     ON = "on",
     OFF = "off",
     TOGGLE = "toggle",

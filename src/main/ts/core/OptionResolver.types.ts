@@ -9,8 +9,8 @@ export interface ToggleOptions {
   offtitle: string | null
   size: ToggleSize | ''
   style: string
-  width: number | string | null
-  height: number | string | null
+  width: string | null
+  height: string | null
   tabindex: number
   tristate: boolean
   name: string | null
@@ -20,6 +20,8 @@ export type UserOptions =
  Partial<ToggleOptions> & {
     on?: string
     off?: string
+    width?: string | number
+    height?: string | number
   };
 
 export type ToggleStyle = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-light' | 'outline-dark';

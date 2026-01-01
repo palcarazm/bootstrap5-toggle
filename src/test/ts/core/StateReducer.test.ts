@@ -98,6 +98,16 @@ describe("StateReducer", () => {
         expect(reducer.get().value).toBe(ToggleStateValue.OFF);
       });
 
+      it("sets TOGGLE", () => {
+        const reducer = new StateReducer(createInput({ checked: true }), false);
+
+        expect(reducer.do(ToggleActionType.TOGGLE)).toBe(true);
+        expect(reducer.get().value).toBe(ToggleStateValue.OFF);
+
+        expect(reducer.do(ToggleActionType.TOGGLE)).toBe(true);
+        expect(reducer.get().value).toBe(ToggleStateValue.ON);
+      });
+
       it("sets INDETERMINATE", () => {
         const reducer = new StateReducer(createInput({ checked: false }), true);
 
@@ -164,6 +174,7 @@ describe("StateReducer", () => {
         expect(reducer.do(ToggleActionType.TOGGLE)).toBe(false);
         expect(reducer.do(ToggleActionType.DETERMINATE)).toBe(false);
         expect(reducer.do(ToggleActionType.INDETERMINATE)).toBe(false);
+        expect(reducer.do(ToggleActionType.NEXT)).toBe(false);
         expect(reducer.do(ToggleActionType.READONLY)).toBe(false);
       });
 
@@ -183,35 +194,35 @@ describe("StateReducer", () => {
       });
     });
 
-    describe("TOGGLE non-tristate", () => {
+    describe("NEXT non-tristate", () => {
       it("ON -> OFF -> ON", () => {
         const reducer = new StateReducer(createInput({ checked: true }), false);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.OFF);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.ON);
       });
     });
 
-    describe("TOGGLE tristate", () => {
+    describe("NEXT tristate", () => {
       it("ON -> INDETERMINATE -> OFF -> INDETERMINATE -> ON", () => {
         const reducer = new StateReducer(createInput({ checked: true }), true);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
         expect(reducer.get().checked).toBe(true);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.OFF);
         expect(reducer.get().checked).toBe(false);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
         expect(reducer.get().checked).toBe(false);
 
-        reducer.do(ToggleActionType.TOGGLE);
+        reducer.do(ToggleActionType.NEXT);
         expect(reducer.get().value).toBe(ToggleStateValue.ON);
         expect(reducer.get().checked).toBe(true);
       });

@@ -183,6 +183,9 @@ export class OptionResolver {
       ),
     };
 
+    if(options.width && parseFloat(options.width)) options.width = `${options.width}px`
+    if(options.height && parseFloat(options.height)) options.height = `${options.height}px`
+
     DeprecationConfig.handle(options, element, userOptions);
 
     return options;

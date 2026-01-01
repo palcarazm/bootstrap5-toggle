@@ -1,405 +1,193 @@
-import{OptionResolver}from"./core/options";
-
-"use strict";
-function sanitize(text) {
-  if (!text) return text; // handle null or undefined
-  var map = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-    "/": "&#x2F;",
-  };
-  return text.replace(/[&<>"'/]/g, function (m) {
-    return map[m];
-  });
-}
-
+import { DOMBuilder } from "./core/DOMBuilder";
+import { OptionResolver } from "./core/OptionResolver";
+import { StateReducer } from "./core/StateReducer";
+import { ToggleActionType } from "./core/StateReducer.types";
+import { ToggleMethods } from "./core/types";
 (function () {
-  /**
-   * `Toggle` is instantiated for each toggle-button
-   */
-  class Toggle {
-    constructor(element, options) {
-      // A: Capture ref to HMTL element
-      this.element = element;
-
-      // B: Set options
-      this.options = OptionResolver.resolve(element, options);
-     
-      // LAST: Render Toggle
-      this.render();
-    }
-    render() {
-      function calcH(el) {
-        const styles = window.getComputedStyle(el);
-        const height = el.offsetHeight;
-        const borderTopWidth = parseFloat(styles.borderTopWidth);
-        const borderBottomWidth = parseFloat(styles.borderBottomWidth);
-        const paddingTop = parseFloat(styles.paddingTop);
-        const paddingBottom = parseFloat(styles.paddingBottom);
-
-        return (
-          height -
-          borderBottomWidth -
-          borderTopWidth -
-          paddingTop -
-          paddingBottom
-        );
-      }
-      // 0: Parse size
-      let size;
-      switch (this.options.size) {
-        case "large":
-        case "lg":
-          size = "btn-lg";
-          break;
-        case "small":
-        case "sm":
-          size = "btn-sm";
-          break;
-        case "mini":
-        case "xs":
-          size = "btn-xs";
-          break;
-        default:
-          size = "";
-          break;
-      }
-
-      // 1: On
-      let ecmasToggleOn = document.createElement("span");
-      ecmasToggleOn.setAttribute(
-        "class",
-        "btn btn-" + this.options.onstyle + " " + size
-      );
-      ecmasToggleOn.innerHTML = this.options.onlabel;
-      if (this.options.ontitle) {
-        ecmasToggleOn.setAttribute("title", this.options.ontitle);
-      }
-
-      // 2: Off
-      let ecmasToggleOff = document.createElement("span");
-      ecmasToggleOff.setAttribute(
-        "class",
-        "btn btn-" + this.options.offstyle + " " + size
-      );
-      ecmasToggleOff.innerHTML = this.options.offlabel;
-      if (this.options.offtitle) {
-        ecmasToggleOff.setAttribute("title", this.options.offtitle);
-      }
-
-      // 3: Handle
-      let ecmasToggleHandle = document.createElement("span");
-      ecmasToggleHandle.setAttribute("class", "toggle-handle btn " + size);
-
-      // 4: Toggle Group
-      let ecmasToggleGroup = document.createElement("div");
-      ecmasToggleGroup.setAttribute("class", "toggle-group");
-      ecmasToggleGroup.appendChild(ecmasToggleOn);
-      ecmasToggleGroup.appendChild(ecmasToggleOff);
-      ecmasToggleGroup.appendChild(ecmasToggleHandle);
-
-      // 5: Render Toggle
-      let ecmasToggle = document.createElement("div");
-      ecmasToggle.setAttribute("class", "toggle btn");
-      ecmasToggle.classList.add(
-        this.element.checked
-          ? "btn-" + this.options.onstyle
-          : "btn-" + this.options.offstyle
-      );
-      ecmasToggle.setAttribute("tabindex", this.options.tabindex);
-      if (!this.element.checked) ecmasToggle.classList.add("off");
-      if (this.options.size) ecmasToggle.classList.add(size);
-      if (this.options.style) {
-        this.options.style.split(" ").forEach((style) => {
-          ecmasToggle.classList.add(style);
-        });
-      }
-      if (this.element.disabled || this.element.readOnly) {
-        ecmasToggle.classList.add("disabled");
-        ecmasToggle.setAttribute("disabled", "disabled");
-      }
-
-      // 6: Set form values
-      if (this.options.onvalue)
-        this.element.setAttribute("value", this.options.onvalue);
-      let invElement = null;
-      if (this.options.offvalue) {
-        invElement = this.element.cloneNode();
-        invElement.setAttribute("value", this.options.offvalue);
-        invElement.setAttribute("data-toggle", "invert-toggle");
-        invElement.removeAttribute("id");
-        invElement.checked = !this.element.checked;
-      }
-
-      // 7: Replace HTML checkbox with Toggle-Button
-      this.element.parentElement.insertBefore(ecmasToggle, this.element);
-      ecmasToggle.appendChild(this.element);
-      if (invElement) ecmasToggle.appendChild(invElement);
-      ecmasToggle.appendChild(ecmasToggleGroup);
-
-      // 8: Set button W/H, lineHeight
-      {
-        // A: Set style W/H
-        // NOTE: `offsetWidth` returns *rounded* integer values, so use `getBoundingClientRect` instead.
-        if (this.options.width) {
-          ecmasToggle.style.width = `${this.options.width}px`;
-        } else {
-          ecmasToggle.style["min-width"] = "100px"; // First approach for better calculation
-          ecmasToggle.style["min-width"] = `${
-            Math.max(
-              ecmasToggleOn.getBoundingClientRect().width,
-              ecmasToggleOff.getBoundingClientRect().width
-            ) +
-            ecmasToggleHandle.getBoundingClientRect().width / 2
-          }px`;
+    var Toggle = /** @class */ (function () {
+        function Toggle(element, options) {
+            this.element = element;
+            this.options = OptionResolver.resolve(element, options);
+            this.stateReducer = new StateReducer(element, this.options.tristate);
+            this.domBuilder = new DOMBuilder(element, this.options, this.stateReducer.get());
+            this.render();
         }
-
-        if (this.options.height) {
-          ecmasToggle.style.height = `${this.options.height}px`;
-        } else {
-          ecmasToggle.style["min-height"] = "36px"; // First approach for better calculation
-          ecmasToggle.style["min-height"] = `${Math.max(
-            ecmasToggleOn.getBoundingClientRect().height,
-            ecmasToggleOff.getBoundingClientRect().height
-          )}px`;
-        }
-
-        // B: Apply on/off class
-        ecmasToggleOn.classList.add("toggle-on");
-        ecmasToggleOff.classList.add("toggle-off");
-
-        // C: Finally, set lineHeight if needed
-        if (this.options.height) {
-          ecmasToggleOn.style.lineHeight = calcH(ecmasToggleOn) + "px";
-          ecmasToggleOff.style.lineHeight = calcH(ecmasToggleOff) + "px";
-        }
-      }
-
-      // 9: Add listeners
-      ecmasToggle.addEventListener(
-        "pointerdown",
-        (e) => {
-          this.#toggleActionPerformed(e);
-        },
-        { passive: true }
-      );
-      ecmasToggle.addEventListener(
-        "keypress",
-        (e) => {
-          if (e.key == " ") {
-            this.#toggleActionPerformed(e);
-          }
-        },
-        { passive: true }
-      );
-
-      if (this.element.id) {
-        document
-          .querySelectorAll('label[for="' + this.element.id + '"]')
-          .forEach((label) => {
-            label.addEventListener(
-              "pointerdown",
-              (e) => {
-                e.preventDefault();
-                this.toggle();
-                ecmasToggle.focus();
-              },
-              { passive: true }
-            );
-          });
-      }
-
-      // 10: Set elements to bootstrap object
-      this.ecmasToggle = ecmasToggle;
-      this.invElement = invElement;
-
-      // 11: Handle indeterminate state
-      if(this.options.tristate && this.element.indeterminate) {
-        this.indeterminate(true);
-      }
-
-      // 12: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
-      this.element.bsToggle = this;
-    }
-
+        Toggle.prototype.render = function () {
+            var _this = this;
+            // 9: Add listeners
+            this.domBuilder.root.addEventListener("pointerdown", function (e) {
+                if (_this.stateReducer.do(ToggleActionType.NEXT)) {
+                    _this.domBuilder.render(_this.stateReducer.get());
+                    _this.trigger();
+                }
+            }, { passive: true });
+            this.domBuilder.root.addEventListener("keypress", function (e) {
+                if (e.key == " ") {
+                    if (_this.stateReducer.do(ToggleActionType.NEXT)) {
+                        _this.domBuilder.render(_this.stateReducer.get());
+                        _this.trigger();
+                    }
+                }
+            }, { passive: true });
+            if (this.element.id) {
+                document
+                    .querySelectorAll('label[for="' + this.element.id + '"]')
+                    .forEach(function (label) {
+                    label.addEventListener("pointerdown", function (e) {
+                        e.preventDefault();
+                        if (_this.stateReducer.do(ToggleActionType.NEXT)) {
+                            _this.domBuilder.render(_this.stateReducer.get());
+                            _this.trigger();
+                        }
+                        _this.domBuilder.root.focus();
+                    }, { passive: true });
+                });
+            }
+            // 12: Keep reference to this instance for subsequent calls via `getElementById().bootstrapToggle()`
+            this.element.bsToggle = this;
+        };
+        Toggle.prototype.toggle = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (this.stateReducer.do(ToggleActionType.TOGGLE)) {
+                this.domBuilder.render(this.stateReducer.get());
+                if (!silent)
+                    this.trigger();
+            }
+        };
+        Toggle.prototype.on = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (this.stateReducer.do(ToggleActionType.ON)) {
+                this.domBuilder.render(this.stateReducer.get());
+                if (!silent)
+                    this.trigger();
+            }
+        };
+        Toggle.prototype.off = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (this.stateReducer.do(ToggleActionType.OFF)) {
+                this.domBuilder.render(this.stateReducer.get());
+                if (!silent)
+                    this.trigger();
+            }
+        };
+        Toggle.prototype.indeterminate = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (this.stateReducer.do(ToggleActionType.INDETERMINATE)) {
+                this.domBuilder.render(this.stateReducer.get());
+                if (!silent)
+                    this.trigger();
+            }
+        };
+        Toggle.prototype.determinate = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (this.stateReducer.do(ToggleActionType.DETERMINATE)) {
+                this.domBuilder.render(this.stateReducer.get());
+                if (!silent)
+                    this.trigger();
+            }
+        };
+        Toggle.prototype.enable = function () {
+            if (this.stateReducer.do(ToggleActionType.ENABLE)) {
+                this.domBuilder.render(this.stateReducer.get());
+            }
+        };
+        Toggle.prototype.disable = function () {
+            if (this.stateReducer.do(ToggleActionType.DISABLE)) {
+                this.domBuilder.render(this.stateReducer.get());
+            }
+        };
+        Toggle.prototype.readonly = function () {
+            if (this.stateReducer.do(ToggleActionType.READONLY)) {
+                this.domBuilder.render(this.stateReducer.get());
+            }
+        };
+        Toggle.prototype.update = function (silent) {
+            if (this.element.disabled)
+                this.disable();
+            else if (this.element.readOnly)
+                this.readonly();
+            else
+                this.enable();
+            if (this.element.checked)
+                this.on(silent);
+            else
+                this.off(silent);
+        };
+        Toggle.prototype.trigger = function (silent) {
+            if (silent === void 0) { silent = false; }
+            if (!silent)
+                this.element.dispatchEvent(new Event("change", { bubbles: true }));
+        };
+        Toggle.prototype.destroy = function () {
+            var _a, _b;
+            // A: Remove button-group from UI, replace checkbox element
+            (_a = this.domBuilder.root.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(this.element, this.domBuilder.root);
+            (_b = this.domBuilder.root.parentNode) === null || _b === void 0 ? void 0 : _b.removeChild(this.domBuilder.root);
+            // B: Delete internal refs
+            delete this.element.bsToggle;
+        };
+        Toggle.prototype.rerender = function () {
+            this.destroy();
+            this.element.bootstrapToggle();
+        };
+        return Toggle;
+    }());
     /**
-     * Trigger actions
-     * @param {Event} e event
+     * Add `bootstrapToggle` prototype function to HTML Elements
+     * Enables execution when used with HTML - ex: `document.getElementById('toggle').bootstrapToggle('on')`
      */
-    #toggleActionPerformed(e) {
-      if (this.options.tristate) {
-        if (this.ecmasToggle.classList.contains("indeterminate")) {
-          this.determinate(true);
-          this.toggle();
-        } else {
-          this.indeterminate();
+    HTMLInputElement.prototype.bootstrapToggle = function (options, silent) {
+        var _bsToggle = this.bsToggle || new Toggle(this, (options && typeof options !== "string") ? options : {});
+        // Execute method calls
+        if (options && typeof options === "string") {
+            switch (options) {
+                case ToggleMethods.TOGGLE:
+                case ToggleMethods.toggle:
+                    return _bsToggle.toggle(silent);
+                case ToggleMethods.ON:
+                case ToggleMethods.on:
+                    return _bsToggle.on(silent);
+                case ToggleMethods.OFF:
+                case ToggleMethods.off:
+                    return _bsToggle.off(silent);
+                case ToggleMethods.INDETERMINATE:
+                case ToggleMethods.indeterminate:
+                    return _bsToggle.indeterminate(silent);
+                case ToggleMethods.DETERMINATE:
+                case ToggleMethods.determinate:
+                    return _bsToggle.determinate(silent);
+                case ToggleMethods.ENABLE:
+                case ToggleMethods.enable:
+                    return _bsToggle.enable();
+                case ToggleMethods.DISABLE:
+                case ToggleMethods.disable:
+                    return _bsToggle.disable();
+                case ToggleMethods.READONLY:
+                case ToggleMethods.readonly:
+                    return _bsToggle.readonly();
+                case ToggleMethods.DESTROY:
+                case ToggleMethods.destroy:
+                    return _bsToggle.destroy();
+                case ToggleMethods.RENDERER:
+                case ToggleMethods.rerender:
+                    return _bsToggle.rerender();
+            }
         }
-      } else {
-        this.toggle();
-      }
-    }
-
-    toggle(silent = false) {
-      if (this.element.checked) this.off(silent);
-      else this.on(silent);
-    }
-
-    on(silent = false) {
-      if (this.element.disabled || this.element.readOnly) return false;
-      this.ecmasToggle.classList.remove("btn-" + this.options.offstyle);
-      this.ecmasToggle.classList.add("btn-" + this.options.onstyle);
-      this.ecmasToggle.classList.remove("off");
-      this.element.checked = true;
-      if (this.invElement) this.invElement.checked = false;
-      if (!silent) this.trigger();
-    }
-
-    off(silent = false) {
-      if (this.element.disabled || this.element.readOnly) return false;
-      this.ecmasToggle.classList.remove("btn-" + this.options.onstyle);
-      this.ecmasToggle.classList.add("btn-" + this.options.offstyle);
-      this.ecmasToggle.classList.add("off");
-      this.element.checked = false;
-      if (this.invElement) this.invElement.checked = true;
-      if (!silent) this.trigger();
-    }
-
-    indeterminate(silent = false) {
-      if (
-        !this.options.tristate ||
-        this.element.disabled ||
-        this.element.readOnly
-      )
-        return false;
-      this.ecmasToggle.classList.add("indeterminate");
-      this.element.indeterminate = true;
-      this.element.removeAttribute("name");
-      if (this.invElement) this.invElement.indeterminate = true;
-      if (this.invElement) this.invElement.removeAttribute("name");
-      if (!silent) this.trigger();
-    }
-
-    determinate(silent = false) {
-      if (
-        !this.options.tristate ||
-        this.element.disabled ||
-        this.element.readOnly
-      )
-        return false;
-      this.ecmasToggle.classList.remove("indeterminate");
-      this.element.indeterminate = false;
-      if (this.options.name)
-        this.element.setAttribute("name", this.options.name);
-      if (this.invElement) this.invElement.indeterminate = false;
-      if (this.invElement && this.options.name)
-        this.invElement.setAttribute("name", this.options.name);
-      if (!silent) this.trigger();
-    }
-
-    enable() {
-      this.ecmasToggle.classList.remove("disabled");
-      this.ecmasToggle.removeAttribute("disabled");
-      this.element.removeAttribute("disabled");
-      this.element.removeAttribute("readonly");
-      if (this.invElement) {
-        this.invElement.removeAttribute("disabled");
-        this.invElement.removeAttribute("readonly");
-      }
-    }
-
-    disable() {
-      this.ecmasToggle.classList.add("disabled");
-      this.ecmasToggle.setAttribute("disabled", "");
-      this.element.setAttribute("disabled", "");
-      this.element.removeAttribute("readonly");
-      if (this.invElement) {
-        this.invElement.setAttribute("disabled", "");
-        this.invElement.removeAttribute("readonly");
-      }
-    }
-
-    readonly() {
-      this.ecmasToggle.classList.add("disabled");
-      this.ecmasToggle.setAttribute("disabled", "");
-      this.element.removeAttribute("disabled");
-      this.element.setAttribute("readonly", "");
-      if (this.invElement) {
-        this.invElement.removeAttribute("disabled");
-        this.invElement.setAttribute("readonly", "");
-      }
-    }
-
-    update(silent) {
-      if (this.element.disabled) this.disable();
-      else if (this.element.readOnly) this.readonly();
-      else this.enable();
-      if (this.element.checked) this.on(silent);
-      else this.off(silent);
-    }
-
-    trigger(silent) {
-      if (!silent)
-        this.element.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    destroy() {
-      // A: Remove button-group from UI, replace checkbox element
-      this.ecmasToggle.parentNode.insertBefore(this.element, this.ecmasToggle);
-      this.ecmasToggle.parentNode.removeChild(this.ecmasToggle);
-
-      // B: Delete internal refs
-      delete this.element.bsToggle;
-      delete this.ecmasToggle;
-    }
-
-    rerender() {
-      this.destroy();
-      this.element.bootstrapToggle();
-    }
-  }
-
-  /**
-   * Add `bootstrapToggle` prototype function to HTML Elements
-   * Enables execution when used with HTML - ex: `document.getElementById('toggle').bootstrapToggle('on')`
-   */
-  Element.prototype.bootstrapToggle = function (options, silent) {
-    let _bsToggle = this.bsToggle || new Toggle(this, options);
-
-    // Execute method calls
-    if (options && typeof options === "string") {
-      if (options.toLowerCase() == "toggle") _bsToggle.toggle(silent);
-      else if (options.toLowerCase() == "on") _bsToggle.on(silent);
-      else if (options.toLowerCase() == "off") _bsToggle.off(silent);
-      else if (options.toLowerCase() == "indeterminate")
-        _bsToggle.indeterminate(silent);
-      else if (options.toLowerCase() == "determinate")
-        _bsToggle.determinate(silent);
-      else if (options.toLowerCase() == "enable") _bsToggle.enable();
-      else if (options.toLowerCase() == "disable") _bsToggle.disable();
-      else if (options.toLowerCase() == "readonly") _bsToggle.readonly();
-      else if (options.toLowerCase() == "destroy") _bsToggle.destroy();
-      else if (options.toLowerCase() == "rerender") _bsToggle.rerender();
-    }
-  };
-
-  /**
-   * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
-   * Executes once page elements have rendered enabling script to be placed in `<head>`
-   */
-  if (typeof window !== "undefined")
-    window.onload = function () {
-      document
-        .querySelectorAll('input[type=checkbox][data-toggle="toggle"]')
-        .forEach(function (ele) {
-          ele.bootstrapToggle();
-        });
     };
-
-  // Export library if possible
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = Toggle;
-  }
+    /**
+     * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
+     * Executes once page elements have rendered enabling script to be placed in `<head>`
+     */
+    if (typeof window !== "undefined")
+        window.onload = function () {
+            document
+                .querySelectorAll('input[type=checkbox][data-toggle="toggle"]')
+                .forEach(function (ele) {
+                ele.bootstrapToggle();
+            });
+        };
+    // Export library if possible
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = Toggle;
+    }
 })();

@@ -30,8 +30,8 @@ export class DOMBuilder {
     options: ToggleOptions,
     state: ToggleState
   ) {
-    this.onStyle = options.onstyle;
-    this.offStyle = options.offstyle;
+    this.onStyle = `btn-${options.onstyle}`;
+    this.offStyle = `btn-${options.offstyle}`;
     this.name = options.name;
 
     this.checkbox = checkbox;
@@ -45,12 +45,12 @@ export class DOMBuilder {
 
     this.toggleOn = this.createToggleSpan(
       options.onlabel,
-      options.onstyle,
+      this.onStyle,
       options.ontitle
     );
     this.toggleOff = this.createToggleSpan(
       options.offlabel,
-      options.offstyle,
+      this.offStyle,
       options.offtitle
     );
     this.toggleHandle = this.createToggleHandle();
@@ -109,7 +109,9 @@ export class DOMBuilder {
     tabindex,
   }: ToggleOptions): void {
     this.toggle.setAttribute("class", `toggle btn ${this.sizeClass} ${style}`);
+    this.toggle.setAttribute("data-toggle", "toggle");
     this.toggle.tabIndex = tabindex;
+    this.toggle.role = "button";
 
     this.checkbox.parentElement?.insertBefore(this.toggle, this.checkbox);
     this.toggle.appendChild(this.checkbox);
@@ -148,14 +150,14 @@ export class DOMBuilder {
     style: string,
     title: string | null
   ): HTMLElement {
-    const toggleOff = document.createElement("span");
-    toggleOff.setAttribute(
+    const toggleSpan = document.createElement("span");
+    toggleSpan.setAttribute(
       "class",
-      `toggle-off btn ${this.sizeClass} btn-${style}`
+      `btn ${this.sizeClass} ${style}`
     );
-    toggleOff.innerHTML = label;
-    if (title) toggleOff.setAttribute("title", title);
-    return toggleOff;
+    toggleSpan.innerHTML = label;
+    if (title) toggleSpan.setAttribute("title", title);
+    return toggleSpan;
   }
 
   /**
@@ -177,8 +179,8 @@ export class DOMBuilder {
    * @param height The height of the toggle element.
    */
   private handleToggleSize(
-    width: string | number | null,
-    height: string | number | null
+    width: string  | null,
+    height: string | null
   ): void {
     function calcH(toggleSpan: HTMLElement) {
       const styles = window.getComputedStyle(toggleSpan);
@@ -193,8 +195,7 @@ export class DOMBuilder {
       );
     }
     if (width) {
-      this.toggle.style.width =
-        typeof width === "number" ? `${width}px` : width;
+      this.toggle.style.width = width;
     } else {
       this.toggle.style.minWidth = "100px"; // First approach for better calculation
       this.toggle.style.minWidth = `${
@@ -207,8 +208,7 @@ export class DOMBuilder {
     }
 
     if (height) {
-      this.toggle.style.height =
-        typeof height === "number" ? `${height}px` : height;
+      this.toggle.style.height = height;
     } else {
       this.toggle.style.minHeight = "36px"; // First approach for better calculation
       this.toggle.style.minHeight = `${Math.max(
@@ -228,10 +228,10 @@ export class DOMBuilder {
     }
   }
 
-/**
- * Renders the toggle element based on the provided state.
- * @param {ToggleState} state The state of the toggle element.
- */
+  /**
+   * Renders the toggle element based on the provided state.
+   * @param {ToggleState} state The state of the toggle element.
+   */
   public render(state: ToggleState): void {
     this.toggle.classList.remove(
       this.onStyle,
@@ -259,6 +259,7 @@ export class DOMBuilder {
 
     this.checkbox.checked = state.checked;
     if (this.invCheckbox) this.invCheckbox.checked = !state.checked;
+    this.toggle.classList.add(state.checked ? this.onStyle : this.offStyle);
 
     switch (state.status) {
       case ToggleStateStatus.ENABLED:
@@ -304,5 +305,13 @@ export class DOMBuilder {
       if (this.invCheckbox) this.invCheckbox.indeterminate = false;
       if (this.invCheckbox && this.name) this.invCheckbox.name = this.name;
     }
+  }
+
+  /**
+   * Returns the root element of the toggle, which is the container of all toggle elements.
+   * @returns {HTMLElement} The root element of the toggle.
+   */
+  public get root(): HTMLElement {
+    return this.toggle;
   }
 }

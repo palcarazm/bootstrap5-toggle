@@ -77,6 +77,11 @@ export class StateReducer {
           indeterminate: false,
         };
         return true;
+      case ToggleActionType.TOGGLE:
+        if (this.state.status != ToggleStateStatus.ENABLED) return false;
+        if (this.state.value === ToggleStateValue.ON) return this.do(ToggleActionType.OFF);
+        if (this.state.value === ToggleStateValue.OFF) return this.do(ToggleActionType.ON);
+        return false;
       case ToggleActionType.INDETERMINATE:
          if (this.state.status != ToggleStateStatus.ENABLED) return false;
         if (this.state.value === ToggleStateValue.INDETERMINATE) return false;
@@ -97,7 +102,7 @@ export class StateReducer {
           indeterminate: false,
         };
         return true;
-      case ToggleActionType.TOGGLE:
+      case ToggleActionType.NEXT:
          if (this.state.status != ToggleStateStatus.ENABLED) return false;
         if (this.isTristate) {
           if (
