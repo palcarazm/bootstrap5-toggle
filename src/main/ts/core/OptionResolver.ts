@@ -37,10 +37,11 @@ export class OptionResolver {
    * Gets a sanitized attribute value from an HTML element
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
+   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Sanitized attribute value or null
    */
-  private static getAttr = (element: HTMLInputElement, attrName: string) =>
-    sanitize(element.getAttribute(attrName));
+  private static getAttr = (element: HTMLInputElement, attrName: string, sanitized:boolean=true) =>
+    sanitized?sanitize(element.getAttribute(attrName)):element.getAttribute(attrName);
 
   /**
    * Returns the value of an attribute, user-provided value, or default value
@@ -48,28 +49,32 @@ export class OptionResolver {
    * @param attrName Attribute name
    * @param userValue Value provided by the user
    * @param defaultValue Default value if neither attribute nor user value exists
+   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Final attribute value
    */
   private static getAttrOrDefault = <T>(
     element: HTMLInputElement,
     attrName: string,
     userValue: T | undefined,
-    defaultValue: T
-  ) => OptionResolver.getAttr(element, attrName) || userValue || defaultValue;
+    defaultValue: T,
+    sanitized:boolean=true
+  ) => OptionResolver.getAttr(element, attrName, sanitized) || userValue || defaultValue;
 
   /**
    * Returns the value of an attribute, user-provided value, or marks as deprecated
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
    * @param userValue Value provided by the user
+   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Final attribute value or DeprecationConfig.value if not found
    */
   private static getAttrOrDeprecation = <T>(
     element: HTMLInputElement,
     attrName: string,
-    userValue: T
+    userValue: T,
+    sanitized:boolean=true
   ) =>
-    OptionResolver.getAttr(element, attrName) ||
+    OptionResolver.getAttr(element, attrName, sanitized) ||
     userValue ||
     DeprecationConfig.value;
 
@@ -87,12 +92,14 @@ export class OptionResolver {
       onlabel: this.getAttrOrDeprecation(
         element,
         "data-onlabel",
-        userOptions.onlabel
+        userOptions.onlabel,
+        false
       ),
       offlabel: this.getAttrOrDeprecation(
         element,
         "data-offlabel",
-        userOptions.offlabel
+        userOptions.offlabel,
+        false
       ),
       onstyle: this.getAttrOrDefault(
         element,
