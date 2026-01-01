@@ -1,4 +1,4 @@
-import { resolveOptions } from "./core/options";
+import { OptionResolver } from "./core/options";
 
 "use strict";
 function sanitize(text) {
@@ -25,7 +25,7 @@ function sanitize(text) {
     this.$element = $(element);
 
     // B: Set options
-    this.options = resolveOptions(element, options);
+    this.options =  OptionResolver.resolve(element, options);
 
     // LAST: Render Toggle
     this.render();

@@ -1,95 +1,76 @@
-import { resolveOptions } from "../../../main/ts/core/options"
-import { ToggleDefaults } from "../../../main/ts/core/options.types"
+import { OptionResolver } from "../../../main/ts/core/options";
 
-function createElement(attrs: Record<string, any> = {}) {
-  const el = document.createElement("input")
-  Object.entries(attrs).forEach(([key, value]) => {
-    if (value === true) el.setAttribute(key, "")
-    else el.setAttribute(key, value)
-  })
-  return el as HTMLInputElement
-}
+describe("OptionResolver", () => {
+  let element: Partial<HTMLInputElement>;
 
-const DEFAULTS: ToggleDefaults = {
-  onlabel: "On",
-  offlabel: "Off",
-  onstyle: "primary",
-  offstyle: "secondary",
-  onvalue: null,
-  offvalue: null,
-  ontitle: null,
-  offtitle: null,
-  size: "",
-  style: "",
-  width: null,
-  height: null,
-  tabindex: 0,
-  tristate: false,
-  name: null
-}
-
-const DEPRECATION = {
-  value: "__DEPRECATED__",
-  ATTRIBUTE: "attribute",
-  OPTION: "option",
-  log: jest.fn()
-}
-
-describe("resolveOptions", () => {
   beforeEach(() => {
-    DEPRECATION.log.mockClear()
-  })
+    element = {
+      getAttribute: jest.fn(),
+      hasAttribute: jest.fn().mockReturnValue(false),
+    };
+    jest.clearAllMocks();
+    jest.spyOn(console, "warn").mockImplementation(() => {});
+  });
 
-  it("uses data attributes over defaults", () => {
-    const el = createElement({ "data-onlabel": "YES" })
+  it("resolves default options when no attributes or user options are provided", () => {
+    const options = OptionResolver.resolve(element as HTMLInputElement, {});
+    expect(options.onlabel).toBe("On");
+    expect(options.offlabel).toBe("Off");
+    expect(options.onstyle).toBe("primary");
+    expect(options.offstyle).toBe("secondary");
+  });
 
-    const options = resolveOptions({
-      element: el,
-      defaults: DEFAULTS,
-      deprecation: DEPRECATION
-    })
+  it("resolves user options if provided", () => {
+    const options = OptionResolver.resolve(element as HTMLInputElement, {
+      onlabel: "Yes",
+      offlabel: "No",
+      onstyle: "success",
+      offstyle: "danger",
+    });
+    expect(options.onlabel).toBe("Yes");
+    expect(options.offlabel).toBe("No");
+    expect(options.onstyle).toBe("success");
+    expect(options.offstyle).toBe("danger");
+  });
 
-    expect(options.onlabel).toBe("YES")
-  })
+  it("resolves attributes from element if provided", () => {
+    (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+      if (attr === "data-onlabel") return "Start";
+      if (attr === "data-offlabel") return "Stop";
+      return null;
+    });
 
-  it("falls back to defaults", () => {
-    const el = createElement()
+    const options = OptionResolver.resolve(element as HTMLInputElement, {});
+    expect(options.onlabel).toBe("Start");
+    expect(options.offlabel).toBe("Stop");
+  });
 
-    const options = resolveOptions({
-      element: el,
-      defaults: DEFAULTS,
-      deprecation: DEPRECATION
-    })
+  it("handles deprecated options via data attributes", () => {
+    (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+      if (attr === "data-on") return "DeprecatedOn";
+      if (attr === "data-off") return "DeprecatedOff";
+      return null;
+    });
 
-    expect(options.onlabel).toBe("On")
-    expect(options.offlabel).toBe("Off")
-  })
+    const options = OptionResolver.resolve(element as HTMLInputElement, {});
 
-  it("handles deprecated attributes", () => {
-    const el = createElement({
-      "data-onlabel": DEPRECATION.value,
-      "data-on": "OLD"
-    })
+    expect(options.onlabel).toBe("DeprecatedOn");
+    expect(options.offlabel).toBe("DeprecatedOff");
+    expect(console.warn).toHaveBeenCalledTimes(2);
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("data-on attribute is deprecated")
+    );
+  });
 
-    const options = resolveOptions({
-      element: el,
-      defaults: DEFAULTS,
-      deprecation: DEPRECATION
-    })
+  it("falls back to userOptions if deprecated attribute not set", () => {
+    (element.getAttribute as jest.Mock).mockReturnValue(null);
 
-    expect(options.onlabel).toBe("OLD")
-    expect(DEPRECATION.log).toHaveBeenCalled()
-  })
+    const options = OptionResolver.resolve(element as HTMLInputElement, {
+      on: "UserOn",
+      off: "UserOff",
+    });
 
-  it("detects tristate attribute", () => {
-    const el = createElement({ tristate: true })
-
-    const options = resolveOptions({
-      element: el,
-      defaults: DEFAULTS,
-      deprecation: DEPRECATION
-    })
-
-    expect(options.tristate).toBe(true)
-  })
-})
+    expect(options.onlabel).toBe("UserOn");
+    expect(options.offlabel).toBe("UserOff");
+  });
+});

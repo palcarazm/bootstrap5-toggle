@@ -1,13 +1,13 @@
 export interface ToggleOptions {
   onlabel: string
   offlabel: string
-  onstyle: string
-  offstyle: string
+  onstyle: ToggleStyle
+  offstyle: ToggleStyle
   onvalue: string | null
   offvalue: string | null
   ontitle: string | null
   offtitle: string | null
-  size: string
+  size: ToggleSize | ''
   style: string
   width: number | string | null
   height: number | string | null
@@ -16,16 +16,13 @@ export interface ToggleOptions {
   name: string | null
 }
 
-export interface DeprecationConfig {
-  value: string
-  ATTRIBUTE: string
-  OPTION: string
-  log: (type: string, oldLabel: string, newLabel: string) => void
-}
-
 export type UserOptions =
  Partial<ToggleOptions> & {
     on?: string
     off?: string
   };
 
+export type ToggleStyle = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-light' | 'outline-dark';
+export type ToggleSize = 'large' | 'normal' | 'small' | 'mini' | 'lg' | 'md' | 'sm' | 'xs';
+export type OptionWithDeprecationRemap = "onlabel" | "offlabel";
+export type OptionDeprecated = "on" | "off";
