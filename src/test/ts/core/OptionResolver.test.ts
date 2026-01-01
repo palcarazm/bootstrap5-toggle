@@ -1,4 +1,4 @@
-import { OptionResolver } from "../../../main/ts/core/options";
+import { OptionResolver } from "../../../main/ts/core/OptionResolver";
 
 describe("OptionResolver", () => {
   let element: Partial<HTMLInputElement>;

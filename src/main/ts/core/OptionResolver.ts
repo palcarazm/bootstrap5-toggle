@@ -1,4 +1,4 @@
-import { sanitize } from "./sanitize";
+import { sanitize } from "./Tools";
 import {
   UserOptions,
   ToggleOptions,
@@ -6,7 +6,7 @@ import {
   OptionDeprecated,
   ToggleStyle,
   ToggleSize,
-} from "./options.types";
+} from "./OptionResolver.types";
 
 /**
  * OptionResolver is responsible for reading HTML attributes and user options
