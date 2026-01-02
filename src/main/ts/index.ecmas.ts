@@ -1,4 +1,4 @@
-import { Toggle } from "./BoostrapToggle";
+import { Toggle } from "./BootstrapToggle";
 import { UserOptions } from "./core/OptionResolver.types";
 import { ToggleMethods } from "./core/types";
 

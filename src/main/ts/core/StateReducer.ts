@@ -17,12 +17,24 @@ export class StateReducer {
    */
   constructor(element: HTMLInputElement, isTristate: boolean) {
     this.isTristate = isTristate;
+    this.state = this.getElementState(element);
+  }
 
+  /**
+   * Retrieves the current state of the toggle based on the HTMLInputElement.
+   * The state is determined by the following:
+   * - The checked property of the input element
+   * - The disabled property of the input element
+   * - The readonly property of the input element
+   * - The indeterminate property of the input element if the toggle is tristate
+   * @returns An object containing the state of the toggle.
+   */
+  private getElementState(element: HTMLInputElement): ToggleState{
     const checked = element.checked;
     const status = element.disabled ? ToggleStateStatus.DISABLED : element.readOnly ? ToggleStateStatus.READONLY : ToggleStateStatus.ENABLED;
-    const indeterminate = isTristate && element.indeterminate;
+    const indeterminate = this.isTristate && element.indeterminate;
 
-    this.state = {
+    return {
       value: indeterminate
         ? ToggleStateValue.INDETERMINATE
         : checked
@@ -41,6 +53,16 @@ export class StateReducer {
   public get(): ToggleState {
     return Object.freeze({ ...this.state });
   }
+
+  /**
+   * Synchronizes the internal state of the toggle with the provided HTMLInputElement.
+   * This method is useful when you need to update the internal state of the toggle
+   * manually, such as when the toggle is updated programmatically.
+   * @param element The HTMLInputElement to synchronize the toggle state with.
+   */
+  public sync(element: HTMLInputElement): void { 
+    this.state = this.getElementState(element)
+  } 
 
 
   /**

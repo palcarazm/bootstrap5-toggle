@@ -1,3 +1,4 @@
+import { Toggle } from "../BootstrapToggle";
 import { ToggleMethods } from "../core/types";
 
 declare global {
@@ -6,6 +7,7 @@ declare global {
       options?: ToggleMethods | Record<string, unknown>,
       silent?: boolean
     ): void;
+    bsToggle?: Toggle;
   }
 }
 

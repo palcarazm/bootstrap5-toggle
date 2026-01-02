@@ -315,4 +315,13 @@ export class DOMBuilder {
   public get root(): HTMLElement {
     return this.toggle;
   }
+
+  /**
+   * Destroys the toggle by removing the toggle element from the DOM and
+   *inserting the original checkbox element back into its original position.
+   */
+  public destroy(): void {
+    this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
+    this.toggle.parentNode?.removeChild(this.toggle);
+  }
 }
