@@ -7,3 +7,6 @@ cypress/screenshots
 cypress/downloads
 .vscode
 .dccache
+js
+css
+debug

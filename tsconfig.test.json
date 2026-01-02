@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "strict": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "rootDir": "src/main/ts",
+    "outDir": "src/main/js",
+     "typeRoots": [
+      "src/main/ts/types",
+      "node_modules/@types"
+    ]
+  },
+  "include": ["src/main/ts/**/*.ts", "src/test/ts/**/*.ts"]
+}

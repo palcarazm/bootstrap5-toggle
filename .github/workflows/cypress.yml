@@ -14,13 +14,21 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    container: cypress/browsers:latest
     strategy:
       matrix:
         browsers: [firefox, chrome, edge]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24.x
+      - name: Build
+        run: |
+          npm install
+          npm run build
       - name: Cypress run ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
