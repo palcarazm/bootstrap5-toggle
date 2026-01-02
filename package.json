@@ -49,6 +49,7 @@
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^30.0.0",
+    "@types/jquery": "^3.5.33",
     "cypress": "^15.8.1",
     "cypress-plugin-tab": "^1.0.5",
     "doctoc": "^2.2.0",
