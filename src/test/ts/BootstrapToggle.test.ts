@@ -109,7 +109,7 @@ describe("Toggle", () => {
       );
 
       expect(addEventListenerSpyLabel).toHaveBeenCalledWith(
-        "pointerdown",
+        "click",
         expect.any(Function),
         expect.objectContaining({ passive: false })
       );
@@ -307,7 +307,7 @@ describe("Toggle", () => {
       );
 
       expect(removeEventListenerSpyLabel).toHaveBeenCalledWith(
-        "pointerdown",
+        "click",
         expect.any(Function)
       );
 

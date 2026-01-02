@@ -138,8 +138,8 @@ export class Toggle {
   };
 
   /**
-   * Binds a pointerdown event listener to all labels that are associated with the toggle's input element.
-   * The event listener is responsible for handling pointerdown events and triggering the toggle's state change when a pointerdown event occurs.
+   * Binds a click event listener to all labels that are associated with the toggle's input element.
+   * The event listener is responsible for handling click events and triggering the toggle's state change when a click event occurs.
    * The event listener is bound with the passive option set to false, which means that it will block other event listeners from being triggered until it has finished its execution.
    * This method is called by the constructor and is responsible for binding the event listener to the toggle's labels.
    * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
@@ -150,7 +150,7 @@ export class Toggle {
       document
         .querySelectorAll('label[for="' + this.element.id + '"]')
         .forEach((label) => {
-          label.addEventListener("pointerdown", this.handlerLabelEvent, {
+          label.addEventListener("click", this.handlerLabelEvent, {
             passive: false,
           });
         });
@@ -158,7 +158,7 @@ export class Toggle {
   }
 
   /**
-   * Unbinds the pointerdown event listener from all labels that are associated with the toggle's input element.
+   * Unbinds the click event listener from all labels that are associated with the toggle's input element.
    * This method is responsible for unbinding the event listener that was previously bound by the bindLabelEventListener method.
    * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
    * @returns void
@@ -168,7 +168,7 @@ export class Toggle {
       document
         .querySelectorAll('label[for="' + this.element.id + '"]')
         .forEach((label) => {
-          label.removeEventListener("pointerdown", this.handlerLabelEvent);
+          label.removeEventListener("click", this.handlerLabelEvent);
         });
     }
   }
