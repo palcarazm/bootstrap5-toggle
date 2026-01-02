@@ -14,7 +14,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    container: cypress/browsers:latest
     strategy:
       matrix:
         browsers: [firefox, chrome, edge]
