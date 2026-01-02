@@ -255,6 +255,7 @@ export class DOMBuilder {
         } else {
           this.toggle.classList.add(this.offStyle, "off");
         }
+        break;
     }
 
     this.checkbox.checked = state.checked;
