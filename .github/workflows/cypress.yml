@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           npm install
-          grunt
+          npm run build
       - name: Cypress run ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
