@@ -6,6 +6,7 @@ import { ToggleActionType } from "./core/StateReducer.types";
 
 export class Toggle {
   private element: HTMLInputElement & { bsToggle?: Toggle };
+  private readonly userOptions: UserOptions;
   private options: ToggleOptions;
   private stateReducer: StateReducer;
   private domBuilder: DOMBuilder;
@@ -19,6 +20,7 @@ export class Toggle {
    */
   constructor(element: HTMLInputElement, options: UserOptions) {
     this.element = element;
+    this.userOptions = options;
     this.options = OptionResolver.resolve(element, options);
     this.stateReducer = new StateReducer(element, this.options.tristate);
     this.domBuilder = new DOMBuilder(
@@ -308,6 +310,6 @@ export class Toggle {
    */
   rerender() {
     this.destroy();
-    this.element.bootstrapToggle();
+    new Toggle(this.element, this.userOptions);
   }
 }
