@@ -14,6 +14,7 @@ const TESTCASES = [
   { name: "API contructor", code: "api-constructor" },
   { name: "API methods", code: "api-methods" },
   { name: "API rerender", code: "api-rerender" },
+  { name: "form data", code: "form-data" },
 ];
 function appStartup(test) {
   ENV.html("");
@@ -72,6 +73,9 @@ function appStartup(test) {
       break;
     case "api-rerender":
       initTestApiRerender();
+      break;
+    case "form-data":
+      initTestFormData();
       break;
 
     default:
@@ -132,6 +136,7 @@ function appStartup(test) {
       case "api-methods":
       case "api-rerender":
       case "tristate":
+      case "form-data":
         break;
 
       default:

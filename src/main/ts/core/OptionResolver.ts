@@ -113,7 +113,7 @@ export class OptionResolver {
         userOptions.offstyle,
         OptionResolver.DEFAULT.offstyle
       ) as ToggleStyle,
-      onvalue: this.getAttrOrDefault(
+      onvalue: this.getAttr(element,'value') || this.getAttrOrDefault(
         element,
         "data-onvalue",
         userOptions.onvalue,

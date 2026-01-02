@@ -808,3 +808,61 @@ function initTestApiRerender() {
   );
   MAIN.append(TEST_TITLE.clone().html("Rerender"), testDiv);
 }
+
+/**
+ * Create the layout for testing form data feature
+ */
+function initTestFormData() {
+  let formDiv, testDiv;
+  DESCRIPTION.html("Check <code>bootstrap5-toggle</code> form data");
+  formDiv = COL.clone().append(
+    $(`<form id="form">
+      <div class="row gx-5">
+        <div class="col">
+          <input
+            type="checkbox"
+            data-toggle="toggle"
+            checked
+            value="VALUE"
+            data-onvalue="ON"
+            data-offvalue="OFF"
+            name="toggle-with-opts-with-value" />
+        </div>
+        <div class="col">
+          <input
+            type="checkbox"
+            data-toggle="toggle"
+            checked
+            data-onvalue="ON"
+            data-offvalue="OFF"
+            name="toggle-with-opts-no-value" />
+        </div>
+        <div class="col">
+          <input type="checkbox" data-toggle="toggle" checked name="toggle-with-no-opts-no-value" />
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-outline-secondary">Submit</button>
+        </div>
+      </div>
+      <div class="d-flex mt-2 align-items-start">
+        <div class="me-2 font-monospace text-muted">Payload:</div>
+        <div class="flex-grow-1 me-2">
+          <pre><div class="text-start font-monospace" id="form-payload"></div></pre>
+        </div>
+      </div>
+    </form>`)
+  );
+  testDiv = TEST_CONTAINER.clone().attr("id", "form-data");
+  testDiv.append($('<div class="row mb-3">').append(formDiv));
+  testDiv.append(
+    $('<div class="row align-items-center">').append(COL.clone(), COL.clone())
+  );
+  MAIN.append(TEST_TITLE.clone().html("Form Data"), testDiv);
+
+  const form_submit_demo = $("#form");
+  form_submit_demo.on("submit", (e) => {
+    e.preventDefault();
+    $("#form-payload")
+      .html(JSON.stringify(form_submit_demo.serializeArray(), null, 2));
+  });
+}
