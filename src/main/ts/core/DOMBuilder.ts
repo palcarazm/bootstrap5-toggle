@@ -19,8 +19,13 @@ export class DOMBuilder {
   private toggleOff: HTMLElement;
   private toggleHandle: HTMLElement;
 
+  private isBuilt: boolean = false;
+  private lastState: ToggleState;
+  private resizeObserver?: ResizeObserver;
+
   /**
    * Initializes a new instance of the DOMBuilder class.
+   * This renders the toggle if the parent element is visible, otherwise defers rendering until it becomes visible.
    * @param checkbox HTMLInputElement element representing the toggle.
    * @param options ToggleOptions object containing options for the toggle.
    * @param state ToggleState object containing the initial state of the toggle.
@@ -30,6 +35,7 @@ export class DOMBuilder {
     options: ToggleOptions,
     state: ToggleState
   ) {
+    this.lastState = state;
     this.onStyle = `btn-${options.onstyle}`;
     this.offStyle = `btn-${options.offstyle}`;
     this.name = options.name;
@@ -56,9 +62,47 @@ export class DOMBuilder {
     this.toggleHandle = this.createToggleHandle();
     this.toggleGroup = this.createToggleGroup();
     this.toggle = document.createElement("div");
-    this.renderToggle(options);
 
-    this.render(state);
+    if(this.isVisible()){
+      this.renderToggle(options);
+      this.render(state);
+    }else{
+      this.deferRender(options);
+    }
+  }
+
+  /**
+   * Checks if the parent element of the checkbox is visible.
+   * A parent element is considered visible if its `offsetWidth` and `offsetHeight` are greater than `0`.
+   * @returns boolean indicating whether the parent element is visible or not.
+   */
+  private isVisible(): boolean {
+    const parent = this.checkbox.parentElement;
+    return !!parent && parent.offsetWidth > 0 && parent.offsetHeight > 0;
+  }
+
+  /**
+   * Defer rendering the toggle until the parent element is visible.
+   * It does this by observing the parent element's bounding rectangle and only rendering the toggle once the width and height of the bounding rectangle are greater than 0.
+   * @param options ToggleOptions object containing options for the toggle.
+   */
+  private deferRender(options: ToggleOptions): void {
+    this.resizeObserver = new ResizeObserver(entries => {
+      if (this.isBuilt) {
+        this.resizeObserver!.disconnect();
+        return;
+      }
+      for (const entry of entries) {
+        if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+          this.renderToggle(options);
+          this.render(this.lastState);
+          this.isBuilt = true;
+          this.resizeObserver!.disconnect();
+          return;
+        }
+      }
+    });
+    this.resizeObserver.observe(this.checkbox.parentElement!);
   }
 
   /**
@@ -119,6 +163,8 @@ export class DOMBuilder {
     this.toggle.appendChild(this.toggleGroup);
 
     this.handleToggleSize(width, height);
+
+    this.isBuilt = true;
   }
 
   /**
@@ -229,7 +275,8 @@ export class DOMBuilder {
   }
 
   /**
-   * Renders the toggle element based on the provided state.
+   * Renders the toggle element based on the provided state if the toggle is already built.
+   * This method should be called whenever the state of the toggle changes.
    * @param {ToggleState} state The state of the toggle element.
    */
   public render(state: ToggleState): void {
@@ -239,6 +286,9 @@ export class DOMBuilder {
       "off",
       "indeterminate"
     );
+    this.lastState = state;
+    
+    if (!this.isBuilt) return;
 
     switch (state.value) {
       case ToggleStateValue.ON:
@@ -318,10 +368,16 @@ export class DOMBuilder {
 
   /**
    * Destroys the toggle by removing the toggle element from the DOM and
-   *inserting the original checkbox element back into its original position.
+   * inserting the original checkbox element back into its original position.
+   * Also disconnects the ResizeObserver if it was used.
    */
   public destroy(): void {
     this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
     this.toggle.parentNode?.removeChild(this.toggle);
+
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
+
+    this.isBuilt = false;
   }
 }
