@@ -10,6 +10,9 @@ export class Toggle {
   private options: ToggleOptions;
   private stateReducer: StateReducer;
   private domBuilder: DOMBuilder;
+
+  private pointer: { x: number; y: number } | null = null;
+  private readonly SCROLL_THRESHOLD = 10;
   private eventsBound = false;
 
   /**
@@ -80,11 +83,9 @@ export class Toggle {
    * other event listeners from being triggered.
    */
   private bindPointerEventListener() {
-    this.domBuilder.root.addEventListener(
-      "pointerdown",
-      this.handlePointerEvent,
-      { passive: true }
-    );
+    this.domBuilder.root.addEventListener("pointerdown", this.onPointerDown, {
+      passive: true,
+    });
   }
 
   /**
@@ -95,14 +96,92 @@ export class Toggle {
    * @returns void
    */
   private unbindPointerEventListener() {
-    this.domBuilder.root.removeEventListener(
-      "pointerdown",
-      this.handlePointerEvent
-    );
+    this.domBuilder.root.removeEventListener("pointerdown", this.onPointerDown);
   }
 
-  private handlePointerEvent = (e: PointerEvent) => {
-    this.apply(ToggleActionType.NEXT);
+  /**
+   * Handles pointer down events by initiating the toggle action and setting up
+   * listeners for pointer movement, release, and cancellation.
+   *
+   * The method early exits if:
+   * - the pointer event is not a primary mouse button click
+   * - the toggle cannot be interacted with (`disabled` or `readonly`)
+   * @param e The PointerEvent object representing the pointer down event.
+   */
+  private onPointerDown = (e: PointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (!this.stateReducer.canInteract()) return;
+
+    this.pointer = { x: e.clientX, y: e.clientY };
+    this.domBuilder.root.addEventListener("pointermove", this.onPointerMove, {
+      passive: true,
+    });
+    this.domBuilder.root.addEventListener("pointerup", this.onPointerUp, {
+      passive: true,
+    });
+    this.domBuilder.root.addEventListener(
+      "pointercancel",
+      this.onPointerCancel,
+      { passive: true }
+    );
+  };
+
+  /**
+   * Handles pointer move events by checking the distance moved from the initial pointer down position.
+   * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
+   *
+   * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
+   * @param e The PointerEvent object representing the pointer move event.
+   */
+  private onPointerMove = (e: PointerEvent) => {
+    const dx = Math.abs(e.clientX - this.pointer!.x);
+    const dy = Math.abs(e.clientY - this.pointer!.y);
+
+    if (dy > this.SCROLL_THRESHOLD || dx > this.domBuilder.root.offsetWidth) {
+      this.onPointerCancel();
+    }
+  };
+
+  /**
+   * Handles pointer up events by determining if the pointer interaction
+   * should trigger a toggle action based on the distance moved.
+   *
+   * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
+   * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
+   * Finally, it cleans up by calling the pointer cancel handler.
+   * 
+   * If the pointer event is not a primary mouse button click, the interaction is cancelled.
+   * @param e The PointerEvent object representing the pointer up event.
+   */
+  private onPointerUp = (e: PointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) {
+      this.onPointerCancel();
+      return;
+    }
+    const dx = Math.abs(e.clientX - this.pointer!.x);
+    const dy = Math.abs(e.clientY - this.pointer!.y);
+
+    if (dy <= this.SCROLL_THRESHOLD && dx <= this.domBuilder.root.offsetWidth) {
+      this.apply(ToggleActionType.NEXT);
+    }
+
+    this.onPointerCancel();
+  };
+
+  /**
+   * Cleans up pointer event listeners after a pointer interaction is completed or cancelled.
+   *
+   * This method removes the `pointermove`, `pointerup`, and `pointercancel` event listeners
+   * from the root element of the toggle.
+   * However, `pointerdown` listener remains active for future interactions.
+   */
+  private onPointerCancel = () => {
+    this.domBuilder.root.removeEventListener("pointermove", this.onPointerMove);
+    this.domBuilder.root.removeEventListener("pointerup", this.onPointerUp);
+    this.domBuilder.root.removeEventListener(
+      "pointercancel",
+      this.onPointerCancel
+    );
   };
 
   /**

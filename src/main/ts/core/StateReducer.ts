@@ -55,6 +55,14 @@ export class StateReducer {
   }
 
   /**
+   * Determines whether the toggle is enabled and can be interacted with.
+   * @returns True if the toggle is enabled and can be interacted with, false otherwise.
+   */
+  public canInteract(): boolean {
+    return this.state.status === ToggleStateStatus.ENABLED;
+  }
+
+  /**
    * Synchronizes the internal state of the toggle with the provided HTMLInputElement.
    * This method is useful when you need to update the internal state of the toggle
    * manually, such as when the toggle is updated programmatically.
@@ -80,7 +88,7 @@ export class StateReducer {
   public do(action: ToggleActionType): boolean {
     switch (action) {
       case ToggleActionType.ON:
-        if (this.state.status != ToggleStateStatus.ENABLED) return false;
+        if (!this.canInteract()) return false;
         if (this.state.value === ToggleStateValue.ON) return false;
         this.state = {
           ...this.state,
@@ -90,7 +98,7 @@ export class StateReducer {
         };
         return true;
       case ToggleActionType.OFF:
-         if (this.state.status != ToggleStateStatus.ENABLED) return false;
+         if (!this.canInteract()) return false;
         if (this.state.value === ToggleStateValue.OFF) return false;
         this.state = {
           ...this.state,
@@ -100,12 +108,12 @@ export class StateReducer {
         };
         return true;
       case ToggleActionType.TOGGLE:
-        if (this.state.status != ToggleStateStatus.ENABLED) return false;
+        if (!this.canInteract()) return false;
         if (this.state.value === ToggleStateValue.ON) return this.do(ToggleActionType.OFF);
         if (this.state.value === ToggleStateValue.OFF) return this.do(ToggleActionType.ON);
         return false;
       case ToggleActionType.INDETERMINATE:
-         if (this.state.status != ToggleStateStatus.ENABLED) return false;
+         if (!this.canInteract()) return false;
         if (this.state.value === ToggleStateValue.INDETERMINATE) return false;
         this.state = {
           ...this.state,
@@ -114,7 +122,7 @@ export class StateReducer {
         };
         return true;
       case ToggleActionType.DETERMINATE:
-         if (this.state.status != ToggleStateStatus.ENABLED) return false;
+         if (!this.canInteract()) return false;
         if (this.state.value != ToggleStateValue.INDETERMINATE) return false;
         this.state = {
           ...this.state,
@@ -125,7 +133,7 @@ export class StateReducer {
         };
         return true;
       case ToggleActionType.NEXT:
-         if (this.state.status != ToggleStateStatus.ENABLED) return false;
+         if (!this.canInteract()) return false;
         if (this.isTristate) {
           if (
             this.state.value === ToggleStateValue.ON ||
@@ -164,7 +172,7 @@ export class StateReducer {
         }
         return true;
       case ToggleActionType.READONLY:
-        if(this.state.status != ToggleStateStatus.ENABLED) return false;
+        if(!this.canInteract()) return false;
         this.state = {
           ...this.state,
           status: ToggleStateStatus.READONLY
