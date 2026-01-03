@@ -2,7 +2,7 @@ import { DOMBuilder } from "../../../main/ts/core/DOMBuilder";
 import {
   ToggleStateStatus,
   ToggleStateValue,
-  ToggleState
+  ToggleState,
 } from "../../../main/ts/core/StateReducer.types";
 import { ToggleOptions } from "../../../main/ts/core/OptionResolver.types";
 
@@ -29,7 +29,7 @@ const BASE_OPTIONS: ToggleOptions = {
   height: null,
   tabindex: 0,
   tristate: false,
-  name: "myToggle"
+  name: "myToggle",
 };
 
 function state(
@@ -42,7 +42,7 @@ function state(
     value,
     status,
     checked,
-    indeterminate
+    indeterminate,
   };
 }
 
@@ -66,6 +66,21 @@ describe("DOMBuilder", () => {
     expect(toggle!.querySelector(".toggle-on")).not.toBeNull();
     expect(toggle!.querySelector(".toggle-off")).not.toBeNull();
     expect(toggle!.querySelector(".toggle-handle")).not.toBeNull();
+  });
+
+  it("defers render when parent not visible", () => {
+    (global as any).__dom_setup_setHidden();
+    const checkbox = createCheckbox();
+
+    new DOMBuilder(
+      checkbox,
+      BASE_OPTIONS,
+      state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+    );
+    expect(document.querySelector(".toggle")).toBeNull();
+    (global as any).__dom_setup_setVisible();
+    (global as any).__dom_setup_triggerResize(120, 40);
+    expect(document.querySelector(".toggle")).not.toBeNull();
   });
 
   it("renders ON state", () => {
@@ -182,7 +197,7 @@ describe("DOMBuilder", () => {
       {
         ...BASE_OPTIONS,
         width: "120px",
-        height: "40px"
+        height: "40px",
       },
       state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
     );

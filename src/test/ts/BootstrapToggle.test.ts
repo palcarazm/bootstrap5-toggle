@@ -1,4 +1,5 @@
 import { Toggle } from "../../main/ts/BootstrapToggle";
+import { DOMBuilder } from "../../main/ts/core/DOMBuilder";
 import { ToggleActionType } from "../../main/ts/core/StateReducer.types";
 
 /* =========================
@@ -324,7 +325,7 @@ describe("Toggle", () => {
       toggle.rerender();
 
       expect(destroyMock).toHaveBeenCalled();
-      expect((input as any).bootstrapToggle).toHaveBeenCalled();
+      expect(DOMBuilder).toHaveBeenCalledTimes(2);
     });
   });
 });
