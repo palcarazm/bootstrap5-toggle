@@ -4,4 +4,4 @@
 
 ***
 
-This branch is only for documentation. Source code is on [master](https://github.com/palcarazm/bootstrap5-toggle).
+This branch is only for documentation. Source code is on [v5](https://github.com/palcarazm/bootstrap5-toggle).
