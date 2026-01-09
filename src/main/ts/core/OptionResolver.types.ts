@@ -7,7 +7,7 @@ export interface ToggleOptions {
   offvalue: string | null
   ontitle: string | null
   offtitle: string | null
-  size: ToggleSize | ''
+  size: ToggleSize | ""
   style: string
   width: string | null
   height: string | null
@@ -24,7 +24,7 @@ export type UserOptions =
     height?: string | number
   };
 
-export type ToggleStyle = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-light' | 'outline-dark';
-export type ToggleSize = 'large' | 'normal' | 'small' | 'mini' | 'lg' | 'md' | 'sm' | 'xs';
+export type ToggleStyle = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-danger" | "outline-warning" | "outline-info" | "outline-light" | "outline-dark";
+export type ToggleSize = "large" | "normal" | "small" | "mini" | "lg" | "md" | "sm" | "xs";
 export type OptionWithDeprecationRemap = "onlabel" | "offlabel";
 export type OptionDeprecated = "on" | "off";

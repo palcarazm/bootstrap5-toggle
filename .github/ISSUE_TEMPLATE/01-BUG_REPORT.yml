@@ -1,0 +1,74 @@
+name: "🐛 Bug report"
+description: Use this template to report a bug or issue with the project.
+labels: "bug"
+body:
+  - type: textarea
+    id: error-description
+    attributes:
+      label: Error Description
+      description: Provide a detailed description of the error encountered.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Describe the steps to reproduce the error and include a minimal code snippet if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe the expected result of the minimal code snippet provided.
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: Describe the actual erroneous result of the minimal code snippet provided.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: Select the severity level of the error.
+      options:
+        - Minimal
+        - Moderate
+        - Severe
+        - Critical
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Bootstrap 5 Toggle Version
+      description: Provide the version of the product where the error was encountered.
+      placeholder: ex. 5.2.0
+    validations:
+      required: true
+  - type: input
+    id: Bootstrap-version
+    attributes:
+      label: Bootstrap version
+      description: Provide the version of Node.js being used.
+      placeholder: ex. v5.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Other
+      placeholder: Any other details?
+  - type: checkboxes
+    id: check-list
+    attributes:
+      label: Bug Report Checklist
+      options:
+        - label: "Confirm that you agree to follow the project's code of conduct."
+          required: true
+        - label: Confirm that you have reviewed open and rejected anomalies and have not found the reported anomaly.
+          required: true

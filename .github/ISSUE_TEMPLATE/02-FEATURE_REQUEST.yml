@@ -1,0 +1,40 @@
+name: "✨ Feature request"
+description: Suggest a feature or enhancement to improve the project.
+labels: "enhancement"
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: Short Description of the Feature
+      description: Provide a brief description of the functionality you want to propose.
+    validations:
+      required: true
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Expected Benefits
+      description: Describe the expected benefits or impact of this feature.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: Define the criteria for considering this feature complete.
+  - type: textarea
+    id: documentation
+    attributes:
+      label: Documentation
+      description: Provide detailed logic or documentation for the feature.
+  - type: textarea
+    id: others
+    attributes:
+      label: Additional Comments
+      description: Include any additional comments or context.
+  - type: checkboxes
+    id: check-list
+    attributes:
+      label: Feature Request Checklist
+      options:
+        - label: "Confirm that you agree to follow the project's code of conduct."
+          required: true
+        - label: Confirm that you have reviewed open and rejected feature requests to ensure novelty.
+          required: true
