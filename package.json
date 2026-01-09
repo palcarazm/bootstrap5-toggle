@@ -24,8 +24,8 @@
     "postversion": "grunt build && grunt readme && doctoc README.md --github",
     "prepack": "grunt build && grunt readme && doctoc README.md --github",
     "prepublishOnly": "git add -A && git commit",
-    "test:cypress": "cypress run --browser=chrome",
-    "test:jest": "jest --coverage"
+    "test:e2e": "cypress run --browser=chrome",
+    "test:unit": "jest --coverage"
   },
   "keywords": [
     "bootstrap",
