@@ -57,7 +57,9 @@ jobs:
     name: Run e2e tests with Cypress
     runs-on: ubuntu-latest
     needs: build-and-test
-    container: cypress/browsers:latest
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
     strategy:
       matrix:
         browsers: [firefox, chrome, edge]
