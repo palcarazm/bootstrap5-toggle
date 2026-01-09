@@ -73,4 +73,69 @@ describe("OptionResolver", () => {
         expect(options.onlabel).toBe("UserOn");
         expect(options.offlabel).toBe("UserOff");
     });
+
+    describe("width and height options", () => {
+        it("resolve numeric values as pixel unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "5",
+                height: "5",
+            });
+            expect(options.width).toBe("5px");
+            expect(options.height).toBe("5px");
+        });
+
+        it("support px unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "5px",
+                height: "5px",
+            });
+            expect(options.width).toBe("5px");
+            expect(options.height).toBe("5px");
+        });
+
+        it("support rem unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "5rem",
+                height: "5rem",
+            });
+            expect(options.width).toBe("5rem");
+            expect(options.height).toBe("5rem");
+        });
+
+        it("support em unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "5em",
+                height: "5em",
+            });
+            expect(options.width).toBe("5em");
+            expect(options.height).toBe("5em");
+        });
+
+        it("support % unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "50%",
+                height: "50%",
+            });
+            expect(options.width).toBe("50%");
+            expect(options.height).toBe("50%");
+        });
+
+        it("support viewport unit", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "5vw",
+                height: "5vh",
+            });
+            expect(options.width).toBe("5vw");
+            expect(options.height).toBe("5vh");
+        });
+
+        it("support auto", () => {
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                width: "auto",
+                height: "auto",
+            });
+            expect(options.width).toBe("auto");
+            expect(options.height).toBe("auto");
+        });
+    });
 });

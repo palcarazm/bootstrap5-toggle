@@ -1,4 +1,4 @@
-import { sanitize } from "../../../main/ts/core/Tools";
+import { isNumeric, sanitize } from "../../../main/ts/core/Tools";
 
 describe("sanitize", () => {
     it("returns null when input is null", () => {
@@ -47,5 +47,22 @@ describe("sanitize", () => {
 
     it("escapes characters appearing multiple times", () => {
         expect(sanitize("&&&&")).toBe("&amp;&amp;&amp;&amp;");
+    });
+});
+
+describe("isNumeric(value: string): boolean",()=>{
+    it("returns true for valid numeric values", () => {
+        expect(isNumeric("123")).toBe(true);
+        expect(isNumeric("-123")).toBe(true);
+        expect(isNumeric("+123")).toBe(true);
+        expect(isNumeric("123.45")).toBe(true);
+        expect(isNumeric("-123.45")).toBe(true);
+        expect(isNumeric("+123.45")).toBe(true);
+    });
+
+    it("returns false for invalid numeric values", () => {
+        expect(isNumeric("abc")).toBe(false);
+        expect(isNumeric("123abc")).toBe(false);
+        expect(isNumeric("123.abc")).toBe(false);
     });
 });
