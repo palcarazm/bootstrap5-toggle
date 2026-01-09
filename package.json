@@ -25,7 +25,7 @@
     "prepack": "grunt build && grunt readme && doctoc README.md --github",
     "prepublishOnly": "git add -A && git commit",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:e2e": "cypress run --browser=chrome",
+    "test:e2e": "cypress run --headless",
     "test:unit": "jest --coverage",
     "lint": "eslint ./src",
     "prepare": "husky"
