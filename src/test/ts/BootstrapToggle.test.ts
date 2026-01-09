@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Toggle } from "../../main/ts/BootstrapToggle";
 import { DOMBuilder } from "../../main/ts/core/DOMBuilder";
 import { ToggleActionType } from "../../main/ts/core/StateReducer.types";
@@ -14,46 +16,46 @@ const syncMock = jest.fn();
 const canInteractMock = jest.fn(() => true);
 
 jest.mock("../../main/ts/core/DOMBuilder", () => {
-  return {
-    DOMBuilder: jest.fn().mockImplementation(() => ({
-      root: document.createElement("div"),
-      render: renderMock,
-      destroy: destroyMock,
-    })),
-  };
+    return {
+        DOMBuilder: jest.fn().mockImplementation(() => ({
+            root: document.createElement("div"),
+            render: renderMock,
+            destroy: destroyMock,
+        })),
+    };
 });
 
 jest.mock("../../main/ts/core/StateReducer", () => {
-  return {
-    StateReducer: jest.fn().mockImplementation(() => ({
-      do: doMock,
-      get: getMock,
-      sync: syncMock,
-      canInteract: canInteractMock,
-    })),
-  };
+    return {
+        StateReducer: jest.fn().mockImplementation(() => ({
+            do: doMock,
+            get: getMock,
+            sync: syncMock,
+            canInteract: canInteractMock,
+        })),
+    };
 });
 
 jest.mock("../../main/ts/core/OptionResolver", () => ({
-  OptionResolver: {
-    resolve: jest.fn(() => ({
-      tristate: false,
-      size: "",
-      style: "",
-      tabindex: 0,
-      name: null,
-      onlabel: "On",
-      offlabel: "Off",
-      onstyle: "primary",
-      offstyle: "secondary",
-      ontitle: null,
-      offtitle: null,
-      onvalue: null,
-      offvalue: null,
-      width: null,
-      height: null,
-    })),
-  },
+    OptionResolver: {
+        resolve: jest.fn(() => ({
+            tristate: false,
+            size: "",
+            style: "",
+            tabindex: 0,
+            name: null,
+            onlabel: "On",
+            offlabel: "Off",
+            onstyle: "primary",
+            offstyle: "secondary",
+            ontitle: null,
+            offtitle: null,
+            onvalue: null,
+            offvalue: null,
+            width: null,
+            height: null,
+        })),
+    },
 }));
 
 /* =========================
@@ -61,460 +63,460 @@ jest.mock("../../main/ts/core/OptionResolver", () => ({
    ========================= */
 
 describe("Toggle", () => {
-  let input: HTMLInputElement;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    input = document.createElement("input");
-    input.type = "checkbox";
-    document.body.appendChild(input);
-  });
-
-  afterEach(() => {
-    document.body.innerHTML = "";
-  });
-
-  describe("constructor", () => {
-    it("initializes and stores instance on element", () => {
-      const toggle = new Toggle(input, {});
-
-      expect(toggle).toBeDefined();
-      expect((input as any).bsToggle).toBe(toggle);
-    });
-
-    it("bind events listeners", () => {
-      input.id = "test-toggle";
-      const label = document.createElement("label");
-      label.setAttribute("for", "test-toggle");
-      document.body.appendChild(label);
-
-      const addEventListenerSpyDiv = jest.spyOn(
-        HTMLDivElement.prototype,
-        "addEventListener"
-      );
-
-      const addEventListenerSpyLabel = jest.spyOn(
-        HTMLLabelElement.prototype,
-        "addEventListener"
-      );
-
-      const toggle = new Toggle(input, {});
-
-      expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
-        "pointerdown",
-        expect.any(Function),
-        expect.any(Object)
-      );
-      expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
-        "keypress",
-        expect.any(Function),
-        expect.any(Object)
-      );
-
-      expect(addEventListenerSpyLabel).toHaveBeenCalledWith(
-        "click",
-        expect.any(Function),
-        expect.objectContaining({ passive: false })
-      );
-
-      addEventListenerSpyDiv.mockRestore();
-      addEventListenerSpyLabel.mockRestore();
-    });
-  });
-
-describe("Pointer interactions", () => {
-  let root: HTMLElement;
-
-  beforeEach(() => {
-    const toggle = new Toggle(input, {});
-    root = (DOMBuilder as any).mock.results[0].value.root;
-    jest.spyOn(toggle as any, "apply");
-  });
-
-  it("toggles on pointerdown + pointerup", () => {
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 12,
-        clientY: 12,
-      })
-    );
-
-    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
-  });
-
-  it("cancels interaction when vertical scroll exceeds threshold on move", () => {
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointermove", {
-        clientX: 12,
-        clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 12,
-        clientY: 12, // Not exceeds SCROLL_THRESHOLD
-      })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-
-  it("cancels interaction when vertical scroll exceeds threshold on up", () => {
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 12,
-        clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
-      })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-
-  it("ignores non-primary mouse button on pointerdown", () => {
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 2,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-
-    it("ignores non-primary mouse button on pointerup", () => {
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerType: "mouse",
-        button: 2,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-
-  it("does not interact when canInteract is false", () => {
-    canInteractMock.mockReturnValueOnce(false);
-
-    root.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 10,
-        clientY: 10,
-      })
-    );
-
-    root.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerType: "mouse",
-        button: 0,
-        clientX: 12,
-        clientY: 12,
-      })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-});
-
-describe("Keyboard interactions", () => {
-  let root: HTMLElement;
-
-  beforeEach(() => {
-    new Toggle(input, {});
-    root = (DOMBuilder as any).mock.results[0].value.root;
-  });
-
-  it("toggles on space keypress", () => {
-    root.dispatchEvent(
-      new KeyboardEvent("keypress", { key: " " })
-    );
-
-    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
-  });
-
-  it("ignores other keys", () => {
-    root.dispatchEvent(
-      new KeyboardEvent("keypress", { key: "Enter" })
-    );
-
-    expect(doMock).not.toHaveBeenCalled();
-  });
-});
-
-describe("Label interaction", () => {
-  it("clicking label toggles and focuses root", () => {
-    input.id = "toggle-id";
-
-    const label = document.createElement("label");
-    label.setAttribute("for", "toggle-id");
-    document.body.appendChild(label);
-
-    const toggle = new Toggle(input, {});
-    const root = (DOMBuilder as any).mock.results[0].value.root;
-    const focusSpy = jest.spyOn(root, "focus");
-
-    label.click();
-
-    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
-    expect(focusSpy).toHaveBeenCalled();
-  });
-});
-
-
-  describe("apply(action: ToggleActionType, silent = false)", () => {
-    it("calls StateReducer.do and DOMBuilder.render", () => {
-      const toggle = new Toggle(input, {});
-
-      (toggle as any).apply(ToggleActionType.TOGGLE);
-
-      expect(doMock).toHaveBeenCalledWith(ToggleActionType.TOGGLE);
-      expect(renderMock).toHaveBeenCalled();
-    });
-
-    it("dispatches change event when not silent", () => {
-      const toggle = new Toggle(input, {});
-      const spy = jest.fn();
-
-      input.addEventListener("change", spy);
-
-      (toggle as any).apply(ToggleActionType.TOGGLE, false);
-
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it("does not dispatch change event when silent", () => {
-      const toggle = new Toggle(input, {});
-      const spy = jest.fn();
-
-      input.addEventListener("change", spy);
-
-      (toggle as any).apply(ToggleActionType.TOGGLE, true);
-
-      expect(spy).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("delegate to apply(action: ToggleActionType, silent = false)", () => {
-    let apply: jest.SpyInstance;
+    let input: HTMLInputElement;
 
     beforeEach(() => {
-      apply = jest.spyOn(Toggle.prototype as any, "apply");
+        jest.clearAllMocks();
+        input = document.createElement("input");
+        input.type = "checkbox";
+        document.body.appendChild(input);
     });
 
-    afterAll(() => {
-      apply.mockRestore();
+    afterEach(() => {
+        document.body.innerHTML = "";
     });
 
-    it("toggle(silent=false)", () => {
-      const toggle = new Toggle(input, {});
+    describe("constructor", () => {
+        it("initializes and stores instance on element", () => {
+            const toggle = new Toggle(input, {});
 
-      toggle.toggle();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.TOGGLE, false);
+            expect(toggle).toBeDefined();
+            expect((input as any).bsToggle).toBe(toggle);
+        });
 
-      toggle.toggle(true);
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.TOGGLE, true);
+        it("bind events listeners", () => {
+            input.id = "test-toggle";
+            const label = document.createElement("label");
+            label.setAttribute("for", "test-toggle");
+            document.body.appendChild(label);
+
+            const addEventListenerSpyDiv = jest.spyOn(
+                HTMLDivElement.prototype,
+                "addEventListener"
+            );
+
+            const addEventListenerSpyLabel = jest.spyOn(
+                HTMLLabelElement.prototype,
+                "addEventListener"
+            );
+
+            new Toggle(input, {});
+
+            expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
+                "pointerdown",
+                expect.any(Function),
+                expect.any(Object)
+            );
+            expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
+                "keypress",
+                expect.any(Function),
+                expect.any(Object)
+            );
+
+            expect(addEventListenerSpyLabel).toHaveBeenCalledWith(
+                "click",
+                expect.any(Function),
+                expect.objectContaining({ passive: false })
+            );
+
+            addEventListenerSpyDiv.mockRestore();
+            addEventListenerSpyLabel.mockRestore();
+        });
     });
 
-    it("on(silent=false)", () => {
-      const toggle = new Toggle(input, {});
+    describe("Pointer interactions", () => {
+        let root: HTMLElement;
 
-      toggle.on();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.ON, false);
+        beforeEach(() => {
+            const toggle = new Toggle(input, {});
+            root = (DOMBuilder as any).mock.results[0].value.root;
+            jest.spyOn(toggle as any, "apply");
+        });
 
-      toggle.on(true);
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.ON, true);
+        it("toggles on pointerdown + pointerup", () => {
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointerup", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 12,
+                    clientY: 12,
+                })
+            );
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+        });
+
+        it("cancels interaction when vertical scroll exceeds threshold on move", () => {
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 12,
+                    clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointerup", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 12,
+                    clientY: 12, // Not exceeds SCROLL_THRESHOLD
+                })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
+
+        it("cancels interaction when vertical scroll exceeds threshold on up", () => {
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointerup", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 12,
+                    clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
+                })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
+
+        it("ignores non-primary mouse button on pointerdown", () => {
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 2,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
+
+        it("ignores non-primary mouse button on pointerup", () => {
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointerup", {
+                    pointerType: "mouse",
+                    button: 2,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
+
+        it("does not interact when canInteract is false", () => {
+            canInteractMock.mockReturnValueOnce(false);
+
+            root.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 10,
+                    clientY: 10,
+                })
+            );
+
+            root.dispatchEvent(
+                new PointerEvent("pointerup", {
+                    pointerType: "mouse",
+                    button: 0,
+                    clientX: 12,
+                    clientY: 12,
+                })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
     });
 
-    it("off(silent=false)", () => {
-      const toggle = new Toggle(input, {});
+    describe("Keyboard interactions", () => {
+        let root: HTMLElement;
 
-      toggle.off();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.OFF, false);
+        beforeEach(() => {
+            new Toggle(input, {});
+            root = (DOMBuilder as any).mock.results[0].value.root;
+        });
 
-      toggle.off(true);
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.OFF, true);
+        it("toggles on space keypress", () => {
+            root.dispatchEvent(
+                new KeyboardEvent("keypress", { key: " " })
+            );
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+        });
+
+        it("ignores other keys", () => {
+            root.dispatchEvent(
+                new KeyboardEvent("keypress", { key: "Enter" })
+            );
+
+            expect(doMock).not.toHaveBeenCalled();
+        });
     });
 
-    it("determinate(silent=false)", () => {
-      const toggle = new Toggle(input, {});
+    describe("Label interaction", () => {
+        it("clicking label toggles and focuses root", () => {
+            input.id = "toggle-id";
 
-      toggle.determinate();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.DETERMINATE, false);
+            const label = document.createElement("label");
+            label.setAttribute("for", "toggle-id");
+            document.body.appendChild(label);
 
-      toggle.determinate(true);
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.DETERMINATE, true);
+            new Toggle(input, {});
+            const root = (DOMBuilder as any).mock.results[0].value.root;
+            const focusSpy = jest.spyOn(root, "focus");
+
+            label.click();
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+            expect(focusSpy).toHaveBeenCalled();
+        });
     });
 
-    it("indeterminate(silent=false)", () => {
-      const toggle = new Toggle(input, {});
 
-      toggle.indeterminate();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, false);
+    describe("apply(action: ToggleActionType, silent = false)", () => {
+        it("calls StateReducer.do and DOMBuilder.render", () => {
+            const toggle = new Toggle(input, {});
 
-      toggle.indeterminate(true);
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, true);
+            (toggle as any).apply(ToggleActionType.TOGGLE);
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.TOGGLE);
+            expect(renderMock).toHaveBeenCalled();
+        });
+
+        it("dispatches change event when not silent", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.fn();
+
+            input.addEventListener("change", spy);
+
+            (toggle as any).apply(ToggleActionType.TOGGLE, false);
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("does not dispatch change event when silent", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.fn();
+
+            input.addEventListener("change", spy);
+
+            (toggle as any).apply(ToggleActionType.TOGGLE, true);
+
+            expect(spy).not.toHaveBeenCalled();
+        });
     });
 
-    it("enable()", () => {
-      const toggle = new Toggle(input, {});
+    describe("delegate to apply(action: ToggleActionType, silent = false)", () => {
+        let apply: jest.SpyInstance;
 
-      toggle.enable();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE);
+        beforeEach(() => {
+            apply = jest.spyOn(Toggle.prototype as any, "apply");
+        });
+
+        afterAll(() => {
+            apply.mockRestore();
+        });
+
+        it("toggle(silent=false)", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.toggle();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.TOGGLE, false);
+
+            toggle.toggle(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.TOGGLE, true);
+        });
+
+        it("on(silent=false)", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.on();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ON, false);
+
+            toggle.on(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ON, true);
+        });
+
+        it("off(silent=false)", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.off();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.OFF, false);
+
+            toggle.off(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.OFF, true);
+        });
+
+        it("determinate(silent=false)", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.determinate();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DETERMINATE, false);
+
+            toggle.determinate(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DETERMINATE, true);
+        });
+
+        it("indeterminate(silent=false)", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.indeterminate();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, false);
+
+            toggle.indeterminate(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, true);
+        });
+
+        it("enable()", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.enable();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE);
+        });
+
+        it("disable()", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.disable();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE);
+        });
+
+        it("readonly()", () => {
+            const toggle = new Toggle(input, {});
+
+            toggle.readonly();
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY);
+        });
     });
 
-    it("disable()", () => {
-      const toggle = new Toggle(input, {});
+    describe("update(silent: boolean)", () => {
+        it("syncs state and renders on update()", () => {
+            const toggle = new Toggle(input, {});
 
-      toggle.disable();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE);
-    });
+            toggle.update(true);
 
-    it("readonly()", () => {
-      const toggle = new Toggle(input, {});
+            expect(syncMock).toHaveBeenCalledWith(input);
+            expect(renderMock).toHaveBeenCalled();
+        });
 
-      toggle.readonly();
-      expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY);
-    });
-  });
+        it("dispatches change event when not silent", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.fn();
 
-  describe("update(silent: boolean)", () => {
-    it("syncs state and renders on update()", () => {
-      const toggle = new Toggle(input, {});
+            input.addEventListener("change", spy);
 
-      toggle.update(true);
+            toggle.update(false);
 
-      expect(syncMock).toHaveBeenCalledWith(input);
-      expect(renderMock).toHaveBeenCalled();
-    });
-
-    it("dispatches change event when not silent", () => {
-      const toggle = new Toggle(input, {});
-      const spy = jest.fn();
-
-      input.addEventListener("change", spy);
-
-      toggle.update(false);
-
-      expect(spy).toHaveBeenCalled();
-    });
+            expect(spy).toHaveBeenCalled();
+        });
     
-    it("does not dispatch change event when silent", () => {
-      const toggle = new Toggle(input, {});
-      const spy = jest.fn();
+        it("does not dispatch change event when silent", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.fn();
 
-      input.addEventListener("change", spy);
+            input.addEventListener("change", spy);
 
-      toggle.update(true);
+            toggle.update(true);
 
-      expect(spy).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("destroy()", () => {
-    it("destroys DOM and unlink instance on destroy()", () => {
-      const toggle = new Toggle(input, {});
-
-      toggle.destroy();
-
-      expect(destroyMock).toHaveBeenCalled();
-      expect((input as any).bsToggle).toBeUndefined();
+            expect(spy).not.toHaveBeenCalled();
+        });
     });
 
-    it("unbind events listeners", () => {
-      input.id = "test-toggle";
-      const label = document.createElement("label");
-      label.setAttribute("for", "test-toggle");
-      document.body.appendChild(label);
+    describe("destroy()", () => {
+        it("destroys DOM and unlink instance on destroy()", () => {
+            const toggle = new Toggle(input, {});
 
-      const removeEventListenerSpyDiv = jest.spyOn(
-        HTMLDivElement.prototype,
-        "removeEventListener"
-      );
+            toggle.destroy();
 
-      const removeEventListenerSpyLabel = jest.spyOn(
-        HTMLLabelElement.prototype,
-        "removeEventListener"
-      );
+            expect(destroyMock).toHaveBeenCalled();
+            expect((input as any).bsToggle).toBeUndefined();
+        });
 
-      const toggle = new Toggle(input, {});
-      toggle.destroy();
+        it("unbind events listeners", () => {
+            input.id = "test-toggle";
+            const label = document.createElement("label");
+            label.setAttribute("for", "test-toggle");
+            document.body.appendChild(label);
 
-      expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
-        "pointerdown",
-        expect.any(Function)
-      );
-      expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
-        "keypress",
-        expect.any(Function)
-      );
+            const removeEventListenerSpyDiv = jest.spyOn(
+                HTMLDivElement.prototype,
+                "removeEventListener"
+            );
 
-      expect(removeEventListenerSpyLabel).toHaveBeenCalledWith(
-        "click",
-        expect.any(Function)
-      );
+            const removeEventListenerSpyLabel = jest.spyOn(
+                HTMLLabelElement.prototype,
+                "removeEventListener"
+            );
 
-      removeEventListenerSpyDiv.mockRestore();
-      removeEventListenerSpyLabel.mockRestore();
+            const toggle = new Toggle(input, {});
+            toggle.destroy();
+
+            expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
+                "pointerdown",
+                expect.any(Function)
+            );
+            expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
+                "keypress",
+                expect.any(Function)
+            );
+
+            expect(removeEventListenerSpyLabel).toHaveBeenCalledWith(
+                "click",
+                expect.any(Function)
+            );
+
+            removeEventListenerSpyDiv.mockRestore();
+            removeEventListenerSpyLabel.mockRestore();
+        });
     });
-  });
 
-  describe("rerender()", () =>{
-    it("rerender destroys and reinitializes toggle", () => {
-      (input as any).bootstrapToggle = jest.fn();
+    describe("rerender()", () =>{
+        it("rerender destroys and reinitializes toggle", () => {
+            (input as any).bootstrapToggle = jest.fn();
 
-      const toggle = new Toggle(input, {});
-      toggle.rerender();
+            const toggle = new Toggle(input, {});
+            toggle.rerender();
 
-      expect(destroyMock).toHaveBeenCalled();
-      expect(DOMBuilder).toHaveBeenCalledTimes(2);
+            expect(destroyMock).toHaveBeenCalled();
+            expect(DOMBuilder).toHaveBeenCalledTimes(2);
+        });
     });
-  });
 });
