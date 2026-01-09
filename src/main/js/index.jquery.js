@@ -1,5 +1,5 @@
 import { Toggle } from "./BootstrapToggle";
-import { ToggleMethods } from "./core/types";
+import { ToggleMethods } from "./types/ToggleMethods";
 
 +(function ($) {
   function Plugin(options, silent) {
