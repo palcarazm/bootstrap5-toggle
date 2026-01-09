@@ -52,6 +52,8 @@ describe("sanitize", () => {
 
 describe("isNumeric(value: string): boolean",()=>{
     it("returns true for valid numeric values", () => {
+        expect(isNumeric(123)).toBe(true);
+        expect(isNumeric(-123)).toBe(true);
         expect(isNumeric("123")).toBe(true);
         expect(isNumeric("-123")).toBe(true);
         expect(isNumeric("+123")).toBe(true);
