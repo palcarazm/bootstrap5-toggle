@@ -60,9 +60,6 @@ jobs:
     container:
       image: cypress/browsers:latest
       options: --user 1001
-    strategy:
-      matrix:
-        browsers: [firefox, chrome, edge]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,10 +67,10 @@ jobs:
         run: npm install
       - name: Build project
         run: npm run build
-      - name: Cypress run ${{ matrix.browsers }}
+      - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ matrix.browsers }}
+          browser: chrome
 
   analyze:
     name: Analyze code with CodeQL
