@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - "v*"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x, 24.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: ${{ matrix.node-version }}
+            cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+      - name: Unit test
+        run: npm run test:jest
+      - name: Upload coverage report to Github
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-${{ matrix.node-version }}
+          path: coverage
+      - name: Upload coverage report to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          flag-name: coverage-report-${{ matrix.node-version }}
+          parallel: true
+
+  coverage-finished:
+    needs: build-and-test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
+          carryforward: "coverage-report-22.x,coverage-report-24.x"
+
+  cypress:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    container: cypress/browsers:latest
+    strategy:
+      matrix:
+        browsers: [firefox, chrome, edge]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+      - name: Cypress run ${{ matrix.browsers }}
+        uses: cypress-io/github-action@v5
+        with:
+          browser: ${{ matrix.browsers }}
+
+  analyze:
+    name: Analyze code with CodeQL
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: typescript
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
