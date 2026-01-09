@@ -1,5 +1,5 @@
 import { Toggle } from "../BootstrapToggle";
-import { ToggleMethods } from "../core/types";
+import { ToggleMethods } from "./ToggleMethods";
 
 declare global {
   interface HTMLInputElement {

@@ -11,6 +11,7 @@ const destroyMock = jest.fn();
 const doMock = jest.fn(() => true);
 const getMock = jest.fn(() => ({}));
 const syncMock = jest.fn();
+const canInteractMock = jest.fn(() => true);
 
 jest.mock("../../main/ts/core/DOMBuilder", () => {
   return {
@@ -28,6 +29,7 @@ jest.mock("../../main/ts/core/StateReducer", () => {
       do: doMock,
       get: getMock,
       sync: syncMock,
+      canInteract: canInteractMock,
     })),
   };
 });
@@ -119,6 +121,193 @@ describe("Toggle", () => {
       addEventListenerSpyLabel.mockRestore();
     });
   });
+
+describe("Pointer interactions", () => {
+  let root: HTMLElement;
+
+  beforeEach(() => {
+    const toggle = new Toggle(input, {});
+    root = (DOMBuilder as any).mock.results[0].value.root;
+    jest.spyOn(toggle as any, "apply");
+  });
+
+  it("toggles on pointerdown + pointerup", () => {
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 12,
+        clientY: 12,
+      })
+    );
+
+    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+  });
+
+  it("cancels interaction when vertical scroll exceeds threshold on move", () => {
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointermove", {
+        clientX: 12,
+        clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 12,
+        clientY: 12, // Not exceeds SCROLL_THRESHOLD
+      })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+
+  it("cancels interaction when vertical scroll exceeds threshold on up", () => {
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 12,
+        clientY: 50, // Exceeds SCROLL_THRESHOLD >> CANCEL
+      })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+
+  it("ignores non-primary mouse button on pointerdown", () => {
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 2,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+
+    it("ignores non-primary mouse button on pointerup", () => {
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerType: "mouse",
+        button: 2,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+
+  it("does not interact when canInteract is false", () => {
+    canInteractMock.mockReturnValueOnce(false);
+
+    root.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      })
+    );
+
+    root.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerType: "mouse",
+        button: 0,
+        clientX: 12,
+        clientY: 12,
+      })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("Keyboard interactions", () => {
+  let root: HTMLElement;
+
+  beforeEach(() => {
+    new Toggle(input, {});
+    root = (DOMBuilder as any).mock.results[0].value.root;
+  });
+
+  it("toggles on space keypress", () => {
+    root.dispatchEvent(
+      new KeyboardEvent("keypress", { key: " " })
+    );
+
+    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+  });
+
+  it("ignores other keys", () => {
+    root.dispatchEvent(
+      new KeyboardEvent("keypress", { key: "Enter" })
+    );
+
+    expect(doMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("Label interaction", () => {
+  it("clicking label toggles and focuses root", () => {
+    input.id = "toggle-id";
+
+    const label = document.createElement("label");
+    label.setAttribute("for", "toggle-id");
+    document.body.appendChild(label);
+
+    const toggle = new Toggle(input, {});
+    const root = (DOMBuilder as any).mock.results[0].value.root;
+    const focusSpy = jest.spyOn(root, "focus");
+
+    label.click();
+
+    expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+    expect(focusSpy).toHaveBeenCalled();
+  });
+});
+
 
   describe("apply(action: ToggleActionType, silent = false)", () => {
     it("calls StateReducer.do and DOMBuilder.render", () => {

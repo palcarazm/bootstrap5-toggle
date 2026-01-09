@@ -79,6 +79,68 @@ describe("StateReducer", () => {
     });
   });
 
+    describe("canInteract()", () => {
+    it("returns true if input is enabled", () => {
+      const reducer = new StateReducer(createInput({ checked: false, disabled: false, readOnly: false }), false);
+      expect(reducer.canInteract()).toBe(true);
+    });
+
+    it("returns false if input is disabled", () => {
+      const reducer = new StateReducer(createInput({ checked: false, disabled: true, readOnly: false }), false);
+      expect(reducer.canInteract()).toBe(false);
+    });
+
+    it("returns false if input is readonly", () => {
+      const reducer = new StateReducer(createInput({ checked: false, disabled: false, readOnly: true }), false);
+      expect(reducer.canInteract()).toBe(false);
+    });
+  });
+
+  describe("sync(element: HTMLInputElement)", () => {
+    it("updates checked state when element is checked", () => {
+      const input = createInput({ checked: false });
+      const reducer = new StateReducer(input, false);
+      input.checked = true;
+      reducer.sync(input);
+      expect(reducer.get().checked).toBe(true);
+      expect(reducer.get().value).toBe(ToggleStateValue.ON);
+    })
+
+    it("updates checked state when element is unchecked", () => {
+      const input = createInput({ checked: true });
+      const reducer = new StateReducer(input, false);
+      input.checked = false;
+      reducer.sync(input);
+      expect(reducer.get().checked).toBe(false);
+      expect(reducer.get().value).toBe(ToggleStateValue.OFF);
+    })
+
+    it("updates status state when element is disabled", () => {
+      const input = createInput({ checked: false, disabled: false, readOnly: false });
+      const reducer = new StateReducer(input, false);
+      input.disabled = true;
+      reducer.sync(input);
+      expect(reducer.get().status).toBe(ToggleStateStatus.DISABLED);
+    })
+
+    it("updates status state when element is readonly", () => {
+      const input = createInput({ checked: false, disabled: false, readOnly: false });
+      const reducer = new StateReducer(input, false);
+      input.readOnly = true;
+      reducer.sync(input);
+      expect(reducer.get().status).toBe(ToggleStateStatus.READONLY);
+    })
+
+    it("updates indeterminate when element is indeterminate", () => {
+      const input = createInput({ checked: false, disabled: false, readOnly: false });
+      const reducer = new StateReducer(input, true);
+      input.indeterminate = true;
+      reducer.sync(input);
+      expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
+      expect(reducer.get().indeterminate).toBe(true);
+    })
+  });
+
   describe("do()", () => {
     describe("basic actions", () => {
       it("sets ON", () => {
@@ -179,18 +241,35 @@ describe("StateReducer", () => {
       });
 
       it("returns false if already in target state", () => {
-        const reducer = new StateReducer(createInput({ checked: true }), false);
+        const reducerOn = new StateReducer(createInput({ checked: true }), false);
+        expect(reducerOn.do(ToggleActionType.ON)).toBe(false);
 
-        expect(reducer.do(ToggleActionType.ON)).toBe(false);
+        const reducerOff = new StateReducer(createInput({ checked: false }), false);
+        expect(reducerOff.do(ToggleActionType.OFF)).toBe(false);
+
+        const reducerIndeterminate = new StateReducer(createInput({ checked: false, indeterminate: true }), true);
+        expect(reducerIndeterminate.do(ToggleActionType.INDETERMINATE)).toBe(false);
+
+        const reducerDeterminate = new StateReducer(createInput({ checked: false, indeterminate: false }), true);
+        expect(reducerDeterminate.do(ToggleActionType.DETERMINATE)).toBe(false);
+
+        const reducerEnabled = new StateReducer(createInput({ checked: false, disabled: false, readOnly: false }), false);
+        expect(reducerEnabled.do(ToggleActionType.ENABLE)).toBe(false);
+
+        const reducerDisabled = new StateReducer(createInput({ checked: false, disabled: true, readOnly: false }), false);
+        expect(reducerDisabled.do(ToggleActionType.DISABLE)).toBe(false);
+
+        const reducerReadOnlu = new StateReducer(createInput({ checked: false, disabled: false, readOnly: true }), false);
+        expect(reducerReadOnlu.do(ToggleActionType.READONLY)).toBe(false);
       });
 
-      it("returns false on invalid determinate", () => {
+      it("returns false on toggle if indeterminate", () => {
         const reducer = new StateReducer(
-          createInput({ checked: false, indeterminate: false }),
+          createInput({ checked: false, indeterminate: true }),
           true
         );
 
-        expect(reducer.do(ToggleActionType.DETERMINATE)).toBe(false);
+        expect(reducer.do(ToggleActionType.TOGGLE)).toBe(false);
       });
     });
 
