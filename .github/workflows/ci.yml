@@ -10,6 +10,7 @@ on:
       - synchronize
     branches:
       - "v*"
+      - "develop/*"
 
 jobs:
   build-and-test:
@@ -28,6 +29,8 @@ jobs:
             cache: npm
       - name: Install dependencies
         run: npm install
+      - name: Lint code
+        run: npm run lint
       - name: Build project
         run: npm run build
       - name: Unit test
