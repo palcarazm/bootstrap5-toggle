@@ -1,9 +1,9 @@
 module.exports = function (grunt) {
-  "use strict";
+    "use strict";
 
-  grunt.initConfig({
-    pkg: grunt.file.readJSON("package.json"),
-    banner:
+    grunt.initConfig({
+        pkg: grunt.file.readJSON("package.json"),
+        banner:
       "/* Copyright Notice\n" +
       " * <%= pkg.name %> v<%= pkg.version %>\n" +
       " * <%= pkg.homepage %>\n" +
@@ -15,46 +15,46 @@ module.exports = function (grunt) {
       " * @license <%= pkg.license %>\n" +
       " * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE\n" +
       " */\n",
-    clean: ["js","css"],
-    exec: {
-      ts: "npx tsc",
-      rollup: "npx rollup -c",
-      postcss: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.css --map",
-      postcssMin: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.min.css --map --env production"
-    },
-    usebanner: {
-      taskName: {
-        options: {
-          position: "top",
-          banner: "<%= banner %>",
-          linebreak: true,
-          replace: true,
+        clean: ["js","css"],
+        exec: {
+            ts: "npx tsc",
+            rollup: "npx rollup -c",
+            postcss: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.css --map",
+            postcssMin: "npx postcss src/main/css/bootstrap5-toggle.css -o css/bootstrap5-toggle.min.css --map --env production"
         },
-        files: {
-          src: ["css/*.css", "js/*.js"],
+        usebanner: {
+            taskName: {
+                options: {
+                    position: "top",
+                    banner: "<%= banner %>",
+                    linebreak: true,
+                    replace: true,
+                },
+                files: {
+                    src: ["css/*.css", "js/*.js"],
+                },
+            },
         },
-      },
-    },
-    copy: {
-      main: {
-        src: "README.template.md",
-        dest: "README.md",
-        options: {
-          process: function (content, _srcpath) {
-            let pkg = grunt.file.readJSON("package.json");
-            return content.replace(/#version#/g, pkg.version);
-          },
+        copy: {
+            main: {
+                src: "README.template.md",
+                dest: "README.md",
+                options: {
+                    process: function (content, _srcpath) {
+                        let pkg = grunt.file.readJSON("package.json");
+                        return content.replace(/#version#/g, pkg.version);
+                    },
+                },
+            },
         },
-      },
-    },
-  });
+    });
 
-  grunt.loadNpmTasks("grunt-banner");
-  grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-exec");
+    grunt.loadNpmTasks("grunt-banner");
+    grunt.loadNpmTasks("grunt-contrib-clean");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-exec");
   
-  grunt.registerTask("default", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
-  grunt.registerTask("build", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
-  grunt.registerTask("readme", ["copy"]);
+    grunt.registerTask("default", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
+    grunt.registerTask("build", ["clean", "exec:ts", "exec:rollup", "exec:postcss", "exec:postcssMin", "usebanner"]);
+    grunt.registerTask("readme", ["copy"]);
 };
