@@ -35,6 +35,9 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
+      - [Library Distributions](#library-distributions)
+- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [ECMAS Interface](#ecmas-interface)
@@ -269,10 +272,10 @@ This also means that using the API or Input to trigger events will work both way
 
 # Collaborators welcom!
 
-- :sos: ¿Do you need some help? Open a issue in [GitHub help wanted](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=help+wanted&template=help-wanted.md&title=%5BHELP%5D)
-- :bug: ¿Do you find a bug? Open a issue in [GitHub bug report](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D)
-- :bulb: ¿Do you have a great idea? Open a issue in [GitHub feature request](https://github.com/palcarazm/bootstrap5-toggle/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D)
-- :computer: ¿Do you know how to fix a bug? Open a pull request in [GitHub pull repuest](https://github.com/palcarazm/bootstrap5-toggle/compare).
+- :sos: Do you need some help? Open a thread in [GitHub Discussions Q&A](https://github.com/palcarazm/bootstrap5-toggle/discussions/new?category=q-a)
+- :bug: Do you find a bug? Open an issue in [GitHub bug report](https://github.com/palcarazm/bootstrap5-toggle/issues/new?template=01-BUG_REPORT.yml)
+- :bulb: Do you have a great idea? Open an issue in [GitHub feature request](https://github.com/palcarazm/bootstrap5-toggle/issues/new?template=02-FEATURE_REQUEST.yml)
+- :computer: Do you know how to fix a bug? Open a pull request in [GitHub pull request](https://github.com/palcarazm/bootstrap5-toggle/compare).
 
 [![GitHub Contributors](https://contrib.rocks/image?repo=palcarazm/bootstrap5-toggle)](https://github.com/palcarazm/bootstrap5-toggle/graphs/contributors)
 
