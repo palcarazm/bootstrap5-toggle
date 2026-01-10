@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     container:
-      image: cypress/browsers:latest
+      image: cypress/browsers:node-24.12.0-chrome-143.0.7499.169-1-ff-146.0.1-edge-143.0.3650.96-1
       options: --user 1001
     steps:
       - name: Checkout
