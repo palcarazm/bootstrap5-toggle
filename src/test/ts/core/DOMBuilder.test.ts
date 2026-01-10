@@ -32,6 +32,7 @@ const BASE_OPTIONS: ToggleOptions = {
     tabindex: 0,
     tristate: false,
     name: "myToggle",
+    aria: {label: "Toggle"},
 };
 
 function state(
@@ -207,5 +208,186 @@ describe("DOMBuilder", () => {
         const toggle = document.querySelector(".toggle") as HTMLElement;
         expect(toggle.style.width).toBe("120px");
         expect(toggle.style.height).toBe("40px");
+    });
+
+    describe("ARIA accessibility", () => {
+        it("sets role='switch' on toggle root", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("role")).toBe("switch");
+        });
+
+        it("sets aria-label from options", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                {
+                    ...BASE_OPTIONS,
+                    aria: { label: "Email notifications" },
+                },
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-label")).toBe("Email notifications");
+        });
+
+        it("sets aria-checked='true' when ON", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-checked")).toBe("true");
+        });
+
+        it("sets aria-checked='false' when OFF", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED, false)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-checked")).toBe("false");
+        });
+
+        it("sets aria-checked='mixed' when INDETERMINATE", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(
+                    ToggleStateValue.INDETERMINATE,
+                    ToggleStateStatus.ENABLED,
+                    false,
+                    true
+                )
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-checked")).toBe("mixed");
+        });
+
+        it("sets aria-disabled when disabled", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.DISABLED)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-disabled")).toBe("true");
+            expect(toggle.getAttribute("aria-readonly")).toBe("false");
+        });
+
+        it("sets aria-readonly when readonly", () => {
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.READONLY)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-readonly")).toBe("true");
+            expect(toggle.getAttribute("aria-disabled")).toBe("false");
+        });
+
+        it("updates ARIA attributes when state changes", () => {
+            const checkbox = createCheckbox();
+
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED, false)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+
+            // OFF (INITIAL STATE)
+
+            // ON
+            builder.render(
+                state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true)
+            );
+            expect(toggle.getAttribute("aria-checked")).toBe("true");
+            expect(toggle.getAttribute("aria-disabled")).toBe("false");
+            expect(toggle.getAttribute("aria-readonly")).toBe("false");
+
+            // INDETERMINATE
+            builder.render(
+                state(ToggleStateValue.INDETERMINATE, ToggleStateStatus.ENABLED, false, true)
+            );
+            expect(toggle.getAttribute("aria-checked")).toBe("mixed");
+            expect(toggle.getAttribute("aria-disabled")).toBe("false");
+            expect(toggle.getAttribute("aria-readonly")).toBe("false");
+
+            // OFF
+            builder.render(
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED, false)
+            );
+            expect(toggle.getAttribute("aria-checked")).toBe("false");
+            expect(toggle.getAttribute("aria-disabled")).toBe("false");
+            expect(toggle.getAttribute("aria-readonly")).toBe("false"); 
+
+            // DISABLED
+            builder.render(
+                state(ToggleStateValue.OFF, ToggleStateStatus.DISABLED, false)
+            );
+            expect(toggle.getAttribute("aria-checked")).toBe("false");
+            expect(toggle.getAttribute("aria-disabled")).toBe("true");
+            expect(toggle.getAttribute("aria-readonly")).toBe("false");
+
+            // READONLY
+            builder.render(
+                state(ToggleStateValue.ON, ToggleStateStatus.READONLY, true)
+            );
+            expect(toggle.getAttribute("aria-checked")).toBe("true");
+            expect(toggle.getAttribute("aria-disabled")).toBe("false");
+            expect(toggle.getAttribute("aria-readonly")).toBe("true");
+        });
+
+
+        it("uses associated <label> via aria-labelledby when present", () => {
+            const label = document.createElement("label");
+            label.id = "toggle-label";
+            label.htmlFor = "test";
+            label.textContent = "Dark mode";
+
+            document.body.appendChild(label);
+
+            const checkbox = createCheckbox();
+
+            const _ = new DOMBuilder(
+                checkbox,
+                {
+                    ...BASE_OPTIONS
+                },
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const toggle = document.querySelector(".toggle")!;
+            expect(toggle.getAttribute("aria-labelledby")).toBe("toggle-label");
+            expect(toggle.hasAttribute("aria-label")).toBe(false);
+        });
     });
 });

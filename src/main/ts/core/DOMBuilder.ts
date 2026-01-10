@@ -1,4 +1,4 @@
-import { ToggleOptions, ToggleSize } from "./OptionResolver.types";
+import { AriaToggleOptions, ToggleOptions, ToggleSize } from "./OptionResolver.types";
 import {
     ToggleState,
     ToggleStateStatus,
@@ -151,16 +151,22 @@ export class DOMBuilder {
         width,
         height,
         tabindex,
+        aria
     }: ToggleOptions): void {
         this.toggle.className= `toggle btn ${this.sizeClass} ${style}`;
         this.toggle.dataset.toggle =  "toggle";
         this.toggle.tabIndex = tabindex;
-        this.toggle.role = "button";
+        this.toggle.role = "switch";
 
+        this.checkbox.tabIndex = -1;
+        if (this.invCheckbox) this.invCheckbox.tabIndex = -1;
+        
         this.checkbox.parentElement?.insertBefore(this.toggle, this.checkbox);
         this.toggle.appendChild(this.checkbox);
         if (this.invCheckbox) this.toggle.appendChild(this.invCheckbox);
         this.toggle.appendChild(this.toggleGroup);
+
+        this.handleLabels(aria);
 
         this.handleToggleSize(width, height);
 
@@ -281,6 +287,27 @@ export class DOMBuilder {
     }
 
     /**
+     * Handles the aria-labelledby and aria-label attributes of the toggle element.
+     * If the checkbox element has a labels property and the length of the labels property is greater than 0,
+     * the aria-labelledby attribute of the toggle element is set to the id of the labels elements.
+     * Otherwise, the aria-label attribute of the toggle element is set to the label property of the ariaOpts object.
+     * @param {AriaToggleOptions} ariaOpts - The object containing the label property to be used for the aria-label attribute.
+     */
+    private handleLabels(ariaOpts: AriaToggleOptions){
+        if (this.checkbox.labels?.length) {
+            const ids = Array.from(this.checkbox.labels)
+                .map(l => l.id)
+                .filter(Boolean);
+
+            if (ids.length) {
+                this.toggle.setAttribute("aria-labelledby", ids.join(" "));
+            }
+        } else{
+            this.toggle.setAttribute("aria-label", ariaOpts.label);
+        }
+    }
+
+    /**
    * Renders the toggle element based on the provided state if the toggle is already built.
    * This method should be called whenever the state of the toggle changes.
    * @param {ToggleState} state The state of the toggle element.
@@ -293,16 +320,15 @@ export class DOMBuilder {
         this.updateToggleByValue(state);
         this.updateToggleByChecked(state);
         this.updateToggleByState(state);
+        this.updateAria(state);
     }
 
-    /*************  ✨ Windsurf Command ⭐  *************/
     /**
      * Updates the class of the toggle element based on the provided state.
      * Removes any existing on/off/indeterminate classes and adds the appropriate class based on the state.
      * If the state is indeterminate, adds the 'indeterminate' class and either the on or off class based on the checked attribute.
      * @param {ToggleState} state The state of the toggle element.
      */
-    /*******  9e620de0-7e60-44a0-b26d-be36099794af  *******/
     private updateToggleByValue(state: ToggleState) {
         this.toggle.classList.remove(
             this.onStyle,
@@ -418,6 +444,31 @@ export class DOMBuilder {
         }
     }
 
+    /**
+     * Updates the aria attributes of the toggle element based on the provided state.
+     * Sets aria-checked to "mixed" if the state is indeterminate, otherwise sets it to the string representation of the state's checked attribute.
+     * Sets aria-disabled to the string representation of whether the state's status is disabled.
+     * Sets aria-readonly to the string representation of whether the state's status is readonly.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateAria(state: ToggleState) {
+        if (state.indeterminate) {
+            this.toggle.setAttribute("aria-checked", "mixed");
+        } else {
+            this.toggle.setAttribute("aria-checked", String(state.checked));
+        }
+
+        this.toggle.setAttribute(
+            "aria-disabled",
+            String(state.status === ToggleStateStatus.DISABLED)
+        );
+
+        this.toggle.setAttribute(
+            "aria-readonly",
+            String(state.status === ToggleStateStatus.READONLY)
+        );
+    }
+    
     /**
    * Returns the root element of the toggle, which is the container of all toggle elements.
    * @returns {HTMLElement} The root element of the toggle.

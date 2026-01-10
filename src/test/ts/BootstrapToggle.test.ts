@@ -108,7 +108,7 @@ describe("Toggle", () => {
                 expect.any(Object)
             );
             expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
-                "keypress",
+                "keydown",
                 expect.any(Function),
                 expect.any(Object)
             );
@@ -274,9 +274,17 @@ describe("Toggle", () => {
             root = (DOMBuilder as any).mock.results[0].value.root;
         });
 
-        it("toggles on space keypress", () => {
+        it("toggles on space keydown", () => {
             root.dispatchEvent(
-                new KeyboardEvent("keypress", { key: " " })
+                new KeyboardEvent("keydown", { key: " " })
+            );
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+        });
+
+        it("toggles on Enter keydown", () => {
+            root.dispatchEvent(
+                new KeyboardEvent("keydown", { key: "Enter" })
             );
 
             expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
@@ -284,7 +292,7 @@ describe("Toggle", () => {
 
         it("ignores other keys", () => {
             root.dispatchEvent(
-                new KeyboardEvent("keypress", { key: "Enter" })
+                new KeyboardEvent("keydown", { key: "Ctrl" })
             );
 
             expect(doMock).not.toHaveBeenCalled();
@@ -494,7 +502,7 @@ describe("Toggle", () => {
                 expect.any(Function)
             );
             expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
-                "keypress",
+                "keydown",
                 expect.any(Function)
             );
 

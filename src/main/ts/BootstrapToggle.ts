@@ -185,35 +185,35 @@ export class Toggle {
     };
 
     /**
-   * Binds a keypress event listener to the root element of the toggle.
-   * The event listener is responsible for handling keypress events
-   * and triggering the toggle's state change when a keypress event occurs.
+   * Binds a keydown event listener to the root element of the toggle.
+   * The event listener is responsible for handling keydown events
+   * and triggering the toggle's state change when a keydown event occurs.
    * The event listener is bound with the passive option, which means that it will not block
    * other event listeners from being triggered.
    */
     private bindKeyboardEventListener() {
         this.domBuilder.root.addEventListener(
-            "keypress",
+            "keydown",
             this.handlerKeyboardEvent,
             { passive: true }
         );
     }
 
     /**
-   * Unbinds the keypress event listener from the root element of the toggle.
-   * This method is responsible for unbinding the keypress event listener that was
+   * Unbinds the keydown event listener from the root element of the toggle.
+   * This method is responsible for unbinding the keydown event listener that was
    * previously bound by the bindKeyboardEventListener method.
    * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
    * @returns void
    */
     private unbindKeyboardEventListener() {
         this.domBuilder.root.removeEventListener(
-            "keypress",
+            "keydown",
             this.handlerKeyboardEvent
         );
     }
     private readonly handlerKeyboardEvent = (e: KeyboardEvent) => {
-        if (e.key == " ") {
+        if (e.key === " " || e.key === "Enter") {
             this.apply(ToggleActionType.NEXT);
         }
     };
