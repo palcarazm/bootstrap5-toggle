@@ -49,7 +49,7 @@ class PageModel {
                     .should(
                         "have.css",
                         toggleProperty || referenceProperty,
-                        window
+                        globalThis.window
                             .getComputedStyle(element[0])
                             .getPropertyValue(referenceProperty)
                     );

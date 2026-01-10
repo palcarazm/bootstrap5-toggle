@@ -71,7 +71,7 @@ describe("DOMBuilder", () => {
     });
 
     it("defers render when parent not visible", () => {
-        (global as any).__dom_setup_setHidden();
+        (globalThis as any).__dom_setup_setHidden();
         const checkbox = createCheckbox();
 
         const _ = new DOMBuilder(
@@ -80,8 +80,8 @@ describe("DOMBuilder", () => {
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
         );
         expect(document.querySelector(".toggle")).toBeNull();
-        (global as any).__dom_setup_setVisible();
-        (global as any).__dom_setup_triggerResize(120, 40);
+        (globalThis as any).__dom_setup_setVisible();
+        (globalThis as any).__dom_setup_triggerResize(120, 40);
         expect(document.querySelector(".toggle")).not.toBeNull();
     });
 

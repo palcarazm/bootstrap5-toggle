@@ -11,14 +11,14 @@ function testStatus() {
         toggle = $(this).find(".toggle");
         button = $(this).find("button");
 
-        toggle_opacity = window.getComputedStyle(toggle[0], null).getPropertyValue("opacity");
-        button_opacity = window.getComputedStyle(button[0], null).getPropertyValue("opacity");
+        toggle_opacity = globalThis.window.getComputedStyle(toggle[0], null).getPropertyValue("opacity");
+        button_opacity = globalThis.window.getComputedStyle(button[0], null).getPropertyValue("opacity");
 
-        toggle_cursor = window.getComputedStyle(toggle[0], null).getPropertyValue("cursor");
-        button_cursor = window.getComputedStyle(button[0], null).getPropertyValue("cursor");
+        toggle_cursor = globalThis.window.getComputedStyle(toggle[0], null).getPropertyValue("cursor");
+        button_cursor = globalThis.window.getComputedStyle(button[0], null).getPropertyValue("cursor");
         
-        toggle_cursorevt = window.getComputedStyle(toggle[0], null).getPropertyValue("pointer-events");
-        button_cursorevt = window.getComputedStyle(button[0], null).getPropertyValue("pointer-events");
+        toggle_cursorevt = globalThis.window.getComputedStyle(toggle[0], null).getPropertyValue("pointer-events");
+        button_cursorevt = globalThis.window.getComputedStyle(button[0], null).getPropertyValue("pointer-events");
         
         toggle_status = toggle.is("[disabled]");
         button_status = button.is("[disabled]");
@@ -196,16 +196,16 @@ function testColorsOutline(colorMode, state) {
         throw new DOMException('Unkown color mode "'+colorMode+'".',DOMException.NOT_SUPPORTED_ERR);
     }
     $(".test").each(function () {
-        toggleBgColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-" + state.property), null).getPropertyValue("background-color");
-        toggleBorderColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle"), null).getPropertyValue("border-color");
-        toggleTextColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-" + state.property), null).getPropertyValue("color");
+        toggleBgColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-" + state.property), null).getPropertyValue("background-color");
+        toggleBorderColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle"), null).getPropertyValue("border-color");
+        toggleTextColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-" + state.property), null).getPropertyValue("color");
         
-        toggleHandleBgColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-handle"), null).getPropertyValue("background-color");
-        toggleHandleBorderColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-handle"), null).getPropertyValue("border-color");
+        toggleHandleBgColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-handle"), null).getPropertyValue("background-color");
+        toggleHandleBorderColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " .toggle-handle"), null).getPropertyValue("border-color");
         
-        buttonBgColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("background-color");
-        buttonBorderColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("border-color");
-        buttonTextColor = window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("color");
+        buttonBgColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("background-color");
+        buttonBorderColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("border-color");
+        buttonTextColor = globalThis.window.getComputedStyle(document.querySelector("#" + $(this).attr("id") + " button"), null).getPropertyValue("color");
         
         $row = $(this).find(".row:eq(1)");
 
