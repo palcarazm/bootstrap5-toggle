@@ -20,10 +20,10 @@ function appStartup(test) {
     ENV.html("");
     ENV.append(
         $("<div>").append(
-            $("<code>").html("Bootstrap v" + DOMPurify.sanitize(Bootstrap))
+            $("<code>").html("Bootstrap v" + DOMPurify.sanitize(globalThis.Bootstrap))
         ),
         $("<div>").append(
-            $("<code>").html("bs-toggle v" + DOMPurify.sanitize(plugin))
+            $("<code>").html("bs-toggle v" + DOMPurify.sanitize(globalThis.plugin))
         ),
         $("<div>").append(
             $("<code>").html("Interface " + DOMPurify.sanitize(INTERFACE))
@@ -149,8 +149,8 @@ function appStartup(test) {
 }
 $(function () {
     $.getJSON("../package-lock.json", function (data) {
-        Bootstrap = data.packages["node_modules/bootstrap"].version;
-        plugin = data.version;
+        globalThis.Bootstrap = data.packages["node_modules/bootstrap"].version;
+        globalThis.plugin = data.version;
     });
     TESTCASES.forEach((testCase) => {
         $("#test-selector").append(
