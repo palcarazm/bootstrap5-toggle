@@ -11,13 +11,13 @@ export class DOMBuilder {
     private readonly offStyle: string;
     private readonly name: string | null;
 
-    private checkbox: HTMLInputElement;
-    private invCheckbox: HTMLInputElement | null;
-    private toggle: HTMLElement;
-    private toggleGroup: HTMLElement;
-    private toggleOn: HTMLElement;
-    private toggleOff: HTMLElement;
-    private toggleHandle: HTMLElement;
+    private readonly checkbox: HTMLInputElement;
+    private readonly invCheckbox: HTMLInputElement | null;
+    private readonly toggle: HTMLElement;
+    private readonly toggleGroup: HTMLElement;
+    private readonly toggleOn: HTMLElement;
+    private readonly toggleOff: HTMLElement;
+    private readonly toggleHandle: HTMLElement;
 
     private isBuilt: boolean = false;
     private lastState: ToggleState;
