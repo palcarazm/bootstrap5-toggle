@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-import ToggleModel from "../support/togglemodel";
 import PageModel from "../support/pagemodel";
 
 describe("Toggle modified by API", () => {

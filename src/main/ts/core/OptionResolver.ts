@@ -37,11 +37,14 @@ export class OptionResolver {
    * Gets a sanitized attribute value from an HTML element
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
-   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
+   * @param options method options
+   * @param options.sanitized Flag to indicate if the attribute value needs to be sanitized (default: `true`)
    * @returns Sanitized attribute value or null
    */
-    private static getAttr (element: HTMLInputElement, attrName: string, sanitized:boolean=true) {
-        return sanitized?sanitize(element.getAttribute(attrName)):element.getAttribute(attrName);
+    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:boolean}) {
+        const { sanitized = true } = opts ?? {};
+        const value = element.getAttribute(attrName);
+        return sanitized ? sanitize(value) : value;
     }
 
     /**
@@ -60,7 +63,7 @@ export class OptionResolver {
         defaultValue: T,
         sanitized:boolean=true
     ){
-        return OptionResolver.getAttr(element, attrName, sanitized) || userValue || defaultValue;
+        return OptionResolver.getAttr(element, attrName, {sanitized}) || userValue || defaultValue;
     }
 
     /**
@@ -77,7 +80,7 @@ export class OptionResolver {
         userValue: T,
         sanitized:boolean=true
     ){
-        return OptionResolver.getAttr(element, attrName, sanitized) ||
+        return OptionResolver.getAttr(element, attrName, {sanitized}) ||
             userValue ||
             DeprecationConfig.value;
     }

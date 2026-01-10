@@ -100,7 +100,7 @@ describe("Toggle", () => {
                 "addEventListener"
             );
 
-            void new Toggle(input, {});
+            const _ = new Toggle(input, {});
 
             expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
                 "pointerdown",
@@ -270,7 +270,7 @@ describe("Toggle", () => {
         let root: HTMLElement;
 
         beforeEach(() => {
-            void new Toggle(input, {});
+            const _ = new Toggle(input, {});
             root = (DOMBuilder as any).mock.results[0].value.root;
         });
 
@@ -299,7 +299,7 @@ describe("Toggle", () => {
             label.setAttribute("for", "toggle-id");
             document.body.appendChild(label);
 
-            void new Toggle(input, {});
+            const _ = new Toggle(input, {});
             const root = (DOMBuilder as any).mock.results[0].value.root;
             const focusSpy = jest.spyOn(root, "focus");
 

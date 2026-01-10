@@ -56,7 +56,7 @@ describe("DOMBuilder", () => {
     it("builds toggle DOM structure", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
@@ -71,24 +71,24 @@ describe("DOMBuilder", () => {
     });
 
     it("defers render when parent not visible", () => {
-        (global as any).__dom_setup_setHidden();
+        (globalThis as any).__dom_setup_setHidden();
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
         );
         expect(document.querySelector(".toggle")).toBeNull();
-        (global as any).__dom_setup_setVisible();
-        (global as any).__dom_setup_triggerResize(120, 40);
+        (globalThis as any).__dom_setup_setVisible();
+        (globalThis as any).__dom_setup_triggerResize(120, 40);
         expect(document.querySelector(".toggle")).not.toBeNull();
     });
 
     it("renders ON state", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true)
@@ -104,7 +104,7 @@ describe("DOMBuilder", () => {
     it("renders OFF state", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED, false)
@@ -119,7 +119,7 @@ describe("DOMBuilder", () => {
     it("renders INDETERMINATE state", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(
@@ -136,7 +136,7 @@ describe("DOMBuilder", () => {
     it("applies disabled state", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.DISABLED)
@@ -150,7 +150,7 @@ describe("DOMBuilder", () => {
     it("applies readonly state", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.READONLY)
@@ -165,7 +165,7 @@ describe("DOMBuilder", () => {
     it("sets input name correctly", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
@@ -177,7 +177,7 @@ describe("DOMBuilder", () => {
     it("creates inverted checkbox when offvalue exists", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             BASE_OPTIONS,
             state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
@@ -194,7 +194,7 @@ describe("DOMBuilder", () => {
     it("applies explicit width and height", () => {
         const checkbox = createCheckbox();
 
-        void new DOMBuilder(
+        const _ = new DOMBuilder(
             checkbox,
             {
                 ...BASE_OPTIONS,

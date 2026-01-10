@@ -21,7 +21,7 @@ function createPointerEvent(type: string, props: any = {}) {
     return event;
 }
 
-(global as any).PointerEvent = function PointerEvent(
+(globalThis as any).PointerEvent = function PointerEvent(
     type: string,
     props?: any
 ) {

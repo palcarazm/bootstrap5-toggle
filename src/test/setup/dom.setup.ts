@@ -18,11 +18,11 @@ function defineOffsetProperties(width: number, height: number) {
         },
     });
 }
-(global as any).__dom_setup_setVisible = () => defineOffsetProperties(100, 30);
-(global as any).__dom_setup_setHidden = () => defineOffsetProperties(0, 0);
+(globalThis as any).__dom_setup_setVisible = () => defineOffsetProperties(100, 30);
+(globalThis as any).__dom_setup_setHidden = () => defineOffsetProperties(0, 0);
 
 beforeEach(() => {
-    (global as any).__dom_setup_setVisible();
+    (globalThis as any).__dom_setup_setVisible();
 });
 
 /**
@@ -46,9 +46,9 @@ class ResizeObserverMock {
         void 0;
     }
 }
-(global as any).ResizeObserver = ResizeObserverMock;
+(globalThis as any).ResizeObserver = ResizeObserverMock;
 
-(global as any).__dom_setup_triggerResize = (
+(globalThis as any).__dom_setup_triggerResize = (
     width = 100,
     height = 30
 ) => {

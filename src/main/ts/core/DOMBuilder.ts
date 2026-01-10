@@ -268,7 +268,7 @@ export class DOMBuilder {
      * @returns The height of the toggle element that should be used for the line-height property.
      */
     private static calcH(toggleSpan: HTMLElement) {
-        const styles = window.getComputedStyle(toggleSpan);
+        const styles = globalThis.window.getComputedStyle(toggleSpan);
         const height = toggleSpan.offsetHeight;
         const borderTopWidth = Number.parseFloat(styles.borderTopWidth);
         const borderBottomWidth = Number.parseFloat(styles.borderBottomWidth);
