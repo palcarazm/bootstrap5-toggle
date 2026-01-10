@@ -12,49 +12,53 @@ describe("Form data feature", () => {
 
 function testCase(bstInterface) {
     const data_test = "form-data";
+
+    const runOn =($test) => {
+        formDataCheck($test,
+            [
+                {
+                    name: "toggle-with-opts-with-value",
+                    value: "VALUE",
+                },
+                {
+                    name: "toggle-with-opts-no-value",
+                    value: "ON",
+                },
+                {
+                    name: "toggle-with-no-opts-no-value",
+                    value: "on",
+                },
+            ]
+        );        
+    };
     context("When the form is submitted with all toggles on", () => {
         it("Then form data should have toggle-on values", () => {
             PageModel.load(bstInterface, data_test);
-            PageModel.getTests().each(($test) => {
-                formDataCheck($test,
-                    [
-                        {
-                            name: "toggle-with-opts-with-value",
-                            value: "VALUE",
-                        },
-                        {
-                            name: "toggle-with-opts-no-value",
-                            value: "ON",
-                        },
-                        {
-                            name: "toggle-with-no-opts-no-value",
-                            value: "on",
-                        },
-                    ]
-                );        
-            });
+            PageModel.getTests().each(runOn);
         });
     });
+
+    const runOff = ($test) => {
+        cy.wrap($test).find(".toggle").each((toggle) => {
+            cy.wrap(toggle).click({ force: true });
+        });
+        formDataCheck($test,
+            [
+                {
+                    name: "toggle-with-opts-with-value",
+                    value: "OFF",
+                },
+                {
+                    name: "toggle-with-opts-no-value",
+                    value: "OFF",
+                },
+            ]
+        );        
+    };
     context("When the form is submitted with all toggles off", () => {
         it("Then form data should have toggle-off values", () => {
             PageModel.load(bstInterface, data_test);
-            PageModel.getTests().each(($test) => {
-                cy.wrap($test).find(".toggle").each((toggle) => {
-                    cy.wrap(toggle).click({ force: true });
-                });
-                formDataCheck($test,
-                    [
-                        {
-                            name: "toggle-with-opts-with-value",
-                            value: "OFF",
-                        },
-                        {
-                            name: "toggle-with-opts-no-value",
-                            value: "OFF",
-                        },
-                    ]
-                );        
-            });
+            PageModel.getTests().each(runOff);
         });
     });
 }
