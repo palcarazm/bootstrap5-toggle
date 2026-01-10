@@ -270,10 +270,10 @@ export class DOMBuilder {
     private static calcH(toggleSpan: HTMLElement) {
         const styles = window.getComputedStyle(toggleSpan);
         const height = toggleSpan.offsetHeight;
-        const borderTopWidth = parseFloat(styles.borderTopWidth);
-        const borderBottomWidth = parseFloat(styles.borderBottomWidth);
-        const paddingTop = parseFloat(styles.paddingTop);
-        const paddingBottom = parseFloat(styles.paddingBottom);
+        const borderTopWidth = Number.parseFloat(styles.borderTopWidth);
+        const borderBottomWidth = Number.parseFloat(styles.borderBottomWidth);
+        const paddingTop = Number.parseFloat(styles.paddingTop);
+        const paddingBottom = Number.parseFloat(styles.paddingBottom);
 
         return (
             height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
