@@ -11,13 +11,13 @@ export class DOMBuilder {
     private readonly offStyle: string;
     private readonly name: string | null;
 
-    private checkbox: HTMLInputElement;
-    private invCheckbox: HTMLInputElement | null;
-    private toggle: HTMLElement;
-    private toggleGroup: HTMLElement;
-    private toggleOn: HTMLElement;
-    private toggleOff: HTMLElement;
-    private toggleHandle: HTMLElement;
+    private readonly checkbox: HTMLInputElement;
+    private readonly invCheckbox: HTMLInputElement | null;
+    private readonly toggle: HTMLElement;
+    private readonly toggleGroup: HTMLElement;
+    private readonly toggleOn: HTMLElement;
+    private readonly toggleOff: HTMLElement;
+    private readonly toggleHandle: HTMLElement;
 
     private isBuilt: boolean = false;
     private lastState: ToggleState;
@@ -132,7 +132,7 @@ export class DOMBuilder {
     private createInvCheckbox(offValue: string): HTMLInputElement {
         const invCheckbox = this.checkbox.cloneNode(true) as HTMLInputElement;
         invCheckbox.value = offValue;
-        invCheckbox.setAttribute("data-toggle", "invert-toggle");
+        invCheckbox.dataset.toggle = "invert-toggle";
         invCheckbox.removeAttribute("id");
         return invCheckbox;
     }
@@ -152,8 +152,8 @@ export class DOMBuilder {
         height,
         tabindex,
     }: ToggleOptions): void {
-        this.toggle.setAttribute("class", `toggle btn ${this.sizeClass} ${style}`);
-        this.toggle.setAttribute("data-toggle", "toggle");
+        this.toggle.className= `toggle btn ${this.sizeClass} ${style}`;
+        this.toggle.dataset.toggle =  "toggle";
         this.toggle.tabIndex = tabindex;
         this.toggle.role = "button";
 
@@ -174,7 +174,7 @@ export class DOMBuilder {
    */
     private createToggleGroup(): HTMLElement {
         const toggleGroup = document.createElement("div");
-        toggleGroup.setAttribute("class", "toggle-group");
+        toggleGroup.className = "toggle-group";
         toggleGroup.appendChild(this.toggleOn);
         toggleGroup.appendChild(this.toggleOff);
         toggleGroup.appendChild(this.toggleHandle);
@@ -197,12 +197,9 @@ export class DOMBuilder {
         title: string | null
     ): HTMLElement {
         const toggleSpan = document.createElement("span");
-        toggleSpan.setAttribute(
-            "class",
-            `btn ${this.sizeClass} ${style}`
-        );
+        toggleSpan.className = `btn ${this.sizeClass} ${style}`;
         toggleSpan.innerHTML = label;
-        if (title) toggleSpan.setAttribute("title", title);
+        if (title) toggleSpan.title = title;
         return toggleSpan;
     }
 
@@ -213,7 +210,7 @@ export class DOMBuilder {
    */
     private createToggleHandle(): HTMLElement {
         const toggleHandle = document.createElement("span");
-        toggleHandle.setAttribute("class", `toggle-handle btn ${this.sizeClass}`);
+        toggleHandle.className = `toggle-handle btn ${this.sizeClass}`;
         return toggleHandle;
     }
 
@@ -228,18 +225,6 @@ export class DOMBuilder {
         width: string  | null,
         height: string | null
     ): void {
-        function calcH(toggleSpan: HTMLElement) {
-            const styles = window.getComputedStyle(toggleSpan);
-            const height = toggleSpan.offsetHeight;
-            const borderTopWidth = parseFloat(styles.borderTopWidth);
-            const borderBottomWidth = parseFloat(styles.borderBottomWidth);
-            const paddingTop = parseFloat(styles.paddingTop);
-            const paddingBottom = parseFloat(styles.paddingBottom);
-
-            return (
-                height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
-            );
-        }
         if (width) {
             this.toggle.style.width = width;
         } else {
@@ -269,9 +254,30 @@ export class DOMBuilder {
 
         // C: Finally, set lineHeight if needed
         if (height) {
-            this.toggleOn.style.lineHeight = calcH(this.toggleOn) + "px";
-            this.toggleOff.style.lineHeight = calcH(this.toggleOff) + "px";
+            this.toggleOn.style.lineHeight = DOMBuilder.calcH(this.toggleOn) + "px";
+            this.toggleOff.style.lineHeight = DOMBuilder.calcH(this.toggleOff) + "px";
         }
+    }
+
+    /**
+     * Calculates the height of the toggle element that should be used for the line-height property.
+     * This calculation is used when the toggle element is given a height that is not explicitly set.
+     * The calculation takes into account the height of the toggle element, the border-top and border-bottom widths,
+     * and the padding-top and padding-bottom of the toggle element.
+     * @param toggleSpan The HTMLElement that represents the toggle element.
+     * @returns The height of the toggle element that should be used for the line-height property.
+     */
+    private static calcH(toggleSpan: HTMLElement) {
+        const styles = window.getComputedStyle(toggleSpan);
+        const height = toggleSpan.offsetHeight;
+        const borderTopWidth = Number.parseFloat(styles.borderTopWidth);
+        const borderBottomWidth = Number.parseFloat(styles.borderBottomWidth);
+        const paddingTop = Number.parseFloat(styles.paddingTop);
+        const paddingBottom = Number.parseFloat(styles.paddingBottom);
+
+        return (
+            height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
+        );
     }
 
     /**
@@ -280,16 +286,30 @@ export class DOMBuilder {
    * @param {ToggleState} state The state of the toggle element.
    */
     public render(state: ToggleState): void {
+        this.lastState = state;
+    
+        if (!this.isBuilt) return;
+
+        this.updateToggleByValue(state);
+        this.updateToggleByChecked(state);
+        this.updateToggleByState(state);
+    }
+
+    /*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Updates the class of the toggle element based on the provided state.
+     * Removes any existing on/off/indeterminate classes and adds the appropriate class based on the state.
+     * If the state is indeterminate, adds the 'indeterminate' class and either the on or off class based on the checked attribute.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    /*******  9e620de0-7e60-44a0-b26d-be36099794af  *******/
+    private updateToggleByValue(state: ToggleState) {
         this.toggle.classList.remove(
             this.onStyle,
             this.offStyle,
             "off",
             "indeterminate"
         );
-        this.lastState = state;
-    
-        if (!this.isBuilt) return;
-
         switch (state.value) {
         case ToggleStateValue.ON:
             this.toggle.classList.add(this.onStyle);
@@ -307,44 +327,84 @@ export class DOMBuilder {
             }
             break;
         }
+    }
 
+    /**
+     * Updates the toggle element based on the provided state.
+     * Calls {@link DOMBuilder.updateCheckboxByChecked} and {@link DOMBuilder.updateInvCheckboxByChecked} to update the checkbox and inverted checkbox elements respectively.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateToggleByChecked(state: ToggleState) {
+        this.updateCheckboxByChecked(state);
+        this.updateInvCheckboxByChecked(state);
+    }
+
+    /**
+     * Updates the checkbox element based on the provided state.
+     * Sets the checked attribute of the checkbox based on the state's checked attribute.
+     * Sets the disabled and readonly attributes of the checkbox based on the state's status.
+     * Adds or removes the 'disabled' class from the toggle element based on the state's status.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateCheckboxByChecked(state: ToggleState) {
         this.checkbox.checked = state.checked;
-        if (this.invCheckbox) this.invCheckbox.checked = !state.checked;
-        this.toggle.classList.add(state.checked ? this.onStyle : this.offStyle);
 
         switch (state.status) {
         case ToggleStateStatus.ENABLED:
+            this.checkbox.disabled = false;
+            this.checkbox.readOnly = false;
             this.toggle.classList.remove("disabled");
             this.toggle.removeAttribute("disabled");
-            this.checkbox.disabled = false;
-            this.checkbox.readOnly = false;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = false;
-                this.invCheckbox.readOnly = false;
-            }
             break;
         case ToggleStateStatus.DISABLED:
-            this.toggle.classList.add("disabled");
-            this.toggle.setAttribute("disabled", "");
             this.checkbox.disabled = true;
             this.checkbox.readOnly = false;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = true;
-                this.invCheckbox.readOnly = false;
-            }
-            break;
-        case ToggleStateStatus.READONLY:
             this.toggle.classList.add("disabled");
             this.toggle.setAttribute("disabled", "");
+            break;
+        case ToggleStateStatus.READONLY:
             this.checkbox.disabled = false;
             this.checkbox.readOnly = true;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = false;
-                this.invCheckbox.readOnly = true;
-            }
+            this.toggle.classList.add("disabled");
+            this.toggle.setAttribute("disabled", "");
             break;
         }
+    }
 
+    /**
+     * Updates the inverted checkbox element based on the provided state.
+     * Sets the checked attribute of the inverted checkbox to the opposite of the state's checked attribute.
+     * Sets the disabled and readonly attributes of the inverted checkbox based on the state's status.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateInvCheckboxByChecked(state: ToggleState) {
+        if (!this.invCheckbox) return;
+
+        this.invCheckbox.checked = !state.checked;
+
+        switch (state.status) {
+        case ToggleStateStatus.ENABLED:
+            this.invCheckbox.disabled = false;
+            this.invCheckbox.readOnly = false;
+            break;
+        case ToggleStateStatus.DISABLED:
+            this.invCheckbox.disabled = true;
+            this.invCheckbox.readOnly = false;
+            break;
+        case ToggleStateStatus.READONLY:
+            this.invCheckbox.disabled = false;
+            this.invCheckbox.readOnly = true;
+            break;
+        }
+    }
+
+    /**
+     * Updates the indeterminate attribute of the checkbox and inverted checkbox elements based on the provided state.
+     * If the state is indeterminate, sets the indeterminate attribute of the checkbox and inverted checkbox to true and removes the name attribute.
+     * If the state is not indeterminate, sets the indeterminate attribute of the checkbox and inverted checkbox to false and sets the name attribute to the provided name.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateToggleByState(state: ToggleState) {
         if (state.indeterminate) {
             this.checkbox.indeterminate = true;
             this.checkbox.removeAttribute("name");
@@ -373,7 +433,7 @@ export class DOMBuilder {
    */
     public destroy(): void {
         this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
-        this.toggle.parentNode?.removeChild(this.toggle);
+        this.toggle.remove();
 
         this.resizeObserver?.disconnect();
         this.resizeObserver = undefined;

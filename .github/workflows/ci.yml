@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "v*"
+      - "develop/*"
   pull_request:
     types:
       - opened
@@ -42,7 +43,8 @@ jobs:
           name: coverage-report-${{ matrix.node-version }}
           path: coverage
       - name: Upload coverage report to Coveralls
-        uses: coverallsapp/github-action@v2
+        #v2.3.7
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
           parallel: true
@@ -54,7 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
+        #v2.3.7
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
         with:
           parallel-finished: true
           carryforward: "coverage-report-22.x,coverage-report-24.x"
@@ -64,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     container:
-      image: cypress/browsers:latest
+      image: cypress/browsers:node-24.12.0-chrome-143.0.7499.169-1-ff-146.0.1-edge-143.0.3650.96-1
       options: --user 1001
     steps:
       - name: Checkout
@@ -74,7 +77,8 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        #v6.10.8
+        uses: cypress-io/github-action@2ad32e649e4db26c07674ebae31a297601dbcbaf
         with:
           browser: chrome
 
@@ -97,3 +101,25 @@ jobs:
         uses: github/codeql-action/autobuild@v3
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+
+  sonarcloud:
+    name: Analyze code with SonarQube
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download coverage artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report-22.x
+          path: coverage
+
+      - name: SonarQube Scan
+        # v7.0.0
+        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

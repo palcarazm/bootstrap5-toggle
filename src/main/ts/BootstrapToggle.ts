@@ -5,11 +5,11 @@ import { StateReducer } from "./core/StateReducer";
 import { ToggleActionType } from "./core/StateReducer.types";
 
 export class Toggle {
-    private element: HTMLInputElement & { bsToggle?: Toggle };
+    private readonly element: HTMLInputElement & { bsToggle?: Toggle };
     private readonly userOptions: UserOptions;
-    private options: ToggleOptions;
-    private stateReducer: StateReducer;
-    private domBuilder: DOMBuilder;
+    private readonly options: ToggleOptions;
+    private readonly stateReducer: StateReducer;
+    private readonly domBuilder: DOMBuilder;
 
     private pointer: { x: number; y: number } | null = null;
     private readonly SCROLL_THRESHOLD = 10;
@@ -108,7 +108,7 @@ export class Toggle {
    * - the toggle cannot be interacted with (`disabled` or `readonly`)
    * @param e The PointerEvent object representing the pointer down event.
    */
-    private onPointerDown = (e: PointerEvent) => {
+    private readonly onPointerDown = (e: PointerEvent) => {
         if (e.pointerType === "mouse" && e.button !== 0) return;
         if (!this.stateReducer.canInteract()) return;
 
@@ -133,7 +133,7 @@ export class Toggle {
    * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
    * @param e The PointerEvent object representing the pointer move event.
    */
-    private onPointerMove = (e: PointerEvent) => {
+    private readonly onPointerMove = (e: PointerEvent) => {
         const dx = Math.abs(e.clientX - this.pointer!.x);
         const dy = Math.abs(e.clientY - this.pointer!.y);
 
@@ -153,7 +153,7 @@ export class Toggle {
    * If the pointer event is not a primary mouse button click, the interaction is cancelled.
    * @param e The PointerEvent object representing the pointer up event.
    */
-    private onPointerUp = (e: PointerEvent) => {
+    private readonly onPointerUp = (e: PointerEvent) => {
         if (e.pointerType === "mouse" && e.button !== 0) {
             this.onPointerCancel();
             return;
@@ -175,7 +175,7 @@ export class Toggle {
    * from the root element of the toggle.
    * However, `pointerdown` listener remains active for future interactions.
    */
-    private onPointerCancel = () => {
+    private readonly onPointerCancel = () => {
         this.domBuilder.root.removeEventListener("pointermove", this.onPointerMove);
         this.domBuilder.root.removeEventListener("pointerup", this.onPointerUp);
         this.domBuilder.root.removeEventListener(
@@ -212,7 +212,7 @@ export class Toggle {
             this.handlerKeyboardEvent
         );
     }
-    private handlerKeyboardEvent = (e: KeyboardEvent) => {
+    private readonly handlerKeyboardEvent = (e: KeyboardEvent) => {
         if (e.key == " ") {
             this.apply(ToggleActionType.NEXT);
         }
@@ -254,7 +254,7 @@ export class Toggle {
         }
     }
 
-    private handlerLabelEvent = (e: Event) => {
+    private readonly handlerLabelEvent = (e: Event) => {
         e.preventDefault();
         this.apply(ToggleActionType.NEXT);
         this.domBuilder.root.focus();
@@ -389,6 +389,6 @@ export class Toggle {
    */
     rerender() {
         this.destroy();
-        new Toggle(this.element, this.userOptions);
+        void new Toggle(this.element, this.userOptions);
     }
 }

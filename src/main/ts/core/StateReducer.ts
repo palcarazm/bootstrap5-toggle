@@ -31,15 +31,29 @@ export class StateReducer {
    */
     private getElementState(element: HTMLInputElement): ToggleState{
         const checked = element.checked;
-        const status = element.disabled ? ToggleStateStatus.DISABLED : element.readOnly ? ToggleStateStatus.READONLY : ToggleStateStatus.ENABLED;
+
+        let status: ToggleStateStatus;
+        if (element.disabled) {
+            status = ToggleStateStatus.DISABLED;
+        } else if (element.readOnly) {
+            status = ToggleStateStatus.READONLY;
+        } else {
+            status = ToggleStateStatus.ENABLED;
+        }
+
         const indeterminate = this.isTristate && element.indeterminate;
 
+        let value: ToggleStateValue;
+        if (indeterminate) {
+            value = ToggleStateValue.INDETERMINATE;
+        } else if (checked) {
+            value = ToggleStateValue.ON;
+        } else {
+            value = ToggleStateValue.OFF;
+        }
+
         return {
-            value: indeterminate
-                ? ToggleStateValue.INDETERMINATE
-                : checked
-                    ? ToggleStateValue.ON
-                    : ToggleStateValue.OFF,
+            value,
             checked,
             status,
             indeterminate,
@@ -89,24 +103,10 @@ export class StateReducer {
         switch (action) {
         case ToggleActionType.ON:
             if (!this.canInteract()) return false;
-            if (this.state.value === ToggleStateValue.ON) return false;
-            this.state = {
-                ...this.state,
-                value: ToggleStateValue.ON,
-                checked: true,
-                indeterminate: false,
-            };
-            return true;
+            return this.setValueIfChanged(ToggleStateValue.ON, true, false);
         case ToggleActionType.OFF:
             if (!this.canInteract()) return false;
-            if (this.state.value === ToggleStateValue.OFF) return false;
-            this.state = {
-                ...this.state,
-                value: ToggleStateValue.OFF,
-                checked: false,
-                indeterminate: false,
-            };
-            return true;
+            return this.setValueIfChanged(ToggleStateValue.OFF, false, false);
         case ToggleActionType.TOGGLE:
             if (!this.canInteract()) return false;
             if (this.state.value === ToggleStateValue.ON) return this.do(ToggleActionType.OFF);
@@ -114,70 +114,95 @@ export class StateReducer {
             return false;
         case ToggleActionType.INDETERMINATE:
             if (!this.canInteract()) return false;
-            if (this.state.value === ToggleStateValue.INDETERMINATE) return false;
-            this.state = {
-                ...this.state,
-                value: ToggleStateValue.INDETERMINATE,
-                indeterminate: true,
-            };
-            return true;
+            return this.setValueIfChanged(ToggleStateValue.INDETERMINATE, undefined, true);
         case ToggleActionType.DETERMINATE:
             if (!this.canInteract()) return false;
             if (this.state.value != ToggleStateValue.INDETERMINATE) return false;
-            this.state = {
-                ...this.state,
-                value: this.state.checked
-                    ? ToggleStateValue.ON
-                    : ToggleStateValue.OFF,
-                indeterminate: false,
-            };
-            return true;
+            return this.setValue(this.state.checked ? ToggleStateValue.ON : ToggleStateValue.OFF, this.state.checked, false);
         case ToggleActionType.NEXT:
             if (!this.canInteract()) return false;
-            if (this.isTristate) {
-                if (
-                    this.state.value === ToggleStateValue.ON ||
-            this.state.value === ToggleStateValue.OFF
-                )
-                    return this.do(ToggleActionType.INDETERMINATE);
-                if (
-                    this.state.value === ToggleStateValue.INDETERMINATE &&
-            this.state.checked
-                )
-                    return this.do(ToggleActionType.OFF);
-                if (
-                    this.state.value === ToggleStateValue.INDETERMINATE &&
-            !this.state.checked
-                )
-                    return this.do(ToggleActionType.ON);
-            } else {
-                if (this.state.value === ToggleStateValue.ON)
-                    return this.do(ToggleActionType.OFF);
-                if (this.state.value === ToggleStateValue.OFF)
-                    return this.do(ToggleActionType.ON);
-            }
-            return false;
+            return this.doNext();
         case ToggleActionType.DISABLE:
-            if (this.state.status === ToggleStateStatus.DISABLED) return false;
-            this.state = {
-                ...this.state,
-                status: ToggleStateStatus.DISABLED,
-            };
-            return true;
+            return this.setStatusIfChanged(ToggleStateStatus.DISABLED);
         case ToggleActionType.ENABLE:
-            if(this.state.status === ToggleStateStatus.ENABLED) return false;
-            this.state = {
-                ...this.state,
-                status: ToggleStateStatus.ENABLED
-            };
-            return true;
+            return this.setStatusIfChanged(ToggleStateStatus.ENABLED);
         case ToggleActionType.READONLY:
             if(!this.canInteract()) return false;
-            this.state = {
-                ...this.state,
-                status: ToggleStateStatus.READONLY
-            };
-            return true;
+            return this.setStatus(ToggleStateStatus.READONLY);
         }
+    }
+    
+    /**
+     * Sets the state of the toggle to the provided value.
+     * If checked or indeterminate is provided, sets the corresponding property of the state to the provided value.
+     * Otherwise, leaves the property unchanged.
+     * @param value The value of the toggle to set.
+     * @param checked The checked state of the toggle to set. If not provided, the property is left unchanged.
+     * @param indeterminate The indeterminate state of the toggle to set. If not provided, the property is left unchanged.
+     * @returns A boolean indicating whether the state was updated.
+     */
+    private setValue(value: ToggleStateValue, checked?: boolean, indeterminate?: boolean): boolean {
+        this.state = {
+            ...this.state,
+            value,
+            checked: checked ?? this.state.checked,
+            indeterminate: indeterminate ?? this.state.indeterminate,
+        };
+        return true;
+    }
+
+    /**
+     * Sets the state of the toggle to the provided value if the value is different from the current state.
+     * If checked or indeterminate is provided, sets the corresponding property of the state to the provided value.
+     * Otherwise, leaves the property unchanged.
+     * @returns A boolean indicating whether the state was updated.
+     */
+    private setValueIfChanged(value: ToggleStateValue, checked?: boolean, indeterminate?: boolean): boolean {
+        if (this.state.value === value) return false;
+        return this.setValue(value, checked, indeterminate);
+    }
+
+    /**
+     * Sets the status of the toggle to the provided value.
+     * @param status The new status of the toggle.
+     * @returns A boolean indicating whether the state was updated.
+     */
+    private setStatus(status: ToggleStateStatus): boolean {
+        this.state = { ...this.state, status };
+        return true;
+    }
+
+    /**
+     * Sets the status of the toggle to the provided value if the value is different from the current status.
+     * @param status The new status of the toggle.
+     * @returns A boolean indicating whether the state was updated.
+     */
+    private setStatusIfChanged(status: ToggleStateStatus): boolean {
+        if (this.state.status === status) return false;
+        return this.setStatus(status);
+    }
+
+    /**
+     * Applies the next action based on the current state of the toggle.
+     * If the toggle is tristate, cycles through the on, off, and indeterminate states.
+     * If the toggle is not tristate, cycles through the on and off states.
+     * @returns A boolean indicating whether the state was updated.
+     */
+    private doNext(): boolean {
+        if (this.isTristate) {
+            if (this.state.value === ToggleStateValue.ON || this.state.value === ToggleStateValue.OFF) {
+                return this.do(ToggleActionType.INDETERMINATE);
+            }
+            if (this.state.value === ToggleStateValue.INDETERMINATE) {
+                return this.state.checked
+                    ? this.do(ToggleActionType.OFF)
+                    : this.do(ToggleActionType.ON);
+            }
+        } else {
+            return this.state.value === ToggleStateValue.ON
+                ? this.do(ToggleActionType.OFF)
+                : this.do(ToggleActionType.ON);
+        }
+        return false;
     }
 }
