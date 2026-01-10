@@ -40,8 +40,9 @@ export class OptionResolver {
    * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Sanitized attribute value or null
    */
-    private static getAttr = (element: HTMLInputElement, attrName: string, sanitized:boolean=true) =>
-        sanitized?sanitize(element.getAttribute(attrName)):element.getAttribute(attrName);
+    private static getAttr (element: HTMLInputElement, attrName: string, sanitized:boolean=true) {
+        return sanitized?sanitize(element.getAttribute(attrName)):element.getAttribute(attrName);
+    }
 
     /**
    * Returns the value of an attribute, user-provided value, or default value
@@ -52,13 +53,15 @@ export class OptionResolver {
    * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Final attribute value
    */
-    private static getAttrOrDefault = <T>(
+    private static getAttrOrDefault<T>(
         element: HTMLInputElement,
         attrName: string,
         userValue: T | undefined,
         defaultValue: T,
         sanitized:boolean=true
-    ) => OptionResolver.getAttr(element, attrName, sanitized) || userValue || defaultValue;
+    ){
+        return OptionResolver.getAttr(element, attrName, sanitized) || userValue || defaultValue;
+    }
 
     /**
    * Returns the value of an attribute, user-provided value, or marks as deprecated
@@ -68,15 +71,16 @@ export class OptionResolver {
    * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
    * @returns Final attribute value or DeprecationConfig.value if not found
    */
-    private static getAttrOrDeprecation = <T>(
+    private static getAttrOrDeprecation<T>(
         element: HTMLInputElement,
         attrName: string,
         userValue: T,
         sanitized:boolean=true
-    ) =>
-        OptionResolver.getAttr(element, attrName, sanitized) ||
-    userValue ||
-    DeprecationConfig.value;
+    ){
+        return OptionResolver.getAttr(element, attrName, sanitized) ||
+            userValue ||
+            DeprecationConfig.value;
+    }
 
     /**
    * Resolves all toggle options from the element and user options
