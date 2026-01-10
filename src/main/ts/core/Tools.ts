@@ -9,7 +9,7 @@ export function sanitize(text: string | null): string | null {
         "'": "&#39;",
         "/": "&#x2F;"
     };
-
+    // Using replace with regex for single-pass character mapping compatible with ES5
     return text.replace(/[&<>"'/]/g, (m) => map[m]);
 }
 

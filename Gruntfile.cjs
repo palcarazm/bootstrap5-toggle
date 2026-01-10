@@ -42,7 +42,7 @@ module.exports = function setup(grunt) {
                 options: {
                     process: function (content, _srcpath) {
                         let pkg = grunt.file.readJSON("package.json");
-                        return content.replace(/#version#/g, pkg.version);
+                        return content.replaceAll("#version#", pkg.version);
                     },
                 },
             },
