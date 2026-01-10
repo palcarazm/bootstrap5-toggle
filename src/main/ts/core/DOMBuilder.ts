@@ -433,7 +433,7 @@ export class DOMBuilder {
    */
     public destroy(): void {
         this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
-        this.toggle.parentNode?.removeChild(this.toggle);
+        this.toggle.remove();
 
         this.resizeObserver?.disconnect();
         this.resizeObserver = undefined;
