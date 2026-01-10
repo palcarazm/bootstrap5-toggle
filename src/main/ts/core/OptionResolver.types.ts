@@ -14,7 +14,12 @@ export interface ToggleOptions {
   tabindex: number
   tristate: boolean
   name: string | null
+  aria:AriaToggleOptions
 }
+
+export type AriaToggleOptions = {
+    label: string
+};
 
 export type UserOptions =
  Partial<ToggleOptions> & {

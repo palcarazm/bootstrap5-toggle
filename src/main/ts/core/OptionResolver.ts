@@ -31,6 +31,7 @@ export class OptionResolver {
         tabindex: 0,
         tristate: false,
         name: null,
+        aria:{label: "Toggle",},
     };
 
     /**
@@ -188,6 +189,14 @@ export class OptionResolver {
                 userOptions.name,
                 this.DEFAULT.name
             ),
+            aria:{
+                label: this.getAttrOrDefault(
+                    element,
+                    "aria-label",
+                    userOptions.aria?.label,
+                    this.DEFAULT.aria.label
+                ),
+            }
         };
 
         if(options.width && isNumeric(options.width)) options.width = `${options.width}px`;
