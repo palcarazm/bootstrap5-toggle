@@ -54,7 +54,7 @@ function testCase(bstInterface) {
         });
     });
 
-    runOn = ($test) => {
+    const runOn = ($test) => {
         if ($test.find('input[data-toggle="toggle"][data-on]').length > 0) {
             ToggleModel.DEPRECATION.warnCheck(
                 ToggleModel.DEPRECATION.ATTRIBUTE,
