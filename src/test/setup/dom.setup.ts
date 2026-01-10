@@ -33,9 +33,18 @@ class ResizeObserverMock {
     constructor(cb: ResizeObserverCallback) {
         resizeCallback = cb;
     }
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe() {
+        // Mock method: no-op
+        void 0;
+    }
+    unobserve() {
+        // Mock method: no-op
+        void 0;
+    }
+    disconnect() {
+        // Mock method: no-op
+        void 0;
+    }
 }
 (global as any).ResizeObserver = ResizeObserverMock;
 
