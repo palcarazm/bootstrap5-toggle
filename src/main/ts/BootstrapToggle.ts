@@ -389,6 +389,6 @@ export class Toggle {
    */
     rerender() {
         this.destroy();
-        new Toggle(this.element, this.userOptions);
+        void new Toggle(this.element, this.userOptions);
     }
 }
