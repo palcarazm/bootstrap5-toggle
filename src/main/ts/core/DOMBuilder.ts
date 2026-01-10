@@ -225,18 +225,6 @@ export class DOMBuilder {
         width: string  | null,
         height: string | null
     ): void {
-        function calcH(toggleSpan: HTMLElement) {
-            const styles = window.getComputedStyle(toggleSpan);
-            const height = toggleSpan.offsetHeight;
-            const borderTopWidth = parseFloat(styles.borderTopWidth);
-            const borderBottomWidth = parseFloat(styles.borderBottomWidth);
-            const paddingTop = parseFloat(styles.paddingTop);
-            const paddingBottom = parseFloat(styles.paddingBottom);
-
-            return (
-                height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
-            );
-        }
         if (width) {
             this.toggle.style.width = width;
         } else {
@@ -266,9 +254,30 @@ export class DOMBuilder {
 
         // C: Finally, set lineHeight if needed
         if (height) {
-            this.toggleOn.style.lineHeight = calcH(this.toggleOn) + "px";
-            this.toggleOff.style.lineHeight = calcH(this.toggleOff) + "px";
+            this.toggleOn.style.lineHeight = DOMBuilder.calcH(this.toggleOn) + "px";
+            this.toggleOff.style.lineHeight = DOMBuilder.calcH(this.toggleOff) + "px";
         }
+    }
+
+    /**
+     * Calculates the height of the toggle element that should be used for the line-height property.
+     * This calculation is used when the toggle element is given a height that is not explicitly set.
+     * The calculation takes into account the height of the toggle element, the border-top and border-bottom widths,
+     * and the padding-top and padding-bottom of the toggle element.
+     * @param toggleSpan The HTMLElement that represents the toggle element.
+     * @returns The height of the toggle element that should be used for the line-height property.
+     */
+    private static calcH(toggleSpan: HTMLElement) {
+        const styles = window.getComputedStyle(toggleSpan);
+        const height = toggleSpan.offsetHeight;
+        const borderTopWidth = parseFloat(styles.borderTopWidth);
+        const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+        const paddingTop = parseFloat(styles.paddingTop);
+        const paddingBottom = parseFloat(styles.paddingBottom);
+
+        return (
+            height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
+        );
     }
 
     /**
