@@ -12,16 +12,17 @@ describe("Toggle set by API", () => {
 });
 
 function testCase(bstInterface) {
+    const run = ($test) => {
+        cy.wrap($test).find("button").click();
+        cy.wrap($test).find(".toggle").then(($toggle)=>{
+            ToggleModel.checkToggleElementWithOptions($toggle, JSON.parse($test.find("code").html()));
+        });
+    };
     context("When the API constructor method is call", () => {
         const data_test = "api-constructor";
         it("Then toggle is render with the options provided to the API constructor method", () => {
             PageModel.load(bstInterface, data_test);
-            PageModel.getTests().each(($test) => {
-                cy.wrap($test).find("button").click();
-                cy.wrap($test).find(".toggle").then(($toggle)=>{
-                    ToggleModel.checkToggleElementWithOptions($toggle, JSON.parse($test.find("code").html()));
-                });
-            });
+            PageModel.getTests().each(run);
         });
     });
 }
