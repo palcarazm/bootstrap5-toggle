@@ -31,15 +31,29 @@ export class StateReducer {
    */
     private getElementState(element: HTMLInputElement): ToggleState{
         const checked = element.checked;
-        const status = element.disabled ? ToggleStateStatus.DISABLED : element.readOnly ? ToggleStateStatus.READONLY : ToggleStateStatus.ENABLED;
+
+        let status: ToggleStateStatus;
+        if (element.disabled) {
+            status = ToggleStateStatus.DISABLED;
+        } else if (element.readOnly) {
+            status = ToggleStateStatus.READONLY;
+        } else {
+            status = ToggleStateStatus.ENABLED;
+        }
+
         const indeterminate = this.isTristate && element.indeterminate;
 
+        let value: ToggleStateValue;
+        if (indeterminate) {
+            value = ToggleStateValue.INDETERMINATE;
+        } else if (checked) {
+            value = ToggleStateValue.ON;
+        } else {
+            value = ToggleStateValue.OFF;
+        }
+
         return {
-            value: indeterminate
-                ? ToggleStateValue.INDETERMINATE
-                : checked
-                    ? ToggleStateValue.ON
-                    : ToggleStateValue.OFF,
+            value,
             checked,
             status,
             indeterminate,
