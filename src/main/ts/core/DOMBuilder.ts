@@ -132,7 +132,7 @@ export class DOMBuilder {
     private createInvCheckbox(offValue: string): HTMLInputElement {
         const invCheckbox = this.checkbox.cloneNode(true) as HTMLInputElement;
         invCheckbox.value = offValue;
-        invCheckbox.setAttribute("data-toggle", "invert-toggle");
+        invCheckbox.dataset.toggle = "invert-toggle";
         invCheckbox.removeAttribute("id");
         return invCheckbox;
     }
@@ -152,8 +152,8 @@ export class DOMBuilder {
         height,
         tabindex,
     }: ToggleOptions): void {
-        this.toggle.setAttribute("class", `toggle btn ${this.sizeClass} ${style}`);
-        this.toggle.setAttribute("data-toggle", "toggle");
+        this.toggle.className= `toggle btn ${this.sizeClass} ${style}`;
+        this.toggle.dataset.toggle =  "toggle";
         this.toggle.tabIndex = tabindex;
         this.toggle.role = "button";
 
@@ -174,7 +174,7 @@ export class DOMBuilder {
    */
     private createToggleGroup(): HTMLElement {
         const toggleGroup = document.createElement("div");
-        toggleGroup.setAttribute("class", "toggle-group");
+        toggleGroup.className = "toggle-group";
         toggleGroup.appendChild(this.toggleOn);
         toggleGroup.appendChild(this.toggleOff);
         toggleGroup.appendChild(this.toggleHandle);
@@ -197,12 +197,9 @@ export class DOMBuilder {
         title: string | null
     ): HTMLElement {
         const toggleSpan = document.createElement("span");
-        toggleSpan.setAttribute(
-            "class",
-            `btn ${this.sizeClass} ${style}`
-        );
+        toggleSpan.className = `btn ${this.sizeClass} ${style}`;
         toggleSpan.innerHTML = label;
-        if (title) toggleSpan.setAttribute("title", title);
+        if (title) toggleSpan.title = title;
         return toggleSpan;
     }
 
@@ -213,7 +210,7 @@ export class DOMBuilder {
    */
     private createToggleHandle(): HTMLElement {
         const toggleHandle = document.createElement("span");
-        toggleHandle.setAttribute("class", `toggle-handle btn ${this.sizeClass}`);
+        toggleHandle.className = `toggle-handle btn ${this.sizeClass}`;
         return toggleHandle;
     }
 
