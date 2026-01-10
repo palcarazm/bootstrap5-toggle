@@ -216,9 +216,9 @@ class ToggleModel {
         cy.wrap($test)
             .find(".toggle")
             .should(isChecked ? "not.have.class" : "have.class", "off");
-    /*cy.wrap($test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
-    cy.wrap($test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
-    CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+        cy.wrap($test).find(isChecked ? ".toggle-on" : ".toggle-off").should("be.visible");
+        /*cy.wrap($test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
+        CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
     }
 
     /**
@@ -259,13 +259,12 @@ class ToggleModel {
                 "indeterminate"
             );
         if (isDeterminated) {
-            /*cy.wrap($test).find(isChecked ? '.toggle-on' : '.toggle-off').should('be.visible');
-      cy.wrap($test).find(isChecked ? '.toggle-off' : '.toggle-on').should('not.be.visible');
-      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+            cy.wrap($test).find(isChecked ? ".toggle-on" : ".toggle-off").should("be.visible");
+            /*cy.wrap($test).find(isChecked ? ".toggle-off" : ".toggle-on").should("not.be.visible");
+            CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
         } else {
-            /*cy.wrap($test).find('.toggle-on').should('be.visible');
-      cy.wrap($test).find('.toggle-off').should('be.visible');
-      CYPRESS ISSUE 22750 (https://github.com/cypress-io/cypress/issues/22750)*/
+            cy.wrap($test).find(".toggle-on").should("be.visible");
+            cy.wrap($test).find(".toggle-off").should("be.visible");
         }
     }
 
