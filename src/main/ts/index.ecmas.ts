@@ -52,7 +52,7 @@ import { ToggleMethods } from "./types/ToggleMethods";
    * Replace all `input[type=checkbox][data-toggle="toggle"]` inputs with "Bootstrap-Toggle"
    * Executes once page elements have rendered enabling script to be placed in `<head>`
    */
-    if (typeof globalThis.window !== "undefined")
+    if (globalThis.window !== undefined)
         globalThis.window.onload = function () {
             document
                 .querySelectorAll('input[type=checkbox][data-toggle="toggle"]')
