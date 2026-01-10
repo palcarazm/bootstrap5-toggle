@@ -42,7 +42,8 @@ jobs:
           name: coverage-report-${{ matrix.node-version }}
           path: coverage
       - name: Upload coverage report to Coveralls
-        uses: coverallsapp/github-action@v2
+        #v2.3.7
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
           parallel: true
@@ -54,7 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
+        #v2.3.7
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
         with:
           parallel-finished: true
           carryforward: "coverage-report-22.x,coverage-report-24.x"
@@ -74,7 +76,8 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        #v6.10.8
+        uses: cypress-io/github-action@2ad32e649e4db26c07674ebae31a297601dbcbaf
         with:
           browser: chrome
 
