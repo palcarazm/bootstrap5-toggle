@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "v*"
+      - "develop/*"
   pull_request:
     types:
       - opened
