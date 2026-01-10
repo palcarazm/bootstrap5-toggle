@@ -41,8 +41,10 @@ export class OptionResolver {
    * @param options.sanitized Flag to indicate if the attribute value needs to be sanitized (default: `true`)
    * @returns Sanitized attribute value or null
    */
-    private static getAttr (element: HTMLInputElement, attrName: string, opts: {sanitized?:boolean}={sanitized:true}) {
-        return opts.sanitized?sanitize(element.getAttribute(attrName)):element.getAttribute(attrName);
+    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:boolean}) {
+        const { sanitized = true } = opts ?? {};
+        const value = element.getAttribute(attrName);
+        return sanitized ? sanitize(value) : value;
     }
 
     /**
