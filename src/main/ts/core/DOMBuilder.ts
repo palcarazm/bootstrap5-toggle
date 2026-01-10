@@ -277,16 +277,30 @@ export class DOMBuilder {
    * @param {ToggleState} state The state of the toggle element.
    */
     public render(state: ToggleState): void {
+        this.lastState = state;
+    
+        if (!this.isBuilt) return;
+
+        this.updateToggleByValue(state);
+        this.updateToggleByChecked(state);
+        this.updateToggleByState(state);
+    }
+
+    /*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Updates the class of the toggle element based on the provided state.
+     * Removes any existing on/off/indeterminate classes and adds the appropriate class based on the state.
+     * If the state is indeterminate, adds the 'indeterminate' class and either the on or off class based on the checked attribute.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    /*******  9e620de0-7e60-44a0-b26d-be36099794af  *******/
+    private updateToggleByValue(state: ToggleState) {
         this.toggle.classList.remove(
             this.onStyle,
             this.offStyle,
             "off",
             "indeterminate"
         );
-        this.lastState = state;
-    
-        if (!this.isBuilt) return;
-
         switch (state.value) {
         case ToggleStateValue.ON:
             this.toggle.classList.add(this.onStyle);
@@ -304,44 +318,84 @@ export class DOMBuilder {
             }
             break;
         }
+    }
 
+    /**
+     * Updates the toggle element based on the provided state.
+     * Calls {@link DOMBuilder.updateCheckboxByChecked} and {@link DOMBuilder.updateInvCheckboxByChecked} to update the checkbox and inverted checkbox elements respectively.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateToggleByChecked(state: ToggleState) {
+        this.updateCheckboxByChecked(state);
+        this.updateInvCheckboxByChecked(state);
+    }
+
+    /**
+     * Updates the checkbox element based on the provided state.
+     * Sets the checked attribute of the checkbox based on the state's checked attribute.
+     * Sets the disabled and readonly attributes of the checkbox based on the state's status.
+     * Adds or removes the 'disabled' class from the toggle element based on the state's status.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateCheckboxByChecked(state: ToggleState) {
         this.checkbox.checked = state.checked;
-        if (this.invCheckbox) this.invCheckbox.checked = !state.checked;
-        this.toggle.classList.add(state.checked ? this.onStyle : this.offStyle);
 
         switch (state.status) {
         case ToggleStateStatus.ENABLED:
+            this.checkbox.disabled = false;
+            this.checkbox.readOnly = false;
             this.toggle.classList.remove("disabled");
             this.toggle.removeAttribute("disabled");
-            this.checkbox.disabled = false;
-            this.checkbox.readOnly = false;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = false;
-                this.invCheckbox.readOnly = false;
-            }
             break;
         case ToggleStateStatus.DISABLED:
-            this.toggle.classList.add("disabled");
-            this.toggle.setAttribute("disabled", "");
             this.checkbox.disabled = true;
             this.checkbox.readOnly = false;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = true;
-                this.invCheckbox.readOnly = false;
-            }
-            break;
-        case ToggleStateStatus.READONLY:
             this.toggle.classList.add("disabled");
             this.toggle.setAttribute("disabled", "");
+            break;
+        case ToggleStateStatus.READONLY:
             this.checkbox.disabled = false;
             this.checkbox.readOnly = true;
-            if (this.invCheckbox) {
-                this.invCheckbox.disabled = false;
-                this.invCheckbox.readOnly = true;
-            }
+            this.toggle.classList.add("disabled");
+            this.toggle.setAttribute("disabled", "");
             break;
         }
+    }
 
+    /**
+     * Updates the inverted checkbox element based on the provided state.
+     * Sets the checked attribute of the inverted checkbox to the opposite of the state's checked attribute.
+     * Sets the disabled and readonly attributes of the inverted checkbox based on the state's status.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateInvCheckboxByChecked(state: ToggleState) {
+        if (!this.invCheckbox) return;
+
+        this.invCheckbox.checked = !state.checked;
+
+        switch (state.status) {
+        case ToggleStateStatus.ENABLED:
+            this.invCheckbox.disabled = false;
+            this.invCheckbox.readOnly = false;
+            break;
+        case ToggleStateStatus.DISABLED:
+            this.invCheckbox.disabled = true;
+            this.invCheckbox.readOnly = false;
+            break;
+        case ToggleStateStatus.READONLY:
+            this.invCheckbox.disabled = false;
+            this.invCheckbox.readOnly = true;
+            break;
+        }
+    }
+
+    /**
+     * Updates the indeterminate attribute of the checkbox and inverted checkbox elements based on the provided state.
+     * If the state is indeterminate, sets the indeterminate attribute of the checkbox and inverted checkbox to true and removes the name attribute.
+     * If the state is not indeterminate, sets the indeterminate attribute of the checkbox and inverted checkbox to false and sets the name attribute to the provided name.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateToggleByState(state: ToggleState) {
         if (state.indeterminate) {
             this.checkbox.indeterminate = true;
             this.checkbox.removeAttribute("name");
