@@ -390,4 +390,142 @@ describe("DOMBuilder", () => {
             expect(toggle.hasAttribute("aria-label")).toBe(false);
         });
     });
+
+    describe("cancelPendingAnimationFrame", () => {
+        it("calls cancelAnimationFrame when requestAnimationFrameId exists", () => {
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            (builder as any).requestAnimationFrameId = 123;
+            
+            const builderAny = builder as any;
+            builderAny.cancelPendingAnimationFrame();
+            
+            expect((globalThis as any).__dom_cancelRAF).toHaveBeenCalledWith(123);
+            expect(builderAny.requestAnimationFrameId).toBeUndefined();
+        });
+
+        it("does nothing when requestAnimationFrameId is undefined", () => {
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const builderAny = builder as any;
+            builderAny.requestAnimationFrameId = undefined;
+            builderAny.cancelPendingAnimationFrame();
+            
+            expect((globalThis as any).__dom_cancelRAF).not.toHaveBeenCalled();
+        });
+
+        it("does nothing when cancelAnimationFrame is not a function", () => {
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            (globalThis as any).cancelAnimationFrame = undefined;
+            
+            const builderAny = builder as any;
+            builderAny.requestAnimationFrameId = 123;
+            builderAny.cancelPendingAnimationFrame();
+            
+            expect(builderAny.requestAnimationFrameId).toBe(123);
+        });
+    });
+
+    describe("handleToggleSize - Error handling", () => {
+        it("handles errors in calculateToggleSize gracefully", async () => {
+            const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+            const checkbox = createCheckbox();
+            
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const builderAny = builder as any;
+            const originalCalculate = builderAny.calculateToggleSize;
+            builderAny.calculateToggleSize = jest.fn(() => {
+                throw new Error("Test error");
+            });
+            builderAny.handleToggleSize(null, null);
+            
+            expect(consoleWarnSpy).toHaveBeenCalledWith(
+                "Error calculating toggle size:",
+                expect.any(Error)
+            );
+            
+            builderAny.calculateToggleSize = originalCalculate;
+            consoleWarnSpy.mockRestore();
+        });
+
+        it("uses fallback when requestAnimationFrame is not supported", () => {
+            (globalThis as any).requestAnimationFrame = undefined;
+            
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const builderAny = builder as any;
+            const calculateSpy = jest.spyOn(builderAny, "calculateToggleSize");
+
+            builderAny.handleToggleSize(null, null);
+
+            expect(calculateSpy).toHaveBeenCalledWith(null, null);
+            
+            calculateSpy.mockRestore();
+        });
+
+        it("cancels pending animation frame before scheduling new one", () => {
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const builderAny = builder as any;
+            const cancelSpy = jest.spyOn(builderAny, "cancelPendingAnimationFrame");
+            
+            builderAny.requestAnimationFrameId = 999;
+            
+            builderAny.handleToggleSize(null, null);
+            
+            expect(cancelSpy).toHaveBeenCalledTimes(1);
+            
+            cancelSpy.mockRestore();
+        });
+    });
+
+    describe("Integration with destroy", () => {
+        it("cancels animation frame on destroy", () => {
+            const checkbox = createCheckbox();
+            const builder = new DOMBuilder(
+                checkbox,
+                BASE_OPTIONS,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            const builderAny = builder as any;
+            const cancelSpy = jest.spyOn(builderAny, "cancelPendingAnimationFrame");
+            
+            builder.destroy();
+            
+            expect(cancelSpy).toHaveBeenCalled();
+            cancelSpy.mockRestore();
+        }); 
+    });
 });
