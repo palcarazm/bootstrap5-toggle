@@ -144,7 +144,7 @@ describe("Toggle", () => {
         });
 
         it("does not throw when setting same value", () => {
-            new Toggle(input, {});
+            const _ = new Toggle(input, {});
 
             expect(() => {
                 input.checked = false;
@@ -536,7 +536,7 @@ describe("Toggle", () => {
             toggle1.destroy();
 
             expect(() => {
-                new Toggle(input, {});
+                const _ = new Toggle(input, {});
             }).not.toThrow();
         });
         it("unbind events listeners", () => {

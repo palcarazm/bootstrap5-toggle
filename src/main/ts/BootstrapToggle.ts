@@ -15,7 +15,7 @@ export class Toggle {
     private readonly SCROLL_THRESHOLD = 10;
     private eventsBound = false;
     private suppressExternalSync  = false;
-    private originalDescriptors = new Map<string, PropertyDescriptor>();
+    private readonly originalDescriptors = new Map<string, PropertyDescriptor>();
 
     /**
    * Initializes a new instance of the BootstrapToggle class.
@@ -61,7 +61,7 @@ export class Toggle {
                 prop
             );
 
-            if (!descriptor || !descriptor.set) return;
+            if (!descriptor?.set) return;
             
             this.originalDescriptors.set(prop, descriptor);
 
