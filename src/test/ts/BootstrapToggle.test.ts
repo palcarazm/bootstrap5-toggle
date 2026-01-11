@@ -124,6 +124,35 @@ describe("Toggle", () => {
         });
     });
 
+    describe("interceptInputProperties()", () => {
+        it("reacts to checked property change", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.spyOn(toggle as any, "onExternalChange");
+
+            input.checked = true;
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("reacts to disabled property change", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.spyOn(toggle as any, "onExternalChange");
+
+            input.disabled = true;
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("does not throw when setting same value", () => {
+            new Toggle(input, {});
+
+            expect(() => {
+                input.checked = false;
+            }).not.toThrow();
+        });
+    });
+
+
     describe("Pointer interactions", () => {
         let root: HTMLElement;
 
@@ -310,6 +339,30 @@ describe("Toggle", () => {
         });
     });
 
+    describe("form reset handling", () => {
+        it("syncs after form reset", () => {
+            jest.useFakeTimers();
+
+            const form = document.createElement("form");
+            form.appendChild(input);
+            document.body.appendChild(form);
+
+            const toggle = new Toggle(input, {});
+            const spy = jest.spyOn(toggle as any, "onExternalChange");
+
+            form.reset();
+
+            expect(spy).not.toHaveBeenCalled();
+
+            jest.runAllTimers();
+
+            expect(spy).toHaveBeenCalled();
+
+            jest.useRealTimers();
+        });
+    });
+
+
 
     describe("apply(action: ToggleActionType, silent = false)", () => {
         it("calls StateReducer.do and DOMBuilder.render", () => {
@@ -339,6 +392,15 @@ describe("Toggle", () => {
             input.addEventListener("change", spy);
 
             (toggle as any).apply(ToggleActionType.TOGGLE, true);
+
+            expect(spy).not.toHaveBeenCalled();
+        });
+
+        it("guard against sync loops:does not react to internal apply-triggered input change", () => {
+            const toggle = new Toggle(input, {});
+            const spy = jest.spyOn(toggle as any, "onExternalChange");
+
+            (toggle as any).apply(ToggleActionType.TOGGLE);
 
             expect(spy).not.toHaveBeenCalled();
         });
@@ -469,12 +531,24 @@ describe("Toggle", () => {
             expect(destroyMock).toHaveBeenCalled();
             expect((input as any).bsToggle).toBeUndefined();
         });
+        it("restores native input descriptors allowing reinitialization", () => {
+            const toggle1 = new Toggle(input, {});
+            toggle1.destroy();
 
+            expect(() => {
+                new Toggle(input, {});
+            }).not.toThrow();
+        });
         it("unbind events listeners", () => {
             input.id = "test-toggle";
+
             const label = document.createElement("label");
             label.setAttribute("for", "test-toggle");
-            document.body.appendChild(label);
+
+            const form = document.createElement("form");
+            form.appendChild(input);
+            form.appendChild(label);
+            document.body.appendChild(form);
 
             const removeEventListenerSpyDiv = jest.spyOn(
                 HTMLDivElement.prototype,
@@ -483,6 +557,11 @@ describe("Toggle", () => {
 
             const removeEventListenerSpyLabel = jest.spyOn(
                 HTMLLabelElement.prototype,
+                "removeEventListener"
+            );
+
+            const removeEventListenerSpyForm = jest.spyOn(
+                HTMLFormElement.prototype,
                 "removeEventListener"
             );
 
@@ -503,8 +582,14 @@ describe("Toggle", () => {
                 expect.any(Function)
             );
 
+            expect(removeEventListenerSpyForm).toHaveBeenCalledWith(
+                "reset",
+                expect.any(Function)
+            );
+
             removeEventListenerSpyDiv.mockRestore();
             removeEventListenerSpyLabel.mockRestore();
+            removeEventListenerSpyForm.mockRestore();
         });
     });
 
