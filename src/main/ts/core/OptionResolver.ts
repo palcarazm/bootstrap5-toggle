@@ -1,4 +1,4 @@
-import { isNumeric, sanitize } from "./Tools";
+import { isNumeric, sanitize, SanitizeMode } from "./Tools";
 import {
     UserOptions,
     ToggleOptions,
@@ -39,13 +39,13 @@ export class OptionResolver {
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
    * @param options method options
-   * @param options.sanitized Flag to indicate if the attribute value needs to be sanitized (default: `true`)
+   * @param options.sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Sanitized attribute value or null
    */
-    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:boolean}) {
-        const { sanitized = true } = opts ?? {};
+    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:SanitizeMode}) {
+        const { sanitized = SanitizeMode.TEXT } = opts ?? {};
         const value = element.getAttribute(attrName);
-        return sanitized ? sanitize(value) : value;
+        return sanitize(value, { mode: sanitized }); ;
     }
 
     /**
@@ -54,7 +54,7 @@ export class OptionResolver {
    * @param attrName Attribute name
    * @param userValue Value provided by the user
    * @param defaultValue Default value if neither attribute nor user value exists
-   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
+   * @param sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Final attribute value
    */
     private static getAttrOrDefault<T>(
@@ -62,9 +62,12 @@ export class OptionResolver {
         attrName: string,
         userValue: T | undefined,
         defaultValue: T,
-        sanitized:boolean=true
+        sanitized:SanitizeMode = SanitizeMode.TEXT
     ){
-        return OptionResolver.getAttr(element, attrName, {sanitized}) || userValue || defaultValue;
+        const sanitizedUserValue = typeof userValue === "string" ? sanitize(userValue as string, { mode: sanitized }) : userValue;
+        return OptionResolver.getAttr(element, attrName, {sanitized}) || 
+            sanitizedUserValue ||
+            defaultValue;
     }
 
     /**
@@ -72,17 +75,18 @@ export class OptionResolver {
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
    * @param userValue Value provided by the user
-   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
+   * @param sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Final attribute value or DeprecationConfig.value if not found
    */
     private static getAttrOrDeprecation<T>(
         element: HTMLInputElement,
         attrName: string,
         userValue: T,
-        sanitized:boolean=true
+        sanitized:SanitizeMode = SanitizeMode.TEXT
     ){
+        const sanitizedUserValue = typeof userValue === "string" ? sanitize(userValue as string, { mode: sanitized }) : userValue;
         return OptionResolver.getAttr(element, attrName, {sanitized}) ||
-            userValue ||
+            sanitizedUserValue ||
             DeprecationConfig.value;
     }
 
@@ -101,13 +105,13 @@ export class OptionResolver {
                 element,
                 "data-onlabel",
                 userOptions.onlabel,
-                false
+                SanitizeMode.HTML
             ),
             offlabel: this.getAttrOrDeprecation(
                 element,
                 "data-offlabel",
                 userOptions.offlabel,
-                false
+                SanitizeMode.HTML
             ),
             onstyle: this.getAttrOrDefault(
                 element,
@@ -227,16 +231,19 @@ class DeprecationConfig {
     currentOpt: OptionWithDeprecationRemap;
     deprecatedAttr: string;
     deprecatedOpt: OptionDeprecated;
+    mode: SanitizeMode
   }[] = [
             {
                 currentOpt: "onlabel",
                 deprecatedAttr: "data-on",
                 deprecatedOpt: "on",
+                mode: SanitizeMode.HTML 
             },
             {
                 currentOpt: "offlabel",
                 deprecatedAttr: "data-off",
                 deprecatedOpt: "off",
+                mode: SanitizeMode.HTML
             },
         ];
 
@@ -252,10 +259,11 @@ class DeprecationConfig {
         userOptions: UserOptions
     ): void {
         this.deprecatedOptions.forEach(
-            ({ currentOpt, deprecatedAttr, deprecatedOpt }) => {
+            ({ currentOpt, deprecatedAttr, deprecatedOpt, mode }) => {
                 if (options[currentOpt] === DeprecationConfig.value) {
                     const deprecatedAttrSanitized = sanitize(
-                        element.getAttribute(deprecatedAttr)
+                        element.getAttribute(deprecatedAttr),
+                        {mode}
                     );
                     if (deprecatedAttrSanitized) {
                         this.log(
