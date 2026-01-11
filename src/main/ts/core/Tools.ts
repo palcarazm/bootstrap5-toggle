@@ -95,7 +95,9 @@ function sanitizeHTML(
                     // Additional security for specific attributes
                     if (attrName === "src" || attrName === "href") {
                         const value = attr.value.toLowerCase();
-                        if (value.startsWith("javascript:") || value.startsWith("data:") && !value.startsWith("data:image/")) {
+                        if (value.startsWith("javascript:")
+                            || value.startsWith("vbscript:")
+                            || (value.startsWith("data:") && !value.startsWith("data:image/"))) {
                             element.removeAttribute(attr.name);
                         }
                     }
