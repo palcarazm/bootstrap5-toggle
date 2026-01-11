@@ -65,8 +65,27 @@ function sanitizeHTML(
     // Implementation using DOMParser for browser compatibility
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
+        
+    // Sanitize all nodes in the document body
+    const bodyChildren = Array.from(doc.body.childNodes);
+    bodyChildren.forEach((node) => sanitizeNode(node, config));
     
-    const sanitizeNode = (node: Node): void => {
+    return doc.body.innerHTML;
+}
+
+/**
+ * Sanitizes a single node in the document tree.
+ * 
+ * For element nodes, it removes disallowed tags and attributes.
+ * For text nodes, it keeps them as is.
+ * 
+ * Recursively sanitizes all children of an element node.
+ * 
+ * @param node The node to sanitize
+ * @param config Configuration options for allowed tags and attributes
+ */
+function sanitizeNode (node: Node, config: { allowedTags: string[], allowedAttributes: string[] }): void {
+    const sanitizeNodeRecursive = (node: Node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
             const element = node as HTMLElement;
             const tagName = element.tagName.toLowerCase();
@@ -89,36 +108,45 @@ function sanitizeHTML(
                     allowed.endsWith("*") ? attrName.startsWith(allowed.slice(0, -1)) : attrName === allowed
                 );
                 
-                if (!isAllowed) {
-                    element.removeAttribute(attr.name);
+                if (isAllowed) {
+                    sanitizeAllowedAttr(element, attr, attrName);
                 } else {
-                    // Additional security for specific attributes
-                    if (attrName === "src" || attrName === "href") {
-                        const value = attr.value.toLowerCase();
-                        if (value.startsWith("javascript:")
-                            || value.startsWith("vbscript:")
-                            || (value.startsWith("data:") && !value.startsWith("data:image/"))) {
-                            element.removeAttribute(attr.name);
-                        }
-                    }
+                    element.removeAttribute(attr.name);
                 }
             });
             
             // Recursively sanitize children
             const children = Array.from(element.childNodes);
-            children.forEach(sanitizeNode);
+            children.forEach(sanitizeNodeRecursive);
         } else if (node.nodeType === Node.TEXT_NODE) {
             // Text nodes are safe, keep them as is
             return;
         }
     };
-    
-    // Sanitize all nodes in the document body
-    const bodyChildren = Array.from(doc.body.childNodes);
-    bodyChildren.forEach(sanitizeNode);
-    
-    return doc.body.innerHTML;
+    sanitizeNodeRecursive(node);
 }
+
+/**
+ * Sanitizes an allowed attribute by removing it if its value is a dangerous protocol.
+ * Only works for "src" and "href" attributes.
+ * @param element The element to check for the attribute.
+ * @param attr The attribute to check the value of.
+ * @param attrName The name of the attribute to check (either "src" or "href").
+ */
+function sanitizeAllowedAttr (element: HTMLElement, attr: Attr, attrName: string): void {
+    if (attrName !== "src" && attrName !== "href") return;
+    
+    const value = attr.value.toLowerCase();
+    
+    // sonar typescript:S1523 - This is security detection, not execution
+    const isDangerousProtocol = value.startsWith("javascript:") ||
+                                value.startsWith("vbscript:") ||
+                                (value.startsWith("data:") && !value.startsWith("data:image/"));
+    
+    if (isDangerousProtocol) {
+        element.removeAttribute(attr.name);
+    }
+};
 
 /**
  * Checks if the given string is a valid numeric value.
