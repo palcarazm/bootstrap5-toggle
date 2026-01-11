@@ -22,6 +22,7 @@ export class DOMBuilder {
     private isBuilt: boolean = false;
     private lastState: ToggleState;
     private resizeObserver?: ResizeObserver;
+    private requestAnimationFrameId?: number;
 
     /**
    * Initializes a new instance of the DOMBuilder class.
@@ -231,6 +232,25 @@ export class DOMBuilder {
         width: string  | null,
         height: string | null
     ): void {
+        this.cancelPendingAnimationFrame();
+
+        if (typeof requestAnimationFrame  === "function") {
+            this.requestAnimationFrameId = requestAnimationFrame (() => {
+                try {
+                    this.calculateToggleSize(width, height);
+                } catch (error) {
+                    console.warn("Error calculating toggle size:", error);
+                }
+            });
+        } else {
+            // Fallback if requestAnimationFrame is not supported
+            this.calculateToggleSize(width, height);
+        }
+    }
+    private calculateToggleSize(
+        width: string  | null,
+        height: string | null
+    ): void {
         if (width) {
             this.toggle.style.width = width;
         } else {
@@ -284,6 +304,17 @@ export class DOMBuilder {
         return (
             height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom
         );
+    }
+
+    /**
+     * Cancels any pending animation frame request if one exists.
+     * This is used to prevent unnecessary calculations when the toggle size is being changed.
+     */
+    private cancelPendingAnimationFrame(): void {
+        if (this.requestAnimationFrameId !== undefined && typeof cancelAnimationFrame === "function") {
+            cancelAnimationFrame(this.requestAnimationFrameId);
+            this.requestAnimationFrameId = undefined;
+        }
     }
 
     /**
@@ -483,6 +514,8 @@ export class DOMBuilder {
    * Also disconnects the ResizeObserver if it was used.
    */
     public destroy(): void {
+        this.cancelPendingAnimationFrame();
+
         this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
         this.toggle.remove();
 
