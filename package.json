@@ -51,7 +51,7 @@
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.2.1",
+    "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^30.0.0",
