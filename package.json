@@ -13,7 +13,7 @@
     "type": "GitHub Sponsors",
     "url": "https://github.com/sponsors/palcarazm"
   },
-  "main": "js/bootstrap5-toggle.ecmas.min.js",
+  "browser": "js/bootstrap5-toggle.ecmas.min.js",
   "style": "css/bootstrap5-toggle.min.css",
   "files": [
     "css/*",
@@ -50,6 +50,10 @@
   "bugs": {
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
+  "engines": {
+    "node": ">=22 <25",
+    "npm": ">=10"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
@@ -79,8 +83,13 @@
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   },
-  "dependencies": {
-    "bootstrap": "^5.0.0"
+  "peerDependencies": {
+    "bootstrap": ">=5 <6"
+  },
+  "peerDependenciesMeta": {
+    "bootstrap": {
+      "optional": false
+    }
   },
   "optionalDependencies": {
     "jquery": "^3.6.0"

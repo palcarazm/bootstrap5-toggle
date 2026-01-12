@@ -3,10 +3,15 @@
 [![Bootstrap 5](https://img.shields.io/static/v1?label=bootstrap&message=%5E5.0.0&color=informational&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/5.0)
 [![JSDelivr Badge](https://img.shields.io/jsdelivr/npm/hm/bootstrap5-toggle?label=hits&logo=jsdelivr&logoColor=white)](https://www.jsdelivr.com/package/npm/bootstrap5-toggle)
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
-[![Coverage Status](https://coveralls.io/repos/github/palcarazm/bootstrap5-toggle/badge.svg?branch=v5)](https://coveralls.io/github/palcarazm/bootstrap5-toggle?branch=v5)
-[![Security](https://img.shields.io/badge/snyk-security%20analyse-informational?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 [![EOL](https://img.shields.io/endpoint?url=https%3A%2F%2Fpalcarazm.github.io%2Fbootstrap5-toggle%2Fapi%2Feol%2Fv5)](https://github.com/palcarazm/bootstrap5-toggle/security/policy)
 [![Funding](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/palcarazm)
+
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/palcarazm/bootstrap5-toggle?branch=v5&logo=coveralls)](https://coveralls.io/github/palcarazm/bootstrap5-toggle?branch=v5)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=palcarazm_bootstrap5-toggle&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=palcarazm_bootstrap5-toggle)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=palcarazm_bootstrap5-toggle&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=palcarazm_bootstrap5-toggle)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=palcarazm_bootstrap5-toggle&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=palcarazm_bootstrap5-toggle)
+[![Security](https://img.shields.io/badge/security-monitored-informational?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
+
 
 # Bootstrap 5 Toggle
 
