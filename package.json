@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
-    "@commitlint/config-conventional": "^19.1.0",
+    "@commitlint/config-conventional": "^20.3.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^30.0.0",
     "@types/jquery": "^3.5.33",
