@@ -14,6 +14,8 @@ export class Toggle {
     private pointer: { x: number; y: number } | null = null;
     private readonly SCROLL_THRESHOLD = 10;
     private eventsBound = false;
+    private suppressExternalSync  = false;
+    private readonly originalDescriptors = new Map<string, PropertyDescriptor>();
 
     /**
    * Initializes a new instance of the BootstrapToggle class.
@@ -33,9 +35,70 @@ export class Toggle {
         );
 
         this.bindEventListeners();
+        this.interceptInputProperties();
 
         this.element.bsToggle = this;
     }
+    
+    /**
+     * Intercepts the following input properties to detect external changes:
+     * - checked
+     * - disabled
+     * - readonly
+     * - indeterminate
+     * This method is used to detect changes made to the input element directly,
+     * rather than through the BootstrapToggle API. It is used to maintain the
+     * state of the toggle in cases where the user changes the input element
+     * directly, rather than through the API.
+     * @returns void
+     */
+    private interceptInputProperties() {
+        const props = ["checked", "disabled", "readOnly", "indeterminate"] as const;
+
+        props.forEach((prop) => {
+            const descriptor = Object.getOwnPropertyDescriptor(
+                Object.getPrototypeOf(this.element),
+                prop
+            );
+
+            if (!descriptor?.set) return;
+            
+            this.originalDescriptors.set(prop, descriptor);
+
+            Object.defineProperty(this.element, prop, {
+                configurable: true,
+                get: () => descriptor.get!.call(this.element),
+                set: (value) => {
+                    descriptor.set!.call(this.element, value);
+                    if (this.suppressExternalSync ) return;
+                    this.onExternalChange();
+                },
+            });
+        });
+    }
+
+    /**
+     * Restores the original input properties of the toggle element.
+     * This method is used to restore the original descriptors of the input properties
+     * which were intercepted by the BootstrapToggle to detect external changes.
+     * @returns void
+     */
+    private restoreInputProperties() {
+        this.originalDescriptors.forEach((descriptor, prop) => {
+            Object.defineProperty(this.element, prop, descriptor);
+        });
+
+        this.originalDescriptors.clear();
+    }
+
+    /**
+     * Handles the change event of the input element of the toggle.
+     * This event listener is responsible for detecting when the input element
+     * of the toggle changes its state and triggering the update method to keep the toggle in sync.
+     */
+    private readonly onExternalChange = () => {
+        this.update(true);
+    };
 
     /**
    * Binds event listeners to the toggle element.
@@ -50,6 +113,7 @@ export class Toggle {
    */
     private bindEventListeners() {
         if (this.eventsBound) return;
+        this.bindFormResetListener();
         this.bindPointerEventListener();
         this.bindKeyboardEventListener();
         this.bindLabelEventListener();
@@ -69,11 +133,28 @@ export class Toggle {
    */
     private unbindEventListeners() {
         if (!this.eventsBound) return;
+        this.unbindFormResetListener();
         this.unbindPointerEventListener();
         this.unbindKeyboardEventListener();
         this.unbindLabelEventListener();
         this.eventsBound = false;
     }
+
+    private bindFormResetListener() {
+        const form = this.element.form;
+        if (!form) return;
+        form.addEventListener("reset", this.onFormReset);
+    }
+
+    private unbindFormResetListener() {
+        const form = this.element.form;
+        if (!form) return;
+        form.removeEventListener("reset", this.onFormReset);
+    }
+
+    private readonly onFormReset = () => {
+        setTimeout(() => this.onExternalChange(), 0);
+    };
 
     /**
    * Binds a pointerdown event listener to the root element of the toggle.
@@ -268,9 +349,13 @@ export class Toggle {
    * @param silent A boolean indicating whether to trigger the change event after applying the action.
    */
     private apply(action: ToggleActionType, silent = false) {
-        if (this.stateReducer.do(action)) {
+        if (!this.stateReducer.do(action)) return;
+        this.suppressExternalSync  = true;
+        try {
             this.domBuilder.render(this.stateReducer.get());
             if (!silent) this.trigger();
+        } finally {
+            this.suppressExternalSync  = false;
         }
     }
 
@@ -357,9 +442,14 @@ export class Toggle {
    * @param {boolean} silent A boolean indicating whether to trigger the change event after synchronizing the toggle state.
    */
     update(silent: boolean) {
-        this.stateReducer.sync(this.element);
-        this.domBuilder.render(this.stateReducer.get());
-        if (!silent) this.trigger();
+        this.suppressExternalSync  = true;
+        try {
+            this.stateReducer.sync(this.element);
+            this.domBuilder.render(this.stateReducer.get());
+            if (!silent) this.trigger();
+        } finally {
+            this.suppressExternalSync  = false;
+        }
     }
 
     /**
@@ -378,6 +468,7 @@ export class Toggle {
    *After calling this method, the toggle element will be removed from the DOM and all event listeners will be unbound.
    */
     destroy() {
+        this.restoreInputProperties();
         this.unbindEventListeners();
         this.domBuilder.destroy();
         delete this.element.bsToggle;

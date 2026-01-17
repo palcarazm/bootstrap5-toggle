@@ -1,6 +1,6 @@
 {
   "name": "bootstrap5-toggle",
-  "version": "5.2.0-rc2",
+  "version": "5.2.0-rc3",
   "type": "module",
   "author": {
     "name": "Pablo Alcaraz Martínez",
@@ -13,7 +13,7 @@
     "type": "GitHub Sponsors",
     "url": "https://github.com/sponsors/palcarazm"
   },
-  "main": "js/bootstrap5-toggle.ecmas.min.js",
+  "browser": "js/bootstrap5-toggle.ecmas.min.js",
   "style": "css/bootstrap5-toggle.min.css",
   "files": [
     "css/*",
@@ -50,8 +50,12 @@
   "bugs": {
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
+  "engines": {
+    "node": ">=22 <25",
+    "npm": ">=10"
+  },
   "devDependencies": {
-    "@commitlint/cli": "^19.2.1",
+    "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^30.0.0",
@@ -64,7 +68,7 @@
     "cypress-plugin-tab": "^1.0.5",
     "doctoc": "^2.2.0",
     "dompurify": "^3.0.0",
-    "globals": "^16.1.0",
+    "globals": "^17.0.0",
     "grunt": "^1.5.3",
     "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "^2.0.1",
@@ -79,8 +83,13 @@
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   },
-  "dependencies": {
-    "bootstrap": "^5.0.0"
+  "peerDependencies": {
+    "bootstrap": ">=5 <6"
+  },
+  "peerDependenciesMeta": {
+    "bootstrap": {
+      "optional": false
+    }
   },
   "optionalDependencies": {
     "jquery": "^3.6.0"
