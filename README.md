@@ -12,6 +12,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=palcarazm_bootstrap5-toggle&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=palcarazm_bootstrap5-toggle)
 [![Security](https://img.shields.io/badge/security-monitored-informational?logo=snyk)](https://snyk.io/advisor/npm-package/bootstrap5-toggle)
 
+
 # Bootstrap 5 Toggle
 
 **Bootstrap 5 Toggle** is a bootstrap plugin/widget that converts checkboxes into toggles.
@@ -39,9 +40,6 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Bootstrap 5 Toggle](#bootstrap-5-toggle)
-      - [Library Distributions](#library-distributions)
-- [Demos](#demos)
 - [Installation](#installation)
   - [CDN](#cdn)
     - [ECMAS Interface](#ecmas-interface)
@@ -75,18 +73,18 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc2/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc3/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc2/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc3/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ### jQuery Interface
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc2/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc3/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc2/js/bootstrap5-toggle.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.2.0-rc3/js/bootstrap5-toggle.jquery.min.js"></script>
 ```
 
 ## Download
@@ -98,13 +96,13 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
-npm install bootstrap5-toggle@5.2.0-rc2
+npm install bootstrap5-toggle@5.2.0-rc3
 ```
 
 ## Yarn
 
 ```ksh
-yarn add bootstrap5-toggle@5.2.0-rc2
+yarn add bootstrap5-toggle@5.2.0-rc3
 ```
 
 # Usage
