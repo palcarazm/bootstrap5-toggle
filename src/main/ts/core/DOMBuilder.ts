@@ -1,4 +1,5 @@
-import { AriaToggleOptions, ToggleOptions, ToggleSize } from "./OptionResolver.types";
+import { Tooltip } from "bootstrap";
+import { AriaToggleOptions, ToggleOptions, ToggleSize, TooltipOptions } from "./OptionResolver.types";
 import {
     ToggleState,
     ToggleStateStatus,
@@ -10,6 +11,7 @@ export class DOMBuilder {
     private readonly onStyle: string;
     private readonly offStyle: string;
     private readonly name: string | null;
+    private readonly tooltipLabels?: { on: string; off: string; mixed?: string };
 
     private readonly checkbox: HTMLInputElement;
     private readonly invCheckbox: HTMLInputElement | null;
@@ -18,6 +20,7 @@ export class DOMBuilder {
     private readonly toggleOn: HTMLElement;
     private readonly toggleOff: HTMLElement;
     private readonly toggleHandle: HTMLElement;
+    private tooltip?: Tooltip;
 
     private isBuilt: boolean = false;
     private lastState: ToggleState;
@@ -63,6 +66,10 @@ export class DOMBuilder {
         this.toggleHandle = this.createToggleHandle();
         this.toggleGroup = this.createToggleGroup();
         this.toggle = document.createElement("div");
+
+        if(options.tooltip){
+            this.tooltipLabels = options.tooltip.title;
+        }
 
         if(this.isVisible()){
             this.renderToggle(options);
@@ -152,7 +159,8 @@ export class DOMBuilder {
         width,
         height,
         tabindex,
-        aria
+        aria,
+        tooltip,
     }: ToggleOptions): void {
         this.toggle.className= `toggle btn ${this.sizeClass} ${style}`;
         this.toggle.dataset.toggle =  "toggle";
@@ -170,6 +178,8 @@ export class DOMBuilder {
         this.handleLabels(aria);
 
         this.handleToggleSize(width, height);
+
+        if(tooltip) this.createTooltip(tooltip);
 
         this.isBuilt = true;
     }
@@ -339,6 +349,19 @@ export class DOMBuilder {
     }
 
     /**
+     * Creates a tooltip for the toggle element.
+     * If the tooltip is successfully created, it is stored in the `tooltip` property of the DOMBuilder instance.
+     * @param {TooltipOptions} tooltip - The options for the tooltip.
+     */
+    private createTooltip(tooltip: TooltipOptions){
+        try{
+            this.tooltip = new globalThis.window.bootstrap.Tooltip(this.toggle, {placement: tooltip.placement, html: true, title: tooltip.title.on});
+        }catch(error){
+            console.error("Error creating tooltip:", error);
+        }
+    }
+
+    /**
    * Renders the toggle element based on the provided state if the toggle is already built.
    * This method should be called whenever the state of the toggle changes.
    * @param {ToggleState} state The state of the toggle element.
@@ -352,6 +375,7 @@ export class DOMBuilder {
         this.updateToggleByChecked(state);
         this.updateToggleByState(state);
         this.updateAria(state);
+        this.updateTooltip(state);
     }
 
     /**
@@ -499,6 +523,27 @@ export class DOMBuilder {
             String(state.status === ToggleStateStatus.READONLY)
         );
     }
+
+    /**
+     * Updates the tooltip of the toggle element based on the provided state.
+     * Sets the content of the tooltip to the corresponding label based on the state's value.
+     * If the tooltip or tooltipLabels are not set, does nothing.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateTooltip(state: ToggleState) {
+        if(!this.tooltip || !this.tooltipLabels) return;
+        switch(state.value){
+        case ToggleStateValue.ON:
+            this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.on});
+            return;
+        case ToggleStateValue.OFF:
+            this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.off});
+            return;
+        case ToggleStateValue.INDETERMINATE:
+            if(this.tooltipLabels.mixed) this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.mixed});
+            return;
+        }
+    }
     
     /**
    * Returns the root element of the toggle, which is the container of all toggle elements.
@@ -515,6 +560,11 @@ export class DOMBuilder {
    */
     public destroy(): void {
         this.cancelPendingAnimationFrame();
+
+        if(this.tooltip){
+            this.tooltip.dispose();
+            this.tooltip = undefined;
+        }
 
         this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
         this.toggle.remove();

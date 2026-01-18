@@ -1,4 +1,5 @@
 import { OptionResolver } from "../../../main/ts/core/OptionResolver";
+import { PlacementOptions } from "../../../main/ts/core/OptionResolver.types";
 
 describe("OptionResolver", () => {
     let element: Partial<HTMLInputElement>;
@@ -137,5 +138,139 @@ describe("OptionResolver", () => {
             expect(options.width).toBe("auto");
             expect(options.height).toBe("auto");
         });
+    });
+
+    describe("Tooltip options", () => {
+        it("returns undefined for tooltip when no tooltip options are provided", () => {
+            (element.getAttribute as jest.Mock).mockReturnValue(null);
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {});
+            
+            expect(options.tooltip).toBeUndefined();
+        });
+
+        it("resolves tooltip options from user options", () => {
+            const tooltipOptions = {
+                placement: PlacementOptions.TOP,
+                title: {
+                    on: "Turned On",
+                    off: "Turned Off",
+                    mixed: "Mixed State"
+                }
+            };
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                tooltip: tooltipOptions
+            });
+
+            expect(options.tooltip).toEqual(tooltipOptions);
+        });
+
+        it("resolves tooltip options from data attributes", () => {
+            (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+                const attrMap: Record<string, string | null> = {
+                    "data-tooltip-title-on": "Active State",
+                    "data-tooltip-title-off": "Inactive State",
+                    "data-tooltip-title-mixed": "Partial State",
+                    "data-tooltip-placement": "bottom"
+                };
+                return attrMap[attr] || null;
+            });
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {});
+
+            expect(options.tooltip).toEqual({
+                placement: "bottom",
+                title: {
+                    on: "Active State",
+                    off: "Inactive State",
+                    mixed: "Partial State"
+                }
+            });
+        });
+
+        it("prioritizes element attributes over user options", () => {
+            (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+                if (attr === "data-tooltip-title-on") return "From Attribute";
+                return null;
+            });
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {
+                tooltip: {
+                    placement: PlacementOptions.TOP,
+                    title: {
+                        on: "From User",
+                        off: "From User",
+                        mixed: "From User"
+                    }
+                }
+            });
+
+            expect(options.tooltip?.title.on).toBe("From Attribute");
+            expect(options.tooltip?.title.off).toBe("From User");
+            expect(options.tooltip?.title.mixed).toBe("From User");
+        });
+
+        it("requires on and off titles to create tooltip options", () => {
+            (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+                if (attr === "data-tooltip-title-on") return "Only On";
+                return null;
+            });
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {});
+
+            expect(options.tooltip).toBeUndefined();
+        });
+
+        it("uses default placement when not specified", () => {
+            (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+                const attrMap: Record<string, string | null> = {
+                    "data-tooltip-title-on": "On Title",
+                    "data-tooltip-title-off": "Off Title",
+                    "data-tooltip-title-mixed": "Mixed Title"
+                };
+                return attrMap[attr] || null;
+            });
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {});
+
+            expect(options.tooltip?.placement).toBe(PlacementOptions.TOP);
+        });
+
+        it("falls back to data-tooltip-title for individual titles", () => {
+            (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+                if (attr === "data-tooltip-title") return "Generic Title";
+                return null;
+            });
+
+            const options = OptionResolver.resolve(element as HTMLInputElement, {});
+
+            expect(options.tooltip?.title.on).toBe("Generic Title");
+            expect(options.tooltip?.title.off).toBe("Generic Title");
+            expect(options.tooltip?.title.mixed).toBe("Generic Title");
+        });
+    });
+
+    const placements = ["top", "bottom", "left", "right"];
+    it.each(placements)("accepts valid placement $placement", (placement) => {
+        (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+            if (attr === "data-tooltip-placement") return placement;
+            if (attr === "data-tooltip-title") return "Generic Title";
+            return null;
+        });
+
+        const options = OptionResolver.resolve(element as HTMLInputElement, {});
+        expect(options.tooltip?.placement).toBe(placement);
+    });
+
+    it("defaults to top for invalid placement", () => {
+        (element.getAttribute as jest.Mock).mockImplementation((attr) => {
+            if (attr === "data-tooltip-placement") return "invalid";
+            if (attr === "data-tooltip-title") return "Generic Title";
+            return null;
+        });
+
+        const options = OptionResolver.resolve(element as HTMLInputElement, {});
+        expect(options.tooltip?.placement).toBe("top");
     });
 });
