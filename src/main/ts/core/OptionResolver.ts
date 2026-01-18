@@ -6,6 +6,8 @@ import {
     OptionDeprecated,
     ToggleStyle,
     ToggleSize,
+    TooltipOptions,
+    PlacementOptions,
 } from "./OptionResolver.types";
 
 /**
@@ -32,6 +34,7 @@ export class OptionResolver {
         tristate: false,
         name: null,
         aria:{label: "Toggle",},
+        tooltip: undefined,
     };
 
     /**
@@ -200,7 +203,8 @@ export class OptionResolver {
                     userOptions.aria?.label,
                     this.DEFAULT.aria.label
                 ),
-            }
+            },
+            tooltip: OptionResolver.resolveTooltipOptions(element, userOptions),
         };
 
         if(options.width && isNumeric(options.width)) options.width = `${options.width}px`;
@@ -209,6 +213,46 @@ export class OptionResolver {
         DeprecationConfig.handle(options, element, userOptions);
 
         return options;
+    }
+
+    /**
+     * Resolve tooltip options from element attributes and user options.
+     * @param element HTMLInputElement representing the toggle
+     * @param userOptions Options provided by the user
+     * @returns Resolved tooltip options or undefined if not found.
+     */
+    private static resolveTooltipOptions(
+        element: HTMLInputElement,
+        userOptions: UserOptions
+    ): TooltipOptions | undefined {
+        const getTitle = (attr:string, userOption?:string) => this.getAttrOrDefault(
+            element,
+            attr,
+            userOption,
+            null,
+            SanitizeMode.HTML
+        ) || this.getAttr(element, "data-tooltip-title", {sanitized: SanitizeMode.HTML});
+
+        const titleOn = getTitle("data-tooltip-title-on", userOptions.tooltip?.title.on);
+        const titleOff = getTitle("data-tooltip-title-off", userOptions.tooltip?.title.off);
+        const titleMixed = getTitle("data-tooltip-title-mixed", userOptions.tooltip?.title.mixed);
+        if(!titleOn || !titleOff ) return OptionResolver.DEFAULT.tooltip;
+
+        const placement = this.getAttrOrDefault(
+            element,
+            "data-tooltip-placement",
+            userOptions.tooltip?.placement,
+            PlacementOptions.TOP
+        ) as PlacementOptions;
+
+        return{
+            placement: Object.values(PlacementOptions).includes(placement) ? placement : PlacementOptions.TOP,
+            title:{
+                on: titleOn,
+                off: titleOff,
+                mixed: titleMixed ?? undefined,
+            },
+        };
     }
 }
 

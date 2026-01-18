@@ -6,7 +6,7 @@ import {
     ToggleStateValue,
     ToggleState,
 } from "../../../main/ts/core/StateReducer.types";
-import { ToggleOptions } from "../../../main/ts/core/OptionResolver.types";
+import { PlacementOptions, ToggleOptions } from "../../../main/ts/core/OptionResolver.types";
 
 function createCheckbox(): HTMLInputElement {
     const input = document.createElement("input");
@@ -527,5 +527,232 @@ describe("DOMBuilder", () => {
             expect(cancelSpy).toHaveBeenCalled();
             cancelSpy.mockRestore();
         }); 
+    });
+
+    describe("Tooltip functionality", () => {
+        let checkbox: HTMLInputElement;
+        let optionsWithTooltip: ToggleOptions;
+        let mockTooltipInstance: any;
+        let mockBootstrap: any;
+
+        beforeEach(() => {
+            checkbox = createCheckbox();
+        
+            optionsWithTooltip = {
+                ...BASE_OPTIONS,
+                tooltip: {
+                    placement: PlacementOptions.TOP,
+                    title: {
+                        on: "Switch is ON",
+                        off: "Switch is OFF", 
+                        mixed: "Switch is MIXED"
+                    }
+                }
+            };
+
+            mockTooltipInstance = {
+                dispose: jest.fn(),
+                setContent: jest.fn(),
+                update: jest.fn(),
+                disable: jest.fn()
+            };
+
+            mockBootstrap = {
+                Tooltip: jest.fn().mockReturnValue(mockTooltipInstance)
+            };
+
+            globalThis.window.bootstrap = mockBootstrap;
+        });
+
+        afterEach(() => {
+            if (globalThis.window?.bootstrap) {
+                delete (globalThis.window as any).bootstrap;
+            }
+        });
+
+        it("creates tooltip when tooltip options are provided and Bootstrap is available", () => {
+            const _ = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(mockBootstrap.Tooltip).toHaveBeenCalledWith(
+                expect.any(HTMLElement),
+                {
+                    placement: "top",
+                    html: true,
+                    title: "Switch is ON"
+                }
+            );
+
+            expect(mockTooltipInstance.setContent).toHaveBeenCalledWith({".tooltip-inner":"Switch is OFF"});
+        });
+
+        it("does not create tooltip when tooltip options are not provided", () => {
+            const _ = new DOMBuilder(
+                checkbox,
+                { ...BASE_OPTIONS },
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(mockBootstrap.Tooltip).not.toHaveBeenCalled();
+        });
+
+        it("handles Bootstrap not being available gracefully", () => {
+            delete (globalThis.window as any).bootstrap;
+
+            const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+            const _ = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(consoleErrorSpy).toHaveBeenCalledWith(
+                "Error creating tooltip:",
+                expect.any(Error)
+            );
+
+            expect(document.querySelector(".toggle")).not.toBeNull();
+
+            consoleErrorSpy.mockRestore();
+        });
+
+        it("updates tooltip content when state changes from OFF to ON", () => {
+            const builder = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            builder.render(state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true));
+
+            expect(mockTooltipInstance.setContent).toHaveBeenCalledWith({
+                ".tooltip-inner": "Switch is ON"
+            });
+        });
+
+        it("updates tooltip content when state changes to INDETERMINATE", () => {
+            const builder = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true)
+            );
+
+            builder.render(state(
+                ToggleStateValue.INDETERMINATE,
+                ToggleStateStatus.ENABLED,
+                false,
+                true
+            ));
+
+            expect(mockTooltipInstance.setContent).toHaveBeenCalledWith({
+                ".tooltip-inner": "Switch is MIXED"
+            });
+        });
+
+        it("does not update tooltip when tooltipLabels is undefined", () => {
+            const builder = new DOMBuilder(
+                checkbox,
+                { ...BASE_OPTIONS },
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            builder.render(state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true));
+
+            expect(mockTooltipInstance.setContent).not.toHaveBeenCalled();
+        });
+
+        it("disposes tooltip when destroy is called", () => {
+            const builder = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            builder.destroy();
+
+            expect(mockTooltipInstance.dispose).toHaveBeenCalled();
+        });
+
+        it("handles destroy gracefully when tooltip is undefined", () => {
+            const builder = new DOMBuilder(
+                checkbox,
+                { ...BASE_OPTIONS},
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(() => builder.destroy()).not.toThrow();
+        });
+
+        it("uses correct initial tooltip title based on initial state", () => {
+            const _ = new DOMBuilder(
+                checkbox,
+                optionsWithTooltip,
+                state(ToggleStateValue.ON, ToggleStateStatus.ENABLED, true)
+            );
+
+            expect(mockBootstrap.Tooltip).toHaveBeenCalledWith(
+                expect.any(HTMLElement),
+                expect.objectContaining({
+                    title: "Switch is ON"
+                })
+            );
+        });
+
+        it("supports different tooltip placements", () => {
+            const optionsWithBottomTooltip = {
+                ...optionsWithTooltip,
+                tooltip: {
+                    ...optionsWithTooltip.tooltip!,
+                    placement: PlacementOptions.BOTTOM
+                }
+            };
+
+            const _ = new DOMBuilder(
+                checkbox,
+                optionsWithBottomTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(mockBootstrap.Tooltip).toHaveBeenCalledWith(
+                expect.any(HTMLElement),
+                expect.objectContaining({
+                    placement: "bottom"
+                })
+            );
+        });
+
+        it("handles HTML content in tooltip titles", () => {
+            const optionsWithHTMLTooltip = {
+                ...BASE_OPTIONS,
+                tooltip: {
+                    placement: PlacementOptions.TOP,
+                    title: {
+                        on: "<b>ON</b> state",
+                        off: "<i>OFF</i> state",
+                        mixed: "<span>MIXED</span> state"
+                    }
+                }
+            };
+
+            const _ = new DOMBuilder(
+                checkbox,
+                optionsWithHTMLTooltip,
+                state(ToggleStateValue.OFF, ToggleStateStatus.ENABLED)
+            );
+
+            expect(mockBootstrap.Tooltip).toHaveBeenCalledWith(
+                expect.any(HTMLElement),
+                expect.objectContaining({
+                    title: "<b>ON</b> state",
+                    html: true
+                })
+            );
+
+            expect(mockTooltipInstance.setContent).toHaveBeenCalledWith({".tooltip-inner":"<i>OFF</i> state"});
+        });
     });
 });
