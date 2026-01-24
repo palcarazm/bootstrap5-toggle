@@ -5,6 +5,7 @@
 
 version: 2
 updates:
+  # ========== NPM DEPENDENCIES ==========
   # PR for security updates only
   - package-ecosystem: "npm"
     directory: "/"
@@ -59,6 +60,45 @@ updates:
     commit-message:
       prefix: "chore(deps): "
       prefix-development: "chore(deps-dev): "
+    ignore:
+      - dependency-type: "all"
+        update-types: ["version-update:semver-major", "security"]
+  
+  # ========== GITHUB ACTIONS ==========
+  # PR for security updates only
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci(security): "
+    ignore:
+      - dependency-type: "all"
+        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+
+  # PR for major version updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci(deps): "
+    ignore:
+      - dependency-type: "all"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch", "security"]
+
+  # PR for minor and patch version updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: "ci(deps): "
     ignore:
       - dependency-type: "all"
         update-types: ["version-update:semver-major", "security"]
