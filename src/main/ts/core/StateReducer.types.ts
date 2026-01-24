@@ -8,7 +8,7 @@ export interface ToggleState {
 export enum ToggleStateValue {
     ON = "on",
     OFF = "off",
-    INDETERMINATE = "indeterminate"
+    MIXED = "mixed"
 }
 
 export enum ToggleStateStatus {

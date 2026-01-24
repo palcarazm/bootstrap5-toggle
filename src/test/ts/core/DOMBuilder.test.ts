@@ -124,7 +124,7 @@ describe("DOMBuilder", () => {
             checkbox,
             BASE_OPTIONS,
             state(
-                ToggleStateValue.INDETERMINATE,
+                ToggleStateValue.MIXED,
                 ToggleStateStatus.ENABLED,
                 false,
                 true
@@ -266,14 +266,14 @@ describe("DOMBuilder", () => {
             expect(toggle.getAttribute("aria-checked")).toBe("false");
         });
 
-        it("sets aria-checked='mixed' when INDETERMINATE", () => {
+        it("sets aria-checked='mixed' when MIXED", () => {
             const checkbox = createCheckbox();
 
             const _ = new DOMBuilder(
                 checkbox,
                 BASE_OPTIONS,
                 state(
-                    ToggleStateValue.INDETERMINATE,
+                    ToggleStateValue.MIXED,
                     ToggleStateStatus.ENABLED,
                     false,
                     true
@@ -333,9 +333,9 @@ describe("DOMBuilder", () => {
             expect(toggle.getAttribute("aria-disabled")).toBe("false");
             expect(toggle.getAttribute("aria-readonly")).toBe("false");
 
-            // INDETERMINATE
+            // MIXED
             builder.render(
-                state(ToggleStateValue.INDETERMINATE, ToggleStateStatus.ENABLED, false, true)
+                state(ToggleStateValue.MIXED, ToggleStateStatus.ENABLED, false, true)
             );
             expect(toggle.getAttribute("aria-checked")).toBe("mixed");
             expect(toggle.getAttribute("aria-disabled")).toBe("false");
@@ -634,7 +634,7 @@ describe("DOMBuilder", () => {
             });
         });
 
-        it("updates tooltip content when state changes to INDETERMINATE", () => {
+        it("updates tooltip content when state changes to MIXED", () => {
             const builder = new DOMBuilder(
                 checkbox,
                 optionsWithTooltip,
@@ -642,7 +642,7 @@ describe("DOMBuilder", () => {
             );
 
             builder.render(state(
-                ToggleStateValue.INDETERMINATE,
+                ToggleStateValue.MIXED,
                 ToggleStateStatus.ENABLED,
                 false,
                 true

@@ -509,7 +509,7 @@ describe("Toggle", () => {
         {
             eventName: ToggleEvents.MIXED,
             action: ToggleActionType.NEXT,
-            mockStateValue: ToggleStateValue.INDETERMINATE,
+            mockStateValue: ToggleStateValue.MIXED,
         }];
 
         it.each(valueBasedEventCases)("dispatches $eventName event for $action action based on state value $mockStateValue", ({ eventName, action, mockStateValue}) => {

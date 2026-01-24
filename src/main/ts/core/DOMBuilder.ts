@@ -398,7 +398,7 @@ export class DOMBuilder {
         case ToggleStateValue.OFF:
             this.toggle.classList.add(this.offStyle, "off");
             break;
-        case ToggleStateValue.INDETERMINATE:
+        case ToggleStateValue.MIXED:
             this.toggle.classList.add("indeterminate");
 
             if (state.checked) {
@@ -539,7 +539,7 @@ export class DOMBuilder {
         case ToggleStateValue.OFF:
             this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.off});
             return;
-        case ToggleStateValue.INDETERMINATE:
+        case ToggleStateValue.MIXED:
             if(this.tooltipLabels.mixed) this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.mixed});
             return;
         }

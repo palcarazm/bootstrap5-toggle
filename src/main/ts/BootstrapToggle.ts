@@ -514,7 +514,7 @@ export class Toggle {
             return ToggleEvents.ON;
         case ToggleStateValue.OFF:
             return ToggleEvents.OFF;
-        case ToggleStateValue.INDETERMINATE:
+        case ToggleStateValue.MIXED:
             return ToggleEvents.MIXED;
         }
     }
