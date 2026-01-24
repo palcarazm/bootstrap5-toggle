@@ -412,29 +412,32 @@ export class Toggle {
    * Enables the toggle.
    * If the toggle is currently disabled, this method will set the toggle state to enabled.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    * @returns void
    */
-    enable() {
-        this.apply(ToggleActionType.ENABLE);
+    enable(silent = false) {
+        this.apply(ToggleActionType.ENABLE, silent);
     }
 
     /**
    * Disables the toggle.
    * If the toggle is currently enabled, this method will set the toggle state to disabled.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    */
-    disable() {
-        this.apply(ToggleActionType.DISABLE);
+    disable(silent = false) {
+        this.apply(ToggleActionType.DISABLE, silent);
     }
 
     /**
    * Sets the toggle state to readonly.
    * If the toggle is currently disabled or enabled, this method will set the toggle state to readonly.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    * @returns void
    */
-    readonly() {
-        this.apply(ToggleActionType.READONLY);
+    readonly(silent = false) {
+        this.apply(ToggleActionType.READONLY, silent);
     }
 
     /**

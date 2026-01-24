@@ -31,13 +31,13 @@ import { ToggleMethods } from "./types/ToggleMethods";
                 return _bsToggle.determinate(silent);
             case ToggleMethods.ENABLE:
             case ToggleMethods.enable:
-                return _bsToggle.enable();
+                return _bsToggle.enable(silent);
             case ToggleMethods.DISABLE:
             case ToggleMethods.disable:
-                return _bsToggle.disable();
+                return _bsToggle.disable(silent);
             case ToggleMethods.READONLY:
             case ToggleMethods.readonly:
-                return _bsToggle.readonly();
+                return _bsToggle.readonly(silent);
             case ToggleMethods.DESTROY:
             case ToggleMethods.destroy:
                 return _bsToggle.destroy();

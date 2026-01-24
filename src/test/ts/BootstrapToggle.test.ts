@@ -595,25 +595,34 @@ describe("Toggle", () => {
             expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, true);
         });
 
-        it("enable()", () => {
+        it("enable(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.enable();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE, false);
+
+            toggle.enable(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE, true);
         });
 
-        it("disable()", () => {
+        it("disable(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.disable();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE, false);
+
+            toggle.disable(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE, true);
         });
 
-        it("readonly()", () => {
+        it("readonly(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.readonly();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY, false);
+
+            toggle.readonly(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY, true);
         });
     });
 
