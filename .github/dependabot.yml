@@ -6,82 +6,29 @@
 version: 2
 updates:
   # ========== NPM DEPENDENCIES ==========
-  # PR for security updates only
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore(security): "
-      prefix-development: "chore(security-dev): "
-    ignore:
-      - update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
-
-  # PR for major version updates
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "friday"
-    commit-message:
-      prefix: "chore(deps): "
-      prefix-development: "chore(deps-dev): "
-    ignore:
-      - update-types: ["version-update:semver-minor", "version-update:semver-patch"]
-
-  # PR for minor and patch version updates
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
-    open-pull-requests-limit: 1
     groups:
       minor-and-patch-updates:
-        patterns:
-          - "*"
+        applies-to: "version-updates"
         update-types: ["minor", "patch"]
     commit-message:
       prefix: "chore(deps): "
       prefix-development: "chore(deps-dev): "
-    ignore:
-      - update-types: ["version-update:semver-major"]
-  
+
   # ========== GITHUB ACTIONS ==========
-  # PR for security updates only
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "ci(security): "
-    ignore:
-      - update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
-
-  # PR for major version updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "friday"
-    commit-message:
-      prefix: "ci(deps): "
-    ignore:
-      - update-types: ["version-update:semver-minor", "version-update:semver-patch", "security"]
-
-  # PR for minor and patch version updates
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
-    open-pull-requests-limit: 1
     groups:
       minor-and-patch-updates:
-        patterns:
-          - "*"
+        applies-to: "version-updates"
         update-types: ["minor", "patch"]
     commit-message:
       prefix: "ci(deps): "
-    ignore:
-      - update-types: ["version-update:semver-major", "security"]
+   
