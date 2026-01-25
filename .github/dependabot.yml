@@ -11,18 +11,11 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    groups:
-      security-updates:
-        patterns:
-          - "*"
-        update-types:
-          - "security"
     commit-message:
       prefix: "chore(security): "
       prefix-development: "chore(security-dev): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+      - update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
 
   # PR for major version updates
   - package-ecosystem: "npm"
@@ -30,18 +23,11 @@ updates:
     schedule:
       interval: "weekly"
       day: "friday"
-    groups:
-      major-updates:
-        patterns:
-          - "*"
-        update-types:
-          - "version-update:semver-major"
     commit-message:
       prefix: "chore(deps): "
       prefix-development: "chore(deps-dev): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-minor", "version-update:semver-patch", "security"]
+      - update-types: ["version-update:semver-minor", "version-update:semver-patch"]
 
   # PR for minor and patch version updates
   - package-ecosystem: "npm"
@@ -54,15 +40,12 @@ updates:
       minor-and-patch-updates:
         patterns:
           - "*"
-        update-types:
-          - "version-update:semver-minor"
-          - "version-update:semver-patch"
+        update-types: ["minor", "patch"]
     commit-message:
       prefix: "chore(deps): "
       prefix-development: "chore(deps-dev): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-major", "security"]
+      - update-types: ["version-update:semver-major"]
   
   # ========== GITHUB ACTIONS ==========
   # PR for security updates only
@@ -70,12 +53,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
     commit-message:
       prefix: "ci(security): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+      - update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
 
   # PR for major version updates
   - package-ecosystem: "github-actions"
@@ -83,12 +64,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "friday"
-    open-pull-requests-limit: 10
     commit-message:
       prefix: "ci(deps): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-minor", "version-update:semver-patch", "security"]
+      - update-types: ["version-update:semver-minor", "version-update:semver-patch", "security"]
 
   # PR for minor and patch version updates
   - package-ecosystem: "github-actions"
@@ -97,8 +76,12 @@ updates:
       interval: "weekly"
       day: "friday"
     open-pull-requests-limit: 1
+    groups:
+      minor-and-patch-updates:
+        patterns:
+          - "*"
+        update-types: ["minor", "patch"]
     commit-message:
       prefix: "ci(deps): "
     ignore:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-major", "security"]
+      - update-types: ["version-update:semver-major", "security"]
