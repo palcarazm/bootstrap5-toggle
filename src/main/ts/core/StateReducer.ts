@@ -45,7 +45,7 @@ export class StateReducer {
 
         let value: ToggleStateValue;
         if (indeterminate) {
-            value = ToggleStateValue.INDETERMINATE;
+            value = ToggleStateValue.MIXED;
         } else if (checked) {
             value = ToggleStateValue.ON;
         } else {
@@ -121,9 +121,9 @@ export class StateReducer {
             if (this.state.value === ToggleStateValue.OFF) return this.do(ToggleActionType.ON);
             return false;
         case ToggleActionType.INDETERMINATE:
-            return this.setValueIfChanged(ToggleStateValue.INDETERMINATE, undefined, true);
+            return this.setValueIfChanged(ToggleStateValue.MIXED, undefined, true);
         case ToggleActionType.DETERMINATE:
-            if (this.state.value != ToggleStateValue.INDETERMINATE) return false;
+            if (this.state.value != ToggleStateValue.MIXED) return false;
             return this.setValue(this.state.checked ? ToggleStateValue.ON : ToggleStateValue.OFF, this.state.checked, false);
         case ToggleActionType.NEXT:
             return this.doNext();
@@ -197,7 +197,7 @@ export class StateReducer {
             if (this.state.value === ToggleStateValue.ON || this.state.value === ToggleStateValue.OFF) {
                 return this.do(ToggleActionType.INDETERMINATE);
             }
-            if (this.state.value === ToggleStateValue.INDETERMINATE) {
+            if (this.state.value === ToggleStateValue.MIXED) {
                 return this.state.checked
                     ? this.do(ToggleActionType.OFF)
                     : this.do(ToggleActionType.ON);

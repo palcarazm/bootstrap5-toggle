@@ -14,7 +14,18 @@ export interface ToggleOptions {
   tabindex: number
   tristate: boolean
   name: string | null
+  aria:AriaToggleOptions
+  tooltip?: TooltipOptions
 }
+
+export type AriaToggleOptions = {
+    label: string
+};
+
+export type TooltipOptions = {
+  placement: PlacementOptions
+  title:{ on: string; off: string; mixed?: string }
+};
 
 export type UserOptions =
  Partial<ToggleOptions> & {
@@ -28,3 +39,5 @@ export type ToggleStyle = "primary" | "secondary" | "success" | "danger" | "warn
 export type ToggleSize = "large" | "normal" | "small" | "mini" | "lg" | "md" | "sm" | "xs";
 export type OptionWithDeprecationRemap = "onlabel" | "offlabel";
 export type OptionDeprecated = "on" | "off";
+
+export enum PlacementOptions { TOP = "top", BOTTOM = "bottom", LEFT = "left", RIGHT = "right" }

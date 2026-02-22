@@ -1,4 +1,4 @@
-import { isNumeric, sanitize } from "./Tools";
+import { isNumeric, sanitize, SanitizeMode } from "./Tools";
 import {
     UserOptions,
     ToggleOptions,
@@ -6,6 +6,8 @@ import {
     OptionDeprecated,
     ToggleStyle,
     ToggleSize,
+    TooltipOptions,
+    PlacementOptions,
 } from "./OptionResolver.types";
 
 /**
@@ -31,6 +33,8 @@ export class OptionResolver {
         tabindex: 0,
         tristate: false,
         name: null,
+        aria:{label: "Toggle",},
+        tooltip: undefined,
     };
 
     /**
@@ -38,13 +42,13 @@ export class OptionResolver {
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
    * @param options method options
-   * @param options.sanitized Flag to indicate if the attribute value needs to be sanitized (default: `true`)
+   * @param options.sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Sanitized attribute value or null
    */
-    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:boolean}) {
-        const { sanitized = true } = opts ?? {};
+    private static getAttr (element: HTMLInputElement, attrName: string, opts?: {sanitized?:SanitizeMode}) {
+        const { sanitized = SanitizeMode.TEXT } = opts ?? {};
         const value = element.getAttribute(attrName);
-        return sanitized ? sanitize(value) : value;
+        return sanitize(value, { mode: sanitized }); ;
     }
 
     /**
@@ -53,7 +57,7 @@ export class OptionResolver {
    * @param attrName Attribute name
    * @param userValue Value provided by the user
    * @param defaultValue Default value if neither attribute nor user value exists
-   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
+   * @param sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Final attribute value
    */
     private static getAttrOrDefault<T>(
@@ -61,9 +65,12 @@ export class OptionResolver {
         attrName: string,
         userValue: T | undefined,
         defaultValue: T,
-        sanitized:boolean=true
+        sanitized:SanitizeMode = SanitizeMode.TEXT
     ){
-        return OptionResolver.getAttr(element, attrName, {sanitized}) || userValue || defaultValue;
+        const sanitizedUserValue = typeof userValue === "string" ? sanitize(userValue as string, { mode: sanitized }) : userValue;
+        return OptionResolver.getAttr(element, attrName, {sanitized}) || 
+            sanitizedUserValue ||
+            defaultValue;
     }
 
     /**
@@ -71,17 +78,18 @@ export class OptionResolver {
    * @param element HTMLInputElement to read
    * @param attrName Attribute name
    * @param userValue Value provided by the user
-   * @param sanitized Flag to indicate if the attribute value needs to be sanitized (default: {@code true})
+   * @param sanitized Flag to indicate if the sanitized mode needs to be used (default: `TEXT`)
    * @returns Final attribute value or DeprecationConfig.value if not found
    */
     private static getAttrOrDeprecation<T>(
         element: HTMLInputElement,
         attrName: string,
         userValue: T,
-        sanitized:boolean=true
+        sanitized:SanitizeMode = SanitizeMode.TEXT
     ){
+        const sanitizedUserValue = typeof userValue === "string" ? sanitize(userValue as string, { mode: sanitized }) : userValue;
         return OptionResolver.getAttr(element, attrName, {sanitized}) ||
-            userValue ||
+            sanitizedUserValue ||
             DeprecationConfig.value;
     }
 
@@ -100,13 +108,13 @@ export class OptionResolver {
                 element,
                 "data-onlabel",
                 userOptions.onlabel,
-                false
+                SanitizeMode.HTML
             ),
             offlabel: this.getAttrOrDeprecation(
                 element,
                 "data-offlabel",
                 userOptions.offlabel,
-                false
+                SanitizeMode.HTML
             ),
             onstyle: this.getAttrOrDefault(
                 element,
@@ -188,6 +196,15 @@ export class OptionResolver {
                 userOptions.name,
                 this.DEFAULT.name
             ),
+            aria:{
+                label: this.getAttrOrDefault(
+                    element,
+                    "aria-label",
+                    userOptions.aria?.label,
+                    this.DEFAULT.aria.label
+                ),
+            },
+            tooltip: OptionResolver.resolveTooltipOptions(element, userOptions),
         };
 
         if(options.width && isNumeric(options.width)) options.width = `${options.width}px`;
@@ -196,6 +213,46 @@ export class OptionResolver {
         DeprecationConfig.handle(options, element, userOptions);
 
         return options;
+    }
+
+    /**
+     * Resolve tooltip options from element attributes and user options.
+     * @param element HTMLInputElement representing the toggle
+     * @param userOptions Options provided by the user
+     * @returns Resolved tooltip options or undefined if not found.
+     */
+    private static resolveTooltipOptions(
+        element: HTMLInputElement,
+        userOptions: UserOptions
+    ): TooltipOptions | undefined {
+        const getTitle = (attr:string, userOption?:string) => this.getAttrOrDefault(
+            element,
+            attr,
+            userOption,
+            null,
+            SanitizeMode.HTML
+        ) || this.getAttr(element, "data-tooltip-title", {sanitized: SanitizeMode.HTML});
+
+        const titleOn = getTitle("data-tooltip-title-on", userOptions.tooltip?.title.on);
+        const titleOff = getTitle("data-tooltip-title-off", userOptions.tooltip?.title.off);
+        const titleMixed = getTitle("data-tooltip-title-mixed", userOptions.tooltip?.title.mixed);
+        if(!titleOn || !titleOff ) return OptionResolver.DEFAULT.tooltip;
+
+        const placement = this.getAttrOrDefault(
+            element,
+            "data-tooltip-placement",
+            userOptions.tooltip?.placement,
+            PlacementOptions.TOP
+        ) as PlacementOptions;
+
+        return{
+            placement: Object.values(PlacementOptions).includes(placement) ? placement : PlacementOptions.TOP,
+            title:{
+                on: titleOn,
+                off: titleOff,
+                mixed: titleMixed ?? undefined,
+            },
+        };
     }
 }
 
@@ -218,16 +275,19 @@ class DeprecationConfig {
     currentOpt: OptionWithDeprecationRemap;
     deprecatedAttr: string;
     deprecatedOpt: OptionDeprecated;
+    mode: SanitizeMode
   }[] = [
             {
                 currentOpt: "onlabel",
                 deprecatedAttr: "data-on",
                 deprecatedOpt: "on",
+                mode: SanitizeMode.HTML 
             },
             {
                 currentOpt: "offlabel",
                 deprecatedAttr: "data-off",
                 deprecatedOpt: "off",
+                mode: SanitizeMode.HTML
             },
         ];
 
@@ -243,10 +303,11 @@ class DeprecationConfig {
         userOptions: UserOptions
     ): void {
         this.deprecatedOptions.forEach(
-            ({ currentOpt, deprecatedAttr, deprecatedOpt }) => {
+            ({ currentOpt, deprecatedAttr, deprecatedOpt, mode }) => {
                 if (options[currentOpt] === DeprecationConfig.value) {
                     const deprecatedAttrSanitized = sanitize(
-                        element.getAttribute(deprecatedAttr)
+                        element.getAttribute(deprecatedAttr),
+                        {mode}
                     );
                     if (deprecatedAttrSanitized) {
                         this.log(

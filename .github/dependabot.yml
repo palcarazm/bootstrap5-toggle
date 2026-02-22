@@ -5,9 +5,30 @@
 
 version: 2
 updates:
+  # ========== NPM DEPENDENCIES ==========
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+    groups:
+      minor-and-patch-updates:
+        applies-to: "version-updates"
+        update-types: ["minor", "patch"]
     commit-message:
-      prefix: "bump: "
+      prefix: "chore(deps): "
+      prefix-development: "chore(deps-dev): "
+
+  # ========== GITHUB ACTIONS ==========
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    groups:
+      minor-and-patch-updates:
+        applies-to: "version-updates"
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: "ci(deps): "
+   

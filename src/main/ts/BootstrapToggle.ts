@@ -2,7 +2,8 @@ import { DOMBuilder } from "./core/DOMBuilder";
 import { OptionResolver } from "./core/OptionResolver";
 import { ToggleOptions, UserOptions } from "./core/OptionResolver.types";
 import { StateReducer } from "./core/StateReducer";
-import { ToggleActionType } from "./core/StateReducer.types";
+import { ToggleActionType, ToggleState, ToggleStateValue } from "./core/StateReducer.types";
+import ToggleEvents, { ToggleEventDetail } from "./types/ToggleEvents";
 
 export class Toggle {
     private readonly element: HTMLInputElement & { bsToggle?: Toggle };
@@ -97,7 +98,7 @@ export class Toggle {
      * of the toggle changes its state and triggering the update method to keep the toggle in sync.
      */
     private readonly onExternalChange = () => {
-        this.update(true);
+        this.update();
     };
 
     /**
@@ -266,35 +267,34 @@ export class Toggle {
     };
 
     /**
-   * Binds a keypress event listener to the root element of the toggle.
-   * The event listener is responsible for handling keypress events
-   * and triggering the toggle's state change when a keypress event occurs.
-   * The event listener is bound with the passive option, which means that it will not block
-   * other event listeners from being triggered.
+   * Binds a keydown event listener to the root element of the toggle.
+   * The event listener is responsible for handling keydown events
+   * and triggering the toggle's state change when a keydown event occurs.
    */
     private bindKeyboardEventListener() {
         this.domBuilder.root.addEventListener(
-            "keypress",
+            "keydown",
             this.handlerKeyboardEvent,
-            { passive: true }
+            { passive: false }
         );
     }
 
     /**
-   * Unbinds the keypress event listener from the root element of the toggle.
-   * This method is responsible for unbinding the keypress event listener that was
+   * Unbinds the keydown event listener from the root element of the toggle.
+   * This method is responsible for unbinding the keydown event listener that was
    * previously bound by the bindKeyboardEventListener method.
    * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
    * @returns void
    */
     private unbindKeyboardEventListener() {
         this.domBuilder.root.removeEventListener(
-            "keypress",
+            "keydown",
             this.handlerKeyboardEvent
         );
     }
     private readonly handlerKeyboardEvent = (e: KeyboardEvent) => {
-        if (e.key == " ") {
+        if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
             this.apply(ToggleActionType.NEXT);
         }
     };
@@ -352,8 +352,9 @@ export class Toggle {
         if (!this.stateReducer.do(action)) return;
         this.suppressExternalSync  = true;
         try {
-            this.domBuilder.render(this.stateReducer.get());
-            if (!silent) this.trigger();
+            const state = this.stateReducer.get();
+            this.domBuilder.render(state);
+            if (!silent) this.trigger(action, state);
         } finally {
             this.suppressExternalSync  = false;
         }
@@ -411,57 +412,113 @@ export class Toggle {
    * Enables the toggle.
    * If the toggle is currently disabled, this method will set the toggle state to enabled.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    * @returns void
    */
-    enable() {
-        this.apply(ToggleActionType.ENABLE);
+    enable(silent = false) {
+        this.apply(ToggleActionType.ENABLE, silent);
     }
 
     /**
    * Disables the toggle.
    * If the toggle is currently enabled, this method will set the toggle state to disabled.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    */
-    disable() {
-        this.apply(ToggleActionType.DISABLE);
+    disable(silent = false) {
+        this.apply(ToggleActionType.DISABLE, silent);
     }
 
     /**
    * Sets the toggle state to readonly.
    * If the toggle is currently disabled or enabled, this method will set the toggle state to readonly.
    * If the silent parameter is false, this method will also trigger the change event.
+   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
    * @returns void
    */
-    readonly() {
-        this.apply(ToggleActionType.READONLY);
+    readonly(silent = false) {
+        this.apply(ToggleActionType.READONLY, silent);
     }
 
     /**
-   * Synchronizes the toggle state with the input element and renders the toggle.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after synchronizing the toggle state.
-   */
-    update(silent: boolean) {
+     * Synchronizes the toggle state with the input element and renders the toggle.
+     */
+    update() {
         this.suppressExternalSync  = true;
         try {
             this.stateReducer.sync(this.element);
             this.domBuilder.render(this.stateReducer.get());
-            if (!silent) this.trigger();
         } finally {
             this.suppressExternalSync  = false;
         }
     }
 
     /**
-   * Triggers the change event on the toggle's input element.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event.
-   * If the silent parameter is false, this method will trigger the change event.
-   */
-    private trigger(silent: boolean = false) {
-        if (!silent)
-            this.element.dispatchEvent(new Event("change", { bubbles: true }));
+     * Triggers the change event on the toggle's input element and the appropriate toggle event.
+     * This method is called after a toggle action is applied to notify listeners of the state change.
+     * @param {ToggleActionType} action The toggle action that was applied.
+     * @param {ToggleState} state The state of the toggle once the action was applied.
+     */
+    private trigger(action: ToggleActionType, state: ToggleState) {
+        this.element.dispatchEvent(new Event("change", { bubbles: true }));
+        
+        const eventName = this.getEventForAction(action, state);
+        const detail: ToggleEventDetail = { state: state };
+        
+        this.element.dispatchEvent(
+            new CustomEvent(eventName, { 
+                bubbles: true, 
+                detail: detail 
+            })
+        );
+    }
+    
+    /**
+     * Returns the corresponding toggle event for the given toggle action and state.
+     * This method is used to determine which toggle event to trigger after a toggle action is applied.
+     * @param {ToggleActionType} action The toggle action that was applied.
+     * @param {ToggleState} state The previous state of the toggle before the action was applied.
+     * @returns {ToggleEvents} The corresponding toggle event for the given toggle action and state.
+     */
+    private getEventForAction(action: ToggleActionType, state: ToggleState): ToggleEvents {
+        switch (action) {
+        case ToggleActionType.ON:
+            return ToggleEvents.ON;
+        case ToggleActionType.OFF:
+            return ToggleEvents.OFF;
+        case ToggleActionType.INDETERMINATE:
+            return ToggleEvents.MIXED;
+        case ToggleActionType.ENABLE:
+            return ToggleEvents.ENABLED;
+        case ToggleActionType.DISABLE:
+            return ToggleEvents.DISABLED;
+        case ToggleActionType.READONLY:
+            return ToggleEvents.READONLY;
+        case ToggleActionType.DETERMINATE:
+        case ToggleActionType.TOGGLE:
+        case ToggleActionType.NEXT:
+            return this.getValueEvent(state);
+        }
     }
 
+
+    /**
+     * Returns the corresponding toggle event for the given toggle state.
+     * This method is used to determine which toggle event to trigger after a toggle action is applied.
+     * @param {ToggleState} state The previous state of the toggle before the action was applied.
+     * @returns {ToggleEvents} The corresponding toggle event for the given toggle state.
+     */
+    private getValueEvent(state: ToggleState): ToggleEvents {
+        switch (state.value) {
+        case ToggleStateValue.ON:
+            return ToggleEvents.ON;
+        case ToggleStateValue.OFF:
+            return ToggleEvents.OFF;
+        case ToggleStateValue.MIXED:
+            return ToggleEvents.MIXED;
+        }
+    }
+    
     /**
    * Destroys the toggle element and unbinds all event listeners.
    *This method is useful when you need to remove the toggle element from the DOM.

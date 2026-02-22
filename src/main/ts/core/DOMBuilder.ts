@@ -1,4 +1,5 @@
-import { ToggleOptions, ToggleSize } from "./OptionResolver.types";
+import { Tooltip } from "bootstrap";
+import { AriaToggleOptions, ToggleOptions, ToggleSize, TooltipOptions } from "./OptionResolver.types";
 import {
     ToggleState,
     ToggleStateStatus,
@@ -10,6 +11,7 @@ export class DOMBuilder {
     private readonly onStyle: string;
     private readonly offStyle: string;
     private readonly name: string | null;
+    private readonly tooltipLabels?: { on: string; off: string; mixed?: string };
 
     private readonly checkbox: HTMLInputElement;
     private readonly invCheckbox: HTMLInputElement | null;
@@ -18,10 +20,12 @@ export class DOMBuilder {
     private readonly toggleOn: HTMLElement;
     private readonly toggleOff: HTMLElement;
     private readonly toggleHandle: HTMLElement;
+    private tooltip?: Tooltip;
 
     private isBuilt: boolean = false;
     private lastState: ToggleState;
     private resizeObserver?: ResizeObserver;
+    private requestAnimationFrameId?: number;
 
     /**
    * Initializes a new instance of the DOMBuilder class.
@@ -62,6 +66,10 @@ export class DOMBuilder {
         this.toggleHandle = this.createToggleHandle();
         this.toggleGroup = this.createToggleGroup();
         this.toggle = document.createElement("div");
+
+        if(options.tooltip){
+            this.tooltipLabels = options.tooltip.title;
+        }
 
         if(this.isVisible()){
             this.renderToggle(options);
@@ -151,18 +159,27 @@ export class DOMBuilder {
         width,
         height,
         tabindex,
+        aria,
+        tooltip,
     }: ToggleOptions): void {
         this.toggle.className= `toggle btn ${this.sizeClass} ${style}`;
         this.toggle.dataset.toggle =  "toggle";
         this.toggle.tabIndex = tabindex;
-        this.toggle.role = "button";
+        this.toggle.role = "switch";
 
+        this.checkbox.tabIndex = -1;
+        if (this.invCheckbox) this.invCheckbox.tabIndex = -1;
+        
         this.checkbox.parentElement?.insertBefore(this.toggle, this.checkbox);
         this.toggle.appendChild(this.checkbox);
         if (this.invCheckbox) this.toggle.appendChild(this.invCheckbox);
         this.toggle.appendChild(this.toggleGroup);
 
+        this.handleLabels(aria);
+
         this.handleToggleSize(width, height);
+
+        if(tooltip) this.createTooltip(tooltip);
 
         this.isBuilt = true;
     }
@@ -225,6 +242,25 @@ export class DOMBuilder {
         width: string  | null,
         height: string | null
     ): void {
+        this.cancelPendingAnimationFrame();
+
+        if (typeof requestAnimationFrame  === "function") {
+            this.requestAnimationFrameId = requestAnimationFrame (() => {
+                try {
+                    this.calculateToggleSize(width, height);
+                } catch (error) {
+                    console.warn("Error calculating toggle size:", error);
+                }
+            });
+        } else {
+            // Fallback if requestAnimationFrame is not supported
+            this.calculateToggleSize(width, height);
+        }
+    }
+    private calculateToggleSize(
+        width: string  | null,
+        height: string | null
+    ): void {
         if (width) {
             this.toggle.style.width = width;
         } else {
@@ -281,6 +317,51 @@ export class DOMBuilder {
     }
 
     /**
+     * Cancels any pending animation frame request if one exists.
+     * This is used to prevent unnecessary calculations when the toggle size is being changed.
+     */
+    private cancelPendingAnimationFrame(): void {
+        if (this.requestAnimationFrameId !== undefined && typeof cancelAnimationFrame === "function") {
+            cancelAnimationFrame(this.requestAnimationFrameId);
+            this.requestAnimationFrameId = undefined;
+        }
+    }
+
+    /**
+     * Handles the aria-labelledby and aria-label attributes of the toggle element.
+     * If the checkbox element has a labels property and the length of the labels property is greater than 0,
+     * the aria-labelledby attribute of the toggle element is set to the id of the labels elements.
+     * Otherwise, the aria-label attribute of the toggle element is set to the label property of the ariaOpts object.
+     * @param {AriaToggleOptions} ariaOpts - The object containing the label property to be used for the aria-label attribute.
+     */
+    private handleLabels(ariaOpts: AriaToggleOptions){
+        if (this.checkbox.labels?.length) {
+            const ids = Array.from(this.checkbox.labels)
+                .map(l => l.id)
+                .filter(Boolean);
+
+            if (ids.length) {
+                this.toggle.setAttribute("aria-labelledby", ids.join(" "));
+            }
+        } else{
+            this.toggle.setAttribute("aria-label", ariaOpts.label);
+        }
+    }
+
+    /**
+     * Creates a tooltip for the toggle element.
+     * If the tooltip is successfully created, it is stored in the `tooltip` property of the DOMBuilder instance.
+     * @param {TooltipOptions} tooltip - The options for the tooltip.
+     */
+    private createTooltip(tooltip: TooltipOptions){
+        try{
+            this.tooltip = new globalThis.window.bootstrap.Tooltip(this.toggle, {placement: tooltip.placement, html: true, title: tooltip.title.on});
+        }catch(error){
+            console.error("Error creating tooltip:", error);
+        }
+    }
+
+    /**
    * Renders the toggle element based on the provided state if the toggle is already built.
    * This method should be called whenever the state of the toggle changes.
    * @param {ToggleState} state The state of the toggle element.
@@ -293,16 +374,16 @@ export class DOMBuilder {
         this.updateToggleByValue(state);
         this.updateToggleByChecked(state);
         this.updateToggleByState(state);
+        this.updateAria(state);
+        this.updateTooltip(state);
     }
 
-    /*************  ✨ Windsurf Command ⭐  *************/
     /**
      * Updates the class of the toggle element based on the provided state.
      * Removes any existing on/off/indeterminate classes and adds the appropriate class based on the state.
      * If the state is indeterminate, adds the 'indeterminate' class and either the on or off class based on the checked attribute.
      * @param {ToggleState} state The state of the toggle element.
      */
-    /*******  9e620de0-7e60-44a0-b26d-be36099794af  *******/
     private updateToggleByValue(state: ToggleState) {
         this.toggle.classList.remove(
             this.onStyle,
@@ -317,7 +398,7 @@ export class DOMBuilder {
         case ToggleStateValue.OFF:
             this.toggle.classList.add(this.offStyle, "off");
             break;
-        case ToggleStateValue.INDETERMINATE:
+        case ToggleStateValue.MIXED:
             this.toggle.classList.add("indeterminate");
 
             if (state.checked) {
@@ -419,6 +500,52 @@ export class DOMBuilder {
     }
 
     /**
+     * Updates the aria attributes of the toggle element based on the provided state.
+     * Sets aria-checked to "mixed" if the state is indeterminate, otherwise sets it to the string representation of the state's checked attribute.
+     * Sets aria-disabled to the string representation of whether the state's status is disabled.
+     * Sets aria-readonly to the string representation of whether the state's status is readonly.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateAria(state: ToggleState) {
+        if (state.indeterminate) {
+            this.toggle.setAttribute("aria-checked", "mixed");
+        } else {
+            this.toggle.setAttribute("aria-checked", String(state.checked));
+        }
+
+        this.toggle.setAttribute(
+            "aria-disabled",
+            String(state.status === ToggleStateStatus.DISABLED)
+        );
+
+        this.toggle.setAttribute(
+            "aria-readonly",
+            String(state.status === ToggleStateStatus.READONLY)
+        );
+    }
+
+    /**
+     * Updates the tooltip of the toggle element based on the provided state.
+     * Sets the content of the tooltip to the corresponding label based on the state's value.
+     * If the tooltip or tooltipLabels are not set, does nothing.
+     * @param {ToggleState} state The state of the toggle element.
+     */
+    private updateTooltip(state: ToggleState) {
+        if(!this.tooltip || !this.tooltipLabels) return;
+        switch(state.value){
+        case ToggleStateValue.ON:
+            this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.on});
+            return;
+        case ToggleStateValue.OFF:
+            this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.off});
+            return;
+        case ToggleStateValue.MIXED:
+            if(this.tooltipLabels.mixed) this.tooltip.setContent({".tooltip-inner": this.tooltipLabels.mixed});
+            return;
+        }
+    }
+    
+    /**
    * Returns the root element of the toggle, which is the container of all toggle elements.
    * @returns {HTMLElement} The root element of the toggle.
    */
@@ -432,6 +559,13 @@ export class DOMBuilder {
    * Also disconnects the ResizeObserver if it was used.
    */
     public destroy(): void {
+        this.cancelPendingAnimationFrame();
+
+        if(this.tooltip){
+            this.tooltip.dispose();
+            this.tooltip = undefined;
+        }
+
         this.toggle.parentNode?.insertBefore(this.checkbox, this.toggle);
         this.toggle.remove();
 

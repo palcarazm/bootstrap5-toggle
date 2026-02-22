@@ -22,12 +22,11 @@ jobs:
         node-version: [22.x, 24.x]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
             node-version: ${{ matrix.node-version }}
-            cache: npm
       - name: Install dependencies
         run: npm install
       - name: Lint code
@@ -38,7 +37,7 @@ jobs:
         run: npm run test:unit
       - name: Upload coverage report to Github
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-report-${{ matrix.node-version }}
           path: coverage
@@ -71,14 +70,14 @@ jobs:
       options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Install dependencies
         run: npm install
       - name: Build project
         run: npm run build
       - name: Cypress run
         #v6.10.8
-        uses: cypress-io/github-action@2ad32e649e4db26c07674ebae31a297601dbcbaf
+        uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec
         with:
           browser: chrome
 
@@ -92,15 +91,15 @@ jobs:
       security-events: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: typescript
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@v4
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
 
   sonarcloud:
     name: Analyze code with SonarQube
@@ -108,12 +107,12 @@ jobs:
     needs: build-and-test
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Download coverage artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: coverage-report-22.x
           path: coverage

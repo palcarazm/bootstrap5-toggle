@@ -2,7 +2,8 @@
 
 import { Toggle } from "../../main/ts/BootstrapToggle";
 import { DOMBuilder } from "../../main/ts/core/DOMBuilder";
-import { ToggleActionType } from "../../main/ts/core/StateReducer.types";
+import { ToggleActionType, ToggleStateValue } from "../../main/ts/core/StateReducer.types";
+import ToggleEvents from "../../main/ts/types/ToggleEvents";
 
 /* =========================
    Mocks inline
@@ -108,7 +109,7 @@ describe("Toggle", () => {
                 expect.any(Object)
             );
             expect(addEventListenerSpyDiv).toHaveBeenCalledWith(
-                "keypress",
+                "keydown",
                 expect.any(Function),
                 expect.any(Object)
             );
@@ -303,9 +304,17 @@ describe("Toggle", () => {
             root = (DOMBuilder as any).mock.results[0].value.root;
         });
 
-        it("toggles on space keypress", () => {
+        it("toggles on space keydown", () => {
             root.dispatchEvent(
-                new KeyboardEvent("keypress", { key: " " })
+                new KeyboardEvent("keydown", { key: " " })
+            );
+
+            expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
+        });
+
+        it("toggles on Enter keydown", () => {
+            root.dispatchEvent(
+                new KeyboardEvent("keydown", { key: "Enter" })
             );
 
             expect(doMock).toHaveBeenCalledWith(ToggleActionType.NEXT);
@@ -313,7 +322,7 @@ describe("Toggle", () => {
 
         it("ignores other keys", () => {
             root.dispatchEvent(
-                new KeyboardEvent("keypress", { key: "Enter" })
+                new KeyboardEvent("keydown", { key: "Ctrl" })
             );
 
             expect(doMock).not.toHaveBeenCalled();
@@ -406,6 +415,125 @@ describe("Toggle", () => {
         });
     });
 
+    describe("custom events are triggered on apply", () => {
+        let onEventSpy: jest.Mock;
+        let offEventSpy: jest.Mock;
+        let mixedEventSpy: jest.Mock;
+        let enableEventSpy: jest.Mock;
+        let disableEventSpy: jest.Mock;
+        let readonlyEventSpy: jest.Mock;
+
+        beforeEach(() => {
+            onEventSpy = jest.fn();
+            offEventSpy = jest.fn();
+            mixedEventSpy = jest.fn();
+            enableEventSpy = jest.fn();
+            disableEventSpy = jest.fn();
+            readonlyEventSpy = jest.fn();
+
+            input.addEventListener("toggle:on", onEventSpy);
+            input.addEventListener("toggle:off", offEventSpy);
+            input.addEventListener("toggle:mixed", mixedEventSpy);
+            input.addEventListener("toggle:enabled", enableEventSpy);
+            input.addEventListener("toggle:disabled", disableEventSpy);
+            input.addEventListener("toggle:readonly", readonlyEventSpy);
+        });
+
+        const customEventsCases =  [{
+            eventSpy: ()=> onEventSpy,
+            eventName: ToggleEvents.ON,
+            action: ToggleActionType.ON,
+        },
+        {
+            eventSpy: ()=> offEventSpy,
+            eventName: ToggleEvents.OFF,
+            action: ToggleActionType.OFF,
+        },
+        {
+            eventSpy: ()=> mixedEventSpy,
+            eventName: ToggleEvents.MIXED,
+            action: ToggleActionType.INDETERMINATE,
+        },
+        {
+            eventSpy: ()=> enableEventSpy,
+            eventName: ToggleEvents.ENABLED,
+            action: ToggleActionType.ENABLE,
+        },
+        {
+            eventSpy: ()=> disableEventSpy,
+            eventName: ToggleEvents.DISABLED,
+            action: ToggleActionType.DISABLE,
+        },{
+            eventSpy: ()=> readonlyEventSpy,
+            eventName: ToggleEvents.READONLY,
+            action: ToggleActionType.READONLY,
+        }];
+
+        it.each(customEventsCases)("dispatches $eventName event for $action action", ({ eventName, action}) => {
+            input.disabled = action === ToggleActionType.ENABLE;
+            input.checked = action !== ToggleActionType.ON;
+ 
+            const toggle = new Toggle(input, {});
+
+            (toggle as any).apply(action, false);
+
+            customEventsCases.forEach((evtSpy)=>{
+                if(evtSpy.eventName === eventName){
+                    expect(evtSpy.eventSpy()).toHaveBeenCalled();
+                } else {
+                    expect(evtSpy.eventSpy()).not.toHaveBeenCalled();
+                }
+            });
+        });
+
+        const valueBasedEventCases =  [{
+            eventName: ToggleEvents.ON,
+            action: ToggleActionType.TOGGLE,
+            mockStateValue:ToggleStateValue.ON,
+        },
+        {
+            eventName: ToggleEvents.OFF,
+            action: ToggleActionType.TOGGLE,
+            mockStateValue: ToggleStateValue.OFF,
+        },
+        {
+            eventName: ToggleEvents.ON,
+            action: ToggleActionType.NEXT,
+            mockStateValue: ToggleStateValue.ON,
+        },
+        {
+            eventName: ToggleEvents.OFF,
+            action: ToggleActionType.NEXT,
+            mockStateValue: ToggleStateValue.OFF,
+        },
+        {
+            eventName: ToggleEvents.MIXED,
+            action: ToggleActionType.NEXT,
+            mockStateValue: ToggleStateValue.MIXED,
+        }];
+
+        it.each(valueBasedEventCases)("dispatches $eventName event for $action action based on state value $mockStateValue", ({ eventName, action, mockStateValue}) => {
+            const mockState = { value: mockStateValue };
+            getMock.mockReturnValue(mockState);
+
+            input.disabled = action === ToggleActionType.ENABLE;
+            input.checked = action !== ToggleActionType.ON;
+
+            const toggle = new Toggle(input, {});
+
+            (toggle as any).apply(action, false);
+
+            customEventsCases.forEach((evtSpy)=>{
+                if(evtSpy.eventName === eventName){
+                    expect(evtSpy.eventSpy()).toHaveBeenCalled();
+                } else {
+                    expect(evtSpy.eventSpy()).not.toHaveBeenCalled();
+                }
+            });
+        });
+
+    });
+
     describe("delegate to apply(action: ToggleActionType, silent = false)", () => {
         let apply: jest.SpyInstance;
 
@@ -467,58 +595,45 @@ describe("Toggle", () => {
             expect(apply).toHaveBeenCalledWith(ToggleActionType.INDETERMINATE, true);
         });
 
-        it("enable()", () => {
+        it("enable(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.enable();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE, false);
+
+            toggle.enable(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.ENABLE, true);
         });
 
-        it("disable()", () => {
+        it("disable(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.disable();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE, false);
+
+            toggle.disable(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.DISABLE, true);
         });
 
-        it("readonly()", () => {
+        it("readonly(silent=false)", () => {
             const toggle = new Toggle(input, {});
 
             toggle.readonly();
-            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY, false);
+
+            toggle.readonly(true);
+            expect(apply).toHaveBeenCalledWith(ToggleActionType.READONLY, true);
         });
     });
 
-    describe("update(silent: boolean)", () => {
+    describe("update()", () => {
         it("syncs state and renders on update()", () => {
             const toggle = new Toggle(input, {});
 
-            toggle.update(true);
+            toggle.update();
 
             expect(syncMock).toHaveBeenCalledWith(input);
             expect(renderMock).toHaveBeenCalled();
-        });
-
-        it("dispatches change event when not silent", () => {
-            const toggle = new Toggle(input, {});
-            const spy = jest.fn();
-
-            input.addEventListener("change", spy);
-
-            toggle.update(false);
-
-            expect(spy).toHaveBeenCalled();
-        });
-    
-        it("does not dispatch change event when silent", () => {
-            const toggle = new Toggle(input, {});
-            const spy = jest.fn();
-
-            input.addEventListener("change", spy);
-
-            toggle.update(true);
-
-            expect(spy).not.toHaveBeenCalled();
         });
     });
 
@@ -573,7 +688,7 @@ describe("Toggle", () => {
                 expect.any(Function)
             );
             expect(removeEventListenerSpyDiv).toHaveBeenCalledWith(
-                "keypress",
+                "keydown",
                 expect.any(Function)
             );
 

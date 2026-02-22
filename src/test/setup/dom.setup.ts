@@ -61,3 +61,31 @@ class ResizeObserverMock {
     {} as ResizeObserver
     );
 };
+
+/**
+ * Mock requestAnimationFrame and cancelAnimationFrame
+ */
+let originalRAF: typeof requestAnimationFrame;
+let originalCancelRAF: typeof cancelAnimationFrame;
+
+beforeEach(() => {
+    originalRAF = globalThis.requestAnimationFrame;
+    originalCancelRAF = globalThis.cancelAnimationFrame;
+    (globalThis as any).__dom_cancelRAF = jest.fn();
+
+    jest.spyOn(globalThis, "requestAnimationFrame").mockImplementation(
+        (callback: FrameRequestCallback) => {
+            callback(performance.now());
+            return 0;
+        }
+    );
+    
+    jest.spyOn(globalThis, "cancelAnimationFrame").mockImplementation(
+        (globalThis as any).__dom_cancelRAF
+    );
+});
+
+afterEach(() => {
+    globalThis.requestAnimationFrame = originalRAF;
+    globalThis.cancelAnimationFrame = originalCancelRAF;
+});

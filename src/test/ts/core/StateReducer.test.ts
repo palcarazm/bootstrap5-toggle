@@ -39,9 +39,9 @@ describe("StateReducer", () => {
             expect(reducer.get().value).toBe(ToggleStateValue.ON);
         });
 
-        it("initializes INDETERMINATE only if tristate", () => {
+        it("initializes MIXED only if tristate", () => {
             const tristate = new StateReducer(createInput({ checked: false, indeterminate: true }), true);
-            expect(tristate.get().value).toBe(ToggleStateValue.INDETERMINATE);
+            expect(tristate.get().value).toBe(ToggleStateValue.MIXED);
 
             const nonTristate = new StateReducer(createInput({ checked: false, indeterminate: true }), false);
             expect(nonTristate.get().value).toBe(ToggleStateValue.OFF);
@@ -131,12 +131,12 @@ describe("StateReducer", () => {
             expect(reducer.get().status).toBe(ToggleStateStatus.READONLY);
         });
 
-        it("updates indeterminate when element is indeterminate", () => {
+        it("updates indeterminate when element is mixed", () => {
             const input = createInput({ checked: false, disabled: false, readOnly: false });
             const reducer = new StateReducer(input, true);
             input.indeterminate = true;
             reducer.sync(input);
-            expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
+            expect(reducer.get().value).toBe(ToggleStateValue.MIXED);
             expect(reducer.get().indeterminate).toBe(true);
         });
     });
@@ -170,15 +170,15 @@ describe("StateReducer", () => {
                 expect(reducer.get().value).toBe(ToggleStateValue.ON);
             });
 
-            it("sets INDETERMINATE", () => {
+            it("sets MIXED on INDETERMINATE action", () => {
                 const reducer = new StateReducer(createInput({ checked: false }), true);
 
                 expect(reducer.do(ToggleActionType.INDETERMINATE)).toBe(true);
-                expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
+                expect(reducer.get().value).toBe(ToggleStateValue.MIXED);
                 expect(reducer.get().checked).toBe(false);
             });
 
-            it("determinate from indeterminate", () => {
+            it("determinate from mixed", () => {
                 const reducer = new StateReducer(
                     createInput({ checked: true, indeterminate: true }),
                     true
@@ -286,11 +286,11 @@ describe("StateReducer", () => {
         });
 
         describe("NEXT tristate", () => {
-            it("ON -> INDETERMINATE -> OFF -> INDETERMINATE -> ON", () => {
+            it("ON -> MIXED -> OFF -> MIXED -> ON", () => {
                 const reducer = new StateReducer(createInput({ checked: true }), true);
 
                 reducer.do(ToggleActionType.NEXT);
-                expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
+                expect(reducer.get().value).toBe(ToggleStateValue.MIXED);
                 expect(reducer.get().checked).toBe(true);
 
                 reducer.do(ToggleActionType.NEXT);
@@ -298,7 +298,7 @@ describe("StateReducer", () => {
                 expect(reducer.get().checked).toBe(false);
 
                 reducer.do(ToggleActionType.NEXT);
-                expect(reducer.get().value).toBe(ToggleStateValue.INDETERMINATE);
+                expect(reducer.get().value).toBe(ToggleStateValue.MIXED);
                 expect(reducer.get().checked).toBe(false);
 
                 reducer.do(ToggleActionType.NEXT);

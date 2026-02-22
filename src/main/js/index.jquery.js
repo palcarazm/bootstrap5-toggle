@@ -33,15 +33,15 @@ import { ToggleMethods } from "./types/ToggleMethods";
                     break;
                 case ToggleMethods.ENABLE:
                 case ToggleMethods.enable:
-                    _bsToggle.enable();
+                    _bsToggle.enable(silent);
                     break;
                 case ToggleMethods.DISABLE:
                 case ToggleMethods.disable:
-                    _bsToggle.disable();
+                    _bsToggle.disable(silent);
                     break;
                 case ToggleMethods.READONLY:
                 case ToggleMethods.readonly:
-                    _bsToggle.readonly();
+                    _bsToggle.readonly(silent);
                     break;
                 case ToggleMethods.DESTROY:
                 case ToggleMethods.destroy:
