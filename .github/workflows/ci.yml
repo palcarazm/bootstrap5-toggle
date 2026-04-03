@@ -77,7 +77,7 @@ jobs:
         run: npm run build
       - name: Cypress run
         #v6.10.8
-        uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec
+        uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8
         with:
           browser: chrome
 
@@ -119,6 +119,6 @@ jobs:
 
       - name: SonarQube Scan
         # v7.0.0
-        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        uses: SonarSource/sonarqube-scan-action@299e4b793aaa83bf2aba7c9c14bedbb485688ec4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
