@@ -1,14 +1,30 @@
-.DS_Store
+# Node modules
 node_modules
-*.log
+
+# Packaging
+bootstrap5-toggle-*.tgz
+
+# Debug
 debug
-img
+
+# Docs
+docs
+
+# Logs
+*.log
+
+# Cache and config dirs and files
 .github
 .vscode
-.prettierrc
 .dccache
-test
-bootstrap*.tgz
-cypress
+.DS_Store
+.prettierrc
+
+# Cypress and testing
+test/*
+cypress/*
 cypress.config.js
-README.template.md
+coverage
+
+# Templates
+*.template*
