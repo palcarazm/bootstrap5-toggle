@@ -28,6 +28,7 @@ updates:
     groups:
       version-updates:
         applies-to: "version-updates"
+        update-types: ["major", "minor", "patch"]
     commit-message:
       prefix: "chore(docs): "
       prefix-development: "chore(docs): "
