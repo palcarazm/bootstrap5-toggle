@@ -60,7 +60,7 @@
     "@rollup/plugin-terser": "^1.0.0",
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^30.0.0",
-    "@types/jquery": "^3.5.33",
+    "@types/jquery": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
     "commitlint": "^20.3.1",
