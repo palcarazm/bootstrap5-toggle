@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "ESNext",
+    "target": "ES2016",
+    "module": "commonjs", // CommonJS used cause of jest need
     "strict": true,
     "declaration": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "rootDir": "src/main/ts",
     "outDir": "src/main/js",
-     "typeRoots": [
+    "noEmit": true,
+    "types": ["jest", "node"],
+    "typeRoots": [
       "src/main/ts/types",
       "node_modules/@types"
     ]
