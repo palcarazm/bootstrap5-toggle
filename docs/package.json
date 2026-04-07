@@ -33,7 +33,7 @@
     "@highlightjs/cdn-assets": "11.11.1",
     "bootstrap": "5.3.8",
     "bootstrap5-toggle": "5.3.0",
-    "bs-darkmode-toggle": "1.0.0-rc1",
+    "bs-darkmode-toggle": "1.0.0",
     "highlightjs-badge": "0.1.9",
     "jquery": "4.0.0"
   },
