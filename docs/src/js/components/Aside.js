@@ -85,7 +85,7 @@ class Aside {
 
     const darkModeToggle = document.createElement("div");
     darkModeToggle.dataset.plugin = "bs-darkmode-toggle";
-    darkModeToggle.dataset.allowCookie = "";
+    darkModeToggle.dataset.storage = "local";
 
     navBar.appendChild(darkModeToggle);
 
