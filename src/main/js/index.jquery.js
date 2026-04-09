@@ -1,7 +1,16 @@
 import { Toggle } from "./BootstrapToggle";
-import { ToggleMethods } from "./types/ToggleMethods";
+import { default as Events } from "./types/ToggleEvents";
+import { ToggleStateValue as StateValue, ToggleStateStatus as StateStatus } from "./core/StateReducer.types";
+import { ToggleMethods as Methods } from "./types/ToggleMethods";
 
 +(function ($) {
+    /**
+     * Add `BootstrapToggle` prototype function to Window
+     * Enables execution when used with ECMAScript
+     */
+    globalThis.window.BootstrapToggle = globalThis.window.BootstrapToggle || {};
+    Object.assign(globalThis.window.BootstrapToggle, {Events, Methods, StateValue, StateStatus});
+
     function Plugin(options, silent) {
         const optArg = Array.prototype.slice.call(arguments, 1)[0];
 
@@ -11,34 +20,34 @@ import { ToggleMethods } from "./types/ToggleMethods";
 
             if (options && typeof options === "string") {
                 switch (options.toLowerCase()) {
-                case ToggleMethods.TOGGLE:
+                case Methods.TOGGLE:
                     _bsToggle.toggle(silent);
                     break;
-                case ToggleMethods.ON:
+                case Methods.ON:
                     _bsToggle.on(silent);
                     break;
-                case ToggleMethods.OFF:
+                case Methods.OFF:
                     _bsToggle.off(silent);
                     break;
-                case ToggleMethods.INDETERMINATE:
+                case Methods.INDETERMINATE:
                     _bsToggle.indeterminate(silent);
                     break;
-                case ToggleMethods.DETERMINATE:
+                case Methods.DETERMINATE:
                     _bsToggle.determinate(silent);
                     break;
-                case ToggleMethods.ENABLE:
+                case Methods.ENABLE:
                     _bsToggle.enable(silent);
                     break;
-                case ToggleMethods.DISABLE:
+                case Methods.DISABLE:
                     _bsToggle.disable(silent);
                     break;
-                case ToggleMethods.READONLY:
+                case Methods.READONLY:
                     _bsToggle.readonly(silent);
                     break;
-                case ToggleMethods.DESTROY:
+                case Methods.DESTROY:
                     _bsToggle.destroy();
                     break;
-                case ToggleMethods.RERENDER:
+                case Methods.RERENDER:
                     _bsToggle.rerender();
                     break;
                 }
