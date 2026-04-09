@@ -1,24 +1,10 @@
-import { Toggle } from "../BootstrapToggle";
-import { ToggleEventDetail } from "./ToggleEvents";
-import { ToggleMethods } from "./ToggleMethods";
+import { BootstrapToggleElement, BootstrapToggleElementEventMap } from "./BootstrapToggleElement";
 
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 declare global {
-  interface HTMLInputElement {
-    bootstrapToggle(
-      options?: ToggleMethods | Record<string, unknown>,
-      silent?: boolean
-    ): void;
-    bsToggle?: Toggle;
-  }
+  interface HTMLInputElement extends BootstrapToggleElement{}
 
-  interface HTMLInputElementEventMap{
-    "toggle:on": CustomEvent<ToggleEventDetail>;
-    "toggle:off": CustomEvent<ToggleEventDetail>;
-    "toggle:mixed": CustomEvent<ToggleEventDetail>;
-    "toggle:enabled": CustomEvent<ToggleEventDetail>;
-    "toggle:disabled": CustomEvent<ToggleEventDetail>;
-    "toggle:readonly": CustomEvent<ToggleEventDetail>;
-  }
+  interface HTMLInputElementEventMap extends BootstrapToggleElementEventMap {}
 }
 
 export {};
