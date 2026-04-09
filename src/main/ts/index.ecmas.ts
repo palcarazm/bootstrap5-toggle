@@ -13,36 +13,26 @@ import { ToggleMethods } from "./types/ToggleMethods";
 
         // Execute method calls
         if (options && typeof options === "string") {
-            switch (options) {
+            switch (options.toLowerCase()) {
             case ToggleMethods.TOGGLE:
-            case ToggleMethods.toggle:
                 return _bsToggle.toggle(silent);
             case ToggleMethods.ON:
-            case ToggleMethods.on:
                 return _bsToggle.on(silent);
             case ToggleMethods.OFF:
-            case ToggleMethods.off:
                 return _bsToggle.off(silent);
             case ToggleMethods.INDETERMINATE:
-            case ToggleMethods.indeterminate:
                 return _bsToggle.indeterminate(silent);
             case ToggleMethods.DETERMINATE:
-            case ToggleMethods.determinate:
                 return _bsToggle.determinate(silent);
             case ToggleMethods.ENABLE:
-            case ToggleMethods.enable:
                 return _bsToggle.enable(silent);
             case ToggleMethods.DISABLE:
-            case ToggleMethods.disable:
                 return _bsToggle.disable(silent);
             case ToggleMethods.READONLY:
-            case ToggleMethods.readonly:
                 return _bsToggle.readonly(silent);
             case ToggleMethods.DESTROY:
-            case ToggleMethods.destroy:
                 return _bsToggle.destroy();
-            case ToggleMethods.RENDERER:
-            case ToggleMethods.rerender:
+            case ToggleMethods.RERENDER:
                 return _bsToggle.rerender();
             }
         }
