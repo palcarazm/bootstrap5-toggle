@@ -1,6 +1,6 @@
 {
   "name": "bootstrap5-toggle",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "type": "module",
   "author": {
     "name": "Pablo Alcaraz Martínez",
@@ -15,10 +15,23 @@
   },
   "browser": "js/bootstrap5-toggle.ecmas.min.js",
   "style": "css/bootstrap5-toggle.min.css",
+  "main": "dist/bootstrap5-toggle.cjs",
+  "module": "dist/bootstrap5-toggle.mjs",
+  "types": "dist/bootstrap5-toggle.d.ts",
+  "typings": "dist/bootstrap5-toggle.d.ts",
+  "sideEffects": false,
   "files": [
     "css/*",
-    "js/*"
+    "js/*",
+    "dist"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/bootstrap5-toggle.d.ts",
+      "import": "./dist/bootstrap5-toggle.mjs",
+      "require": "./dist/bootstrap5-toggle.cjs"
+    }
+  },
   "scripts": {
     "build": "grunt build",
     "postversion": "grunt build && grunt readme && doctoc README.md --github",
@@ -64,11 +77,11 @@
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
     "commitlint": "^20.3.1",
-    "eslint": "^10.0.0",
     "cypress": "^15.8.1",
     "cypress-plugin-tab": "^1.0.5",
     "doctoc": "^2.2.0",
     "dompurify": "^3.0.0",
+    "eslint": "^10.0.0",
     "globals": "^17.0.0",
     "grunt": "^1.5.3",
     "grunt-banner": "^0.6.0",
@@ -81,6 +94,7 @@
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "rollup": "^4.54.0",
+    "rollup-plugin-dts": "^6.4.1",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   },

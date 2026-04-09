@@ -15,7 +15,7 @@ module.exports = function setup(grunt) {
       " * @license <%= pkg.license %>\n" +
       " * @see https://github.com/palcarazm/bootstrap5-toggle/blob/master/LICENSE\n" +
       " */\n",
-        clean: ["js","css"],
+        clean: ["js","css", "dist"],
         exec: {
             ts: "npx tsc",
             rollup: "npx rollup -c",
@@ -31,7 +31,7 @@ module.exports = function setup(grunt) {
                     replace: true,
                 },
                 files: {
-                    src: ["css/*.css", "js/*.js"],
+                    src: ["css/*.css", "js/*.js", "dist/**/*"],
                 },
             },
         },

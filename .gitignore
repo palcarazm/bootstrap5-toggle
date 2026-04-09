@@ -12,3 +12,5 @@ js
 css
 debug
 coverage
+dist
+@types
