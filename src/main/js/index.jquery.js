@@ -10,45 +10,35 @@ import { ToggleMethods } from "./types/ToggleMethods";
             let _bsToggle = this.bsToggle || new Toggle(this, (options && typeof options !== "string") ?  options : {});
 
             if (options && typeof options === "string") {
-                switch (options) {
+                switch (options.toLowerCase()) {
                 case ToggleMethods.TOGGLE:
-                case ToggleMethods.toggle:
                     _bsToggle.toggle(silent);
                     break;
                 case ToggleMethods.ON:
-                case ToggleMethods.on:
                     _bsToggle.on(silent);
                     break;
                 case ToggleMethods.OFF:
-                case ToggleMethods.off:
                     _bsToggle.off(silent);
                     break;
                 case ToggleMethods.INDETERMINATE:
-                case ToggleMethods.indeterminate:
                     _bsToggle.indeterminate(silent);
                     break;
                 case ToggleMethods.DETERMINATE:
-                case ToggleMethods.determinate:
                     _bsToggle.determinate(silent);
                     break;
                 case ToggleMethods.ENABLE:
-                case ToggleMethods.enable:
                     _bsToggle.enable(silent);
                     break;
                 case ToggleMethods.DISABLE:
-                case ToggleMethods.disable:
                     _bsToggle.disable(silent);
                     break;
                 case ToggleMethods.READONLY:
-                case ToggleMethods.readonly:
                     _bsToggle.readonly(silent);
                     break;
                 case ToggleMethods.DESTROY:
-                case ToggleMethods.destroy:
                     _bsToggle.destroy();
                     break;
-                case ToggleMethods.RENDERER:
-                case ToggleMethods.rerender:
+                case ToggleMethods.RERENDER:
                     _bsToggle.rerender();
                     break;
                 }
