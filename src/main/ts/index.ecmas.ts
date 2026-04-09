@@ -1,5 +1,6 @@
 import { Toggle } from "./BootstrapToggle";
 import { UserOptions } from "./core/OptionResolver.types";
+import { BootstrapToggleElement } from "./types/BootstrapToggleElement";
 import { ToggleMethods } from "./types/ToggleMethods";
 
 (function () {
@@ -9,7 +10,7 @@ import { ToggleMethods } from "./types/ToggleMethods";
    * Enables execution when used with HTML - ex: `document.getElementById('toggle').bootstrapToggle('on')`
    */
     HTMLInputElement.prototype.bootstrapToggle = function (options?: UserOptions | ToggleMethods, silent?: boolean) {
-        let _bsToggle = (this as HTMLInputElement & { bsToggle?: Toggle }).bsToggle || new Toggle(this, (options && typeof options !== "string") ?  options : {});
+        let _bsToggle = (this as BootstrapToggleElement).bsToggle || new Toggle(this, (options && typeof options !== "string") ?  options : {});
 
         // Execute method calls
         if (options && typeof options === "string") {
@@ -45,9 +46,9 @@ import { ToggleMethods } from "./types/ToggleMethods";
     if (globalThis.window !== undefined)
         globalThis.window.onload = function () {
             document
-                .querySelectorAll('input[type=checkbox][data-toggle="toggle"]')
+                .querySelectorAll<HTMLInputElement>('input[type=checkbox][data-toggle="toggle"]')
                 .forEach(function (ele) {
-                    (ele as HTMLInputElement).bootstrapToggle();
+                    ele.bootstrapToggle();
                 });
         };
 
