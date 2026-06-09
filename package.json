@@ -30,7 +30,9 @@
       "types": "./dist/bootstrap5-toggle.d.ts",
       "import": "./dist/bootstrap5-toggle.mjs",
       "require": "./dist/bootstrap5-toggle.cjs"
-    }
+    },
+    "./css/*": "./css/*",
+    "./js/*": "./js/*"
   },
   "scripts": {
     "build": "grunt build",
