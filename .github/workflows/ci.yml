@@ -77,7 +77,7 @@ jobs:
         run: npm run build
       - name: Cypress run
         #v6.10.8
-        uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8
+        uses: cypress-io/github-action@948d67d3074f1bbb6379c8bdbb04e95d2f8e593f
         with:
           browser: chrome
 
