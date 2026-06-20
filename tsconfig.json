@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES2016",
     "module": "ESNext",
     "strict": true,
     "declaration": true,
     "declarationMap": false,
-    "declarationDir": "./src/main/@types",
+    "declarationDir": "./dist/tmp/@types",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "rootDir": "src/main/ts",
     "outDir": "src/main/js",
-     "typeRoots": [
+    "types": ["node"],
+    "typeRoots": [
       "src/main/ts/types",
       "node_modules/@types"
     ]

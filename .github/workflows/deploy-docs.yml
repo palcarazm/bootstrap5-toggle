@@ -2,9 +2,9 @@ name: Deploy documentation
 
 on:
   push:
-    branches: [ "gh-pages" ]
+    branches: [ "v5" ]
   pull_request:
-    branches: [ "gh-pages" ]
+    branches: [ "v5" ]
   workflow_dispatch:
   
 permissions:
@@ -19,6 +19,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -31,11 +34,11 @@ jobs:
       - name: Build
         run: npm run build
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: './dist'
+          path: ./docs/dist
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

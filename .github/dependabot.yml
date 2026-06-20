@@ -19,6 +19,20 @@ updates:
       prefix: "chore(deps): "
       prefix-development: "chore(deps-dev): "
 
+  # ========== DOCS DEPENDENCIES ==========
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    groups:
+      version-updates:
+        applies-to: "version-updates"
+        update-types: ["major", "minor", "patch"]
+    commit-message:
+      prefix: "chore(docs): "
+      prefix-development: "chore(docs): "
+
   # ========== GITHUB ACTIONS ==========
   - package-ecosystem: "github-actions"
     directory: "/"

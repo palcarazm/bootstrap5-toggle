@@ -37,7 +37,7 @@ jobs:
         run: npm run test:unit
       - name: Upload coverage report to Github
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report-${{ matrix.node-version }}
           path: coverage
@@ -77,7 +77,7 @@ jobs:
         run: npm run build
       - name: Cypress run
         #v6.10.8
-        uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec
+        uses: cypress-io/github-action@948d67d3074f1bbb6379c8bdbb04e95d2f8e593f
         with:
           browser: chrome
 
@@ -112,13 +112,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download coverage artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: coverage-report-22.x
           path: coverage
 
       - name: SonarQube Scan
         # v7.0.0
-        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

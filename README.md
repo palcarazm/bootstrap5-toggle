@@ -29,9 +29,9 @@
 
 See EOL for each version in [Security Policy Page](https://github.com/palcarazm/bootstrap5-toggle/security/policy).
 
-# Demos
+# Demo and documentation
 
-**Demos and API Docs:** https://palcarazm.github.io/bootstrap5-toggle/
+**Please read our documentation page for a completed usage explanation:** https://palcarazm.github.io/bootstrap5-toggle/
 
 ---
 
@@ -50,14 +50,7 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 - [Usage](#usage)
   - [Initialize With HTML](#initialize-with-html)
   - [Initialize With Code](#initialize-with-code)
-- [API](#api)
-  - [Options](#options)
-  - [Methods](#methods)
-- [Events](#events)
-  - [Event Propagation](#event-propagation)
-  - [Stopping Event Propagation](#stopping-event-propagation)
-  - [API vs Input](#api-vs-input)
-- [Collaborators welcom!](#collaborators-welcom)
+- [Collaborators welcome!](#collaborators-welcome)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -73,18 +66,18 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.3/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.3/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ### jQuery Interface
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.3/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.3/js/bootstrap5-toggle.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/js/bootstrap5-toggle.jquery.min.js"></script>
 ```
 
 ## Download
@@ -96,13 +89,13 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
-npm install bootstrap5-toggle@5.3.3
+npm install bootstrap5-toggle@5.4.0
 ```
 
 ## Yarn
 
 ```ksh
-yarn add bootstrap5-toggle@5.3.3
+yarn add bootstrap5-toggle@5.4.0
 ```
 
 # Usage
@@ -128,151 +121,7 @@ EX: Initialize id `chkToggle` with a single line of JavaScript.
 </script>
 ```
 
-# API
-
-## Options
-
-- Options can be passed via data attributes or JavaScript
-- For data attributes, append the option name to `data-` (ex: `data-on="Enabled"`)
-
-```html
-<input
-  type="checkbox"
-  data-toggle="toggle"
-  data-onlabel="Enabled"
-  data-offlabel="Disabled" />
-<input type="checkbox" id="toggle-two" />
-<script>
-  document.querySelector("#toggle-two").bootstrapToggle({
-    on: "Enabled",
-    off: "Disabled",
-  });
-</script>
-```
-
-| Name       | Type        | Default     | Description                                                                                                                                              |
-| ---------- | ----------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onlabel`  | string/html | "On"        | Text of the on toggle                                                                                                                                    |
-| `offlabel` | string/html | "Off"       | Text of the off toggle                                                                                                                                   |
-| `size`     | string      | "normal"    | Size of the toggle. Possible values are: `large`, `normal`, `small`, `mini`.                                                                             |
-| `onstyle`  | string      | "primary"   | Style of the on toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix  |
-| `offstyle` | string      | "secondary" | Style of the off toggle. Possible values are: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` and with `outline-` prefix |
-| `onvalue`  | string      | _null_      | Sets on state value                                                                                                                                      |
-| `offvalue` | string      | _null_      | Sets off state value                                                                                                                                     |
-| `ontitle`  | string      | _null_      | Title of the on toggle                                                                                                                                   |
-| `offtitle` | string      | _null_      | Title of the off toggle                                                                                                                                  |
-| `style`    | string      |             | Appends the value to the class attribute of the toggle. This can be used to apply custom styles. Refer to Custom Styles for reference.                   |
-| `width`    | integer     | _null_      | Sets the width of the toggle. if set to _null_, width will be auto-calculated.                                                                           |
-| `height`   | integer     | _null_      | Sets the height of the toggle. if set to _null_, height will be auto-calculated.                                                                         |
-| `tabindex` | integer     | 0           | Sets the tabindex of the toggle.                                                                                                                         |
-| `tristate` | boolean     | false       | Sets tristate support                                                                                                                                    |
-
-## Methods
-
-Methods can be used to control toggles directly.
-
-```html
-<input id="toggle-demo" type="checkbox" data-toggle="toggle" />
-<script>
-  const toggleDemo = document.querySelector("#toggle-demo");
-</script>
-```
-
-| Method        | Example                                       | Description                                                                           |
-| ------------- | --------------------------------------------- | ------------------------------------------------------------------------------------- |
-| initialize    | `toggleDemo.bootstrapToggle()`                | Initializes the toggle plugin with options                                            |
-| destroy       | `toggleDemo.bootstrapToggle('destroy')`       | Destroys the toggle                                                                   |
-| rerender      | `toggleDemo.bootstrapToggle('rerender')`      | Rerender toggle with the appropriated size. Useful when parent is collapsed at first. |
-| on            | `toggleDemo.bootstrapToggle('on')`            | Sets the toggle to 'On' state                                                         |
-| off           | `toggleDemo.bootstrapToggle('off')`           | Sets the toggle to 'Off' state                                                        |
-| toggle        | `toggleDemo.bootstrapToggle('toggle')`        | Toggles the state of the toggle on/off                                                |
-| enable        | `toggleDemo.bootstrapToggle('enable')`        | Enables the toggle                                                                    |
-| disable       | `toggleDemo.bootstrapToggle('disable')`       | Disables the toggle                                                                   |
-| readonly      | `toggleDemo.bootstrapToggle('readonly')`      | Disables the toggle but preserve checkbox enabled                                     |
-| indeterminate | `toggleDemo.bootstrapToggle('indeterminate')` | Sets the toggle to 'indeterminate' state                                              |
-| determinate   | `toggleDemo.bootstrapToggle('determinate')`   | Sets the toggle to 'determinate' state                                                |
-
-# Events
-
-## Event Propagation
-
-Note All events are propagated to and from input element to the toggle.
-
-You should listen to events from the `<input type="checkbox">` directly rather than look for custom events.
-
-```html
-<input id="toggle-event" type="checkbox" data-toggle="toggle" />
-<div id="console-event"></div>
-<script>
-  document.querySelector("#toggle-event").change(function (e) {
-    document
-      .querySelector("#console-event")
-      .html("Toggle: " + e.target.prop("checked"));
-  });
-</script>
-```
-
-## Stopping Event Propagation
-
-Passing `true` to the on, off, toggle, determinate and indeterminate methods will enable the silent option to prevent the control from propagating the change event in cases where you want to update the controls on/off state, but do not want to fire the onChange event.
-
-```html
-<input id="toggle-silent" type="checkbox" data-toggle="toggle" />
-<button class="btn btn-success" onclick="toggleApiOnSilent()">
-  On by API (silent)
-</button>
-<button class="btn btn-success" onclick="toggleApiOffSilent()">
-  Off by API (silent)
-</button>
-<button class="btn btn-warning" onclick="toggleApiOnNotSilent()">
-  On by API (not silent)
-</button>
-<button class="btn btn-warning" onclick="toggleApiOffNotSilent()">
-  On by API (not silent)
-</button>
-<script>
-  function toggleApiOnSilent() {
-    document.querySelector("#toggle-silent").bootstrapToggle("on", true);
-  }
-  function toggleApiOffSilent() {
-    document.querySelector("#toggle-silent").bootstrapToggle("off", true);
-  }
-  function toggleApiOnNotSilent() {
-    document.querySelector("#toggle-silent").bootstrapToggle("on");
-  }
-  function toggleApiOffNotSilent() {
-    document.querySelector("#toggle-silent").bootstrapToggle("off");
-  }
-</script>
-```
-
-## API vs Input
-
-This also means that using the API or Input to trigger events will work both ways.
-
-```html
-<input id="toggle-trigger" type="checkbox" data-toggle="toggle" />
-<button class="btn btn-success" onclick="toggleApiOn()">On by API</button>
-<button class="btn btn-danger" onclick="toggleApiOff()">Off by API</button>
-<button class="btn btn-success" onclick="toggleInpOn()">On by Input</button>
-<button class="btn btn-danger" onclick="toggleInpOff()">Off by Input</button>
-<script>
-  function toggleApiOn() {
-    document.querySelector("#toggle-trigger").bootstrapToggle("on");
-  }
-  function toggleApiOff() {
-    document.querySelector("#toggle-trigger").bootstrapToggle("off");
-  }
-  function toggleInpOn() {
-    document.querySelector("#toggle-trigger").prop("checked", true).change();
-  }
-  function toggleInpOff() {
-    document.querySelector("#toggle-trigger").prop("checked", false).change();
-  }
-</script>
-```
-
-# Collaborators welcom!
+# Collaborators welcome!
 
 - :sos: Do you need some help? Open a thread in [GitHub Discussions Q&A](https://github.com/palcarazm/bootstrap5-toggle/discussions/new?category=q-a)
 - :bug: Do you find a bug? Open an issue in [GitHub bug report](https://github.com/palcarazm/bootstrap5-toggle/issues/new?template=01-BUG_REPORT.yml)

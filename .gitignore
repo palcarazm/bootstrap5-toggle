@@ -1,16 +1,32 @@
-.DS_Store
+# Node modules
 node_modules
 package-lock.json
+
+# Packaging
+bootstrap5-toggle-*.tgz
+
+# Debug
+debug
+
+# Dist
+js
+!src/main/js
+!docs/src/js
+css
+!docs/src/css
+dist
+@types
+
+# Logs
 *.log
-bootstrap*.tgz
+
+# Cache and config dirs and files
+.vscode
+.dccache
+.DS_Store
+
+# Test
+coverage
 cypress/videos
 cypress/screenshots
 cypress/downloads
-.vscode
-.dccache
-js
-css
-debug
-coverage
-dist
-@types
