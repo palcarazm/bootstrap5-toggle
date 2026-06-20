@@ -66,18 +66,18 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.1/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.1/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/js/bootstrap5-toggle.ecmas.min.js"></script>
 ```
 
 ### jQuery Interface
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.1/css/bootstrap5-toggle.min.css"
+  href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/css/bootstrap5-toggle.min.css"
   rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.3.1/js/bootstrap5-toggle.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.4.0/js/bootstrap5-toggle.jquery.min.js"></script>
 ```
 
 ## Download
@@ -89,13 +89,13 @@ See EOL for each version in [Security Policy Page](https://github.com/palcarazm/
 [![NPM Badge](https://img.shields.io/npm/dm/bootstrap5-toggle?logo=npm)](https://www.npmjs.com/package/bootstrap5-toggle)
 
 ```ksh
-npm install bootstrap5-toggle@5.3.1
+npm install bootstrap5-toggle@5.4.0
 ```
 
 ## Yarn
 
 ```ksh
-yarn add bootstrap5-toggle@5.3.1
+yarn add bootstrap5-toggle@5.4.0
 ```
 
 # Usage
