@@ -8,9 +8,10 @@ import ToggleEvents, { ToggleEventDetail } from "./types/ToggleEvents";
 export class Toggle {
     private readonly element: HTMLInputElement & { bsToggle?: Toggle };
     private readonly userOptions: UserOptions;
-    private readonly options: ToggleOptions;
-    private readonly stateReducer: StateReducer;
-    private readonly domBuilder: DOMBuilder;
+
+    private options: ToggleOptions;
+    private stateReducer: StateReducer;
+    private domBuilder: DOMBuilder;
 
     private pointer: { x: number; y: number } | null = null;
     private readonly SCROLL_THRESHOLD = 10;
@@ -532,11 +533,40 @@ export class Toggle {
     }
 
     /**
-   * Destroys the toggle element and reinitializes it with the same options.
-   *This method is useful when you need to reinitialize the toggle element with the same options.
-   */
-    rerender() {
-        this.destroy();
-        const _ = new Toggle(this.element, this.userOptions);
+     * Rebuilds the toggle component in-place without destroying the current instance.
+     * 
+     * This method is useful when you need to reinitialize the toggle element with the same options,
+     * for example after HTML attribute changes or when the DOM structure has been modified externally.
+     * 
+     * The method follows this sequence:
+     * 1. Restores original input properties (checked, disabled, readOnly, indeterminate)
+     * 2. Unbinds all event listeners (pointer, keyboard, label, form reset)
+     * 3. Destroys the DOM builder (removes toggle DOM, restores original checkbox)
+     * 4. Re-resolves options from the element and user options
+     * 5. Creates a fresh StateReducer with the updated tristate value
+     * 6. Builds new toggle DOM structure
+     * 7. Re-binds all event listeners
+     * 8. Re-intercepts input properties for external change detection
+     * 
+     * Important: The instance identity is preserved (this.element.bsToggle remains unchanged),
+     * making it safe for external code that holds references to this instance.
+     * 
+     * @returns void
+     */
+    rerender() {       
+        this.restoreInputProperties();
+        this.unbindEventListeners();
+        this.domBuilder.destroy();
+        
+        this.options = OptionResolver.resolve(this.element, this.userOptions);
+        this.stateReducer = new StateReducer(this.element, this.options.tristate);
+        this.domBuilder = new DOMBuilder(
+            this.element,
+            this.options,
+            this.stateReducer.get()
+        );
+        
+        this.bindEventListeners();
+        this.interceptInputProperties();
     }
 }

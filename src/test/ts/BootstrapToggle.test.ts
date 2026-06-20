@@ -1,7 +1,9 @@
+/// <reference types="jest" />
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Toggle } from "../../main/ts/BootstrapToggle";
 import { DOMBuilder } from "../../main/ts/core/DOMBuilder";
+import { OptionResolver } from "../../main/ts/core/OptionResolver";
 import { ToggleActionType, ToggleStateValue } from "../../main/ts/core/StateReducer.types";
 import ToggleEvents from "../../main/ts/types/ToggleEvents";
 
@@ -709,14 +711,33 @@ describe("Toggle", () => {
     });
 
     describe("rerender()", () =>{
-        it("rerender destroys and reinitializes toggle", () => {
-            (input as any).bootstrapToggle = jest.fn();
-
+        it("rebuilds toggle in-place while preserving instance identity", () => {
             const toggle = new Toggle(input, {});
+            const instanceRef = toggle;
+            
+            const originalBsToggle = (input as any).bsToggle;
+            
             toggle.rerender();
-
+            
+            expect(toggle).toBe(instanceRef);
+            expect((input as any).bsToggle).toBe(originalBsToggle);
+            expect((input as any).bsToggle).toBe(toggle);
+            
             expect(destroyMock).toHaveBeenCalled();
             expect(DOMBuilder).toHaveBeenCalledTimes(2);
+        });
+        
+        it("re-resolves options from HTML attributes after change", () => {
+            
+            const toggle = new Toggle(input, { onlabel: "Old" });
+
+            const resolveSpy = jest.spyOn(OptionResolver, "resolve");
+            input.dataset.onlabel = "New";
+
+            toggle.rerender();
+            
+            expect(resolveSpy).toHaveBeenCalledWith(input, toggle["userOptions"]);
+            resolveSpy.mockRestore();
         });
     });
 });
