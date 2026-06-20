@@ -3,6 +3,7 @@ node_modules
 
 # Packaging
 bootstrap5-toggle-*.tgz
+dist/tmp
 
 # Debug
 debug
