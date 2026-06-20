@@ -5,7 +5,7 @@
     "strict": true,
     "declaration": true,
     "declarationMap": false,
-    "declarationDir": "./src/main/@types",
+    "declarationDir": "./dist/tmp/@types",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "rootDir": "src/main/ts",
