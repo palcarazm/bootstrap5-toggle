@@ -162,13 +162,16 @@ jobs:
           else
             CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           fi
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|./**.md|./**.yml)'
           
           if echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|./**.md|./**.yml)'; then
             echo "has_code_changes=true" >> $GITHUB_OUTPUT
             echo "📝 Code changes detected"
           else
             echo "has_code_changes=false" >> $GITHUB_OUTPUT
-            echo "📦 Only dependency files changed"
+            echo "📦 Only dependency, documentation or ci/cd files changed"
           fi
 
       - name: Download coverage artifact
