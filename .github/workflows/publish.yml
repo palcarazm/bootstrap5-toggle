@@ -1,0 +1,44 @@
+name: Publish Package to npmJS
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Determine npm tag
+        id: npm-tag
+        run: |
+          RELEASE_NAME="${{ github.event.release.name }}"
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          
+          echo "📦 Release name: $RELEASE_NAME"
+          echo "🏷️ Release tag: $RELEASE_TAG"
+          
+          if [ "${{ github.event.release.prerelease }}" == "true" ]; then
+            echo "🔬 Prerelease detected - using 'next' tag"
+            echo "tag=next" >> $GITHUB_OUTPUT
+          else
+            echo "🚀 Full release detected - using 'latest' tag"
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Publish to npm
+        run: |
+          npm publish --provenance --access public --tag ${{ steps.npm-tag.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
