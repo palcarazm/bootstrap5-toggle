@@ -19,7 +19,10 @@
   "module": "dist/bootstrap5-toggle.mjs",
   "types": "dist/bootstrap5-toggle.d.ts",
   "typings": "dist/bootstrap5-toggle.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "css/*.css",
+    "js/*.js"
+  ],
   "files": [
     "css/*",
     "js/*",
@@ -49,8 +52,8 @@
     "postversion": "git push --follow-tags",
     "prepack": "npm run build && npm run version:update && doctoc README.md --github",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:e2e": "cypress run --headless",
     "test:unit": "jest --coverage",
+    "test:e2e": "cypress run --headless",
     "lint": "eslint ./src",
     "prepare": "husky"
   },
