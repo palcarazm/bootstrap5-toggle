@@ -152,26 +152,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if only dependencies changed
+      - name: Get changed files
+        id: changed-files
+        #47.0.6
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96
+        with:
+          files: |
+            **
+          files_ignore: |
+            package.json
+            .npmrc
+            **/*.md
+            .github/**
+            .gitignore
+          
+      - name: Check if code changes exist
         id: check-changes
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-            CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA)
-          else
-            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
-          fi
-
-          echo "Changed files:"
-          echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|./**.md|./**.yml)'
-          
-          if echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|./**.md|./**.yml)'; then
+          if [ "${{ steps.changed-files.outputs.any_changed }}" == "true" ]; then
             echo "has_code_changes=true" >> $GITHUB_OUTPUT
-            echo "📝 Code changes detected"
+            echo "📝 Code changes detected in:"
+            echo "${{ steps.changed-files.outputs.all_changed_files }}"
           else
             echo "has_code_changes=false" >> $GITHUB_OUTPUT
-            echo "📦 Only dependency, documentation or ci/cd files changed"
+            echo "📦 Only dependency, documentation or CI/CD files changed"
           fi
 
       - name: Download coverage artifact
