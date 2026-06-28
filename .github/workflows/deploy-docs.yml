@@ -3,8 +3,6 @@ name: Deploy documentation
 on:
   push:
     branches: [ "v5" ]
-  pull_request:
-    branches: [ "v5" ]
   workflow_dispatch:
   
 permissions:

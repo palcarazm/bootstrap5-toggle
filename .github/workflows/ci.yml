@@ -163,7 +163,7 @@ jobs:
             CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           fi
           
-          if echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|*.md|*.yml)'; then
+          if echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|./**.md|./**.yml)'; then
             echo "has_code_changes=true" >> $GITHUB_OUTPUT
             echo "📝 Code changes detected"
           else
