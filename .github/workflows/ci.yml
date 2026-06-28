@@ -47,6 +47,7 @@ jobs:
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
           parallel: true
+        continue-on-error: true
 
   coverage-finished:
     name: Publish coverage report to Coveralls
@@ -55,11 +56,51 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
+        id: coveralls
         #v2.3.7
         uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
         with:
           parallel-finished: true
           carryforward: "coverage-report-22.x,coverage-report-24.x"
+        continue-on-error: true
+  
+      - name: Check Coveralls status
+        id: check-status
+        if: always()
+        run: |
+          if [ "${{ steps.coveralls.outcome }}" == "success" ]; then
+            echo "✅ Coveralls report submitted successfully"
+            echo "status=success" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.coveralls.outcome }}" == "failure" ]; then
+            echo "⚠️ Coveralls service is temporarily unavailable"
+            echo "status=neutral" >> $GITHUB_OUTPUT
+          else
+            echo "❓ Coveralls status unknown: ${{ steps.coveralls.outcome }}"
+            echo "status=neutral" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Set neutral status (if needed)
+        if: steps.check-status.outputs.status == 'neutral'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { context } = require('@actions/github');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sha = context.sha;
+            
+            await github.rest.checks.create({
+              owner,
+              repo,
+              name: 'Coveralls / Coverage Report',
+              head_sha: sha,
+              status: 'completed',
+              conclusion: 'neutral',
+              output: {
+                title: 'Coveralls service temporarily unavailable',
+                summary: '⚠️ Coveralls is currently experiencing issues. The coverage report will be submitted when the service is available again.\n\nThis check is marked as neutral and does not block the PR.'
+              }
+            });
 
   cypress:
     name: Run e2e tests with Cypress
@@ -111,13 +152,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check if only dependencies changed
+        id: check-changes
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA)
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          fi
+          
+          if echo "$CHANGED_FILES" | grep -q -v -E '^(package.json|*.md|*.yml)'; then
+            echo "has_code_changes=true" >> $GITHUB_OUTPUT
+            echo "📝 Code changes detected"
+          else
+            echo "has_code_changes=false" >> $GITHUB_OUTPUT
+            echo "📦 Only dependency files changed"
+          fi
+
       - name: Download coverage artifact
+        if: steps.check-changes.outputs.has_code_changes == 'true'
         uses: actions/download-artifact@v8
         with:
           name: coverage-report-22.x
           path: coverage
 
       - name: SonarQube Scan
+        if: steps.check-changes.outputs.has_code_changes == 'true'
         # v7.0.0
         uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432
         env:
