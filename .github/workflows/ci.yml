@@ -81,7 +81,7 @@ jobs:
       
       - name: Set neutral status (if needed)
         if: steps.check-status.outputs.status == 'neutral'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { context } = require('@actions/github');
