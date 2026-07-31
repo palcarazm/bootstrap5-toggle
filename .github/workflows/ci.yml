@@ -43,7 +43,7 @@ jobs:
           path: coverage
       - name: Upload coverage report to Coveralls
         #v2.3.7
-        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
           parallel: true
@@ -58,7 +58,7 @@ jobs:
       - name: Coveralls Finished
         id: coveralls
         #v2.3.7
-        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           parallel-finished: true
           carryforward: "coverage-report-22.x,coverage-report-24.x"
@@ -134,13 +134,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+        uses: github/codeql-action/init@v4.37.3
         with:
           languages: typescript
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v4
+        uses: github/codeql-action/autobuild@v4.37.3
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+        uses: github/codeql-action/analyze@v4.37.3
 
   sonarcloud:
     name: Analyze code with SonarQube
@@ -188,6 +188,6 @@ jobs:
       - name: SonarQube Scan
         if: steps.check-changes.outputs.has_code_changes == 'true'
         # v7.0.0
-        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e
+        uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
