@@ -1,10 +1,8 @@
 name: Deploy documentation
 
 on:
-  push:
-    branches: [ "v5" ]
-  pull_request:
-    branches: [ "v5" ]
+  release:
+    types: [published]
   workflow_dispatch:
   
 permissions:
@@ -24,9 +22,9 @@ jobs:
         working-directory: docs
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24.x
       - name: Install dependencies

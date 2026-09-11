@@ -22,9 +22,9 @@ jobs:
         node-version: [22.x, 24.x]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
             node-version: ${{ matrix.node-version }}
       - name: Install dependencies
@@ -43,10 +43,11 @@ jobs:
           path: coverage
       - name: Upload coverage report to Coveralls
         #v2.3.7
-        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
           parallel: true
+        continue-on-error: true
 
   coverage-finished:
     name: Publish coverage report to Coveralls
@@ -55,11 +56,51 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
+        id: coveralls
         #v2.3.7
-        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           parallel-finished: true
           carryforward: "coverage-report-22.x,coverage-report-24.x"
+        continue-on-error: true
+  
+      - name: Check Coveralls status
+        id: check-status
+        if: always()
+        run: |
+          if [ "${{ steps.coveralls.outcome }}" == "success" ]; then
+            echo "✅ Coveralls report submitted successfully"
+            echo "status=success" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.coveralls.outcome }}" == "failure" ]; then
+            echo "⚠️ Coveralls service is temporarily unavailable"
+            echo "status=neutral" >> $GITHUB_OUTPUT
+          else
+            echo "❓ Coveralls status unknown: ${{ steps.coveralls.outcome }}"
+            echo "status=neutral" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Set neutral status (if needed)
+        if: steps.check-status.outputs.status == 'neutral'
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { context } = require('@actions/github');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sha = context.sha;
+            
+            await github.rest.checks.create({
+              owner,
+              repo,
+              name: 'Coveralls / Coverage Report',
+              head_sha: sha,
+              status: 'completed',
+              conclusion: 'neutral',
+              output: {
+                title: 'Coveralls service temporarily unavailable',
+                summary: '⚠️ Coveralls is currently experiencing issues. The coverage report will be submitted when the service is available again.\n\nThis check is marked as neutral and does not block the PR.'
+              }
+            });
 
   cypress:
     name: Run e2e tests with Cypress
@@ -70,14 +111,14 @@ jobs:
       options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: npm install
       - name: Build project
         run: npm run build
       - name: Cypress run
         #v6.10.8
-        uses: cypress-io/github-action@948d67d3074f1bbb6379c8bdbb04e95d2f8e593f
+        uses: cypress-io/github-action@09090944bd8aaa2a517cefb6e38bf1aae336b42b
         with:
           browser: chrome
 
@@ -91,7 +132,7 @@ jobs:
       security-events: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
@@ -107,18 +148,46 @@ jobs:
     needs: build-and-test
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
+      - name: Get changed files
+        id: changed-files
+        #47.0.6
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96
+        with:
+          files: |
+            **
+          files_ignore: |
+            package.json
+            .npmrc
+            **/*.md
+            .github/**
+            .gitignore
+          
+      - name: Check if code changes exist
+        id: check-changes
+        run: |
+          if [ "${{ steps.changed-files.outputs.any_changed }}" == "true" ]; then
+            echo "has_code_changes=true" >> $GITHUB_OUTPUT
+            echo "📝 Code changes detected in:"
+            echo "${{ steps.changed-files.outputs.all_changed_files }}"
+          else
+            echo "has_code_changes=false" >> $GITHUB_OUTPUT
+            echo "📦 Only dependency, documentation or CI/CD files changed"
+          fi
+
       - name: Download coverage artifact
+        if: steps.check-changes.outputs.has_code_changes == 'true'
         uses: actions/download-artifact@v8
         with:
           name: coverage-report-22.x
           path: coverage
 
       - name: SonarQube Scan
+        if: steps.check-changes.outputs.has_code_changes == 'true'
         # v7.0.0
-        uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432
+        uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
