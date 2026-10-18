@@ -1,45 +1,97 @@
+import { Component } from "component-lifecycle";
 import { DOMBuilder } from "./core/DOMBuilder";
 import { OptionResolver } from "./core/OptionResolver";
 import { ToggleOptions, UserOptions } from "./core/OptionResolver.types";
 import { StateReducer } from "./core/StateReducer";
 import { ToggleActionType, ToggleState, ToggleStateValue } from "./core/StateReducer.types";
-import ToggleEvents, { ToggleEventDetail } from "./types/ToggleEvents";
+import ToggleEvents, { ToggleEventMap } from "./types/ToggleEvents";
 
-export class Toggle {
-    private readonly element: HTMLInputElement & { bsToggle?: Toggle };
+export class Toggle extends Component<"toggle", ToggleEventMap> {
+    declare readonly element: HTMLInputElement & { bsToggle?: Toggle };
+    protected readonly PREFIX = "toggle" as const;
     private readonly userOptions: UserOptions;
 
-    private options: ToggleOptions;
-    private stateReducer: StateReducer;
-    private domBuilder: DOMBuilder;
+    private toggleOptions: ToggleOptions;
+    private stateReducer!: StateReducer;
+    private domBuilder!: DOMBuilder;
 
     private pointer: { x: number; y: number } | null = null;
     private readonly SCROLL_THRESHOLD = 10;
-    private eventsBound = false;
     private suppressExternalSync  = false;
     private readonly originalDescriptors = new Map<string, PropertyDescriptor>();
 
     /**
-   * Initializes a new instance of the BootstrapToggle class.
-   * @param element The HTMLInputElement element which represents the toggle.
-   * @param options The options for the toggle.
-   * @returns The constructed BootstrapToggle instance.
-   */
+     * Initializes a new instance of the Toggle component.
+     *
+     * @param element The checkbox element backing the toggle.
+     * @param options User-provided options.
+     */
     constructor(element: HTMLInputElement, options: UserOptions) {
-        this.element = element;
+        super(element, {bubbleEvents: true});
+
         this.userOptions = options;
-        this.options = OptionResolver.resolve(element, options);
-        this.stateReducer = new StateReducer(element, this.options.tristate);
+        this.toggleOptions = OptionResolver.resolve(element, options);
+
+        this.element.bsToggle = this;
+    }
+
+    /**
+     * Initializes internal state. No DOM access, no side effects.
+     * @returns {Promise<{ cancelled: boolean }>} transition result
+     */
+    protected doInit(): Promise<{ cancelled: boolean }> {
+        this.stateReducer = new StateReducer(
+            this.element,
+            this.toggleOptions.tristate
+        );
+        return Promise.resolve({ cancelled: false });
+    }
+
+    /**
+     * Binds the component to the DOM: builds the toggle DOM, binds listeners,
+     * intercepts input properties, and registers the instance on the element.
+     * @returns {Promise<{ cancelled: boolean }>} transition result
+     */
+    protected doAttach(): Promise<{ cancelled: boolean }> {
         this.domBuilder = new DOMBuilder(
-            element,
-            this.options,
+            this.element,
+            this.toggleOptions,
             this.stateReducer.get()
         );
 
         this.bindEventListeners();
         this.interceptInputProperties();
 
-        this.element.bsToggle = this;
+        return Promise.resolve({ cancelled: false });
+    }
+
+    /**
+     * Tears down everything created by doAttach(), including the toggle DOM.
+     * The original checkbox is restored to the DOM.
+     * @returns {Promise<{ cancelled: boolean }>} transition result
+     */
+    protected doDispose(): Promise<{ cancelled: boolean }> {
+        this.unbindEventListeners();
+        this.restoreInputProperties();
+        this.domBuilder.destroy();
+        return Promise.resolve({ cancelled: false });
+    }
+
+    /**
+     * Final teardown. Defensively disposes if still attached (see decision 5b).
+     * @returns {Promise<{ cancelled: boolean; reason?: string }>} transition result
+     */
+    protected async doDestroy(): Promise<{ cancelled: boolean, reason?: string }> {
+
+        if (this.isAttached()) {
+            try {
+                await this.doDispose();
+            } catch (e) {
+                return { cancelled: true, reason: (e as Error).message };
+            }
+        }
+        delete this.element.bsToggle;
+        return { cancelled: false };
     }
     
     /**
@@ -103,43 +155,28 @@ export class Toggle {
     };
 
     /**
-   * Binds event listeners to the toggle element.
-   * This method is called by the constructor and is responsible for
-   * binding the following event listeners:
-   * - Pointer events (click, touchstart, touchend)
-   * - Keyboard events (keydown, keyup)
-   * - Label events (click)
-   * If the event listeners are already bound (i.e. this.eventsBound is true),
-   * this method does nothing.
-   * @returns void
-   */
+     * Binds all event listeners for the toggle component, including form reset, pointer, keyboard, and label events.
+     * This method is called during the attachment phase of the component lifecycle.
+     * It ensures that the toggle component responds to user interactions and external changes.
+     */
     private bindEventListeners() {
-        if (this.eventsBound) return;
         this.bindFormResetListener();
         this.bindPointerEventListener();
         this.bindKeyboardEventListener();
         this.bindLabelEventListener();
-        this.eventsBound = true;
     }
 
+
     /**
-   * Unbinds all event listeners from the toggle element.
-   * This method is called by the destructor and is responsible for
-   * unbinding the following event listeners:
-   * - Pointer events (click, touchstart, touchend)
-   * - Keyboard events (keydown, keyup)
-   * - Label events (click)
-   * If the event listeners are not bound (i.e. this.eventsBound is false),
-   * this method does nothing.
-   * @returns void
-   */
+     * Unbinds all event listeners for the toggle component, including form reset, pointer, keyboard, and label events.
+     * This method is called during the disposal phase of the component lifecycle.
+     * It ensures that the toggle component no longer responds to user interactions and external changes.
+     */
     private unbindEventListeners() {
-        if (!this.eventsBound) return;
         this.unbindFormResetListener();
         this.unbindPointerEventListener();
         this.unbindKeyboardEventListener();
         this.unbindLabelEventListener();
-        this.eventsBound = false;
     }
 
     private bindFormResetListener() {
@@ -159,12 +196,12 @@ export class Toggle {
     };
 
     /**
-   * Binds a pointerdown event listener to the root element of the toggle.
-   * The event listener is responsible for handling pointer events (e.g. mouse clicks, touch events)
-   * and triggering the toggle's state change when a pointer event occurs.
-   * The event listener is bound with the passive option, which means that it will not block
-   * other event listeners from being triggered.
-   */
+     * Binds a pointerdown event listener to the root element of the toggle.
+     * The event listener is responsible for handling pointer events (e.g. mouse clicks, touch events)
+     * and triggering the toggle's state change when a pointer event occurs.
+     * The event listener is bound with the passive option, which means that it will not block
+     * other event listeners from being triggered.
+     */
     private bindPointerEventListener() {
         this.domBuilder.root.addEventListener("pointerdown", this.onPointerDown, {
             passive: true,
@@ -172,25 +209,25 @@ export class Toggle {
     }
 
     /**
-   * Unbinds the pointerdown event listener from the root element of the toggle.
-   * This method is responsible for unbinding the pointerdown event listener that was
-   * previously bound by the bindPointerEventListener method.
-   * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
-   * @returns void
-   */
+     * Unbinds the pointerdown event listener from the root element of the toggle.
+     * This method is responsible for unbinding the pointerdown event listener that was
+     * previously bound by the bindPointerEventListener method.
+     * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
+     * @returns void
+     */
     private unbindPointerEventListener() {
         this.domBuilder.root.removeEventListener("pointerdown", this.onPointerDown);
     }
 
     /**
-   * Handles pointer down events by initiating the toggle action and setting up
-   * listeners for pointer movement, release, and cancellation.
-   *
-   * The method early exits if:
-   * - the pointer event is not a primary mouse button click
-   * - the toggle cannot be interacted with (`disabled` or `readonly`)
-   * @param e The PointerEvent object representing the pointer down event.
-   */
+     * Handles pointer down events by initiating the toggle action and setting up
+     * listeners for pointer movement, release, and cancellation.
+     *
+     * The method early exits if:
+     * - the pointer event is not a primary mouse button click
+     * - the toggle cannot be interacted with (`disabled` or `readonly`)
+     * @param e The PointerEvent object representing the pointer down event.
+     */
     private readonly onPointerDown = (e: PointerEvent) => {
         if (e.pointerType === "mouse" && e.button !== 0) return;
         if (!this.stateReducer.canInteract()) return;
@@ -210,12 +247,12 @@ export class Toggle {
     };
 
     /**
-   * Handles pointer move events by checking the distance moved from the initial pointer down position.
-   * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
-   *
-   * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
-   * @param e The PointerEvent object representing the pointer move event.
-   */
+     * Handles pointer move events by checking the distance moved from the initial pointer down position.
+     * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
+     *
+     * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
+     * @param e The PointerEvent object representing the pointer move event.
+     */
     private readonly onPointerMove = (e: PointerEvent) => {
         const dx = Math.abs(e.clientX - this.pointer!.x);
         const dy = Math.abs(e.clientY - this.pointer!.y);
@@ -226,16 +263,16 @@ export class Toggle {
     };
 
     /**
-   * Handles pointer up events by determining if the pointer interaction
-   * should trigger a toggle action based on the distance moved.
-   *
-   * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
-   * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
-   * Finally, it cleans up by calling the pointer cancel handler.
-   * 
-   * If the pointer event is not a primary mouse button click, the interaction is cancelled.
-   * @param e The PointerEvent object representing the pointer up event.
-   */
+     * Handles pointer up events by determining if the pointer interaction
+     * should trigger a toggle action based on the distance moved.
+     *
+     * If the pointer has moved beyond a certain threshold, the pointer interaction is cancelled.
+     * Allows dragging within the width of the toggle but cancels if vertical movement exceeds the scroll threshold.
+     * Finally, it cleans up by calling the pointer cancel handler.
+     * 
+     * If the pointer event is not a primary mouse button click, the interaction is cancelled.
+     * @param e The PointerEvent object representing the pointer up event.
+     */
     private readonly onPointerUp = (e: PointerEvent) => {
         if (e.pointerType === "mouse" && e.button !== 0) {
             this.onPointerCancel();
@@ -252,12 +289,12 @@ export class Toggle {
     };
 
     /**
-   * Cleans up pointer event listeners after a pointer interaction is completed or cancelled.
-   *
-   * This method removes the `pointermove`, `pointerup`, and `pointercancel` event listeners
-   * from the root element of the toggle.
-   * However, `pointerdown` listener remains active for future interactions.
-   */
+     * Cleans up pointer event listeners after a pointer interaction is completed or cancelled.
+     *
+     * This method removes the `pointermove`, `pointerup`, and `pointercancel` event listeners
+     * from the root element of the toggle.
+     * However, `pointerdown` listener remains active for future interactions.
+     */
     private readonly onPointerCancel = () => {
         this.domBuilder.root.removeEventListener("pointermove", this.onPointerMove);
         this.domBuilder.root.removeEventListener("pointerup", this.onPointerUp);
@@ -268,10 +305,10 @@ export class Toggle {
     };
 
     /**
-   * Binds a keydown event listener to the root element of the toggle.
-   * The event listener is responsible for handling keydown events
-   * and triggering the toggle's state change when a keydown event occurs.
-   */
+     * Binds a keydown event listener to the root element of the toggle.
+     * The event listener is responsible for handling keydown events
+     * and triggering the toggle's state change when a keydown event occurs.
+     */
     private bindKeyboardEventListener() {
         this.domBuilder.root.addEventListener(
             "keydown",
@@ -281,12 +318,12 @@ export class Toggle {
     }
 
     /**
-   * Unbinds the keydown event listener from the root element of the toggle.
-   * This method is responsible for unbinding the keydown event listener that was
-   * previously bound by the bindKeyboardEventListener method.
-   * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
-   * @returns void
-   */
+     * Unbinds the keydown event listener from the root element of the toggle.
+     * This method is responsible for unbinding the keydown event listener that was
+     * previously bound by the bindKeyboardEventListener method.
+     * If the event listener is not bound (i.e. this.eventsBound is false), this method does nothing.
+     * @returns void
+     */
     private unbindKeyboardEventListener() {
         this.domBuilder.root.removeEventListener(
             "keydown",
@@ -301,13 +338,13 @@ export class Toggle {
     };
 
     /**
-   * Binds a click event listener to all labels that are associated with the toggle's input element.
-   * The event listener is responsible for handling click events and triggering the toggle's state change when a click event occurs.
-   * The event listener is bound with the passive option set to false, which means that it will block other event listeners from being triggered until it has finished its execution.
-   * This method is called by the constructor and is responsible for binding the event listener to the toggle's labels.
-   * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
-   * @returns void
-   */
+     * Binds a click event listener to all labels that are associated with the toggle's input element.
+     * The event listener is responsible for handling click events and triggering the toggle's state change when a click event occurs.
+     * The event listener is bound with the passive option set to false, which means that it will block other event listeners from being triggered until it has finished its execution.
+     * This method is called by the constructor and is responsible for binding the event listener to the toggle's labels.
+     * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
+     * @returns void
+     */
     private bindLabelEventListener() {
         if (this.element.id) {
             document
@@ -321,11 +358,11 @@ export class Toggle {
     }
 
     /**
-   * Unbinds the click event listener from all labels that are associated with the toggle's input element.
-   * This method is responsible for unbinding the event listener that was previously bound by the bindLabelEventListener method.
-   * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
-   * @returns void
-   */
+     * Unbinds the click event listener from all labels that are associated with the toggle's input element.
+     * This method is responsible for unbinding the event listener that was previously bound by the bindLabelEventListener method.
+     * If the toggle's input element does not have an id (i.e. this.element.id is null or undefined), this method does nothing.
+     * @returns void
+     */
     private unbindLabelEventListener() {
         if (this.element.id) {
             document
@@ -343,12 +380,12 @@ export class Toggle {
     };
 
     /**
-   * Applies a toggle action to the toggle state and renders the toggle element.
-   * If the action is successful, this method will render the toggle element with the new state.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param action The toggle action to apply.
-   * @param silent A boolean indicating whether to trigger the change event after applying the action.
-   */
+     * Applies a toggle action to the toggle state and renders the toggle element.
+     * If the action is successful, this method will render the toggle element with the new state.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param action The toggle action to apply.
+     * @param silent A boolean indicating whether to trigger the change event after applying the action.
+     */
     private apply(action: ToggleActionType, silent = false) {
         if (!this.stateReducer.do(action)) return;
         this.suppressExternalSync  = true;
@@ -362,81 +399,81 @@ export class Toggle {
     }
 
     /**
-   * Toggles the state of the toggle.
-   * If the toggle is currently in the on state, it will be set to the off state.
-   * If the toggle is currently in the off state, it will be set to the on state.
-   * If the toggle is currently in the indeterminate state, it will be set to the on state.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param silent A boolean indicating whether to trigger the change event after applying the action.
-   */
+     * Toggles the state of the toggle.
+     * If the toggle is currently in the on state, it will be set to the off state.
+     * If the toggle is currently in the off state, it will be set to the on state.
+     * If the toggle is currently in the indeterminate state, it will be set to the on state.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param silent A boolean indicating whether to trigger the change event after applying the action.
+     */
     toggle(silent = false) {
         this.apply(ToggleActionType.TOGGLE, silent);
     }
 
     /**
-   * Sets the toggle state to on.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param silent A boolean indicating whether to trigger the change event after applying the action.
-   */
-    on(silent = false) {
+     * Sets the toggle state to on.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param silent A boolean indicating whether to trigger the change event after applying the action.
+     */
+    toggleOn(silent = false) {
         this.apply(ToggleActionType.ON, silent);
     }
 
     /**
-   * Sets the toggle state to off.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param silent A boolean indicating whether to trigger the change event after applying the action.
-   */
-    off(silent = false) {
+     * Sets the toggle state to off.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param silent A boolean indicating whether to trigger the change event after applying the action.
+     */
+    toggleOff(silent = false) {
         this.apply(ToggleActionType.OFF, silent);
     }
 
     /**
-   * Sets the toggle state to indeterminate.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
-   */
+     * Sets the toggle state to indeterminate.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
+     */
     indeterminate(silent = false) {
         this.apply(ToggleActionType.INDETERMINATE, silent);
     }
 
     /**
-   * Sets the toggle state to determinate.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
-   */
+     * Sets the toggle state to determinate.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
+     */
     determinate(silent = false) {
         this.apply(ToggleActionType.DETERMINATE, silent);
     }
 
     /**
-   * Enables the toggle.
-   * If the toggle is currently disabled, this method will set the toggle state to enabled.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
-   * @returns void
-   */
+     * Enables the toggle.
+     * If the toggle is currently disabled, this method will set the toggle state to enabled.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
+     * @returns void
+     */
     enable(silent = false) {
         this.apply(ToggleActionType.ENABLE, silent);
     }
 
     /**
-   * Disables the toggle.
-   * If the toggle is currently enabled, this method will set the toggle state to disabled.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
-   */
+     * Disables the toggle.
+     * If the toggle is currently enabled, this method will set the toggle state to disabled.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
+     */
     disable(silent = false) {
         this.apply(ToggleActionType.DISABLE, silent);
     }
 
     /**
-   * Sets the toggle state to readonly.
-   * If the toggle is currently disabled or enabled, this method will set the toggle state to readonly.
-   * If the silent parameter is false, this method will also trigger the change event.
-   * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
-   * @returns void
-   */
+     * Sets the toggle state to readonly.
+     * If the toggle is currently disabled or enabled, this method will set the toggle state to readonly.
+     * If the silent parameter is false, this method will also trigger the change event.
+     * @param {boolean} silent A boolean indicating whether to trigger the change event after applying the action.
+     * @returns void
+     */
     readonly(silent = false) {
         this.apply(ToggleActionType.READONLY, silent);
     }
@@ -464,15 +501,10 @@ export class Toggle {
         this.element.dispatchEvent(new Event("change", { bubbles: true }));
         
         const eventName = this.getEventForAction(action, state);
-        const detail: ToggleEventDetail = { state: state };
         
-        this.element.dispatchEvent(
-            new CustomEvent(eventName, { 
-                bubbles: true, 
-                detail: detail 
-            })
-        );
+        this.emit(eventName, { state });
     }
+
     
     /**
      * Returns the corresponding toggle event for the given toggle action and state.
@@ -519,54 +551,24 @@ export class Toggle {
             return ToggleEvents.MIXED;
         }
     }
-    
-    /**
-   * Destroys the toggle element and unbinds all event listeners.
-   *This method is useful when you need to remove the toggle element from the DOM.
-   *After calling this method, the toggle element will be removed from the DOM and all event listeners will be unbound.
-   */
-    destroy() {
-        this.restoreInputProperties();
-        this.unbindEventListeners();
-        this.domBuilder.destroy();
-        delete this.element.bsToggle;
-    }
 
     /**
-     * Rebuilds the toggle component in-place without destroying the current instance.
-     * 
-     * This method is useful when you need to reinitialize the toggle element with the same options,
-     * for example after HTML attribute changes or when the DOM structure has been modified externally.
-     * 
-     * The method follows this sequence:
-     * 1. Restores original input properties (checked, disabled, readOnly, indeterminate)
-     * 2. Unbinds all event listeners (pointer, keyboard, label, form reset)
-     * 3. Destroys the DOM builder (removes toggle DOM, restores original checkbox)
-     * 4. Re-resolves options from the element and user options
-     * 5. Creates a fresh StateReducer with the updated tristate value
-     * 6. Builds new toggle DOM structure
-     * 7. Re-binds all event listeners
-     * 8. Re-intercepts input properties for external change detection
-     * 
-     * Important: The instance identity is preserved (this.element.bsToggle remains unchanged),
-     * making it safe for external code that holds references to this instance.
-     * 
-     * @returns void
+     * Rebuilds the toggle in-place, preserving instance identity.
+     * Emits `toggle:disposed` and `toggle:attached` lifecycle events.
+     *
+     * Sequence:
+     *   1. dispose()  → doDispose() unbinds listeners, restores props, tears down DOM
+     *   2. re-resolve options from element (may have changed)
+     *   3. attach()   → doAttach() rebuilds DOM and re-binds listeners
+     *
+     * @returns {Promise<void>} resolves when re-attached.
      */
-    rerender() {       
-        this.restoreInputProperties();
-        this.unbindEventListeners();
-        this.domBuilder.destroy();
-        
-        this.options = OptionResolver.resolve(this.element, this.userOptions);
-        this.stateReducer = new StateReducer(this.element, this.options.tristate);
-        this.domBuilder = new DOMBuilder(
-            this.element,
-            this.options,
-            this.stateReducer.get()
-        );
-        
-        this.bindEventListeners();
-        this.interceptInputProperties();
+    async rerender(): Promise<void> {
+        await this.dispose();
+
+        this.toggleOptions = OptionResolver.resolve(this.element, this.userOptions);
+        this.stateReducer = new StateReducer(this.element, this.toggleOptions.tristate);
+
+        await this.attach();
     }
 }
