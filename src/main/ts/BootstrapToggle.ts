@@ -39,12 +39,12 @@ export class Toggle extends Component<"toggle", ToggleEventMap> {
      * Initializes internal state. No DOM access, no side effects.
      * @returns {Promise<{ cancelled: boolean }>} transition result
      */
-    protected async doInit(): Promise<{ cancelled: boolean }> {
+    protected doInit(): Promise<{ cancelled: boolean }> {
         this.stateReducer = new StateReducer(
             this.element,
             this.toggleOptions.tristate
         );
-        return { cancelled: false };
+        return Promise.resolve({ cancelled: false });
     }
 
     /**
@@ -52,7 +52,7 @@ export class Toggle extends Component<"toggle", ToggleEventMap> {
      * intercepts input properties, and registers the instance on the element.
      * @returns {Promise<{ cancelled: boolean }>} transition result
      */
-    protected async doAttach(): Promise<{ cancelled: boolean }> {
+    protected doAttach(): Promise<{ cancelled: boolean }> {
         this.domBuilder = new DOMBuilder(
             this.element,
             this.toggleOptions,
@@ -62,7 +62,7 @@ export class Toggle extends Component<"toggle", ToggleEventMap> {
         this.bindEventListeners();
         this.interceptInputProperties();
 
-        return { cancelled: false };
+        return Promise.resolve({ cancelled: false });
     }
 
     /**
@@ -70,11 +70,11 @@ export class Toggle extends Component<"toggle", ToggleEventMap> {
      * The original checkbox is restored to the DOM.
      * @returns {Promise<{ cancelled: boolean }>} transition result
      */
-    protected async doDispose(): Promise<{ cancelled: boolean }> {
+    protected doDispose(): Promise<{ cancelled: boolean }> {
         this.unbindEventListeners();
         this.restoreInputProperties();
         this.domBuilder.destroy();
-        return { cancelled: false };
+        return Promise.resolve({ cancelled: false });
     }
 
     /**

@@ -15,11 +15,10 @@ import { ToggleMethods as Methods } from "./types/ToggleMethods";
         const optArg = Array.prototype.slice.call(arguments, 1)[0];
 
         return ( this ).each(function () {
-            const el = this;
-            let _bsToggle = el.bsToggle;
+            let _bsToggle = this.bsToggle;
 
             if (!_bsToggle) {
-                _bsToggle = new Toggle(el, (options && typeof options !== "string") ? options : {});
+                _bsToggle = new Toggle(this, (options && typeof options !== "string") ? options : {});
                 void _bsToggle.init().then(() => _bsToggle.attach());
                 return;
             }
