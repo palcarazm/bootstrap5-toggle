@@ -84,6 +84,8 @@
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^30.0.0",
@@ -122,5 +124,12 @@
   },
   "optionalDependencies": {
     "jquery": "^4.0.0"
+  },
+  "dependencies": {
+    "component-lifecycle": "^2.0.0"
+  },
+  "allowScripts": {
+    "cypress@16.2.0": true,
+    "unrs-resolver@1.11.1": true
   }
 }

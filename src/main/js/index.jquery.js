@@ -15,8 +15,14 @@ import { ToggleMethods as Methods } from "./types/ToggleMethods";
         const optArg = Array.prototype.slice.call(arguments, 1)[0];
 
         return ( this ).each(function () {
-            const $this = $(this);
-            let _bsToggle = this.bsToggle || new Toggle(this, (options && typeof options !== "string") ?  options : {});
+            const el = this;
+            let _bsToggle = el.bsToggle;
+
+            if (!_bsToggle) {
+                _bsToggle = new Toggle(el, (options && typeof options !== "string") ? options : {});
+                void _bsToggle.init().then(() => _bsToggle.attach());
+                return;
+            }
 
             if (options && typeof options === "string") {
                 switch (options.toLowerCase()) {
@@ -24,10 +30,10 @@ import { ToggleMethods as Methods } from "./types/ToggleMethods";
                     _bsToggle.toggle(silent);
                     break;
                 case Methods.ON:
-                    _bsToggle.on(silent);
+                    _bsToggle.toggleOn(silent);
                     break;
                 case Methods.OFF:
-                    _bsToggle.off(silent);
+                    _bsToggle.toggleOff(silent);
                     break;
                 case Methods.INDETERMINATE:
                     _bsToggle.indeterminate(silent);
