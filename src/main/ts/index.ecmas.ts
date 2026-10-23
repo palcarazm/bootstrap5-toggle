@@ -1,4 +1,5 @@
 import { Toggle as BootstrapToggle } from "./BootstrapToggle";
+import { ToggleMonitor } from "./monitoring/ToggleMonitor";
 import { default as Events } from "./types/ToggleEvents";
 import { UserOptions} from "./core/OptionResolver.types";
 import { ToggleStateValue as StateValue, ToggleStateStatus as StateStatus } from "./core/StateReducer.types";
@@ -11,7 +12,13 @@ import { BootstrapToggleElement } from "./types/BootstrapToggleElement";
      * Enables execution when used with ECMAScript
      */
     globalThis.window.BootstrapToggle = globalThis.window.BootstrapToggle || {};
-    Object.assign(globalThis.window.BootstrapToggle, {Events, Methods, StateValue, StateStatus});
+    Object.assign(globalThis.window.BootstrapToggle, {
+        Events,
+        Methods,
+        StateValue,
+        StateStatus,
+        MONITOR: new ToggleMonitor(),
+    });
 
     /**
    * Add `bootstrapToggle` prototype function to HTML Elements
