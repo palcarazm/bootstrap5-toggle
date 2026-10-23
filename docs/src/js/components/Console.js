@@ -27,7 +27,8 @@ class Console {
     btnGroup.append(clearBtn);
 
     const console = document.createElement("div");
-    console.className = "flex-grow-1 me-2";
+    console.className = "flex-grow-1 me-2 overflow-x-scroll";
+    console.style.scrollbarWidth = "none";
     this.#pre = document.createElement("pre");
     console.append(this.#pre);
 
