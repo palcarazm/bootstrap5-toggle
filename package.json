@@ -78,8 +78,8 @@
     "url": "https://github.com/palcarazm/bootstrap5-toggle/issues"
   },
   "engines": {
-    "node": ">=22 <25",
-    "npm": ">=10"
+    "node": "^22.0.0 || ^24.0.0 || ^26.0.0",
+    "npm": ">=10.9.9"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
