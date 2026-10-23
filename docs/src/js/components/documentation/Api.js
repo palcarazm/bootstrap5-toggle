@@ -6,15 +6,15 @@ import State from "./api/State";
 import DocSection from "./DocSection";
 
 class Api extends DocSection {
-  static build() {
-    return super.build("api", "API", [
-      Options.build(),
-      Methods.build(),
-      InputInteraction.build(),
-      State.build(),
-      Rerender.build(),
-    ]);
-  }
+    static build() {
+        return super.build("api", "API", [
+            Options.build(),
+            Methods.build(),
+            InputInteraction.build(),
+            State.build(),
+            Rerender.build(),
+        ]);
+    }
 }
 
 export default Api;

@@ -1,26 +1,26 @@
 import DocArticle from "../DocArticle";
 
 class Options extends DocArticle {
-  static build() {
-    return super.build({
-      title: "Options",
-      description: Options.#description(),
-      example: Options.#example(),
-      codePanel: Options.#codePanel(),
-      alert: {
-        type: "warning",
-        title: "Deprecation notice",
-        versionPill: {
-          version: "5.0.0",
-          action: "DEPRECATED",
-        },
-        content: `Using <code>on</code> and <code>off</code> user options is deprecated and will throw a console warning. Use <code>onlabel</code> and <code>offlabel</code> user options instead.`,
-      },
-    });
-  }
+    static build() {
+        return super.build({
+            title: "Options",
+            description: Options.#description(),
+            example: Options.#example(),
+            codePanel: Options.#codePanel(),
+            alert: {
+                type: "warning",
+                title: "Deprecation notice",
+                versionPill: {
+                    version: "5.0.0",
+                    action: "DEPRECATED",
+                },
+                content: "Using <code>on</code> and <code>off</code> user options is deprecated and will throw a console warning. Use <code>onlabel</code> and <code>offlabel</code> user options instead.",
+            },
+        });
+    }
 
-  static #codePanel() {
-    const ecmas = `<form class="d-flex justify-content-between align-items-center" id="api-option-form">
+    static #codePanel() {
+        const ecmas = `<form class="d-flex justify-content-between align-items-center" id="api-option-form">
   <input type="checkbox" id="api-option-toggle" checked />
   <button type="submit" class="btn btn-outline-secondary">Launch Bootstrap Toggle</button>
 </form>
@@ -47,7 +47,7 @@ class Options extends DocArticle {
     });
   };
 </script>`;
-    const jquery = `<form class="d-flex justify-content-between align-items-center" id="api-option-form">
+        const jquery = `<form class="d-flex justify-content-between align-items-center" id="api-option-form">
   <input type="checkbox" id="api-option-toggle" checked />
   <button type="submit" class="btn btn-outline-secondary">Launch Bootstrap Toggle</button>
 </form>
@@ -74,59 +74,59 @@ class Options extends DocArticle {
     });
   });
 </script>`;
-    return {
-      name: "api-options",
-      language: "javascript",
-      tabs: ["ECMAScript", "jQuery"],
-      contents: [ecmas, jquery],
-    };
-  }
+        return {
+            name: "api-options",
+            language: "javascript",
+            tabs: ["ECMAScript", "jQuery"],
+            contents: [ecmas, jquery],
+        };
+    }
 
-  static #example() {
-    const form = document.createElement("form");
-    form.id = "form_state_status";
-    form.className = "d-flex justify-content-between align-items-center";
+    static #example() {
+        const form = document.createElement("form");
+        form.id = "form_state_status";
+        form.className = "d-flex justify-content-between align-items-center";
 
-    const input = document.createElement("input");
-    input.id = "api-option-toggle";
-    input.type = "checkbox";
-    input.checked = true;
+        const input = document.createElement("input");
+        input.id = "api-option-toggle";
+        input.type = "checkbox";
+        input.checked = true;
 
-    const button = document.createElement("button");
-    button.type = "submit";
-    button.className = "btn btn-outline-secondary";
-    button.innerHTML = "Launch Bootstrap Toggle";
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.className = "btn btn-outline-secondary";
+        button.innerHTML = "Launch Bootstrap Toggle";
 
-    form.append(input, button);
+        form.append(input, button);
 
-    form.onsubmit = (e) => {
-      e.preventDefault();
-      input.bootstrapToggle({
-        onlable: "Enabled",
-        offlabel: "Disabled",
-        onstyle: "success",
-        offstyle: "danger",
-        onvalue: "1",
-        offvalue: "0",
-        size: "lg",
-        style: null,
-        width: null,
-        height: null,
-        tabindex: -1,
-        tristate: true,
-        tooltip: {
-          placement: "top",
-          title: { on: "Enabled", off: "Disabled", mixed: "Mixed" },
-        },
-      });
-    };
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            input.bootstrapToggle({
+                onlable: "Enabled",
+                offlabel: "Disabled",
+                onstyle: "success",
+                offstyle: "danger",
+                onvalue: "1",
+                offvalue: "0",
+                size: "lg",
+                style: null,
+                width: null,
+                height: null,
+                tabindex: -1,
+                tristate: true,
+                tooltip: {
+                    placement: "top",
+                    title: { on: "Enabled", off: "Disabled", mixed: "Mixed" },
+                },
+            });
+        };
 
-    return [form];
-  }
+        return [form];
+    }
 
-  static #description() {
-    const description = document.createElement("div");
-    description.innerHTML = `<p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-on="Enabled"</code>. Data attributes will take precedence over JavaScript options. </p>
+    static #description() {
+        const description = document.createElement("div");
+        description.innerHTML = `<p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-on="Enabled"</code>. Data attributes will take precedence over JavaScript options. </p>
 <div class="table-responsive">
     <table class="table table-striped table-condensed">
         <caption>API constructor options</caption>
@@ -279,8 +279,8 @@ class Options extends DocArticle {
         </tbody>
     </table>
 </div>`;
-    return description;
-  }
+        return description;
+    }
 }
 
 export default Options;
