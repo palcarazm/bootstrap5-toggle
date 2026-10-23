@@ -76,6 +76,7 @@ class Methods extends DocArticle {
 <script>const myToggle = document.getElementById("api-methods-toggle");</script>`,
             },
             example: [input],
+            alert: Methods.#asyncAlert(),
         });
     }
 
@@ -85,7 +86,11 @@ class Methods extends DocArticle {
         const paragraph = document.createElement("p");
         paragraph.innerHTML =
       "Methods can be used to control toggles directly. The following methods are available in the following way:";
-        description.append(paragraph, Methods.#table(input));
+
+        description.append(
+            paragraph,
+            Methods.#table(input),
+        );
 
         return description;
     }
@@ -145,6 +150,18 @@ class Methods extends DocArticle {
 
         tbody.append(...trs);
         return tbody;
+    }
+
+    static #asyncAlert() {
+        return ({
+            type: "warning",
+            title: "Async teardown",
+            versionPill: { version: "5.5.0", action: "SINCE" },
+            content: `<p><code>destroy()</code> and <code>rerender()</code> return <code>Promise&lt;void&gt;</code>. Await before re-initializing or inspecting DOM:</p>
+<pre><code class="highlight language-javascript">await element.bsToggle.destroy();
+element.bootstrapToggle();</code></pre>
+<p><code>rerender()</code> emits <code>toggle:disposed</code> and <code>toggle:attached</code> around the re-attach.</p>`,
+        });
     }
 }
 

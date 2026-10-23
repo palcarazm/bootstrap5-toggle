@@ -52,6 +52,12 @@ class DocArticle {
 
         return header;
     }
+
+    static fragment(...nodes) {
+        const fragment = document.createDocumentFragment();
+        nodes.forEach((node) => fragment.appendChild(node));
+        return fragment;
+    }
 }
 
 export default DocArticle;

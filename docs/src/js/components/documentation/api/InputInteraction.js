@@ -97,7 +97,16 @@ class InputInteraction extends DocArticle {
         const paragraph = document.createElement("p");
         paragraph.innerHTML =
       "Interact with the input elements dispatch changes to the toggle:";
-        description.append(paragraph, InputInteraction.#table(input));
+
+        const footnote = document.createElement("p");
+        footnote.innerHTML =
+      "<small>These demos assume the toggle is already attached. If calling immediately after <code>.bootstrapToggle()</code>, <code>await input.bsToggle.attach()</code> first or call <code>.update()</code>.</small>";
+
+        description.append(
+            paragraph,
+            InputInteraction.#table(input),
+            footnote
+        );
 
         return description;
     }
