@@ -62,11 +62,11 @@ class CustomEvents extends DocArticle {
 <script>
   const myToggle = document.getElementById("custom-events-toggle");
   const events = ["toggle:on", "toggle:off", "toggle:mixed", "toggle:enabled", "toggle:disabled", "toggle:readonly"];
-  events.forEach((event) => {
-    myToggle.addEventListener(event, (e) => {
+  events.forEach((eventName) => {
+    myToggle.addEventListener(eventName, (e) => {
       // e.detail is { state: { value, checked, status, indeterminate } }
       const { value, checked, status, indeterminate } = e.detail.state;
-      console.log(\`Event ${event} fired.\`, { value, checked, status, indeterminate });
+      console.log(\`Event \${eventName} fired.\`, { value, checked, status, indeterminate });
     });
   });
 </script>`,

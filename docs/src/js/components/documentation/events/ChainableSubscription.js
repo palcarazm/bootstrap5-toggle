@@ -7,7 +7,7 @@ class ChainableSubscription extends DocArticle {
         input.setAttribute("type", "checkbox");
         input.setAttribute("id", "chainable-subscription-toggle");
         input.setAttribute("checked", "");
-        input.setAttribute("data-toggle", "toggle");
+        input.dataset.toggle = "toggle";
         const console = new Console();
 
         input.addEventListener("toggle:on", () => {

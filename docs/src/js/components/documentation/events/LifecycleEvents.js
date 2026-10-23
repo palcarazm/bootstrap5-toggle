@@ -34,7 +34,7 @@ class LifecycleEvents extends DocArticle {
         input.setAttribute("type", "checkbox");
         input.setAttribute("id", "lifecycle-events-toggle");
         input.setAttribute("checked", "");
-        input.setAttribute("data-toggle", "toggle");
+        input.dataset.toggle = "toggle";
         const mockConsole = new Console();
 
         LifecycleEvents.#events.forEach((event) => {
@@ -70,18 +70,18 @@ class LifecycleEvents extends DocArticle {
     "toggle:destroyed",
     "toggle:transition-cancelled",
     "toggle:transition-invalid"
-  ].forEach((name) => {
-    myToggle.addEventListener(name, (_e) => {
+  ].forEach((eventName) => {
+    myToggle.addEventListener(eventName, (_e) => {
             mockConsole.log({
                 mode: "append",
-                data: \`Event ${name} fired.\`,
+                data: \`Event \${eventName} fired.\`,
             });
         });
   });
 
   // Rerender goes through dispose() -> attach(), so it
   // emits toggle:disposed and toggle:attached.
-  myToggle.rerender();
+  myToggle.bootstrapToggle("rerender");
 </script>`,
             },
             example: [input, rerenderBtn, mockConsole.htmlElement],
