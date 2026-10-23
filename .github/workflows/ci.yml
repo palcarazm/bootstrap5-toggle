@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
+        node-version: [22.x, 24.x, 26.x]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -61,7 +61,7 @@ jobs:
         uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           parallel-finished: true
-          carryforward: "coverage-report-22.x,coverage-report-24.x"
+          carryforward: "coverage-report-22.x,coverage-report-24.x,coverage-report-26.x"
         continue-on-error: true
   
       - name: Check Coveralls status
@@ -182,7 +182,7 @@ jobs:
         if: steps.check-changes.outputs.has_code_changes == 'true'
         uses: actions/download-artifact@v8
         with:
-          name: coverage-report-22.x
+          name: coverage-report-26.x
           path: coverage
 
       - name: SonarQube Scan
