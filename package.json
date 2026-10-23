@@ -54,7 +54,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest --coverage",
     "test:e2e": "cypress run --headless",
-    "lint": "eslint ./src",
+    "lint": "eslint ./src && eslint ./docs/src",
     "prepare": "husky"
   },
   "keywords": [
