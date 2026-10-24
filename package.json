@@ -126,10 +126,11 @@
     "jquery": "^4.0.0"
   },
   "dependencies": {
-    "component-lifecycle": "^2.0.0"
+    "component-lifecycle": "^2.1.0"
   },
   "allowScripts": {
     "cypress@16.2.0": true,
-    "unrs-resolver@1.11.1": true
+    "unrs-resolver@1.12.2": true,
+    "@parcel/watcher@2.6.0": true
   }
 }
