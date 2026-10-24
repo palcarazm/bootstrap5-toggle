@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -37,8 +37,8 @@ jobs:
             echo "tag=latest" >> $GITHUB_OUTPUT
           fi
       
-      - name: Publish to npm
+      - name: Stage publish to npm
         run: |
-          npm publish --provenance --access public --tag ${{ steps.npm-tag.outputs.tag }}
+          npm stage publish --provenance --access public --tag ${{ steps.npm-tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
