@@ -42,7 +42,6 @@ jobs:
           name: coverage-report-${{ matrix.node-version }}
           path: coverage
       - name: Upload coverage report to Coveralls
-        #v2.3.7
         uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           flag-name: coverage-report-${{ matrix.node-version }}
@@ -57,7 +56,6 @@ jobs:
     steps:
       - name: Coveralls Finished
         id: coveralls
-        #v2.3.7
         uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329
         with:
           parallel-finished: true
@@ -117,8 +115,7 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Cypress run
-        #v6.10.8
-        uses: cypress-io/github-action@09090944bd8aaa2a517cefb6e38bf1aae336b42b
+        uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060
         with:
           browser: chrome
 
@@ -154,7 +151,6 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        #47.0.6
         uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96
         with:
           files: |
@@ -187,7 +183,6 @@ jobs:
 
       - name: SonarQube Scan
         if: steps.check-changes.outputs.has_code_changes == 'true'
-        # v7.0.0
-        uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f
+        uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
