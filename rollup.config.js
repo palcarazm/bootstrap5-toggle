@@ -1,4 +1,6 @@
 import terser from "@rollup/plugin-terser";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import dts from "rollup-plugin-dts";
 import { bannerContent } from "./scripts/package-banner.js";
 
@@ -23,6 +25,7 @@ const umdECMAS = {
             banner,
         },
     ],
+    plugins: [nodeResolve(), commonjs()],
 };
 
 const umdJquery = {
@@ -49,10 +52,12 @@ const umdJquery = {
             banner,
         },
     ],
+    plugins: [nodeResolve(), commonjs()],
 };
 
 const mainConfig = {
     input: "src/main/js/index.js",
+    external: ["component-lifecycle"], 
     output: [
         {
             file: "dist/bootstrap5-toggle.cjs",

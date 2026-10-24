@@ -15,24 +15,24 @@ import Tooltip from "./features/Tooltip";
 import Tristate from "./features/Tristate";
 
 class Features extends DocSection {
-  static build() {
-    return super.build("features", "Features", [
-      Size.build(),
-      CustomSize.build(),
-      Tristate.build(),
-      Colors.build(),
-      OutlineColors.build(),
-      CustomText.build(),
-      CustomTitle.build(),
-      Tooltip.build(),
-      CustomStyle.build(),
-      AnimationSpeed.build(),
-      KeyboardInteraction.build(),
-      StateStatus.build(),
-      CustomFormValue.build(),
-      FormLayout.build(),
-    ]);
-  }
+    static build() {
+        return super.build("features", "Features", [
+            Size.build(),
+            CustomSize.build(),
+            Tristate.build(),
+            Colors.build(),
+            OutlineColors.build(),
+            CustomText.build(),
+            CustomTitle.build(),
+            Tooltip.build(),
+            CustomStyle.build(),
+            AnimationSpeed.build(),
+            KeyboardInteraction.build(),
+            StateStatus.build(),
+            CustomFormValue.build(),
+            FormLayout.build(),
+        ]);
+    }
 }
 
 export default Features;

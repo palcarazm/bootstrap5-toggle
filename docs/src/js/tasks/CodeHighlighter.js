@@ -1,8 +1,8 @@
 class CodeHighlighter {
-  static run() {
-    hljs.highlightAll();
-    window.highlightJsBadge();
-  }
+    static run() {
+        hljs.highlightAll();
+        window.highlightJsBadge();
+    }
 }
 
 export default CodeHighlighter;

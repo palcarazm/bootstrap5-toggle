@@ -1,4 +1,5 @@
 import { Toggle as BootstrapToggle } from "./BootstrapToggle";
+import { ToggleMonitor } from "./monitoring/ToggleMonitor";
 import { default as Events } from "./types/ToggleEvents";
 import { UserOptions} from "./core/OptionResolver.types";
 import { ToggleStateValue as StateValue, ToggleStateStatus as StateStatus } from "./core/StateReducer.types";
@@ -11,24 +12,36 @@ import { BootstrapToggleElement } from "./types/BootstrapToggleElement";
      * Enables execution when used with ECMAScript
      */
     globalThis.window.BootstrapToggle = globalThis.window.BootstrapToggle || {};
-    Object.assign(globalThis.window.BootstrapToggle, {Events, Methods, StateValue, StateStatus});
+    Object.assign(globalThis.window.BootstrapToggle, {
+        Events,
+        Methods,
+        StateValue,
+        StateStatus,
+        MONITOR: new ToggleMonitor(),
+    });
 
     /**
    * Add `bootstrapToggle` prototype function to HTML Elements
    * Enables execution when used with HTML - ex: `document.getElementById('toggle').bootstrapToggle('on')`
    */
     HTMLInputElement.prototype.bootstrapToggle = function (options?: UserOptions | Methods, silent?: boolean) {
-        let _bsToggle = (this as BootstrapToggleElement).bsToggle || new BootstrapToggle(this, (options && typeof options !== "string") ?  options : {});
+        const el = this as BootstrapToggleElement;
+        let _bsToggle = el.bsToggle;
 
-        // Execute method calls
+        if (!_bsToggle) {
+            _bsToggle = new BootstrapToggle(this, (options && typeof options !== "string") ?  options : {});
+            void _bsToggle.init().then(() => _bsToggle!.attach());
+            return;
+        }
+        
         if (options && typeof options === "string") {
             switch (options.toLowerCase()) {
             case Methods.TOGGLE:
                 return _bsToggle.toggle(silent);
             case Methods.ON:
-                return _bsToggle.on(silent);
+                return _bsToggle.toggleOn(silent);
             case Methods.OFF:
-                return _bsToggle.off(silent);
+                return _bsToggle.toggleOff(silent);
             case Methods.INDETERMINATE:
                 return _bsToggle.indeterminate(silent);
             case Methods.DETERMINATE:

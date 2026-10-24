@@ -9,8 +9,8 @@ DOMBuilder.run();
 LogoSwitcher.run({ toggleDelay: 3000 });
 
 window.onload = () => {
-  BootstrapToggler.run();
-  BootsrapDarkmodeToggler.run();
-  CodeHighlighter.run();
-  TOCBuilder.run();
+    BootstrapToggler.run();
+    BootsrapDarkmodeToggler.run();
+    CodeHighlighter.run();
+    TOCBuilder.run();
 };
