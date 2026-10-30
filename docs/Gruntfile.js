@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+function config(grunt) {
     const pkg = grunt.file.readJSON("package.json");
 
     grunt.initConfig({
@@ -108,3 +108,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask("dev", ["build", "watch"]);
 };
+
+module.exports = config;
