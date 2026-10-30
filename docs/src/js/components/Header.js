@@ -20,7 +20,7 @@ class Header {
         img.src = "assets/img/fork-me.webp";
         img.className = "attachment-full size-full";
         img.alt = "Fork me on GitHub";
-        img.setAttribute("data-recalc-dims", "1");
+        img.dataset.recalcDims = "1";
 
         forkMeLink.appendChild(img);
         return forkMeLink;

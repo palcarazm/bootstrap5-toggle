@@ -38,10 +38,10 @@ class CodePanel {
             navLink.id = `${name}-${index}-tab`;
             navLink.role = "tab";
             navLink.type = "button";
-            navLink.setAttribute("data-bs-toggle", "tab");
-            navLink.setAttribute("data-bs-target", `#${name}-${index}`);
-            navLink.setAttribute("aria-controls", `${name}-${index}`);
-            navLink.setAttribute("aria-selected", index === 0 ? "true" : "false");
+            navLink.dataset.bsToggle = "tab";
+            navLink.dataset.bsTarget = `#${name}-${index}`;
+            navLink.ariaControls = `${name}-${index}`;
+            navLink.ariaSelected = index === 0 ? "true" : "false";
             navLink.textContent = tabName;
 
             navItem.append(navLink);

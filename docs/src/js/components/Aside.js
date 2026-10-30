@@ -71,11 +71,11 @@ class Aside {
         const button = document.createElement("button");
         button.className = "navbar-toggler";
         button.type = "button";
-        button.setAttribute("data-bs-toggle", "collapse");
-        button.setAttribute("data-bs-target", "#navbarSupportedContent");
-        button.setAttribute("aria-controls", "navbarSupportedContent");
-        button.setAttribute("aria-expanded", "false");
-        button.setAttribute("aria-label", "Toggle navigation");
+        button.dataset.bsToggle = "collapse";
+        button.dataset.bsTarget = "#navbarSupportedContent";
+        button.ariaControls = "navbarSupportedContent";
+        button.ariaExpanded = "false";
+        button.ariaLabel = "Toggle navigation";
 
         const span = document.createElement("span");
         span.className = "navbar-toggler-icon";
