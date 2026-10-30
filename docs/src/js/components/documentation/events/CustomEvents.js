@@ -1,4 +1,3 @@
-import { version } from "grunt";
 import Console from "../../Console";
 import DocArticle from "../DocArticle";
 
