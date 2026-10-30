@@ -26,7 +26,7 @@ function testCase(bstInterface) {
     });
     context("When toggle element is selected and spacebar is pressed", () => {
         const data_test = "layout";
-        it.only("Then toggle is toggle", () => {
+        it("Then toggle is toggle", () => {
             PageModel.load(bstInterface, data_test);
             PageModel.getTests().each(($test) => {
                 ToggleModel.checkToggleKeypress($test,true);
