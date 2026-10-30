@@ -1,4 +1,3 @@
-import Console from "../../Console";
 import DocArticle from "../DocArticle";
 
 class FormLayout {

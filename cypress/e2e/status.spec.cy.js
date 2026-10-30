@@ -98,7 +98,7 @@ function testCase(bstInterface) {
             });
         });
 
-        it.only("Then toggle do not change on click", () => {
+        it("Then toggle do not change on click", () => {
             PageModel.load(bstInterface, data_test);
             cy.get(test_id).each(($test) => {
                 ToggleModel.checkToggleClick($test, false, "readonly");

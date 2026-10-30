@@ -4,7 +4,7 @@ class TOCBuilder {
         Toc.init({
             $nav: $("#toc"),
         });
-        const _scrollSpy = new bootstrap.ScrollSpy(document.body, {
+        void new bootstrap.ScrollSpy(document.body, {
             target: "#toc",
         });
     }

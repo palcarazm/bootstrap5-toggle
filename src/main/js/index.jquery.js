@@ -1,6 +1,6 @@
 import { Toggle } from "./BootstrapToggle";
 import { ToggleMonitor } from "./monitoring/ToggleMonitor";
-import { default as Events } from "./types/ToggleEvents";
+import Events from "./types/ToggleEvents";
 import { ToggleStateValue as StateValue, ToggleStateStatus as StateStatus } from "./core/StateReducer.types";
 import { ToggleMethods as Methods } from "./types/ToggleMethods";
 
@@ -19,8 +19,6 @@ import { ToggleMethods as Methods } from "./types/ToggleMethods";
     });
 
     function Plugin(options, silent) {
-        const optArg = Array.prototype.slice.call(arguments, 1)[0];
-
         return ( this ).each(function () {
             let _bsToggle = this.bsToggle;
 

@@ -801,7 +801,7 @@ function initTestApiRerender() {
                     })
             )
     );
-    testDiv = TEST_CONTAINER.clone().attr("id", "status-" + status.name);
+    testDiv = TEST_CONTAINER.clone().attr("id", "rerender");
     testDiv.append($('<div class="row mb-3">').append(toggleDiv, buttonDiv));
     testDiv.append(
         $('<div class="row align-items-center">').append(COL.clone(), COL.clone())

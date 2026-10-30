@@ -1,4 +1,3 @@
-import { version } from "grunt";
 import Console from "../../Console";
 import DocArticle from "../DocArticle";
 
@@ -32,11 +31,11 @@ class CustomEvents extends DocArticle {
 
     static build() {
         const input = document.createElement("input");
-        input.setAttribute("type", "checkbox");
-        input.setAttribute("id", "custom-events-toggle");
-        input.setAttribute("checked", "");
+        input.type = "checkbox";
+        input.id = "custom-events-toggle";
+        input.checked = true;
         input.setAttribute("tristate", "");
-        input.setAttribute("data-toggle", "toggle");
+        input.dataset.toggle = "toggle";
         const console = new Console();
 
         CustomEvents.#events.forEach((event) => {
