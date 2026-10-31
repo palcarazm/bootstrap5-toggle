@@ -95,7 +95,7 @@ class Aside {
 
         const navMenu = document.createElement("nav");
         navMenu.id = "toc";
-        navMenu.setAttribute("data-toggle", "toc");
+        navMenu.dataset.toggle = "toc";
         navMenu.setAttribute("aria-label", "Table of contents");
 
         collapseDiv.appendChild(navMenu);
