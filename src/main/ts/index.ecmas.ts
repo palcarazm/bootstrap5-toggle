@@ -1,6 +1,6 @@
 import { Toggle as BootstrapToggle } from "./BootstrapToggle";
 import { ToggleMonitor } from "./monitoring/ToggleMonitor";
-import { default as Events } from "./types/ToggleEvents";
+import Events from "./types/ToggleEvents";
 import { UserOptions} from "./core/OptionResolver.types";
 import { ToggleStateValue as StateValue, ToggleStateStatus as StateStatus } from "./core/StateReducer.types";
 import { ToggleMethods as Methods } from "./types/ToggleMethods";

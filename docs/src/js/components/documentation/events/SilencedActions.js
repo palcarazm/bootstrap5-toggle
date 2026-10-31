@@ -15,10 +15,10 @@ class SilencedActions extends DocArticle {
 
     static build() {
         const input = document.createElement("input");
-        input.setAttribute("type", "checkbox");
-        input.setAttribute("id", "events-silence-toggle");
-        input.setAttribute("checked", "");
-        input.setAttribute("data-toggle", "toggle");
+        input.type = "checkbox";
+        input.id = "events-silence-toggle";
+        input.checked = true;
+        input.dataset.toggle = "toggle";
         const console = new Console();
 
         input.addEventListener("change", (e) => {
