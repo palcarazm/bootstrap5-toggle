@@ -31,11 +31,11 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "7.3.1",
     "@highlightjs/cdn-assets": "11.12.0",
-    "bootstrap": "5.3.8",
+    "bootstrap": "5.3.9",
     "bootstrap5-toggle": "5.5.1",
     "bs-darkmode-toggle": "1.2.1",
     "highlightjs-badge": "0.1.9",
-    "jquery": "4.0.0"
+    "jquery": "4.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^1.0.0",
